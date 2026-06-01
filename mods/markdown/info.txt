@@ -1,0 +1,12 @@
+title: Markdown
+desc: This module allows users to use Markdown syntax in their postings.
+version: 1.0.0
+author: Gemini CLI
+url: https://parsedown.org/
+
+hook: format|phorum_mod_markdown_format
+hook: javascript_register|phorum_mod_markdown_javascript_register
+
+# Run after BBCode if both are active.
+priority: run module after *
+priority: run hook format after *

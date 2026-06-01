@@ -2036,7 +2036,8 @@ function phorum_redirect_by_url( $redir_url )
     // If it's an absolute URL, check if it's within our site.
     // Relative URLs (no http(s):// or //) are always allowed.
     if (preg_match("!^(?:https?:)?(?://|\\\\\\\\)!i", $redir_url)) {
-        if (strpos($redir_url, $PHORUM['http_path']) !== 0) {
+        $site_base = str_replace('/forum', '', $PHORUM['http_path']);
+        if (strpos($redir_url, $PHORUM['http_path']) !== 0 && strpos($redir_url, $site_base) !== 0) {
             $redir_url = phorum_get_url(PHORUM_INDEX_URL);
         }
     }
