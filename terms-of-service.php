@@ -41,9 +41,9 @@
         = $PHORUM['DATA']['LANG']['TOS']['Version']
               .':&nbsp;'
               .phorum_date
-                  ( $PHORUM['long_date'],
+                  ( $PHORUM['short_date'],
                     mktime
-                        ( 0, 0, 0,
+                        ( 12, 0, 0,
                           substr($PHORUM['mod_tos']['date_last_change'], 4, 2),
                           substr($PHORUM['mod_tos']['date_last_change'], 6, 2),
                           substr($PHORUM['mod_tos']['date_last_change'], 0, 4) ) );
