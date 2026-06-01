@@ -10,9 +10,20 @@
 
 #phorum .mod_onlineusers .onlineusers_users {
     font-size: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px;
 }
 
 #phorum .mod_onlineusers .onlineusers_users a {
+}
+
+#phorum .mod_onlineusers .onlineusers_userlist {
+    font-size: 1em;
+    margin-left: auto;
+    white-space: nowrap;
 }
 
 #phorum .mod_onlineusers .onlineusers_guests {

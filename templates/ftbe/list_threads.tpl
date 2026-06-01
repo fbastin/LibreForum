@@ -16,14 +16,14 @@
     {INCLUDE "paging"}
     <!-- CONTINUE TEMPLATE list_threads.tpl -->
     {IF URL->INDEX}
-        <a class="icon icon-folder" href="{URL->INDEX}">{LANG->ForumList}</a>
+        <a class="icon" href="{URL->INDEX}"><i class="li-folder"></i> {LANG->ForumList}</a>
     {/IF}
-    <a class="icon icon-comment-add" href="{URL->POST}">{LANG->NewTopic}</a>
+    <a class="icon" href="{URL->POST}"><i class="li-msg-add"></i> {LANG->NewTopic}</a>
     {IF URL->MARK_READ}
-        <a class="icon icon-tag-green" href="{URL->MARK_READ}">{LANG->MarkForumRead}</a>
+        <a class="icon" href="{URL->MARK_READ}"><i class="li-tag"></i> {LANG->MarkForumRead}</a>
     {/IF}
     {IF URL->FEED}
-        <a class="icon icon-feed" href="{URL->FEED}">{FEED}</a>
+        <a class="icon" href="{URL->FEED}"><i class="li-rss"></i> {FEED}</a>
     {/IF}
 </div>
 

@@ -48,9 +48,9 @@
 
 {IF NOT SEARCH->match_type "USER_ID"}
     <div class="nav">
-        {IF URL->INDEX}<a class="icon icon-folder" href="{URL->INDEX}">{LANG->ForumList}</a>{/IF}
+        {IF URL->INDEX}<a class="icon" href="{URL->INDEX}"><i class="li-folder"></i> {LANG->ForumList}</a>{/IF}
         {IF URL->POST}
-            <a class="icon icon-comment-add" href="{URL->POST}">{LANG->NewTopic}</a>
+            <a class="icon" href="{URL->POST}"><i class="li-msg-add"></i> {LANG->NewTopic}</a>
         {/IF}
     </div>
 

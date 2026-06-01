@@ -71,6 +71,7 @@ display: inline;
   <link rel="stylesheet" type="text/css" href="{URL->CSS}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{URL->CSS_PRINT}" media="print" />
   <link rel="stylesheet" type="text/css" href="/css/tireur.min.css?v=20260530c" media="all"/>
+  <link rel="stylesheet" type="text/css" href="/css/lucide.css?v=1" media="all"/>
 {/IF}
 
 {! Load Javascript code. This code origins from core Phorum javascript }
@@ -169,19 +170,19 @@ Some Icons courtesy of:
 
     <div id="user-nav" class="user-nav-bar">
       {IF LOGGEDIN}
-        <a class="icon icon-user-edit" href="{URL->REGISTERPROFILE}">{LANG->MyProfile}</a>
+        <a class="icon" href="{URL->REGISTERPROFILE}"><i class="li-user"></i> {LANG->MyProfile}</a>
         {IF ENABLE_PM}
             {IF USER->new_private_messages}
-              <a class="icon icon-user-comment" href="{URL->PM}"><strong>{LANG->NewPrivateMessages}</strong></a>
+              <a class="icon" href="{URL->PM}"><i class="li-mail"></i> <strong>{LANG->NewPrivateMessages}</strong></a>
             {ELSE}
-              <a class="icon icon-user-comment" href="{URL->PM}">{LANG->PrivateMessages}</a>
+              <a class="icon" href="{URL->PM}"><i class="li-mail"></i> {LANG->PrivateMessages}</a>
             {/IF}
         {/IF}
-        <a class="icon" style="background-image: url('mods/recent_messages/templates/emerald/icon_recent_messages.gif');" href="{URL->RECENT_MESSAGES}">{LANG->mod_recent_messages->RecentMessages}</a>
-        <a class="icon icon-key-delete" href="{URL->LOGINOUT}">{LANG->LogOut}</a>
+        <a class="icon" href="{URL->RECENT_MESSAGES}"><i class="li-clock"></i> {LANG->mod_recent_messages->RecentMessages}</a>
+        <a class="icon" href="{URL->LOGINOUT}"><i class="li-log-out"></i> {LANG->LogOut}</a>
       {ELSE}
-        <a class="icon icon-key-go" href="{URL->LOGINOUT}">{LANG->LogIn}</a>
-        <a class="icon icon-user-add" href="{URL->REGISTERPROFILE}">{LANG->Register}</a>
+        <a class="icon" href="{URL->LOGINOUT}"><i class="li-log-in"></i> {LANG->LogIn}</a>
+        <a class="icon" href="{URL->REGISTERPROFILE}"><i class="li-user-plus"></i> {LANG->Register}</a>
       {/IF}
     </div>
 
@@ -260,9 +261,9 @@ Some Icons courtesy of:
     {IF USER->NOTICE->SHOW}
       <div id="notices" class="attention">
         <span class="h4 heading">{LANG->NeedsAttention}</span class="h4">
-        {IF USER->NOTICE->MESSAGES}<a class="icon icon-table-add" href="{URL->NOTICE->MESSAGES}">{LANG->UnapprovedMessagesLong}</a>{/IF}
-        {IF USER->NOTICE->USERS}<a class="icon icon-user-add" href="{URL->NOTICE->USERS}">{LANG->UnapprovedUsersLong}</a>{/IF}
-        {IF USER->NOTICE->GROUPS}<a class="icon icon-group-add" href="{URL->NOTICE->GROUPS}">{LANG->UnapprovedGroupMembers}</a>{/IF}
+        {IF USER->NOTICE->MESSAGES}<a class="icon" href="{URL->NOTICE->MESSAGES}"><i class="li-file-check"></i> {LANG->UnapprovedMessagesLong}</a>{/IF}
+        {IF USER->NOTICE->USERS}<a class="icon" href="{URL->NOTICE->USERS}"><i class="li-user-plus"></i> {LANG->UnapprovedUsersLong}</a>{/IF}
+        {IF USER->NOTICE->GROUPS}<a class="icon" href="{URL->NOTICE->GROUPS}"><i class="li-users"></i> {LANG->UnapprovedGroupMembers}</a>{/IF}
       </div> <!-- end of div id=notices -->
     {/IF}
 

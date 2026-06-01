@@ -2,10 +2,10 @@
 <div class="nav">
     {INCLUDE "paging"}
     <!-- CONTINUE TEMPLATE read_hybrid.tpl -->
-    {IF URL->INDEX}<a class="icon icon-folder" href="{URL->INDEX}">{LANG->ForumList}</a>{/IF}
-    {IF FORUM_ID}<a class="icon icon-list" href="{URL->LIST}">{LANG->MessageList}</a>{/IF}
-    {IF FORUM_ID}<a class="icon icon-comment-add" href="{URL->POST}">{LANG->NewTopic}</a>{/IF}
-    <a class="icon icon-printer" href="{URL->PRINTVIEW}" target="_blank">{LANG->PrintView}</a>
+    {IF URL->INDEX}<a class="icon" href="{URL->INDEX}"><i class="li-folder"></i> {LANG->ForumList}</a>{/IF}
+    {IF FORUM_ID}<a class="icon" href="{URL->LIST}"><i class="li-clock"></i> {LANG->MessageList}</a>{/IF}
+    {IF FORUM_ID}<a class="icon" href="{URL->POST}"><i class="li-msg-add"></i> {LANG->NewTopic}</a>{/IF}
+    <a class="icon" href="{URL->PRINTVIEW}" target="_blank"><i class="li-printer"></i> {LANG->PrintView}</a>
 </div>
 
 {LOOP MESSAGES}
@@ -73,12 +73,12 @@
             <div class="message-options">
                 {IF MESSAGES->edit 1}
                     {IF MODERATOR false}
-                        <a class="icon icon-comment-edit" href="{MESSAGES->URL->EDIT}">{LANG->EditPost}</a>
+                        <a class="icon" href="{MESSAGES->URL->EDIT}"><i class="li-pencil"></i> {LANG->EditPost}</a>
                     {/IF}
                 {/IF}
-                <a class="icon icon-comment-add" href="{MESSAGES->URL->REPLY}">{LANG->Reply}</a>
-                <a class="icon icon-comment-add" href="{MESSAGES->URL->QUOTE}">{LANG->QuoteMessage}</a>
-                {IF MESSAGES->URL->REPORT}<a class="icon icon-exclamation" href="{MESSAGES->URL->REPORT}">{LANG->Report}</a>{/IF}
+                <a class="icon" href="{MESSAGES->URL->REPLY}"><i class="li-msg-add"></i> {LANG->Reply}</a>
+                <a class="icon" href="{MESSAGES->URL->QUOTE}"><i class="li-msg-add"></i> {LANG->QuoteMessage}</a>
+                {IF MESSAGES->URL->REPORT}<a class="icon" href="{MESSAGES->URL->REPORT}"><i class="li-alert"></i> {LANG->Report}</a>{/IF}
 {HOOK "social_share" MESSAGE}
             </div>
 
@@ -96,18 +96,18 @@
             {IF MODERATOR true}
                 <div class="message-moderation">
                     {IF MESSAGES->threadstart true}
-                        <a class="icon icon-delete" href="javascript:if(window.confirm('{LANG->ConfirmDeleteMessage}')) window.location='{MESSAGES->URL->DELETE_THREAD}';">{LANG->DelMessReplies}</a>
+                        <a class="icon" href="javascript:if(window.confirm('{LANG->ConfirmDeleteMessage}')) window.location='{MESSAGES->URL->DELETE_THREAD}';"><i class="li-trash"></i> {LANG->DelMessReplies}</a>
                     {ELSE}
-                        <a class="icon icon-delete" href="javascript:if(window.confirm('{LANG->ConfirmDeleteMessage}')) window.location='{MESSAGES->URL->DELETE_MESSAGE}';">{LANG->DeleteMessage}</a>
-                        <a class="icon icon-delete" href="javascript:if(window.confirm('{LANG->ConfirmDeleteMessage}')) window.location='{MESSAGES->URL->DELETE_THREAD}';">{LANG->DelMessReplies}</a>
-                        <a class="icon icon-split" href="{MESSAGES->URL->SPLIT}">{LANG->SplitThread}</a>
+                        <a class="icon" href="javascript:if(window.confirm('{LANG->ConfirmDeleteMessage}')) window.location='{MESSAGES->URL->DELETE_MESSAGE}';"><i class="li-trash"></i> {LANG->DeleteMessage}</a>
+                        <a class="icon" href="javascript:if(window.confirm('{LANG->ConfirmDeleteMessage}')) window.location='{MESSAGES->URL->DELETE_THREAD}';"><i class="li-trash"></i> {LANG->DelMessReplies}</a>
+                        <a class="icon" href="{MESSAGES->URL->SPLIT}"><i class="li-split"></i> {LANG->SplitThread}</a>
                     {/IF}
                     {IF MESSAGES->is_unapproved}
-                        <a class="icon icon-accept" href="{MESSAGES->URL->APPROVE}">{LANG->ApproveMessage}</a>
+                        <a class="icon" href="{MESSAGES->URL->APPROVE}"><i class="li-check"></i> {LANG->ApproveMessage}</a>
                     {ELSE}
-                        <a class="icon icon-comment-delete" href="{MESSAGES->URL->HIDE}">{LANG->HideMessage}</a>
+                        <a class="icon" href="{MESSAGES->URL->HIDE}"><i class="li-trash"></i> {LANG->HideMessage}</a>
                     {/IF}
-                    <a class="icon icon-comment-edit" href="{MESSAGES->URL->EDIT}">{LANG->EditPost}</a>
+                    <a class="icon" href="{MESSAGES->URL->EDIT}"><i class="li-pencil"></i> {LANG->EditPost}</a>
                 </div>
             {/IF}
 
@@ -118,30 +118,30 @@
 <div class="nav">
     {INCLUDE "paging"}
     <!-- CONTINUE TEMPLATE read_hybrid.tpl -->
-    <a class="icon icon-prev" href="{URL->NEWERTHREAD}">{LANG->NewerThread}</a>
-    <a class="icon icon-next" href="{URL->OLDERTHREAD}">{LANG->OlderThread}</a>
+    <a class="icon" href="{URL->NEWERTHREAD}"><i class="li-arrow-left"></i> {LANG->NewerThread}</a>
+    <a class="icon" href="{URL->OLDERTHREAD}"><i class="li-arrow-right"></i> {LANG->OlderThread}</a>
 </div>
 
 <div id="thread-options" class="nav">
-    <a class="icon icon-printer" href="{URL->PRINTVIEW}" target="_blank">{LANG->PrintView}</a>
+    <a class="icon" href="{URL->PRINTVIEW}" target="_blank"><i class="li-printer"></i> {LANG->PrintView}</a>
     {IF URL->MARKTHREADREAD}
-        <a class="icon icon-tag-green" href="{URL->MARKTHREADREAD}">{LANG->MarkThreadRead}</a>
+        <a class="icon" href="{URL->MARKTHREADREAD}"><i class="li-tag"></i> {LANG->MarkThreadRead}</a>
     {/IF}
     {IF TOPIC->URL->FOLLOW}
-        <a class="icon icon-note-add" href="{TOPIC->URL->FOLLOW}">{LANG->FollowThread}</a>
+        <a class="icon" href="{TOPIC->URL->FOLLOW}"><i class="li-msg-add"></i> {LANG->FollowThread}</a>
     {/IF}
     {IF URL->FEED}
-        <a class="icon icon-feed" href="{URL->FEED}">{FEED}</a>
+        <a class="icon" href="{URL->FEED}"><i class="li-rss"></i> {FEED}</a>
     {/IF}
     {IF MODERATOR true}
-        <a class="icon icon-merge" href="{TOPIC->URL->MERGE}">{LANG->MergeThread}</a>
+        <a class="icon" href="{TOPIC->URL->MERGE}"><i class="li-merge"></i> {LANG->MergeThread}</a>
         {IF TOPIC->closed false}
-            <a class="icon icon-close" href="{TOPIC->URL->CLOSE}">{LANG->CloseThread}</a>
+            <a class="icon" href="{TOPIC->URL->CLOSE}"><i class="li-ban"></i> {LANG->CloseThread}</a>
         {ELSE}
-            <a class="icon icon-open" href="{TOPIC->URL->REOPEN}">{LANG->ReopenThread}</a>
+            <a class="icon" href="{TOPIC->URL->REOPEN}"><i class="li-eye"></i> {LANG->ReopenThread}</a>
         {/IF}
-        <a class="icon icon-delete" href="javascript:if(window.confirm('{LANG->ConfirmDeleteThread}')) window.location='{TOPIC->URL->DELETE_THREAD}';">{LANG->DeleteThread}</a>
-        {IF TOPIC->URL->MOVE}<a class="icon icon-move" href="{TOPIC->URL->MOVE}">{LANG->MoveThread}</a>{/IF}
+        <a class="icon" href="javascript:if(window.confirm('{LANG->ConfirmDeleteThread}')) window.location='{TOPIC->URL->DELETE_THREAD}';"><i class="li-trash"></i> {LANG->DeleteThread}</a>
+        {IF TOPIC->URL->MOVE}<a class="icon" href="{TOPIC->URL->MOVE}"><i class="li-move"></i> {LANG->MoveThread}</a>{/IF}
 {HOOK "social_share" TOPIC}
     {/IF}
 </div>

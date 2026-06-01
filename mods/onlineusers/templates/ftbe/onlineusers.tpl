@@ -2,12 +2,12 @@
 
   <h1>{LANG->mod_onlineusers->OnlineUsers}</h1>
 
-  {IF MOD_ONLINEUSERS->USERS}
     <div class="onlineusers_users">
-      {VAR FIRST 1}
-      {LOOP MOD_ONLINEUSERS->USERS}{VAR OU MOD_ONLINEUSERS->USERS}{IF NOT FIRST}, {/IF}<a href="{OU->PROFILE}">{OU->NAME}</a> {IF OU->ADMIN OR OU->IDLE}({/IF}{IF OU->ADMIN}{LANG->mod_onlineusers->Administrator}{/IF}{IF OU->ADMIN AND OU->IDLE}, {/IF}{IF OU->IDLE}{OU->IDLE}{/IF}{IF OU->ADMIN OR OU->IDLE}){/IF}{VAR FIRST 0}{/LOOP MOD_ONLINEUSERS->USERS}
-    </div>
+  {IF MOD_ONLINEUSERS->USERS}
+      <span>{VAR FIRST 1}{LOOP MOD_ONLINEUSERS->USERS}{VAR OU MOD_ONLINEUSERS->USERS}{IF NOT FIRST}, {/IF}<a href="{OU->PROFILE}">{OU->NAME}</a> {IF OU->ADMIN OR OU->IDLE}({/IF}{IF OU->ADMIN}{LANG->mod_onlineusers->Administrator}{/IF}{IF OU->ADMIN AND OU->IDLE}, {/IF}{IF OU->IDLE}{OU->IDLE}{/IF}{IF OU->ADMIN OR OU->IDLE}){/IF}{VAR FIRST 0}{/LOOP MOD_ONLINEUSERS->USERS}</span>
   {/IF}
+      {IF LOGGEDIN}<a class="onlineusers_userlist" href="{URL->USER_LIST->All}">Liste des inscrits</a>{/IF}
+    </div>
 
   {IF MOD_ONLINEUSERS->SHOW_GUESTS}
     <div class="onlineusers_guests">

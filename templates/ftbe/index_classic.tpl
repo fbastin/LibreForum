@@ -58,9 +58,9 @@
 
                     <p>{FORUMS->description}</p>
 
-                    {IF FORUMS->URL->MARK_READ}<a class="icon icon-tag-green" href="{FORUMS->URL->MARK_READ}">{LANG->MarkForumRead}</a>&nbsp;&nbsp;&nbsp;{/IF}
+                    {IF FORUMS->URL->MARK_READ}<a class="icon" href="{FORUMS->URL->MARK_READ}"><i class="li-tag"></i> {LANG->MarkForumRead}</a>&nbsp;&nbsp;&nbsp;{/IF}
 
-                    {IF FORUMS->URL->FEED}<a class="icon icon-feed" href="{FORUMS->URL->FEED}">{FEED}</a>{/IF}
+                    {IF FORUMS->URL->FEED}<a class="icon" href="{FORUMS->URL->FEED}"><i class="li-rss"></i> {FEED}</a>{/IF}
 
                 </td>
 

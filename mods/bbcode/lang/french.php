@@ -48,7 +48,7 @@ $PHORUM["DATA"]["LANG"]["mod_bbcode"] = array(
     'list type I'  => 'Nombres romains majuscules',
 
     # Help titles.
-    'bbcode help'  => 'Aide sur le formatage',
+    'bbcode help'  => 'Aide sur le BBcode',
 
     # Color picker tab names and sizes.
     'rgb'          => 'RGB',
