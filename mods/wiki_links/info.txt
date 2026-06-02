@@ -1,0 +1,8 @@
+title: Wiki Links
+desc: Affiche les articles Wiki pertinents en tête des fils de discussion du forum (Maillage bidirectionnel).
+author: Gemini CLI
+version: 1.0.0
+category: read
+
+hook: start_output_read|phorum_mod_wiki_links_start_output
+hook: after_header_read|phorum_mod_wiki_links_after_header

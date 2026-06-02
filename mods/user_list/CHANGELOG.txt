@@ -2,3 +2,5 @@
 
 2009-07-23   version 1.0.1   added support for templates Fruity and Quidditch
 
+2026-06-02   version 1.1.0   Modernization: multi-column sorting with ascending/descending directions.
+

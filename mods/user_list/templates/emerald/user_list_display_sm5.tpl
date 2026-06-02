@@ -33,15 +33,14 @@
 </table>
 <div class="nav">
     {INCLUDE 'paging'}
-    Sort by: <a href="{URL->USER_LIST->NumberSort}">Number</a> / <a href="{URL->USER_LIST->All}">Name</a>
 </div>
 <table cellspacing=1 class="list user_list tborder fullwidth">
     <tr>
 <!-- Member Number -->
-        <th align="center">No.</th>
+        <th align="center" width="200" style="white-space: nowrap;"><a href="{URL->USER_LIST->SORT_BY_USER_ID}">No.&nbsp;{IF USER_LIST_SORT 'user_id'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a></th>
         <!-- <th align="center">{LANG->MemberNumber}</th> -->
 <!-- Member -->
-        <th align="center" class="firstcol">{LANG->Member}</th>
+        <th align="center" class="firstcol"><a href="{URL->USER_LIST->SORT_BY_USERNAME}">{LANG->Member}&nbsp;{IF USER_LIST_SORT 'username'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a></th>
         {IF LOGGEDIN}
             {IF ENABLE_PM}
 <!-- PM -->
@@ -53,12 +52,12 @@
 <!-- Rank (later) -->
         <!-- <th align="center">Rank</th> -->
 <!-- Posts -->
-        <th align="center">{LANG->Posts}</th>
+        <th align="center"><a href="{URL->USER_LIST->SORT_BY_POSTS}">{LANG->Posts}&nbsp;{IF USER_LIST_SORT 'posts'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a></th>
 <!-- Date Joined -->
-        <th align="center">Date Joined</th>
+        <th align="center"><a href="{URL->USER_LIST->SORT_BY_DATE_ADDED}">Date Joined&nbsp;{IF USER_LIST_SORT 'date_added'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a></th>
         <!-- <th align="center">{LANG->DateReg}</th> -->
 <!-- Last Seen -->
-        <th align="center">Last Seen</th>
+        <th align="center"><a href="{URL->USER_LIST->SORT_BY_DATE_LAST_ACTIVE}">Last Seen&nbsp;{IF USER_LIST_SORT 'date_last_active'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a></th>
         <!-- <th align="center">{LANG->DateActive}</th> -->
     </tr>
 

@@ -34,31 +34,35 @@
 </table>
 <div class="nav">
     {INCLUDE 'paging'}
-    Trier par: <a href="{URL->USER_LIST->NumberSort}">Numéro</a> / <a href="{URL->USER_LIST->All}">Nom</a>
 </div>
 <table cellspacing="0" class="list user_list">
     <tr>
 <!-- Member Number -->
-        <th align="center">No.</th>
-        <!-- <th align="center">{LANG->MemberNumber}</th> -->
+        <th align="center" width="80" style="white-space: nowrap;">
+            <a href="{URL->USER_LIST->SORT_BY_USER_ID}">No.&nbsp;{IF USER_LIST_SORT 'user_id'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a>
+        </th>
 <!-- Member -->
-        <th align="center">{LANG->Member}</th>
+        <th align="center">
+            <a href="{URL->USER_LIST->SORT_BY_USERNAME}">{LANG->Member}&nbsp;{IF USER_LIST_SORT 'username'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a>
+        </th>
             {IF ENABLE_PM}
 <!-- PM -->
                 <th align="center">{LANG->PrivateReply}</th>
 <!-- Buddy -->
                 <th align="center">{LANG->Buddy}</th>
             {/IF} {! ENABLE_PM}
-<!-- Rank (later) -->
-        <!-- <th align="center">Rank</th> -->
 <!-- Posts -->
-        <th align="center">{LANG->Posts}</th>
+        <th align="center">
+            <a href="{URL->USER_LIST->SORT_BY_POSTS}">{LANG->Posts}&nbsp;{IF USER_LIST_SORT 'posts'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a>
+        </th>
 <!-- Date Joined -->
-        <th align="center">Date d'inscription</th>
-        <!-- <th align="center">{LANG->DateReg}</th> -->
+        <th align="center">
+            <a href="{URL->USER_LIST->SORT_BY_DATE_ADDED}">Date d'inscription&nbsp;{IF USER_LIST_SORT 'date_added'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a>
+        </th>
 <!-- Last Seen -->
-        <th align="center">Dernière activité</th>
-        <!-- <th align="center">{LANG->DateActive}</th> -->
+        <th align="center">
+            <a href="{URL->USER_LIST->SORT_BY_DATE_LAST_ACTIVE}">Dernière activité&nbsp;{IF USER_LIST_SORT 'date_last_active'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a>
+        </th>
     </tr>
 
     {LOOP USERS}
