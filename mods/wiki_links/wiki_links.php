@@ -3,14 +3,19 @@
 if (!defined('PHORUM')) return;
 
 /**
- * Hook start_output_read:
+ * Hook start_output:
  * Identifie les articles Wiki pertinents basés sur le sujet de la discussion.
  */
 function phorum_mod_wiki_links_start_output() {
     global $PHORUM;
 
+    // On ne traite que la page de lecture des messages
+    if (phorum_page != 'read') return;
+
     // On récupère le sujet de la discussion
-    if (!isset($PHORUM['DATA']['TOPIC']['subject'])) return;
+    if (!isset($PHORUM['DATA']['TOPIC']['subject'])) {
+        return;
+    }
     $subject = $PHORUM['DATA']['TOPIC']['subject'];
 
     // Extraction des mots-clés (logique similaire à related_threads.php du wiki)
@@ -98,13 +103,18 @@ function phorum_mod_wiki_links_start_output() {
 }
 
 /**
- * Hook after_header_read:
+ * Hook before_footer:
  * Affiche les liens Wiki si trouvés.
  */
-function phorum_mod_wiki_links_after_header() {
+function phorum_mod_wiki_links_before_footer() {
     global $PHORUM;
 
-    if (empty($PHORUM['DATA']['WIKI_LINKS'])) return;
+    // On ne traite que la page de lecture des messages
+    if (phorum_page != 'read') return;
+
+    if (empty($PHORUM['DATA']['WIKI_LINKS'])) {
+        return;
+    }
 
     echo '<div class="wiki-related-box noprint">';
     echo '  <div class="wiki-related-header">';
