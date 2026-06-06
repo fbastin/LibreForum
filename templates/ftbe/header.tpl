@@ -70,7 +70,7 @@ display: inline;
 {ELSE}
   <link rel="stylesheet" type="text/css" href="{URL->CSS}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{URL->CSS_PRINT}" media="print" />
-  <link rel="stylesheet" type="text/css" href="/css/tireur.min.css?v=20260530c" media="all"/>
+  <link rel="stylesheet" type="text/css" href="/css/tireur.min.css?v=20260606d" media="all"/>
   <link rel="stylesheet" type="text/css" href="/css/lucide.css?v=1" media="all"/>
 {/IF}
 
@@ -78,6 +78,7 @@ display: inline;
 {! code, template javascript code (templates/.../javascript.tpl) and }
 {! modules that add their code using the "javascript_register" module hook. }
 <script type="text/javascript" src="{URL->JAVASCRIPT}"></script>
+<script type="text/javascript" src="/js/theme-switcher.js"></script>
 
 {! Add links to the available RSS feeds. }
 {IF FEEDS}
