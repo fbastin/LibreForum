@@ -272,8 +272,8 @@ require_once("./include/phorum_get_url.php");
 // module authors a chance to override them. This can be especially useful
 // for distibuting a module that contains a full OpenPhorum template as well.
 // For switching, the function phorum_switch_template() can be used.
-$PHORUM['template_path'] = './templates';
-$PHORUM['cache'] = './cache';
+$PHORUM['template_path'] = dirname(__FILE__) . '/templates';
+$PHORUM['cache'] = dirname(__FILE__) . '/cache';
 $PHORUM['template_http_path'] = $PHORUM['http_path'].'/templates';
 
 // ----------------------------------------------------------------------
@@ -1501,143 +1501,18 @@ function phorum_output($templates) {
 
     include phorum_get_template("header");
 
-    /*
-     * [hook]
-     *     after_header
-     *
-     * [description]
-     *     This hook can be used for adding content to the pages that is
-     *     displayed after the page header template, but before the main
-     *     page content.
-     *
-     * [category]
-     *     Page output
-     *
-     * [when]
-     *     After sending the page header template, but before sending the
-     *     main page content.
-     *
-     * [input]
-     *     No input.
-     *
-     * [output]
-     *     No output.
-     *
-     * [example]
-     *     <hookcode>
-     *     function phorum_mod_foo_after_header()
-     *     {
-     *         // Only add data after the header for the index and list pages.
-     *         if (phorum_page != 'index' && phorum_page != 'list') return;
-     *
-     *         // Add some static notification after the header.
-     *         print '<div style="border:1px solid orange; padding: 1em">';
-     *         print 'Welcome to our forums!';
-     *         print '</div>';
-     *     }
-     *     </hookcode>
-     */
     if (isset($PHORUM["hooks"]["after_header"])) {
         phorum_hook("after_header");
     }
 
-    /*
-     * [availability]
-     *     OpenPhorum 5 >= 5.2.16
-     *
-     * [hook]
-     *     after_header_<page>
-     *
-     * [description]
-     *     This hook provides the same functionality as the
-     *     <hook>after_header</hook> hook. The difference is that this
-     *     hook is called for a specific phorum_page, which makes
-     *     this a lightweight hook if you only need to do processing
-     *     for a single phorum_page.
-     *
-     * [category]
-     *     Page output
-     *
-     * [when]
-     *     After sending the page header template, but before sending the
-     *     main page content.
-     *
-     * [input]
-     *     No input.
-     *
-     * [output]
-     *     No output.
-     */
     if (isset($GLOBALS['PHORUM']['hooks']['after_header_' . phorum_page])) {
         phorum_hook('after_header_' . phorum_page);
     }
 
-    /*
-     * [hook]
-     *     output_templates
-     *
-     * [description]
-     *     This hook can be used to alter the list of templates that
-     *     will be displayed by the phorum_api_output() call.
-     *
-     * [category]
-     *     Page output
-     *
-     * [when]
-     *     After sending the page header template, but before sending the
-     *     main page content.
-     *
-     * [input]
-     *     An array, containing the names of the templates to display
-     *     in the page body (between the header and footer template).
-     *
-     * [output]
-     *     Same as input, possibly modified.
-     *
-     * [example]
-     *     <hookcode>
-     *     function phorum_mod_foo_output_templates($templates)
-     *     {
-     *         // Add some advertisements at the top and bottom of the page.
-     *         array_unshift($templates, "foo::top_advertisement);
-     *         array_push($templates, "foo::bottom_advertisement);
-     *
-     *         return $templates;
-     *     }
-     *     </hookcode>
-     */
     if (isset($PHORUM['hooks']['output_templates'])) {
         $templates = phorum_hook('output_templates', $templates);
     }
 
-    /*
-     * [availability]
-     *     OpenPhorum 5 >= 5.2.16
-     *
-     * [hook]
-     *     output_templates_<page>
-     *
-     * [description]
-     *     This hook provides the same functionality as the
-     *     <hook>output_templates</hook> hook. The difference is that this
-     *     hook is called for a specific phorum_page, which makes
-     *     this a lightweight hook if you only need to do processing
-     *     for a single phorum_page.
-     *
-     * [category]
-     *     Page output
-     *
-     * [when]
-     *     After sending the page header template, but before sending the
-     *     main page content.
-     *
-     * [input]
-     *     An array, containing the names of the templates to display
-     *     in the page body (between the header and footer template).
-     *
-     * [output]
-     *     Same as input, possibly modified.
-     */
     if (isset($GLOBALS['PHORUM']['hooks']['output_templates' . phorum_page])) {
         $templates = phorum_hook(
           'output_templates' . phorum_page, $templates);
@@ -2037,7 +1912,9 @@ function phorum_redirect_by_url( $redir_url )
     // Relative URLs (no http(s):// or //) are always allowed.
     if (preg_match("!^(?:https?:)?(?://|\\\\\\\\)!i", $redir_url)) {
         $site_base = str_replace('/forum', '', $PHORUM['http_path']);
-        if (strpos($redir_url, $PHORUM['http_path']) !== 0 && strpos($redir_url, $site_base) !== 0) {
+        $valid_forum = (strpos($redir_url, $PHORUM['http_path'] . '/') === 0 || $redir_url === $PHORUM['http_path']);
+        $valid_site = (strpos($redir_url, $site_base . '/') === 0 || $redir_url === $site_base);
+        if (!$valid_forum && !$valid_site) {
             $redir_url = phorum_get_url(PHORUM_INDEX_URL);
         }
     }

@@ -19,6 +19,7 @@
 define('phorum_page','read');
 
 include_once("./common.php");
+
 include_once("./include/email_functions.php");
 include_once("./include/format_functions.php");
 
@@ -159,7 +160,7 @@ if(empty($PHORUM["args"][1])) {
                     $new_message = array_shift($message_ids);
                 }
 
-                if($PHORUM['threaded_read'] == 0) { // get new page
+                if($PHORUM["threaded_read"] == 0) { // get new page
                     $new_page=ceil(phorum_db_get_message_index($thread,$new_message)/$PHORUM['read_length']);
                     $dest_url=phorum_get_url(PHORUM_READ_URL,$thread,$new_message,"page=$new_page");
                 } else { // for threaded
@@ -193,6 +194,17 @@ if(empty($PHORUM["args"][1])) {
 }
 
 //timing_mark("before database");
+
+// Phase 2 Optimization: Fallback to flat mode for large threads to prevent performance degradation
+if (!empty($PHORUM["threaded_read"]) && !empty($thread)) {
+    $thread_message = phorum_cache_get('message', $thread);
+    if (empty($thread_message)) {
+        $thread_message = phorum_db_get_message($thread, 'message_id');
+    }
+    if (!empty($thread_message) && isset($thread_message['thread_count']) && $thread_message['thread_count'] > 50) {
+        $PHORUM["threaded_read"] = 0;
+    }
+}
 
 // determining the page if page isn't given and message_id != thread
 $page=0;
@@ -228,8 +240,7 @@ if ($page > 1) {
  thats the caching part
  */
 
-if($PHORUM['cache_messages'] &&
-   (!$PHORUM['count_views'] || !$PHORUM["threaded_read"])) {
+if($PHORUM['cache_messages']) {
 
     $data=array();
     $data['users']=array();
@@ -752,17 +763,7 @@ if(!empty($data) && isset($data[$thread]) && isset($data[$message_id])) {
     if (isset($PHORUM["hooks"]["read"]))
         $messages = phorum_hook("read", $messages, $message_id);
 
-    // increment viewcount if enabled
-    if($PHORUM['count_views'] &&
-      (!isset($PHORUM['status']) || $PHORUM["status"]!=PHORUM_MASTER_STATUS_READ_ONLY)) {
-        // increment viewcount per thread if enabled
-        $inc_thread_id = NULL;
-        if (!empty($PHORUM['count_views_per_thread'])) {
-            $inc_thread_id = $thread;
-        }
-
-        phorum_db_increment_viewcount($message_id, $inc_thread_id);
-    }
+    // View count increment has been decoupled to an asynchronous AJAX call.
 
     // format messages
     $messages = phorum_format_messages($messages);
@@ -770,7 +771,7 @@ if(!empty($data) && isset($data[$thread]) && isset($data[$message_id])) {
     // set up the data
 
     // this is the message that is the first in the thread
-    $PHORUM["DATA"]["TOPIC"] = $messages[$thread];
+   $PHORUM["DATA"]["TOPIC"] = $messages[$thread];
     if($page>1){
         unset($messages[$thread]);
     }
@@ -860,7 +861,14 @@ if(!empty($data) && isset($data[$thread]) && isset($data[$message_id])) {
         }
     }    
 
-    phorum_output($templates);
+
+phorum_output($templates);
+
+    // Asynchronous view count
+    if($PHORUM['count_views'] && (!isset($PHORUM['status']) || $PHORUM["status"]!=PHORUM_MASTER_STATUS_READ_ONLY)) {
+        $inc_thread_id = !empty($PHORUM['count_views_per_thread']) ? $thread : 0;
+        echo '<img src="ajax_viewcount.php?message_id=' . $message_id . '&amp;thread_id=' . $inc_thread_id . '" style="display:none;" width="1" height="1" alt="" />';
+    }
 
 
 } elseif($toforum=phorum_check_moved_message($thread)) { // is it a moved thread?
