@@ -72,6 +72,7 @@ display: inline;
 {! code, template javascript code (templates/.../javascript.tpl) and }
 {! modules that add their code using the "javascript_register" module hook. }
 <script type="text/javascript" src="{URL->JAVASCRIPT}"></script>
+<script type="text/javascript" src="/js/theme-switcher.js"></script>
 
 {! Add links to the available RSS feeds. }
 {IF FEEDS}

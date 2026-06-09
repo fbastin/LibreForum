@@ -18,7 +18,7 @@ function mod_user_avatar_common()
 // Add avatar images to messages that are being read.
 function mod_user_avatar_read($messages)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     // If the user doesn't want to show avatars, we are done.
     if (mod_user_avatar_current_user_has_permission('disable') &&

@@ -778,7 +778,6 @@ function phorum_read_file($file)
  */
 function phorum_write_file($file, $data)
 {
-    file_put_contents("/var/www/tireur.org/forum/cache/tpl_log.txt", "Writing template: $file\n", FILE_APPEND);
     // Write the data to the file.
     if (! $fp = fopen($file, "w")) trigger_error(
         "phorum_write_file: failed to write to file " .
@@ -798,7 +797,7 @@ function phorum_write_file($file, $data)
     // the file it just had written :-/
     if (! $fp = fopen($file, "r")) trigger_error(
         "Failed to write a usable compiled template to the file " .
-        "\"" . htmlspecialchars($outfile) . "\". The file was created " .
+        "\"" . htmlspecialchars($file) . "\". The file was created " .
         "successfully, but it could not be read by the webserver " .
         "afterwards. This is probably caused by the filepermissions " .
         "on your cache directory.",

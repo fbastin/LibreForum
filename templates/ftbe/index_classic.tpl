@@ -54,13 +54,11 @@
 
                 <td width="55%">
 
-                    <span class="h3"><a href="{FORUMS->URL->LIST}">{FORUMS->name}</a>{IF FORUMS->new_message_check}&nbsp;&nbsp;<span class="new-indicator">({LANG->NewMessages})</span>{/IF}</span class="h3">
+                    <span class="h3">{IF FORUMS->URL->FEED}<a href="{FORUMS->URL->FEED}" title="{FEED}" style="margin-right: 5px; color: var(--color-accent); text-decoration: none;"><i class="li-rss"></i></a>{/IF}<a href="{FORUMS->URL->LIST}">{FORUMS->name}</a>{IF FORUMS->new_message_check}&nbsp;&nbsp;<span class="new-indicator">({LANG->NewMessages})</span>{/IF}</span class="h3">
 
                     <p>{FORUMS->description}</p>
 
-                    {IF FORUMS->URL->MARK_READ}<a class="icon" href="{FORUMS->URL->MARK_READ}"><i class="li-tag"></i> {LANG->MarkForumRead}</a>&nbsp;&nbsp;&nbsp;{/IF}
-
-                    {IF FORUMS->URL->FEED}<a class="icon" href="{FORUMS->URL->FEED}"><i class="li-rss"></i> {FEED}</a>{/IF}
+                    {IF FORUMS->URL->MARK_READ}<a class="icon" href="{FORUMS->URL->MARK_READ}"><i class="li-tag"></i> {LANG->MarkForumRead}</a>{/IF}
 
                 </td>
 

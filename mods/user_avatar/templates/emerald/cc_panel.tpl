@@ -17,7 +17,7 @@
 
   </form>
 
-  <br/>
+  <br />
 {/IF}
 
 <form action="{URL->ACTION}" method="post">
@@ -45,9 +45,9 @@
           <td style="vertical-align:middle" width="5%"><input type="checkbox" name="delete[]" value="{FILES->file_id}" /></td>
           <td style="vertical-align:middle"><input type="radio" name="avatar" value="{FILES->file_id}"{IF FILES->selected} checked="checked"{/IF} /></td>
           <td style="vertical-align:middle">
-              <a href="{FILES->url}">{FILES->filename}</a><br/>
+              <a href="{FILES->url}">{FILES->filename}</a><br />
               {FILES->filesize}
-              {IF FILES->dimensions}({FILES->dimensions}){/IF}<br/>
+              {IF FILES->dimensions}({FILES->dimensions}){/IF}<br />
           </td>
           <td style="text-align:right; vertical-align:middle">
             <img src="{FILES->url}" />

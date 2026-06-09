@@ -1,0 +1,4 @@
+cache/
+files/
+include/db/config.php
+*.bak-*

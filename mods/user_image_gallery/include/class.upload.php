@@ -1869,7 +1869,7 @@ class upload {
         $this->no_script                = true;     // turns scripts into test files
 
         $val = trim(ini_get('upload_max_filesize'));
-        $last = strtolower($val{strlen($val)-1});
+        $last = strtolower($val[strlen($val)-1]);
         switch($last) {
             case 'g':
                 $val *= 1024;

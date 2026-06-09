@@ -229,14 +229,14 @@ function store_files_on_disk_build_filepath($file)
     // We switched to gmstrftime() to get rid of this dependency, because
     // changing the server timezone resulted in changed (thus broken)
     // file paths.
-    $date_part = strftime('%Y/%m%d/%H', $file['add_datetime']);  
+    $date_part = date('Y/md/H', $file['add_datetime']);
     $oldpaths[] = $basedir . DIRECTORY_SEPARATOR .
                   $date_part . DIRECTORY_SEPARATOR .
                   $file['file_id'];
 
     // New path format:
     // GMT based, YYYY/MMDD/HH/<file_id>
-    $date_part = gmstrftime('%Y/%m%d/%H', $file['add_datetime']);  
+    $date_part = gmdate('Y/md/H', $file['add_datetime']);
     $newpath = $basedir . DIRECTORY_SEPARATOR .
                $date_part . DIRECTORY_SEPARATOR .
                $file['file_id'];

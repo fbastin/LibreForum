@@ -31,7 +31,7 @@ if (isset($PHORUM["args"]["phorum_redirect_to"])) {
 
     // SEC-01: Validation for Open Redirect
     if (preg_match("!^(?:https?:)?(?://|\\\\\\\\)!i", $redir)) {
-        if (strpos($redir, $PHORUM['http_path']) !== 0) {
+        if (strpos($redir, $PHORUM['http_path'] . '/') !== 0 && $redir !== $PHORUM['http_path']) {
             $redir = phorum_get_url(PHORUM_INDEX_URL);
         }
     }

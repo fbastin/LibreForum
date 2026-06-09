@@ -74,7 +74,7 @@ function phorum_mod_check_module_upgrades_admin_pre($sent_module) {
                         $verstart = strpos($fullfile, "[[BR]]Version: ", $verstart) + 15;
                         $verstop = strpos(substr($fullfile,$verstart,60)," [[BR]]");
                         $online_version = substr($fullfile,$verstart,$verstop);
-                        if ($fields["version"] != $online_version) {
+                        if (version_compare($fields["version"], $online_version, '<')) {
                             $cmu_flag = true;
                             $url_start = (empty($fields["url"])) ? "" :  "<b style=\"color:#DD0000;\">";
                             $url_end = (empty($fields["url"])) ? "" :  "</b>";
@@ -167,7 +167,7 @@ function phorum_mod_check_module_upgrades_before_footer() {
 					$verstart = strpos($fullfile, "[[BR]]Version: ", $verstart) + 15;
 					$verstop = strpos(substr($fullfile,$verstart,60)," [[BR]]");
 					$online_version = substr($fullfile,$verstart,$verstop);
-					if ($fields["version"] != $online_version) {
+						if (version_compare($fields["version"], $online_version, '<')) {
 						$upgraded_mods .= (empty($upgraded_mods)) ? $fields["title"] : ", ".str_replace(" ","&nbsp;",$fields["title"]);
 					}
 				}

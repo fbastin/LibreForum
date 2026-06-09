@@ -1,5 +1,5 @@
 <!-- BEGIN TEMPLATE read_threads.tpl -->
-<div class="nav">
+<div class="nav" style="display:flow-root">
     <div class="nav-right">
         <a class="icon" href="{MESSAGE->URL->PREV}"><i class="li-arrow-left"></i> {LANG->PreviousMessage}</a>
         <a class="icon" href="{MESSAGE->URL->NEXT}"><i class="li-arrow-right"></i> {LANG->NextMessage}</a>
@@ -7,7 +7,10 @@
     {IF URL->INDEX}<a class="icon" href="{URL->INDEX}"><i class="li-folder"></i> {LANG->ForumList}</a>{/IF}
     <a class="icon" href="{URL->LIST}"><i class="li-clock"></i> {LANG->MessageList}</a>
     <a class="icon" href="{URL->POST}"><i class="li-msg-add"></i> {LANG->NewTopic}</a>
-    <a class="icon" href="{URL->PRINTVIEW}" target="_blank"><i class="li-printer"></i> {LANG->PrintView}</a>
+    <span class="print-button-container" style="float:right;display:inline-flex;margin:0">
+        <a class="btn-print" href="{URL->PRINTVIEW}" target="_blank"><i class="li-file-text"></i> Exporter en PDF</a>
+        <button type="button" class="btn-print" onclick="window.print()"><i class="li-printer"></i> Imprimer</button>
+    </span>
 </div>
 
 <div class="message">

@@ -1,11 +1,14 @@
 <!-- BEGIN TEMPLATE read_hybrid.tpl -->
-<div class="nav">
+<div class="nav" style="display:flow-root">
     {INCLUDE "paging"}
     <!-- CONTINUE TEMPLATE read_hybrid.tpl -->
     {IF URL->INDEX}<a class="icon" href="{URL->INDEX}"><i class="li-folder"></i> {LANG->ForumList}</a>{/IF}
     {IF FORUM_ID}<a class="icon" href="{URL->LIST}"><i class="li-clock"></i> {LANG->MessageList}</a>{/IF}
     {IF FORUM_ID}<a class="icon" href="{URL->POST}"><i class="li-msg-add"></i> {LANG->NewTopic}</a>{/IF}
-    <a class="icon" href="{URL->PRINTVIEW}" target="_blank"><i class="li-printer"></i> {LANG->PrintView}</a>
+    <span class="print-button-container" style="float:right;display:inline-flex;margin:0">
+        <a class="btn-print" href="{URL->PRINTVIEW}" target="_blank"><i class="li-file-text"></i> Exporter en PDF</a>
+        <button type="button" class="btn-print" onclick="window.print()"><i class="li-printer"></i> Imprimer</button>
+    </span>
 </div>
 
 {LOOP MESSAGES}
@@ -123,7 +126,7 @@
 </div>
 
 <div id="thread-options" class="nav">
-    <a class="icon" href="{URL->PRINTVIEW}" target="_blank"><i class="li-printer"></i> {LANG->PrintView}</a>
+    <a class="icon" href="{URL->PRINTVIEW}" target="_blank"><i class="li-file-text"></i> Exporter en PDF</a>
     {IF URL->MARKTHREADREAD}
         <a class="icon" href="{URL->MARKTHREADREAD}"><i class="li-tag"></i> {LANG->MarkThreadRead}</a>
     {/IF}
