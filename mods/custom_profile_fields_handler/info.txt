@@ -3,4 +3,5 @@ desc: Gère les spécificités des champs personnalisés (ex: cases à cocher po
 version: 1.0.0
 author: Gemini CLI
 
+hook: common|phorum_mod_custom_profile_fields_handler_common
 hook: cc_save_user|phorum_mod_custom_profile_fields_handler_save
