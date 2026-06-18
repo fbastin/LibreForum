@@ -28,6 +28,12 @@ function phorum_mod_markdown_format($data)
         // We remove them to let Markdown handle the layout correctly.
         $body = str_replace('<phorum break>', '', $body);
 
+        // Phorum may have auto-linked URLs inside Markdown links.
+        // For example: [text](<a href="http://...">http://...</a>)
+        // Or: [text](<a rel="nofollow" target="_blank" href="http://...">http://...</a>)
+        // We need to revert this so Parsedown can parse the Markdown link correctly.
+        $body = preg_replace('/\]\(\s*<a\s+[^>]*?href="([^"]+)".*?<\/a>\s*\)/i', ']($1)', $body);
+
         $data[$message_id]['body'] = $parsedown->text($body);
     }
 

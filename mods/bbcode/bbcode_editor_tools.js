@@ -200,7 +200,7 @@ function editor_tools_handle_email()
 
 function editor_tools_handle_url()
 {
-    var url = 'http://';
+    var url = 'https://';
 
     for (;;)
     {
@@ -213,8 +213,9 @@ function editor_tools_handle_url()
         url = editor_tools_strip_whitespace(url);
 
         // Check the URL scheme (http, https, ftp and mailto are allowed).
-        copy = url.toLowerCase();
-        if (copy == 'http://' || (
+        url = url.replace(/^https?:\/\/(https?:\/\/|ftp:\/\/|mailto:)/i, '$1');
+        var copy = url.toLowerCase();
+        if (copy == 'http://' || copy == 'https://' || (
             copy.substring(0,7) != 'http://' &&
             copy.substring(0,8) != 'https://' &&
             copy.substring(0,6) != 'ftp://' &&
@@ -307,7 +308,7 @@ function editor_tools_handle_size_select(size)
 
 function editor_tools_handle_img()
 {
-    var url = 'http://';
+    var url = 'https://';
 
     for (;;)
     {
@@ -319,9 +320,11 @@ function editor_tools_handle_img()
         if (url == '' || url == null) return;
         url = editor_tools_strip_whitespace(url);
 
+        url = url.replace(/^https?:\/\/(https?:\/\/|ftp:\/\/)/i, '$1');
+
         // Check the URL scheme (http, https, ftp and mailto are allowed).
         var copy = url.toLowerCase();
-        if (copy == 'http://' || (
+        if (copy == 'http://' || copy == 'https://' || (
             copy.substring(0,7) != 'http://' &&
             copy.substring(0,8) != 'https://' &&
             copy.substring(0,6) != 'ftp://')) {
