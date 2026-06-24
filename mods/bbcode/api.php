@@ -1202,7 +1202,13 @@ function bbcode_img_handler($content, $args, $message)
         $args['img'] = $content;
     }
     if (!preg_match('!^\w+://!', $args['img'])) {
-        $args['img'] = 'http://'.$args['img'];
+        $args['img'] = 'https://'.$args['img'];
+    } elseif (preg_match('!^http://!i', $args['img'])) {
+        // Le forum est servi en HTTPS : une image en http:// est bloquée comme
+        // « contenu mixte » et s'affiche cassée. On force https:// (la plupart
+        // des hébergeurs le supportent ; ceux qui ne l'ont pas étaient de toute
+        // façon déjà bloqués sur une page HTTPS).
+        $args['img'] = preg_replace('!^http://!i', 'https://', $args['img']);
     }
 
     $append = '';
