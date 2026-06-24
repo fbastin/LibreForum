@@ -100,6 +100,15 @@ function mod_user_avatar_read($messages)
             $info = $author["mod_user_avatar"]["image_info"][$file_id];
             $w = $info['width'];
             $h = $info['height'];
+            // Plafonner à une vignette uniforme (max 90 px, ratio conservé) pour
+            // éviter que les avatars en taille d'origine (jusqu'à 200 px) ne
+            // déforment la colonne membre. Corrigé dans le HTML lui-même -> robuste
+            // quel que soit l'état du cache CSS du navigateur.
+            if ($w > 0 && $h > 0 && ($w > 90 || $h > 90)) {
+                $scale = 90 / max($w, $h);
+                $w = (int) round($w * $scale);
+                $h = (int) round($h * $scale);
+            }
             // mod_user_avatar = backward compatibilty.
             $messages[$messageid]["mod_user_avatar_w"] =
                 $messages[$messageid]["user_avatar_w"] = $w;
@@ -149,8 +158,15 @@ function mod_user_avatar_profile($profile, $from_post_user = FALSE)
     // Add the avatar image size to the template data, if available.
     if (!empty($profile['mod_user_avatar']["image_info"][$file_id])) {
         $info = $profile['mod_user_avatar']['image_info'][$file_id];
-        $profile["user_avatar_w"] = $info['width'];
-        $profile["user_avatar_h"] = $info['height'];
+        $pw = $info['width']; $ph = $info['height'];
+        // Vignette plafonnée à 90 px (ratio conservé), cf. boucle des messages.
+        if ($pw > 0 && $ph > 0 && ($pw > 90 || $ph > 90)) {
+            $scale = 90 / max($pw, $ph);
+            $pw = (int) round($pw * $scale);
+            $ph = (int) round($ph * $scale);
+        }
+        $profile["user_avatar_w"] = $pw;
+        $profile["user_avatar_h"] = $ph;
         // mod_user_avatar = backward compatibility
         if (!$from_post_user) {
             $profile['mod_user_avatar_w'] = $profile['user_avatar_w'];
