@@ -572,6 +572,17 @@ img {
     margin: 0 0 0 16px;
 }
 
+/* Avatars : vignette uniforme. Phorum code en ligne les dimensions d'origine
+   (jusqu'à 200 px), ce qui rendait la colonne membre incohérente. Ciblage par
+   alt="avatar" pour ne pas toucher aux pièces jointes servies par file.php. */
+#phorum img[alt="avatar"] {
+    width: auto !important;
+    height: auto !important;
+    max-width: 90px;
+    max-height: 90px;
+    border-radius: 4px;
+}
+
 #phorum div.message-subject {
     font-weight: bold;
     font-size: {font_small};
