@@ -70,7 +70,7 @@ display: inline;
 {ELSE}
   <link rel="stylesheet" type="text/css" href="{URL->CSS}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{URL->CSS_PRINT}" media="print" />
-  <link rel="stylesheet" type="text/css" href="/css/tireur.min.css?v=20260606d" media="all"/>
+  <link rel="stylesheet" type="text/css" href="/css/tireur.min.css?v=20260624c" media="all"/>
   <link rel="stylesheet" type="text/css" href="/css/lucide.css?v=1" media="all"/>
 {/IF}
 
