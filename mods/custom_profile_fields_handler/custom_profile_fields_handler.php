@@ -17,6 +17,7 @@ function phorum_mod_custom_profile_fields_handler_ensure_fields()
     if (function_exists('phorum_api_custom_profile_field_byname') &&
         !phorum_api_custom_profile_field_byname('real_name_privacy')) {
         phorum_api_custom_profile_field_configure(array(
+            'id'            => NULL,
             'name'          => 'real_name_privacy',
             'length'        => 1,
             'html_disabled' => TRUE,

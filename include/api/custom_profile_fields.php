@@ -214,7 +214,7 @@ function phorum_api_custom_profile_field_configure($field)
         $high = isset($PHORUM['PROFILE_FIELDS']['num_fields'])
               ? (int) $PHORUM['PROFILE_FIELDS']['num_fields'] : 0;
         foreach ($PHORUM['PROFILE_FIELDS'] as $checkid => $profile_field) {
-            if ($checkid > $high) $high = $checkid;    
+            if (is_numeric($checkid) && $checkid > $high) $high = (int)$checkid;    
         }
         
         // Use the next available value as our id.
