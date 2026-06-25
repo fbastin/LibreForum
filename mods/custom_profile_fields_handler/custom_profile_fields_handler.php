@@ -89,4 +89,30 @@ function phorum_mod_custom_profile_fields_handler_save($userdata)
 
     return $userdata;
 }
+
+/**
+ * Hook user_delete — anonymisation RGPD. Déclenché par phorum_api_user_delete()
+ * AVANT la suppression effective (l'utilisateur existe encore en base, donc on
+ * peut récupérer son pseudo et cibler ses messages par user_id). Purge l'IP des
+ * messages publics et anonymise les journaux DokuWiki (.changes).
+ */
+function phorum_mod_custom_profile_fields_handler_user_delete($user_id)
+{
+    // Une erreur d'anonymisation ne doit JAMAIS empêcher la suppression du compte.
+    try {
+        require_once dirname(__FILE__) . '/anonymize.php';
+        $username = '';
+        if (function_exists('phorum_api_user_get')) {
+            $u = phorum_api_user_get((int)$user_id);
+            if (!empty($u['username'])) $username = $u['username'];
+        }
+        if (function_exists('tireur_anonymize_user')) {
+            tireur_anonymize_user((int)$user_id, $username, false);
+        }
+    } catch (\Throwable $e) {
+        if (function_exists('tireur_anon_log')) tireur_anon_log('ERREUR hook user_delete #' . (int)$user_id . ' : ' . $e->getMessage());
+        error_log('anonymize user_delete #' . (int)$user_id . ' : ' . $e->getMessage());
+    }
+    return $user_id;   // un hook Phorum renvoie son argument
+}
 ?>

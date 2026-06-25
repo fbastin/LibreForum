@@ -5,3 +5,4 @@ author: Gemini CLI
 
 hook: common|phorum_mod_custom_profile_fields_handler_common
 hook: cc_save_user|phorum_mod_custom_profile_fields_handler_save
+hook: user_delete|phorum_mod_custom_profile_fields_handler_user_delete
