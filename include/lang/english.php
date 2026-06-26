@@ -188,6 +188,7 @@
         "FollowExplanation"     =>      "Followed topics are listed in your Control Center.",
         "FollowExplanationMail" =>      "You can select to receive an email when the topic is updated.",
         "FollowThread"          =>      "Follow Topic",
+        "UnfollowThread"        =>      "Unfollow Topic",
         "FollowWithEmail"       =>      "Email me when this topic is updated",
         "FollowWithEmailCC"     =>      "Follow Topic and email me on replies",
         "Forum"                 =>      "Forum",

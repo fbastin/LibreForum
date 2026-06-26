@@ -516,6 +516,21 @@ if(!empty($data) && isset($data[$thread]) && isset($data[$message_id])) {
         $URLS["reopen_url"] = str_replace(array('%action_id%','%message_id%'),array(PHORUM_REOPEN_THREAD,$thread),$moderation_url_template);
     }
 
+    // Check if the user is subscribed to this thread
+    $user_subscribed = FALSE;
+    $unfollow_url = '';
+    if ($PHORUM["DATA"]["LOGGEDIN"]) {
+        $sub_type = phorum_api_user_get_subscription(
+            $PHORUM["user"]["user_id"],
+            $PHORUM["forum_id"],
+            $thread
+        );
+        if ($sub_type !== NULL) {
+            $user_subscribed = TRUE;
+            $unfollow_url = phorum_get_url(PHORUM_FOLLOW_URL, $thread, 'stop=1');
+        }
+    }
+
     // main loop for template setup
     $messages=array();
     $read_messages=array(); // needed for newinfo
@@ -589,6 +604,8 @@ if(!empty($data) && isset($data[$thread]) && isset($data[$message_id])) {
         $row["URL"]["PM"] = false;
         if ($PHORUM["DATA"]["LOGGEDIN"]) {
             $row["URL"]["FOLLOW"] = str_replace('%thread_id%',$row['thread'],$follow_url_template);
+            $row["URL"]["UNFOLLOW"] = $unfollow_url;
+            $row["subscribed"] = $user_subscribed;
             // can only send private replies if the author is a registered user
             if ($PHORUM["enable_pm"] && $row["user_id"]) {
                 $row["URL"]["PM"] = str_replace('%message_id%',$row['message_id'],$pm_url_template);

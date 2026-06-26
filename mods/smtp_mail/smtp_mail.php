@@ -114,13 +114,14 @@ function phorum_smtp_send_messages ($data)
             	
             }
             
-            if(!empty($settings['bcc']) && $num_addresses > 3){
-            	$bcc = 1;
-            	$mail->AddAddress("undisclosed-recipients:;");
+            // Always use BCC if there are multiple recipients to avoid multiple slow SMTP calls.
+            if ($num_addresses > 1) {
+                $bcc = 1;
+                $mail->AddAddress($PHORUM['system_email_from_address'], $PHORUM['system_email_from_name']);
             } else {
-            	$bcc = 0;
-            	// lets keep the connection alive - it could be multiple mails
-            	$mail->SMTPKeepAlive = true;
+                $bcc = 0;
+                // lets keep the connection alive - it could be multiple mails
+                $mail->SMTPKeepAlive = true;
             }
             
             foreach ($addresses as $address) {

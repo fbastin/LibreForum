@@ -1849,6 +1849,40 @@ function phorum_api_user_set_active_user($type, $user = NULL, $flags = 0)
             'last_active_forum' => $last_active_forum
         ));
 
+        // Auto-subscribe user to all threads they posted in if they were inactive
+        // (inactive means date_last_active was 3 months ago or more).
+        $three_months = 90 * 86400;
+        if (!empty($user['date_last_active']) && 
+            $user['date_last_active'] < time() - $three_months) {
+            
+            $uid = (int)$user['user_id'];
+            if ($uid > 0) {
+                // Find all threads where this user posted a message
+                $user_threads = phorum_db_interact(
+                    DB_RETURN_ROWS,
+                    "SELECT DISTINCT forum_id, thread FROM {$PHORUM['message_table']} WHERE user_id = $uid AND thread > 0"
+                );
+                
+                if (!empty($user_threads)) {
+                    $values = array();
+                    foreach ($user_threads as $t) {
+                        $fid = (int)$t[0];
+                        $tid = (int)$t[1];
+                        $values[] = "($uid, $fid, 0, $tid)";
+                    }
+                    
+                    // Insert/update in chunks of 500
+                    $chunks = array_chunk($values, 500);
+                    foreach ($chunks as $chunk) {
+                        $sql = "INSERT INTO {$PHORUM['subscribers_table']} (user_id, forum_id, sub_type, thread) " .
+                               "VALUES " . implode(', ', $chunk) . " " .
+                               "ON DUPLICATE KEY UPDATE sub_type = 0";
+                        phorum_db_interact(DB_RETURN_RES, $sql);
+                    }
+                }
+            }
+        }
+
         // Update the live user data.
         $PHORUM['user']['date_last_active']  = $date_last_active;
         $PHORUM['user']['last_active_forum'] = $last_active_forum;

@@ -131,7 +131,11 @@
         <a class="icon" href="{URL->MARKTHREADREAD}"><i class="li-tag"></i> {LANG->MarkThreadRead}</a>
     {/IF}
     {IF TOPIC->URL->FOLLOW}
-        <a class="icon" href="{TOPIC->URL->FOLLOW}"><i class="li-msg-add"></i> {LANG->FollowThread}</a>
+        {IF TOPIC->subscribed}
+            <a class="icon" href="{TOPIC->URL->UNFOLLOW}"><i class="li-msg-delete"></i> {LANG->UnfollowThread}</a>
+        {ELSE}
+            <a class="icon" href="{TOPIC->URL->FOLLOW}"><i class="li-msg-add"></i> {LANG->FollowThread}</a>
+        {/IF}
     {/IF}
     {IF URL->FEED}
         <a class="icon" href="{URL->FEED}"><i class="li-rss"></i> {FEED}</a>

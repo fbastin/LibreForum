@@ -190,6 +190,7 @@
 				"FollowExplanation"   =>      "Les discussions suivies sont dans votre profil.<br/>Vous pouvez choisir de recevoir un courriel lorsque la discussion est mise à jour.",
 				"FollowExplanationMail"   =>      "Vous pouvez recevoir un courriel lorsque ce sujet est mis à jour.",
 				"FollowThread"   =>      "Suivre cette discussion",
+				"UnfollowThread"   =>      "Ne plus suivre cette discussion",
 				"FollowWithEmail"   =>      "Voulez vous recevoir un courriel lorsque cette discussion sera mise à jour ?",
 				"FollowWithEmailCC"   =>      "Suivre la discussion et m'envoyer un courriel s'il y a des réponses",
 				"Forum"   =>      "Forum",

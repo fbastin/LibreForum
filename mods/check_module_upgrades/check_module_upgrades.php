@@ -76,9 +76,9 @@ function phorum_mod_check_module_upgrades_admin_pre($sent_module) {
                         $online_version = substr($fullfile,$verstart,$verstop);
                         if (version_compare($fields["version"], $online_version, '<')) {
                             $cmu_flag = true;
-                            $url_start = (empty($fields["url"])) ? "" :  "<b style=\"color:#DD0000;\">";
-                            $url_end = (empty($fields["url"])) ? "" :  "</b>";
-                            $orig_str = $fields["title"]." (version ".$fields["version"].")";
+                            $url_start = "<span style=\"padding: 2px 6px; background-color: #fef2f2; border: 1px solid #fee2e2; border-radius: 4px; color: #c0392b; font-size: 11px; font-weight: 500; margin-left: 6px;\">";
+                            $url_end = "</span>";
+                            $orig_str = '<span class="mod-title">'.$fields["title"]."</span> (version ".$fields["version"].")";
                             $replace_str = $orig_str." - ".$url_start."Upgrade Available ($online_version)".$url_end;
                             $output = str_replace($orig_str, $replace_str, $output);
                         }
@@ -89,7 +89,7 @@ function phorum_mod_check_module_upgrades_admin_pre($sent_module) {
 		}
 		if ($cmu_flag) {
 			$orig_str = "<td valign=\"top\" width=\"100%\">";
-			$replace_str = $orig_str."<div style=\"background-color: #FFEEEE; font-weight: bold; border: solid 2px #DD0000; padding: 5px; text-align: center; width: 450px; align: center;\">One or more modules below has a newer version available.</div>";
+			$replace_str = $orig_str."<div style=\"background-color: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; padding: 12px; border-radius: 6px; margin-bottom: 12px; font-weight: 500; width: 450px; text-align: center;\">Une ou plusieurs extensions ci-dessous ont une version plus récente disponible.</div>";
 			$output = str_replace($orig_str, $replace_str, $output);
 		}
 	} else {

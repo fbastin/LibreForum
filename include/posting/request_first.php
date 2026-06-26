@@ -107,18 +107,15 @@ if (($mode == "post" || $mode == "reply" || $mode == "quote") && $PHORUM["DATA"]
         $message["show_signature"] = 1;
     }
 
-    $message['subscription'] = "";
-    if (isset($PHORUM["user"]["email_notify"]) &&
-        $PHORUM["user"]["email_notify"] > 0) {
-
-        if($PHORUM["user"]["email_notify"] == 2) {
+    // Default to "message" (follow thread with email notifications) to ensure users follow
+    // discussions they participate in by default.
+    $message['subscription'] = "message";
+    if (isset($PHORUM["user"]["email_notify"])) {
+        if($PHORUM["user"]["email_notify"] == 2 || $PHORUM["user"]["email_notify"] == 1) {
             $message["subscription"] = "message";
-        } elseif($PHORUM["user"]["email_notify"] == 1) {
-            $message["subscription"] = "bookmark";
-        } else {
+        } elseif($PHORUM["user"]["email_notify"] == 0) {
             $message["subscription"] = "";
         }
-
     }
 }
 
@@ -132,12 +129,14 @@ if (($mode == "reply"  || $mode == "quote") && $PHORUM["DATA"]["LOGGEDIN"])
 
     switch ($type) {
         case NULL:
-            if($PHORUM["user"]["email_notify"] == 2) {
-                $message["subscription"] = "message";
-            } elseif($PHORUM["user"]["email_notify"] == 1) {
-                $message["subscription"] = "bookmark";
-            } else {
-                $message["subscription"] = "";
+            // Default to "message" (follow thread with email notifications)
+            $message["subscription"] = "message";
+            if (isset($PHORUM["user"]["email_notify"])) {
+                if($PHORUM["user"]["email_notify"] == 2 || $PHORUM["user"]["email_notify"] == 1) {
+                    $message["subscription"] = "message";
+                } elseif($PHORUM["user"]["email_notify"] == 0) {
+                    $message["subscription"] = "";
+                }
             }
             break;
         case PHORUM_SUBSCRIPTION_BOOKMARK:

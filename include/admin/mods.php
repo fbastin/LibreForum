@@ -91,7 +91,7 @@ foreach ($list['modules'] as $name => $info)
         $settings_link="";
     }
 
-    $text = $info["title"];
+    $text = '<span class="mod-title">' . $info["title"] . '</span>';
     if(isset($info["version"])){
         $text.=" (version ".$info["version"].")";
     }

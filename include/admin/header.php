@@ -169,8 +169,8 @@ function hide_help()
     $updates = phorum_api_modules_check_updated_info();
     if (!empty($updates)) {
         phorum_api_modules_save();
-        print "<div style=\"padding:5px;background-color:#fffff0;".
-              "border:2px solid orange; text-align:left\">" .
+        print "<div style=\"padding:6px 12px;background-color:#fff9e6;".
+              "border:1px solid #ffe8cc;border-radius:4px;color:#b9770e;text-align:left;font-size:13px;\">" .
               "<strong>Notification:</strong> " .
               "Updated module info for module".(count($updates)==1?"":"s") .
               (count($updates)>10 ? "" : ":" . implode(", ", $updates)) .

@@ -22,8 +22,38 @@
     include_once("./include/api/base.php");
     include_once("./include/api/user.php");
 
+    global $PHORUM;
+
+    // Check if the user has a valid front-end admin session
+    $has_front_admin = false;
+    $res_user = phorum_api_user_session_restore(PHORUM_FORUM_SESSION);
+    if (isset($PHORUM["user"]) && $PHORUM["user"]["admin"]) {
+        $has_front_admin = true;
+    }
+
+    // Check referrer
+    $referer = $_SERVER['HTTP_REFERER'] ?? '';
+    $from_admin_tools = (strpos($referer, 'admin-tools.php') !== false);
+
     phorum_api_user_session_destroy(PHORUM_ADMIN_SESSION);
-    $redir_url = phorum_admin_build_url('base', TRUE);
+    
+    // Set a cookie to indicate the admin has explicitly logged out, preventing auto-SSO.
+    setcookie(
+        'phorum_admin_logged_out',
+        '1',
+        time() + 3600,
+        $PHORUM['session_path'] ?? '/',
+        $PHORUM['session_domain'] ?? '',
+        FALSE,
+        TRUE
+    );
+    
+    if ($has_front_admin || $from_admin_tools) {
+        $redir_url = '/admin-tools.php';
+    } else {
+        $redir_url = '/';
+    }
+
     phorum_redirect_by_url($redir_url);
     exit();
 

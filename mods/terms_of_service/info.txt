@@ -5,7 +5,7 @@ url: http://www.phorum.org/phorum5/read.php?62,129366
 category: posting
 priority: run module before spamhurdles
 required_version: 5.2.0
-version: 2.4.3
+version: 2.4.4
 
 hook: after_header|mod_tos_after_header
 hook: before_register|mod_tos_before_register

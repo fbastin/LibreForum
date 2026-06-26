@@ -63,7 +63,62 @@
     } else {
 
         // Try to restore an admin session.
-        phorum_api_user_session_restore(PHORUM_ADMIN_SESSION);
+        $res_admin = phorum_api_user_session_restore(PHORUM_ADMIN_SESSION);
+
+        // If the sso param is set, or if we successfully restored the admin session, clear the logged_out cookie.
+        if (isset($_GET['sso']) || $res_admin) {
+            if (isset($_COOKIE['phorum_admin_logged_out'])) {
+                setcookie(
+                    'phorum_admin_logged_out',
+                    '',
+                    time() - 86400,
+                    $PHORUM['session_path'] ?? '/',
+                    $PHORUM['session_domain'] ?? '',
+                    FALSE,
+                    TRUE
+                );
+                unset($_COOKIE['phorum_admin_logged_out']);
+            }
+        }
+
+        // If no admin session exists, but a user session exists and the user is an admin,
+        // we can automatically establish the admin session!
+        if(!isset($PHORUM["user"]) || !$PHORUM["user"]["admin"]){
+            if (empty($_COOKIE['phorum_admin_logged_out']) || isset($_GET['sso'])) {
+                $res_user = phorum_api_user_session_restore(PHORUM_FORUM_SESSION);
+            if(isset($PHORUM["user"]) && $PHORUM["user"]["admin"]){
+                if(phorum_api_user_set_active_user(PHORUM_ADMIN_SESSION, $PHORUM["user"]["user_id"]) &&
+                   phorum_api_user_session_create(PHORUM_ADMIN_SESSION)){
+                    
+                    // Generate a fresh admin token
+                    $PHORUM["user"]['settings_data']['admin_token_time'] = time();
+                    $sig_data = $PHORUM["user"]['user_id'].time().$PHORUM["user"]['username'];
+                    $PHORUM["user"]['settings_data']['admin_token'] = phorum_generate_data_signature($sig_data);
+                    $PHORUM['admin_token'] = $PHORUM["user"]['settings_data']['admin_token'];
+                    
+                    $tmp_user = array(
+                        'user_id'=>$PHORUM["user"]['user_id'],
+                        'settings_data'=>$PHORUM["user"]['settings_data']
+                    );
+                    phorum_api_user_save($tmp_user);
+
+                    // Sync the IP lock in admin_security_suite module if enabled to prevent session theft false positives
+                    if (isset($PHORUM["phorum_mod_admin_security_suite"])) {
+                        $mod_cfg = $PHORUM["phorum_mod_admin_security_suite"];
+                        if (isset($mod_cfg["enable_admin_IP_session_lock"]) && $mod_cfg["enable_admin_IP_session_lock"] == "1") {
+                            $mod_cfg["admin_IP_session_locks"][$PHORUM["user"]["user_id"]] = $_SERVER["REMOTE_ADDR"];
+                            $PHORUM["phorum_mod_admin_security_suite"] = $mod_cfg;
+                            phorum_db_update_settings(array("phorum_mod_admin_security_suite" => $mod_cfg));
+                        }
+                    }
+                    
+                    // Redirect to the admin panel with the newly generated token!
+                    phorum_redirect_by_url(phorum_admin_build_url('', TRUE));
+                    exit();
+                }
+            }
+            }
+        }
 
         if(!isset($GLOBALS["PHORUM"]["user"]) || !$GLOBALS["PHORUM"]["user"]["admin"]){
             // if not an admin
