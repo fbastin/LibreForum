@@ -61,7 +61,7 @@ if (!function_exists('random_bytes')) {
 // ----------------------------------------------------------------------
 
 // the OpenPhorum version
-define( "PHORUM", "6.0.1" );
+define( "PHORUM", "6.0.2" );
 
 // our database schema version in format of year-month-day-serial
 define( "PHORUM_SCHEMA_VERSION", "2010101500" );
