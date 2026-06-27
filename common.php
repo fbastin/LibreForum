@@ -67,7 +67,7 @@ define( "PHORUM", "6.0.1" );
 define( "PHORUM_SCHEMA_VERSION", "2010101500" );
 
 // our database patch level in format of year-month-day-serial
-define( "PHORUM_SCHEMA_PATCHLEVEL", "2008091900" );
+define( "PHORUM_SCHEMA_PATCHLEVEL", "2026062600" );
 
 /*
 // Send headers to prevent caching of dynamic OpenPhorum pages.
