@@ -617,6 +617,20 @@ img {
     clear: both;
 }
 
+#phorum div.user-signature {
+    margin-top: 15px;
+    padding-top: 8px;
+    border-top: 1px dashed {border_color};
+    font-size: {font_small};
+    color: #6a737d;
+    font-style: italic;
+    clear: both;
+}
+
+#phorum div.user-signature p {
+    margin: 4px 0 !important;
+}
+
 #phorum div.message-date {
     font-size: {font_small};
 }
