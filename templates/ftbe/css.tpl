@@ -135,7 +135,7 @@ img {
 }
 
 #phorum table.forumlist td p {
-    margin: 4px 8px 16px 4px;
+    margin: 4px 8px 6px 4px;
 }
 
 #phorum table.forumlist td .h3 {
@@ -220,7 +220,7 @@ img {
 }
 
 #phorum table.list td p {
-    margin: 4px 8px 16px 4px;
+    margin: 4px 8px 6px 4px;
 }
 
 #phorum table.list td .h3 {

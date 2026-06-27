@@ -26,12 +26,12 @@
                 {IF FORUMS->folder_flag}
                     <td colspan="4">
                         <i class="li-folder"></i>
-                        <a href="{FORUMS->URL->INDEX}">{FORUMS->name}</a><p>{FORUMS->description}</p>
+                        <a href="{FORUMS->URL->INDEX}">{FORUMS->name}</a>{IF FORUMS->description}<p>{FORUMS->description}</p>{/IF}
                     </td>
                 {ELSE}
                     <td width="55%">
-                        <b><span class="h3">{IF FORUMS->URL->FEED}<a href="{FORUMS->URL->FEED}" title="{FEED}" style="margin-right: 5px; color: var(--color-accent); text-decoration: none;"><i class="li-rss"></i></a>{/IF}<a href="{FORUMS->URL->LIST}">{FORUMS->name}</a></b>{IF FORUMS->new_message_check}&nbsp;&nbsp;<span class="new-indicator">({LANG->NewMessages})</span>{/IF}</span class="h3">
-                        <p>{FORUMS->description}</p>
+                        <span class="h3"><b>{IF FORUMS->URL->FEED}<a href="{FORUMS->URL->FEED}" title="{FEED}" style="margin-right: 5px; color: var(--color-accent); text-decoration: none;"><i class="li-rss"></i></a>{/IF}<a href="{FORUMS->URL->LIST}">{FORUMS->name}</a></b>{IF FORUMS->new_message_check}&nbsp;&nbsp;<span class="new-indicator">({LANG->NewMessages})</span>{/IF}</span>
+                        {IF FORUMS->description}<p>{FORUMS->description}</p>{/IF}
                         {IF FORUMS->URL->MARK_READ}<a class="icon" href="{FORUMS->URL->MARK_READ}"><i class="li-tag"></i> {LANG->MarkForumRead}</a>{/IF}
                     </td>
                     <td align="center" width="12%" nowrap="nowrap">
