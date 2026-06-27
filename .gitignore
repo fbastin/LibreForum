@@ -2,3 +2,4 @@ cache/
 files/
 include/db/config.php
 *.bak-*
+mods/admin_security_suite/tmp_captchas/
