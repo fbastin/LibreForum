@@ -1,6 +1,7 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-jscalendar@1.4.5/source/jsCalendar.min.css">
-<script src="https://cdn.jsdelivr.net/npm/simple-jscalendar@1.4.5/source/jsCalendar.min.js"></script>
-<link rel="stylesheet" href="/forum/mods/js_calendar/css/calendar.css?v=20260526c">
+<link rel="stylesheet" href="/forum/mods/js_calendar/css/jsCalendar.min.css?v=1">
+<script src="/forum/mods/js_calendar/js/jsCalendar.min.js?v=1"></script>
+<script src="/forum/mods/js_calendar/js/jsCalendar.lang.fr.js?v=1"></script>
+<link rel="stylesheet" href="/forum/mods/js_calendar/css/calendar.css?v=20260627">
 
 <div class="calendar-page-header">Calendrier des &eacute;v&eacute;nements</div>
 <div class="PhorumStdBlock calendar-page-main">
