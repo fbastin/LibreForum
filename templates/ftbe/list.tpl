@@ -84,7 +84,7 @@
                 <a href="{MESSAGES->URL->READ}" class="{newclass}" title="{title}">{MESSAGES->subject}</a>
                 {IF MESSAGES->meta->attachments}<i class="li-file-text" title="{LANG->Attachments}"></i> {/IF}
                 {IF MESSAGES->pages}&nbsp;<small>&nbsp;({LANG->Pages}:&nbsp;{MESSAGES->pages})</small>{/IF}
-            </span class="h4">
+            </span>
             {LANG->by} {IF MESSAGES->URL->PROFILE}<a href="{MESSAGES->URL->PROFILE}">{/IF}{MESSAGES->author}{IF MESSAGES->URL->PROFILE}</a>{/IF}
         </td>
 
