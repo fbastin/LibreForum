@@ -171,7 +171,7 @@ if(isset($PHORUM["args"]["author"])){
 }
 
 if(!isset($PHORUM["args"]["match_type"])) $PHORUM["args"]["match_type"]="ALL";
-if(!isset($PHORUM["args"]["match_dates"])) $PHORUM["args"]["match_dates"]="30";
+if(!isset($PHORUM["args"]["match_dates"])) $PHORUM["args"]["match_dates"]="0";
 if(!isset($PHORUM["args"]["match_forum"])) $PHORUM["args"]["match_forum"]="ALL";
 if(!isset($PHORUM["args"]["match_threads"])) $PHORUM["args"]["match_threads"]=FALSE;
 
