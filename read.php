@@ -206,6 +206,21 @@ if (!empty($PHORUM["threaded_read"]) && !empty($thread)) {
     }
 }
 
+// If the requested thread is actually a reply (parent_id is not empty),
+// automatically redirect to the correct thread URL to prevent "message not found" error.
+if (!empty($thread)) {
+    $thread_check = phorum_cache_get('message', $thread);
+    if (empty($thread_check)) {
+        $thread_check = phorum_db_get_message($thread, 'message_id');
+    }
+    if (!empty($thread_check) && !empty($thread_check['parent_id'])) {
+        $real_thread = empty($thread_check['thread']) ? $thread_check['parent_id'] : $thread_check['thread'];
+        $dest_url = phorum_get_url(PHORUM_READ_URL, $real_thread, $thread);
+        phorum_redirect_by_url($dest_url);
+        exit();
+    }
+}
+
 // determining the page if page isn't given and message_id != thread
 $page=0;
 if(!$PHORUM["threaded_read"]) {
