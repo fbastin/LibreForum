@@ -147,7 +147,8 @@ Some Icons courtesy of:
 <div id="wrapper">
 
 <header id="header">
-<?php include $_SERVER['DOCUMENT_ROOT'] . '/logo.php'; ?>
+    <a href="/index.php"><img src="/images/logo-site.webp" alt="Tireur.org" class="site-logo" /></a>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/nav_search.php'; ?>
 </header>
 
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/menu.php'; ?>
