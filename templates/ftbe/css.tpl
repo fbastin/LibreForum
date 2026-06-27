@@ -639,10 +639,25 @@ img {
     margin-top: 8px;
     font-size: {font_small};
     border-top: 0;
-    padding: 6px;
+    padding: 6px 12px;
     background-color: {alt_background_color};
     border: 1px solid {border_color};
-    line-height: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 12px;
+}
+
+#phorum div.message-moderation a.icon {
+    padding: 2px 0;
+    margin: 0;
+    background: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+#phorum div.message-moderation a.icon i {
+    margin-right: 4px;
 }
 
 #phorum div.message-options {
