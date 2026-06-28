@@ -1,7 +1,7 @@
 {IF ERROR}<div class="attention">{ERROR}</div>{/IF}
 {IF OKMSG}<div class="information">{OKMSG}</div>{/IF}
 
-<form id="post_form" name="post" action="{URL->ACTION}" method="post"
+<form id="post_form" name="post_form" action="{URL->ACTION}" method="post"
  enctype="multipart/form-data">
 {POST_VARS}
 
@@ -62,7 +62,7 @@
          {IF POLL->PERMISSION "anonymous"}selected="selected"{/IF}>
          {LANG->mod_topic_poll->PermissionAnonymous}
         </option>
-      </select><br/>
+      </select><br />
       <select name="topic_poll:novotenoread" style="margin-top: 0.5em">
         <option value="0">
          {LANG->mod_topic_poll->NoVoteReadAllow}
@@ -84,18 +84,18 @@
   </tr>
 
 </table>
-<br/>
+<br />
 
 </div>
 
 <div id="post-buttons">
   <input type="submit"
          name="topic_poll:back_to_message"
-         value="{LANG->mod_topic_poll->BackToMessage}"/>
+         value="{LANG->mod_topic_poll->BackToMessage}" />
   {IF POLL->CAN_DELETE}
   <input type="submit" value="{LANG->mod_topic_poll->DeletePoll}"
          name="topic_poll:delete"
-         onClick="return confirm('{LANG->AreYouSure}')"/>
+         onclick="return confirm('{LANG->AreYouSure}')" />
   {/IF}
 </div>
 

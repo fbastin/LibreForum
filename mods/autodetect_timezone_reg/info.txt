@@ -1,0 +1,7 @@
+title: Autodetect Timezone on Registration
+desc: Détecte automatiquement le fuseau horaire de l'utilisateur lors de l'inscription via JavaScript et l'assigne à son profil.
+version: 1.0.0
+author: Gemini CLI
+
+hook: tpl_register_form|phorum_mod_autodetect_timezone_reg_form
+hook: before_register|phorum_mod_autodetect_timezone_reg_save

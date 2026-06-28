@@ -2,7 +2,7 @@ title: Forum Subscriptions
 category: email
 author: Joe Curia   
 desc: This module allows users to subscribe to all forums or individual forums in order to receive emails when new messages are posted. It provides users with the option to receive emails for all new messages or only new threads.  It also allows users to choose to receive an email for each new message when it is posted, or (if the admin allows it) in a daily or weekly digest email which contains all of the messages from the previous day or week.
-version: 5.2.1.02
+version: 5.2.1.03
 
 hook: after_post|phorum_mod_forum_subscriptions_after_post
 hook: after_approve|phorum_mod_forum_subscriptions_after_approve

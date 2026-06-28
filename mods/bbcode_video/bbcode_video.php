@@ -14,6 +14,9 @@ function phorum_mod_bbcode_video_format($data)
     $search[] = "/\[video\]https?:\/\/(\w+\.)?youtube.com\/watch\?v=([\w_-]+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*'\(\),~%#]*\[\/video\]/is";
     $replace[] = "[video]youtube:$2[/video]";
 
+    $search[] = "/\[video\]https?:\/\/(\w+\.)?youtube.com\/shorts\/([\w_-]+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*'\(\),~%#]*\[\/video\]/is";
+    $replace[] = "[video]youtube:$2[/video]";
+
     $search[] = "/\[video\]https?:\/\/\w+\.?youtube.com\/v\/([\w_-]+)\[\/video\]/is";
     $replace[] = "[video]youtube:$1[/video]";
 
@@ -43,13 +46,22 @@ function phorum_mod_bbcode_video_format($data)
         $search[] = "/\[url\]https?:\/\/(\w+\.)?youtube.com\/watch\?v=([\w_-]+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*'\(\),~%#]*\[\/url\]/is";
         $replace[] = "[video]youtube:$2[/video]";
 
+        $search[] = "/\[url\]https?:\/\/(\w+\.)?youtube.com\/shorts\/([\w_-]+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*'\(\),~%#]*\[\/url\]/is";
+        $replace[] = "[video]youtube:$2[/video]";
+
         $search[] = "/\[url=https?:\/\/(\w+\.)?youtube.com\/watch\?v=([\w_-]+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*'\(\),~%#]*\](.+?)\[\/url\]/is";
+        $replace[] = "[video]youtube:$2[/video]<br/>$3";
+
+        $search[] = "/\[url=https?:\/\/(\w+\.)?youtube.com\/shorts\/([\w_-]+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*'\(\),~%#]*\](.+?)\[\/url\]/is";
         $replace[] = "[video]youtube:$2[/video]<br/>$3";
 
         $search[] = "/\[url=https?:\/\/youtu.be\/([\w_-]+)\[\/url\]/is";
         $replace[] = "[video]youtube:$1[/video]";
 
         $search[] = "/https?:\/\/(\w+\.)?youtube.com\/watch\?v=([\w_-]+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*'\(\),~%#]*/is";
+        $replace[] = "[video]youtube:$2[/video]";
+
+        $search[] = "/https?:\/\/(\w+\.)?youtube.com\/shorts\/([\w_-]+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*'\(\),~%#]*/is";
         $replace[] = "[video]youtube:$2[/video]";
 
         $search[] = "/https?:\/\/\w+\.?youtube.com\/v\/([\w_-]+)/is";
@@ -91,7 +103,7 @@ function phorum_mod_bbcode_video_format($data)
 
     // Final replacement for YouTube videos.
     $search[] = "/\[video\]youtube:([\w_-]+)\[\/video\]/is";
-    $replace[] = "<br/><embed src=\"https://www.youtube.com/v/$1\" type=\"application/x-shockwave-flash\" width=\"425\" height=\"350\"></embed><br/>";
+    $replace[] = '<br/><div class="video-container"><iframe src="https://www.youtube.com/embed/$1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><br/>';
 
     // Final replacement for Google videos.
     $search[] = "/\[video\]google:(video.google.[a-z]+):(-?\d+)\[\/video\]/is";

@@ -27,13 +27,13 @@
   <input type="hidden" name="forum_subscriptions_form" value="subscriptions" />
   <table cellspacing="0" class="list" style="width:100%">
     <tr>
-      <th align="left">
+      <th align="left" width="60%">
         {LANG->forum_subscriptions->ForumSubscriptions}
       </th>
-      <th align="left">
+      <th align="left" width="20%">
         {LANG->forum_subscriptions->SubscriptionType}
       </th>
-      <th align="left">
+      <th align="left" width="20%">
         {LANG->forum_subscriptions->Frequency}
       </th>
     </tr>

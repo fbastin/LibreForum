@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // This file ist part of the German Language Files Package
 // Get the complete package here:
@@ -8,6 +8,6 @@
 // Das komplette Paket gibt es hier:
 // http://www.phorum.org/phorum5/read.php?65,129717
 
-include(dirname(__FILE__).'/german.'.$PHORUM['DATA']['CHARSET'].'.php');
+include(str_replace('-informal-male', '', __FILE__));
 
 ?>

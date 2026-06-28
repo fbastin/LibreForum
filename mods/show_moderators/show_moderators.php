@@ -8,7 +8,7 @@ require_once('./mods/show_moderators/defaults.php');
 // displaying of moderators on the index page.
 function phorum_mod_show_moderators_index($data)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     // Determine the template file to use for automatic displaying.
     if (!empty($PHORUM['mod_show_moderators']['show_on_index'])) {
@@ -45,7 +45,7 @@ function phorum_mod_show_moderators_index($data)
 // Generate the template data for the list page.
 function phorum_mod_show_moderators_list($data)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
     $moderators = mod_show_moderators_get_list($PHORUM['forum_id']);
     $GLOBALS['PHORUM']['DATA']['MODERATORS'] = $moderators;
     $GLOBALS['PHORUM']['DATA']['MODERATOR_COUNT'] = count($moderators);
@@ -56,7 +56,7 @@ function phorum_mod_show_moderators_list($data)
 // Generate the template data for the read page.
 function phorum_mod_show_moderators_read($data)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
     $moderators = mod_show_moderators_get_list($PHORUM['forum_id']);
     $GLOBALS['PHORUM']['DATA']['MODERATORS'] = $moderators;
     $GLOBALS['PHORUM']['DATA']['MODERATOR_COUNT'] = count($moderators);
@@ -89,7 +89,7 @@ function phorum_mod_show_moderators_before_footer()
  */
 function mod_show_moderators_get_list($forum_id)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     $no_admins  = empty($PHORUM['mod_show_moderators']['include_admins']) ? 1:0;
     $cache_type = 'show_moderators';
@@ -110,7 +110,7 @@ function mod_show_moderators_get_list($forum_id)
             $users = phorum_api_user_get(array_keys($moderators));
             $moderators = array();
             foreach($users as $id => $user) {
-                $display_name = empty($PHORUM["custom_display_name"]) ? htmlspecialchars($user["display_name"], ENT_COMPAT, $PHORUM["DATA"]["HCHARSET"]) : $user["display_name"];
+                $display_name = empty($PHORUM["custom_display_name"]) ? htmlspecialchars($user["display_name"], ENT_QUOTES, $PHORUM["DATA"]["HCHARSET"]) : $user["display_name"];
                 $profile_url = phorum_get_url(PHORUM_PROFILE_URL, $id);
                 $moderators[$id] = array(
                     'DISPLAY_NAME' => $display_name,

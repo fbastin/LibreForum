@@ -1,4 +1,4 @@
-<form method="POST" action="{POLL->POST_URL}">
+<form method="post" action="{POLL->POST_URL}">
  {POST_VARS}
  <div align="center">
   <div id="topic_poll" align="left">
@@ -8,8 +8,8 @@
         {LANG->mod_topic_poll->Poll}
       </div>
       <div id="topic_poll_details">
-       {IF POLL->TOTAL_VOTES_STR}{POLL->TOTAL_VOTES_STR}<br/>{/IF}
-       {IF POLL->VOTING_ENDTIME}{POLL->VOTING_ENDTIME}<br/>{/IF}
+       {IF POLL->TOTAL_VOTES_STR}{POLL->TOTAL_VOTES_STR}<br />{/IF}
+       {IF POLL->VOTING_ENDTIME}{POLL->VOTING_ENDTIME}<br />{/IF}
        {IF POLL->PERMISSION_STR}{POLL->PERMISSION_STR}{/IF}
       </div>
     </div>
@@ -36,22 +36,22 @@
         {/LOOP POLL->ANSWERS}
       </table>
 
-      <br/>
+      <br />
       {IF POLL->PREVIEW}
        <input type="button" class="topic_poll_button"
         value="{LANG->mod_topic_poll->CastVote}"
-        onClick="alert('{LANG->mod_topic_poll->NoVotingInPreview}')"/>
+        onclick="alert('{LANG->mod_topic_poll->NoVotingInPreview}')" />
       {ELSE}
        <input type="submit" name="topic_poll:cast_vote"
         class="topic_poll_button"
-        value="{LANG->mod_topic_poll->CastVote}"/>
+        value="{LANG->mod_topic_poll->CastVote}" />
       {/IF}
 
       {IF NOT POLL->PREVIEW}
        {IF POLL->CAN_VIEWRESULTS}
         <input type="submit" name="topic_poll:view_results"
          class="topic_poll_button"
-         value="{LANG->mod_topic_poll->ViewResults}"/>
+         value="{LANG->mod_topic_poll->ViewResults}" />
        {/IF}
       {/IF}
 

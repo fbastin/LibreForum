@@ -48,6 +48,14 @@ if (!isset($GLOBALS["PHORUM"]["mod_bbcode"]["process_bare_email"])) {
     $GLOBALS["PHORUM"]["mod_bbcode"]["process_bare_email"] = 1;
 }
 
+if (!isset($GLOBALS["PHORUM"]["mod_bbcode"]["follow_urls"])) {
+    $GLOBALS["PHORUM"]["mod_bbcode"]["follow_urls"] = "";
+}
+
+if (!isset($GLOBALS["PHORUM"]["mod_bbcode"]["allow_disable_per_post"])) {
+    $GLOBALS["PHORUM"]["mod_bbcode"]["allow_disable_per_post"] = 0;
+}
+
 if (!isset($GLOBALS["PHORUM"]["mod_bbcode"]["enable_bbcode_escape"])) {
     $GLOBALS["PHORUM"]["mod_bbcode"]["enable_bbcode_escape"] = 0;
 }

@@ -79,7 +79,7 @@ function mod_embed_images_loadimage(
     {
         target.innerHTML =
             (target_url ? '<a href="'+target_url+'">' : '') +
-            '<img id="image_'+viewer_id+'" src="'+thumbnail_url+'"/>' +
+            '<img id="image_'+viewer_id+'" src="'+thumbnail_url+'" />' +
             (target_url ? '<\/a>' : '');
         return;
     }
@@ -122,7 +122,7 @@ function mod_embed_images_loadimage(
                     'id="image_'+viewer_id+'" ' +
                     'onload="' +
                     'mod_embed_images_image_loaded(this,'+w+','+h+')" ' +
-                    'src="'+thumbnail_url+'"/>' +
+                    'src="'+thumbnail_url+'" />' +
                     (target_url ? '<\/a>' : '');
 
                 container.innerHTML += html;
@@ -154,7 +154,7 @@ function mod_embed_images_loadimage(
             else container.innerHTML =
                 '<div class="mod_embed_images_error">' +
                 '<strong>Image error<\/strong><br\/>' +
-                res + '<br/>' +
+                res + '<br />' +
                 '<a href="' + fullimage_url + '">open image URL<\/a>' +
                 '<\/div>';
         }

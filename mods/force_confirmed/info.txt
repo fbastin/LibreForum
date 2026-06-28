@@ -1,0 +1,7 @@
+title: Force Confirmed Status
+desc: Force le statut CONFIRMED pour les utilisateurs inscrits depuis au moins 7 jours avec 5 messages.
+version: 1.0.0
+author: Gemini CLI
+
+hook: common_post_user|phorum_mod_force_confirmed_common
+priority: run hook common_post_user after *

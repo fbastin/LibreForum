@@ -1,6 +1,6 @@
 {! Prevent nested forms in the admin interface }
 {IF NOT POLL->ADMIN_PREVIEW}
-  <form method="POST" action="{POLL->POST_URL}">
+  <form method="post" action="{POLL->POST_URL}">
   {POST_VARS}
 {/IF}
 <div align="center">
@@ -52,13 +52,13 @@
       </table>
 
       {IF POLL->CAN_REVOKE}
-        <br/>
+        <br />
         <input type="submit" name="topic_poll:revoke_vote"
          class="topic_poll_button"
          value="{LANG->mod_topic_poll->RevokeVote}" />
       {ELSE}
         {IF POLL->CAN_VOTE}
-          <br/>
+          <br />
           <input type="submit"
            class="topic_poll_button"
            value="{LANG->mod_topic_poll->GotoVote}" />

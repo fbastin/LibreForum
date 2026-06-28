@@ -1,0 +1,7 @@
+title: Wiki Links
+desc: Affiche les articles Wiki pertinents en bas de la page, apres les messages (Maillage bidirectionnel).
+author: Gemini CLI
+version: 1.0.3
+category: read
+
+hook: before_footer|phorum_mod_wiki_links_before_footer

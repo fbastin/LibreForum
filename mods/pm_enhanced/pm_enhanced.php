@@ -45,7 +45,7 @@ function pm_enhanced_get_list($folder, $user_id = NULL, $reverse = TRUE)
 
     if(empty($PHORUM["mod_pm_enhanced"]["count"])){
         $PHORUM["mod_pm_enhanced"] = array(
-            "count" => 20
+            "count" => 50
         );
     }
 
@@ -213,7 +213,7 @@ function _pm_enhanced_create_like_string($fields, $search) {
                 $sub = $match[1];
             }
 
-            $sub = mysql_escape_string($sub);
+            $sub = addslashes($sub);
 
             foreach($fields as $field){
 

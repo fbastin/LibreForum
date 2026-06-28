@@ -63,7 +63,7 @@ function fancybox_get_css()
 
 function image_viewer_javascript_register($data)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     if (empty($PHORUM['mod_embed_images']['fancybox_noload'])) {
         $data[] = array(

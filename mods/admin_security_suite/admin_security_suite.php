@@ -372,7 +372,7 @@ function phorum_mod_admin_security_suite_admin_pre ($module) {
 			if(isset($_POST["username"]) && isset($_POST["password"])){
 	        	$user_id=phorum_api_user_authenticate(PHORUM_ADMIN_SESSION,$_POST["username"], $_POST["password"]);
 	        	if (intval($_POST["submitted_captcha"]) == $PHORUM["phorum_mod_admin_security_suite"]["admin_captcha_list"][$_SERVER["REMOTE_ADDR"]]["captcha_code"]
-				|| (isset($PHORUM["phorum_mod_admin_security_suite"]["enable_skip_first_admin_captcha"]) && $PHORUM["phorum_mod_admin_security_suite"]["enable_skip_first_admin_captcha"] = "1"
+				|| (isset($PHORUM["phorum_mod_admin_security_suite"]["enable_skip_first_admin_captcha"]) && $PHORUM["phorum_mod_admin_security_suite"]["enable_skip_first_admin_captcha"] == "1"
 					&& empty($PHORUM["phorum_mod_admin_security_suite"]["admin_lockout_log"][$_SERVER['REMOTE_ADDR']]["lockout_count"]))) {
 		           if ($user_id &&
 			            phorum_api_user_set_active_user(PHORUM_ADMIN_SESSION, $user_id) &&
@@ -412,23 +412,25 @@ function phorum_mod_admin_security_suite_admin_pre ($module) {
 			}	    
 		    }
 
-			$captcha_image = imagecreate(50,20);
-			$pale_green = imagecolorallocate($captcha_image, 50, 200, 50);
-			$dark_green = imagecolorallocate($captcha_image, 20,60,20);
 			srand((double)microtime()*1000000);  
-			$randnum = rand(0,2000);
-			for ($x=$randnum; $x<=(100+$randnum); $x++) {
-				srand($x);
-				$rand_color = imagecolorallocate($captcha_image, rand(1,255),rand(1,255),rand(1,255));
-				$rand_h = rand(0,45);
-				$rand_v = rand(0,15);
-				$rand_hh = $rand_h + rand(0,4);
-				$rand_vv = $rand_v + rand(0,4);
-				imageline ($captcha_image, $rand_h, $rand_v, $rand_hh, $rand_vv, $rand_color);
+			$randnum = rand(100,2000);
+			$captcha_img = "";
+
+			if (function_exists('imagecreate')) {
+				$captcha_image = imagecreate(120,40);
+				$bg_color = imagecolorallocate($captcha_image, 245, 245, 245);
+				$text_color = imagecolorallocate($captcha_image, 20, 60, 20);
+				for ($x=0; $x<15; $x++) {
+					$rand_color = imagecolorallocate($captcha_image, rand(180,230), rand(180,230), rand(180,230));
+					imageline ($captcha_image, rand(0,120), rand(0,40), rand(0,120), rand(0,40), $rand_color);
+				}
+				// Font 5 is 9px wide, 15px high. A 4-digit number is 36px wide.
+				// Centering: (120 - 36) / 2 = 42 for X. (40 - 15) / 2 = 12 for Y.
+				imagestring($captcha_image,5,42,12,$randnum,$text_color);
+				$captcha_img = time().".png";
+				imagepng($captcha_image,"./mods/admin_security_suite/tmp_captchas/".$captcha_img);
+				imagedestroy($captcha_image);
 			}
-			imagestring($captcha_image,5,6,3,$randnum,$dark_green);
-			$captcha_img = time().".png";
-			imagepng($captcha_image,"./mods/admin_security_suite/tmp_captchas/".$captcha_img);
 			$captcha_info["captcha_code"]=$randnum;
 			$captcha_info["captcha_img"]=$captcha_img;
 			$PHORUM["phorum_mod_admin_security_suite"]["admin_captcha_list"][$_SERVER["REMOTE_ADDR"]] = $captcha_info;
@@ -448,7 +450,11 @@ function phorum_mod_admin_security_suite_admin_pre ($module) {
 	
 		    $frm->addrow("Password", $frm->text_box("password", "", 30, 0, true));
 		    
-		    $frm->addrow("Enter this code: <img width='60' height='24' src='./mods/admin_security_suite/tmp_captchas/".$captcha_img."' />", $frm->text_box("submitted_captcha", "", 30));
+		    $captcha_display = !empty($captcha_img)
+				? "<img width='120' height='40' style='vertical-align: middle; border: 1px solid #ccc; border-radius: 4px;' src='./mods/admin_security_suite/tmp_captchas/".$captcha_img."' />"
+				: "<b style='font-size: 1.2em; letter-spacing: 2px;'>$randnum</b>";
+
+		    $frm->addrow("Enter this code: $captcha_display", $frm->text_box("submitted_captcha", "", 30));
 
 		
 

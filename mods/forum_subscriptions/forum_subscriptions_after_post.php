@@ -254,6 +254,22 @@ function phorum_mod_forum_subscriptions_functions_after_post($data = NULL, $queu
                     || $PHORUM["phorum_mod_forum_subscriptions"]["allow_user_unsubscribe_self"] != 1)
                 && ((!empty($mail_data["digest_id"]) && $mail_data["forum_id"] == $mail_data["vroot"])
                     || phorum_api_user_check_access(PHORUM_USER_ALLOW_READ, $mail_data["forum_id"], $user_id))) {
+
+                // single_notification enforcement for immediate thread replies
+                if (empty($mail_data["digest_id"]) && !empty($mail_data["thread_id"]) && !empty($PHORUM["mods"]["single_notification"])) {
+                    require_once("./mods/single_notification/db.php");
+                    if (mod_single_notification_db_init()) {
+                        $checks = mod_single_notification_db_check(array($user_info["email"]), $mail_data["forum_id"], $mail_data["thread_id"]);
+                        if (!empty($checks)) {
+                            if (!is_null($queue_data)) {
+                                unset($queue_data["recipient_ids"][$user_id]);
+                            }
+                            continue;
+                        } else {
+                            mod_single_notification_db_add(array($user_info["email"]), $mail_data["forum_id"], $mail_data["thread_id"]);
+                        }
+                    }
+                }
             
                 if ($debug_i == 1) {
                     if (function_exists('event_logging_writelog')) {

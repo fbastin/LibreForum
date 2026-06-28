@@ -487,9 +487,16 @@ function phorum_mod_forum_subscriptions_db_subscriptions_get_subscriber ($user_i
 
     // retrieve a subscriber (if any)
     $subscriber = phorum_db_interact($return_val, $sql);
-    
+
+    // When a forum_id is given, DB_RETURN_ASSOC returns a single row (or NULL).
+    // Normalize it to an array of rows so the loop below works and to avoid a
+    // PHP 8 fatal (count(null) / accessing a string offset on a scalar row).
+    if ($forum_id !== NULL) {
+        $subscriber = empty($subscriber) ? array() : array($subscriber);
+    }
+
     $forum_subscriptions = array();
-    
+
     if (count($subscriber)) {
         $forums = array();
         

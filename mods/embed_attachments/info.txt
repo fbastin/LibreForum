@@ -2,7 +2,7 @@ title: Embed Attachments
 desc: This module makes it possible to put links that point to the attachments for a message inline at any position in the message body. Other modules (like "Embed Images" and "Embed MP3") can be installed to replace these links by embedded attachment viewers.
 author: Maurice Makaay <maurice@phorum.org>
 url: http://www.phorum-support.de/
-version: 1.0.1
+version: 1.0.2
 require_version: 5.2.2
 category: embed_content
 

@@ -26,7 +26,7 @@
     {IF POLL->CAN_DELETE}
       <input type="submit" name="topic_poll:delete"
        style="font-size: 10px"
-       onClick="return confirm('{LANG->AreYouSure}')"
+       onclick="return confirm('{LANG->AreYouSure}')"
        value="{LANG->mod_topic_poll->DeletePoll}" />
     {/IF}
   </div>

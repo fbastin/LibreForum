@@ -1,5 +1,5 @@
 Module  : User Avatar
-Version : 3.0.4
+Version : 3.0.5
 Authors : Chris Eaton (tridus@hiredgoons.ca) (original author)
           CZVilda
           Thomas Seifert (*)
@@ -181,7 +181,7 @@ template variables that you can use and some some sample implementations.
             |_________________________________________________________|
 
               {IF PROFILE->user_avatar}
-                <img src="{PROFILE->user_avatar}" alt="" align="right"/>
+                <img src="{PROFILE->user_avatar}" alt="" align="right" />
               {/IF}
 
               <div class="icon-user">

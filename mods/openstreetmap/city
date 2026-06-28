@@ -1,0 +1,19 @@
+README:        {LANG->mod_openstreetmap->CCIntroduction}<br/>
+README:  {IF PROFILE->mod_openstreetmap->city}
+README:    {PROFILE->mod_openstreetmap->country},
+README:    {PROFILE->mod_openstreetmap->city}
+README:  {IF PROFILE->mod_openstreetmap->city}
+README:    <dt>{LANG->mod_openstreetmap->Location}:</dt>
+README:      {PROFILE->mod_openstreetmap->city},
+README:      {PROFILE->mod_openstreetmap->country}
+README:  {IF MESSAGES->user->mod_openstreetmap->city}
+README:    {MESSAGES->user->mod_openstreetmap->country},
+README:    {MESSAGES->user->mod_openstreetmap->city}
+README:  {VAR mod_openstreetmap->cc_width        '100%'}
+README:  {VAR mod_openstreetmap->cc_height       '300px'}
+README:  {VAR mod_openstreetmap->profile_width   '100%'}
+README:  {VAR mod_openstreetmap->profile_height  '300px'}
+README:  {VAR mod_openstreetmap->usermap_width   '100%'}
+README:  {VAR mod_openstreetmap->usermap_height  '500px'}
+settings.php:     This data will be available as {MESSAGE->user->mod_openstreetmap->city}
+settings.php:     and ->country on read pages and {PROFILE->mod_openstreetmap->city} on

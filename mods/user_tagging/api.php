@@ -216,8 +216,14 @@ function user_tagging_process_rule($rule, $user)
             break;
 
         case 'GLOBAL':
-            $count = empty($moddata['global'])
-                   ? 0 : $moddata['global'];
+            // Use the standard Phorum post count if available,
+            // otherwise fall back to the module's counter.
+            if (isset($user['posts'])) {
+                $count = (int)$user['posts'];
+            } else {
+                $count = empty($moddata['global'])
+                       ? 0 : $moddata['global'];
+            }
             break;
     }
 

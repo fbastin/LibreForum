@@ -10,15 +10,15 @@
             font-size: 70%;
             margin-bottom: 20px;
             background-color: #f5f5f5" id="mod_impersonate_user_div">
-      {MOD_IMPERSONATE_USER->NOTICE}<br/>
-      <img src="{MOD_IMPERSONATE_USER->URL->TEMPLATES}/key_go.png"/>
+      {MOD_IMPERSONATE_USER->NOTICE}<br />
+      <img src="{MOD_IMPERSONATE_USER->URL->TEMPLATES}/key_go.png" />
       <a href="{MOD_IMPERSONATE_USER->URL->SWITCHBACK}">
           {MOD_IMPERSONATE_USER->SWITCHBACK}
-      </a><br/>
-      <img src="{MOD_IMPERSONATE_USER->URL->TEMPLATES}/delete.png"/>
+      </a><br />
+      <img src="{MOD_IMPERSONATE_USER->URL->TEMPLATES}/delete.png" />
       <a href="javascript:mod_impersonate_user_drop_notice()">
           {LANG->mod_impersonate_user->DropNotice}
-      </a><br/>
+      </a><br />
 </div>
 
 <script type="text/javascript">

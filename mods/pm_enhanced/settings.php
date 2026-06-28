@@ -3,7 +3,7 @@
 
     if(empty($PHORUM["mod_pm_enhanced"]["count"])){
         $PHORUM["mod_pm_enhanced"] = array(
-            "count" => 20
+            "count" => 50
         );
     }
 

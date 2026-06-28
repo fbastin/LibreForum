@@ -35,7 +35,7 @@ $frm->addbreak('User avatar module settings');
 
 $frm->addmessage(
     "<strong>Note:</strong> Be sure to read the included
-     <a href=\"./mods/user_avatar/README\" target=\"_new\">README</a>
+     <a href=\"./mods/user_avatar/README\" target=\"_blank\">README</a>
      file for more information on the necessary template changes for this
      module. If you do not update the templates, then the avatars
      will not be visible.");
@@ -68,12 +68,12 @@ $choices = array(
     AVATAR_PERM_ADMIN     => 'Phorum administrators',
 );
 
-$frm->addrow('Who are allowed to use the avatar feature?', $frm->select_tag('permission_create', $choices, $PHORUM['mod_user_avatar']['permission_create'], 'id="moderator_perm" onchange="toggleModeratorPermission()"') . '<div id="moderator_perm_div" style="display:none">'.$frm->checkbox('moderator_only_in_mod_forums', 1, '', $PHORUM['mod_user_avatar']['moderator_only_in_mod_forums']) . 'Only show an avatar for moderators in<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the forums which they moderate</div>');
+$frm->addrow('Who are allowed to use the avatar feature?', $frm->select_tag('permission_create', $choices, $PHORUM['mod_user_avatar']['permission_create'], 'id="moderator_perm" onchange="toggleModeratorPermission()"') . '<div id="moderator_perm_div" style="display:none">'.$frm->checkbox('moderator_only_in_mod_forums', 1, '', $PHORUM['mod_user_avatar']['moderator_only_in_mod_forums']) . 'Only show an avatar for moderators in<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the forums which they moderate</div>');
 
 $choices[AVATAR_PERM_NOBODY] = 'Nobody';
 
 $row = $frm->addrow('Who can disable displaying of avatars?', $frm->select_tag('permission_disable', $choices, $PHORUM['mod_user_avatar']['permission_disable']));
-$frm->addhelp($row, 'Disable displaying of avatars', "The users that have permission to disable the displaying of avatars, get an extra option in their control center to do so. Using this option, they can hide avatars for themselves when reading the forums.<br/><br/>Normally, it's best to grant this permission to all registered users, so they can choose for themselves whether to show avatars or not.");
+$frm->addhelp($row, 'Disable displaying of avatars', "The users that have permission to disable the displaying of avatars, get an extra option in their control center to do so. Using this option, they can hide avatars for themselves when reading the forums.<br /><br />Normally, it's best to grant this permission to all registered users, so they can choose for themselves whether to show avatars or not.");
 
 $frm->addmessage('');
 $frm->show();

@@ -35,8 +35,8 @@ function phorum_mod_onlineusers_common_post_user()
     // Check and handle automatic installation and upgrading
     // of the database structure. Do not continue running the
     // module in case the installation fails.
-    if (! onlineusers_db_install()) return;    
-    
+    if (! onlineusers_db_install()) return;
+
     // No guest counting to do? Then we're done here.
     if (!empty($PHORUM["mod_onlineusers"]["disable_guests"])) return;
 
@@ -45,21 +45,21 @@ function phorum_mod_onlineusers_common_post_user()
         ? $_SERVER["HTTP_USER_AGENT"] : 'unknown';
     $ip = isset($_SERVER["REMOTE_ADDR"])
         ? $_SERVER["REMOTE_ADDR"] : '127.0.0.1';
-    
+
     // make it a raw binary hash for easier db access
-    // TODO: 
+    // TODO:
     // somehow I can't get it to store the binary string into the field
     // therefore changed it to varchar(50), before it was binary(25)
     // and store a hex key
     //$track_id = sha1("{$ip}-{$ua}",true);
     $track_id = sha1("{$ip}-{$ua}");
-    
+
     //print "Track_id: $track_id";
 
     // If we are handling an authenticated user, then see if we have to
     // delete a guest track record (in case the user just logged in).
     if ($PHORUM['user']['user_id']) {
-    	//print "DEBUG: is user";
+      //print "DEBUG: is user";
         if (onlineusers_db_search($track_id,'guest') !== NULL) {
             onlineusers_db_delete($track_id,'guest');
             phorum_cache_remove('onlineusers',$PHORUM['vroot']."-data");
@@ -74,10 +74,10 @@ function phorum_mod_onlineusers_common_post_user()
             strstr($ua, "Yahoo! Slurp") !== FALSE ||
             strstr($ua, "-unknown")     !== FALSE) return;
 
-        //print "DEBUG: is guest";    
+        //print "DEBUG: is guest";
         // Create a track record for the guest.
         onlineusers_db_insertreplace($track_id,'guest',time(),$PHORUM['forum_id'],0);
-        
+
     }
 
 }
@@ -97,7 +97,7 @@ function phorum_mod_onlineusers_before_footer($is_header = FALSE)
 
     // make sure that we've got the db-table installed
     if(empty($PHORUM["mod_onlineusers_installed"])) {
-    	return;    	
+      return;
     }
     // If we are not on one of the pages where the user list has to be
     // shown, then we are done here.
@@ -135,20 +135,20 @@ function phorum_mod_onlineusers_before_footer($is_header = FALSE)
             $do_update = false;
         }
     }
-    
+
     if ($do_update) {
         mod_onlineusers_update();
         if (!empty($PHORUM['mod_onlineusers']['cache_time'])) {
             phorum_cache_put(
-            	'onlineusers',
-            	$PHORUM['vroot']."-data",
+              'onlineusers',
+              $PHORUM['vroot']."-data",
                 $PHORUM['mod_onlineusers']['data'],
                 $PHORUM['mod_onlineusers']['cache_time']
             );
         }
     }
 
-    
+
     // Build the template data.
 
     include_once("./include/format_functions.php");
@@ -178,7 +178,7 @@ function phorum_mod_onlineusers_before_footer($is_header = FALSE)
             }
         }
 
-        $name = empty($PHORUM["custom_display_name"]) ? htmlspecialchars($user["display_name"], ENT_COMPAT, $PHORUM["DATA"]["HCHARSET"]) : $user["display_name"];
+        $name = empty($PHORUM["custom_display_name"]) ? htmlspecialchars($user["display_name"], ENT_QUOTES, $PHORUM["DATA"]["HCHARSET"]) : $user["display_name"];
 
         $admin = empty($PHORUM['mod_onlineusers']['indicate_admin_users'])
                ? 0 : $user['admin'];
@@ -353,26 +353,26 @@ function mod_onlineusers_update()
         // track_id = 1 -> guestcount
         // track_id = 2 -> usercount
         $records = onlineusers_db_get_entries('record_count');
-        
+
         if (!empty($data['guestcount'])) {
             if(!isset($records[1]) || $data['guestcount'] > $records[1]['last_active_forum']) {
-	            $data['record_guestcount'] = $data['guestcount'];
-	            $data['record_guestcount_date'] = time();
-	            onlineusers_db_insertreplace('1','record_count',$data['record_guestcount_date'],$data['record_guestcount'],0);
+              $data['record_guestcount'] = $data['guestcount'];
+              $data['record_guestcount_date'] = time();
+              onlineusers_db_insertreplace('1','record_count',$data['record_guestcount_date'],$data['record_guestcount'],0);
             } else {
                 $data['record_guestcount'] = $records[1]['last_active_forum'];
-                $data['record_guestcount_date'] = $records[1]['date_last_active'];               
+                $data['record_guestcount_date'] = $records[1]['date_last_active'];
             }
         }
 
         if (!empty($data['usercount'])) {
             if(!isset($records[2]) || $data['usercount'] > $records[2]['last_active_forum']) {
-	            $data['record_usercount'] = $data['usercount'];
-	            $data['record_usercount_date'] = time();
-	            onlineusers_db_insertreplace('2','record_count',$data['record_usercount_date'],$data['record_usercount'],0);
+              $data['record_usercount'] = $data['usercount'];
+              $data['record_usercount_date'] = time();
+              onlineusers_db_insertreplace('2','record_count',$data['record_usercount_date'],$data['record_usercount'],0);
             } else {
                 $data['record_usercount'] = $records[2]['last_active_forum'];
-                $data['record_usercount_date'] = $records[2]['date_last_active'];            	
+                $data['record_usercount_date'] = $records[2]['date_last_active'];
             }
         }
     }

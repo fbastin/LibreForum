@@ -17,7 +17,7 @@ targetlinks:[], //Array to hold links with rel="thumbnail"
 
 createthumbBox:function(){
 //write out HTML for Image Thumbnail Viewer plus loading div
-document.write('<div id="thumbBox" onClick="thumbnailviewer.closeit()"><div id="thumbImage"><\/div>'+this.definefooter+'<\/div>')
+document.write('<div id="thumbBox" onclick="thumbnailviewer.closeit()"><div id="thumbImage"><\/div>'+this.definefooter+'<\/div>')
 document.write('<div id="thumbLoading">'+this.defineLoading+'<\/div>')
 this.thumbBox=document.getElementById("thumbBox")
 this.thumbImage=document.getElementById("thumbImage") //Reference div that holds the shown image

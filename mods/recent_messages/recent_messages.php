@@ -400,7 +400,7 @@ function mod_recent_messages_setup_templatedata()
     $PHORUM["DATA"]["GROUP_BY"]    = $group_by;
 
     $PHORUM["DATA"]["POST_VARS"] .=
-        '<input type="hidden" name="module" value="recent_messages"/>';
+        '<input type="hidden" name="module" value="recent_messages" />';
 
     // Listing unread messages can only be done for authenticated users
     // and for versions of Phorum that provide db backend support for it.

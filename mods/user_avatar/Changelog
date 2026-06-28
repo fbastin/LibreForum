@@ -1,6 +1,10 @@
 Changelog:
 ----------
 
+2016-09-01 3.0.5 Oliver Riesen-Mallmann <oliver@riesen.org>
+
+    - Made XHTML 1.0 Transitional compliant.
+
 2008-11-14 3.0.4 Maurice Makaay
 
     - Generate the avatar for the currently active user as well. The

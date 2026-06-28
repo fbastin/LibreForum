@@ -1,8 +1,8 @@
 title: BBcode + Math
 desc:  Adds LaTeX math support to forum posts via [math]...[/math] (inline) and [displaymath]...[/displaymath] (block) tags, rendered by MathJax. Works alongside the BBcode module.
 version: 1.0.0
-author: LibreForum
-url: https://www.example.com
+author: Tireur.org
+url: https://www.tireur.org
 
 hook: format|phorum_mod_bbcode_math_format
 hook: javascript_register|phorum_mod_bbcode_math_javascript_register

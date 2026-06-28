@@ -32,6 +32,9 @@ function phorum_mod_js_calendar_addon() {
                 $data = phorum_mod_js_calendar_save_event();
             } elseif ($action === 'delete') {
                 $data = phorum_mod_js_calendar_delete_event();
+            } elseif ($action === 'export') {
+                phorum_mod_js_calendar_export_ical();
+                exit;
             }
         } catch (Exception $e) {
             $data = array('error' => $e->getMessage());
@@ -97,19 +100,50 @@ function phorum_mod_js_calendar_list_events() {
     $prefix = $PHORUM['DBCONFIG']['table_prefix'];
     $quoted_date = phorum_db_interact(DB_RETURN_QUOTED, $date);
 
+    // 1. Fetch standard events
     $sql = "SELECT e.*, u.username FROM phorum_calendar_events e JOIN {$prefix}_users u ON e.user_id = u.user_id WHERE e.event_date = '$quoted_date' ORDER BY e.created_at ASC";
     $res = phorum_db_interact(DB_RETURN_RES, $sql);
 
     $results = array();
     if ($res) {
         while ($row = phorum_db_fetch_row($res, DB_RETURN_ASSOC)) {
+            $row['type'] = 'event';
             $results[] = $row;
         }
     }
+
+    // 2. Fetch birthdays for this day/month (ignoring year)
+    $day_month = substr($date, 5); // MM-DD
+    $sql_bday = "SELECT u.user_id, u.username, b.data as birthday 
+                 FROM {$prefix}_users u 
+                 JOIN {$prefix}_user_custom_fields b ON u.user_id = b.user_id AND b.type = 22
+                 LEFT JOIN {$prefix}_user_custom_fields p ON u.user_id = p.user_id AND p.type = 23
+                 WHERE b.data LIKE '%-$day_month' 
+                 AND (p.data IS NULL OR p.data = '0')
+                 AND u.active = 1";
+    $res_bday = phorum_db_interact(DB_RETURN_RES, $sql_bday);
+    if ($res_bday) {
+        while ($row = phorum_db_fetch_row($res_bday, DB_RETURN_ASSOC)) {
+            $results[] = array(
+                'event_id'    => 'bday_' . $row['user_id'],
+                'user_id'     => $row['user_id'],
+                'username'    => $row['username'],
+                'title'       => "Anniversaire de " . $row['username'],
+                'description' => "Date de naissance : " . $row['birthday'],
+                'event_date'  => $date,
+                'type'        => 'birthday'
+            );
+        }
+    }
+
     return $results;
 }
 
 function phorum_mod_js_calendar_list_all_dates() {
+    $PHORUM = $GLOBALS['PHORUM'];
+    $prefix = $PHORUM['DBCONFIG']['table_prefix'];
+    
+    // Standard events dates
     $res = phorum_db_interact(DB_RETURN_RES, "SELECT DISTINCT event_date FROM phorum_calendar_events");
     $results = array();
     if ($res) {
@@ -117,7 +151,29 @@ function phorum_mod_js_calendar_list_all_dates() {
             $results[] = $row['event_date'];
         }
     }
-    return $results;
+
+    // Birthdays dates (we only care about the current view typically, 
+    // but for simplicity we can return birthdays that match users)
+    // To avoid returning thousands of dates, we could just return those in a range,
+    // but js_calendar list_all_dates is used for highlighting.
+    // Since birthdays repeat every year, this logic is tricky for "list_all_dates".
+    // For now, let's keep it to standard events and we'll handle birthday highlighting in JS if needed,
+    // or just return birthdays for the current year.
+    $year = date('Y');
+    $sql_bday = "SELECT DISTINCT SUBSTR(b.data, 6) as md
+                 FROM {$prefix}_user_custom_fields b
+                 LEFT JOIN {$prefix}_user_custom_fields p ON b.user_id = p.user_id AND p.type = 23
+                 WHERE b.type = 22 AND (p.data IS NULL OR p.data = '0')";
+    $res_bday = phorum_db_interact(DB_RETURN_RES, $sql_bday);
+    if ($res_bday) {
+        while ($row = phorum_db_fetch_row($res_bday, DB_RETURN_ASSOC)) {
+            $results[] = $year . '-' . $row['md'];
+            $results[] = ($year+1) . '-' . $row['md'];
+            $results[] = ($year-1) . '-' . $row['md'];
+        }
+    }
+
+    return array_unique($results);
 }
 
 function phorum_mod_js_calendar_save_event() {
@@ -169,4 +225,78 @@ function phorum_mod_js_calendar_delete_event() {
 
     phorum_db_interact(DB_RETURN_RES, "DELETE FROM phorum_calendar_events WHERE event_id = $event_id");
     return array('success' => true);
+}
+
+function phorum_mod_js_calendar_export_ical() {
+    $PHORUM = $GLOBALS['PHORUM'];
+    $prefix = $PHORUM['DBCONFIG']['table_prefix'];
+
+    // 1. Fetch events
+    $sql = "SELECT e.*, u.username FROM phorum_calendar_events e JOIN {$prefix}_users u ON e.user_id = u.user_id ORDER BY e.event_date ASC";
+    $res = phorum_db_interact(DB_RETURN_RES, $sql);
+
+    // 2. Prepare iCal content
+    $ical = "BEGIN:VCALENDAR\r\n";
+    $ical .= "VERSION:2.0\r\n";
+    $ical .= "PRODID:-//Tireur.org//jsCalendar//FR\r\n";
+    $ical .= "CALSCALE:GREGORIAN\r\n";
+    $ical .= "METHOD:PUBLISH\r\n";
+    $ical .= "X-WR-CALNAME:Calendrier Tireur.org\r\n";
+
+    if ($res) {
+        while ($row = phorum_db_fetch_row($res, DB_RETURN_ASSOC)) {
+            $dt = str_replace('-', '', $row['event_date']);
+            $ical .= "BEGIN:VEVENT\r\n";
+            $ical .= "UID:event_" . $row['event_id'] . "@tireur.org\r\n";
+            $ical .= "DTSTAMP:" . date('Ymd\THis\Z', strtotime($row['created_at'])) . "\r\n";
+            $ical .= "DTSTART;VALUE=DATE:" . $dt . "\r\n";
+            $ical .= "SUMMARY:" . phorum_mod_js_calendar_ical_escape($row['title']) . "\r\n";
+            if (!empty($row['description'])) {
+                $ical .= "DESCRIPTION:" . phorum_mod_js_calendar_ical_escape($row['description'] . " (Par " . $row['username'] . ")") . "\r\n";
+            } else {
+                $ical .= "DESCRIPTION:Par " . phorum_mod_js_calendar_ical_escape($row['username']) . "\r\n";
+            }
+            $ical .= "END:VEVENT\r\n";
+        }
+    }
+
+    // 3. Fetch birthdays (as recurring events)
+    $sql_bday = "SELECT u.user_id, u.username, b.data as birthday 
+                 FROM {$prefix}_users u 
+                 JOIN {$prefix}_user_custom_fields b ON u.user_id = b.user_id AND b.type = 22
+                 LEFT JOIN {$prefix}_user_custom_fields p ON u.user_id = p.user_id AND p.type = 23
+                 WHERE (p.data IS NULL OR p.data = '0')
+                 AND u.active = 1";
+    $res_bday = phorum_db_interact(DB_RETURN_RES, $sql_bday);
+    if ($res_bday) {
+        while ($row = phorum_db_fetch_row($res_bday, DB_RETURN_ASSOC)) {
+            // Birthday is usually YYYY-MM-DD in the custom field
+            // We want it to start on that day and repeat yearly
+            $bdt = str_replace('-', '', $row['birthday']);
+            if (strlen($bdt) === 8) {
+                $ical .= "BEGIN:VEVENT\r\n";
+                $ical .= "UID:bday_" . $row['user_id'] . "@tireur.org\r\n";
+                $ical .= "DTSTAMP:" . date('Ymd\THis\Z') . "\r\n";
+                $ical .= "DTSTART;VALUE=DATE:" . $bdt . "\r\n";
+                $ical .= "RRULE:FREQ=YEARLY\r\n";
+                $ical .= "SUMMARY:Anniversaire de " . phorum_mod_js_calendar_ical_escape($row['username']) . "\r\n";
+                $ical .= "END:VEVENT\r\n";
+            }
+        }
+    }
+
+    $ical .= "END:VCALENDAR\r\n";
+
+    // 4. Send file
+    header('Content-Type: text/calendar; charset=utf-8');
+    header('Content-Disposition: attachment; filename="tireur_org_calendar.ics"');
+    echo $ical;
+}
+
+function phorum_mod_js_calendar_ical_escape($text) {
+    $text = str_replace('\\', '\\\\', $text);
+    $text = str_replace(',', '\\,', $text);
+    $text = str_replace(';', '\\;', $text);
+    $text = str_replace("\n", '\\n', $text);
+    return $text;
 }

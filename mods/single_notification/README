@@ -16,3 +16,8 @@ Installation instructions:
 
 - Enable the module "Single Notification".
 
+Integration Note:
+-----------------
+This module has been integrated with the `forum_subscriptions` module (inside `forum_subscriptions_after_post.php`). When immediate subscriptions are processed, this module's DB constraints are evaluated, ensuring that users only receive a single email notification for replies until they visit the thread/forum.
+
+

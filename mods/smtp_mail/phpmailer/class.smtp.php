@@ -76,7 +76,7 @@ class SMTP {
     $this->error = null;
     $this->helo_rply = null;
 
-    $this->do_debug = 0;
+    $this->do_debug = 2;
   }
 
   /*************************************************************
@@ -1089,20 +1089,21 @@ class SMTP {
    */
   private function get_lines() {
     $data = "";
-    while($str = @fgets($this->smtp_conn,515)) {
-      if($this->do_debug >= 4) {
-        echo "SMTP -> get_lines(): \$data was \"$data\"" .
-                 $this->CRLF;
-        echo "SMTP -> get_lines(): \$str is \"$str\"" .
-                 $this->CRLF;
+    $count = 0;
+    while($count < 1000) {
+      $str = @fgets($this->smtp_conn,515);
+      if ($str !== false && $str !== "") {
+          $data .= $str;
+          if(substr($str,3,1) == " ") { break; }
+      } else {
+          // If we got nothing but expect data, wait a bit
+          if ($data == "") {
+              usleep(100000); // 100ms
+              $count++;
+              continue;
+          }
+          break;
       }
-      $data .= $str;
-      if($this->do_debug >= 4) {
-        echo "SMTP -> get_lines(): \$data is \"$data\"" . $this->CRLF;
-      }
-      // if the 4th character is a space then we are done reading
-      // so just break the loop
-      if(substr($str,3,1) == " ") { break; }
     }
     return $data;
   }

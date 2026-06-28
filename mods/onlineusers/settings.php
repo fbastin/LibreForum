@@ -50,7 +50,7 @@ $frm->hidden("mod", "onlineusers");
 $frm->addbreak("Edit Settings for the Online Users module");
 
 $row = $frm->addrow("Idle time before a user is offline (minutes)", $frm->text_box("idle_time", $PHORUM["mod_onlineusers"]["idle_time"]));
-$frm->addhelp($row, "Idle time before a user is offline (minutes)", "Idle time is the maximum amount of time between user actions to still consider the user online. If set to 5 minutes, a user inactive for less than 5 minutes will be shown as online. This shouldn't be too low, as a user can be reading a thread for several minutes and still be online.<br/><br/>The \"Track User Usage\" feature on the General Settings page is used for tracking registered users. The configuration value for that feature should be at or below the idle time that is configured here to make the module work correctly (if there is some conflict within this constraint, you will get a warning notice in this settings screen).");
+$frm->addhelp($row, "Idle time before a user is offline (minutes)", "Idle time is the maximum amount of time between user actions to still consider the user online. If set to 5 minutes, a user inactive for less than 5 minutes will be shown as online. This shouldn't be too low, as a user can be reading a thread for several minutes and still be online.<br /><br />The \"Track User Usage\" feature on the General Settings page is used for tracking registered users. The configuration value for that feature should be at or below the idle time that is configured here to make the module work correctly (if there is some conflict within this constraint, you will get a warning notice in this settings screen).");
 
 $row = $frm->addrow("Cache time (seconds)", $frm->text_box("cache_time", $PHORUM["mod_onlineusers"]["cache_time"]));
 $frm->addhelp($row, "Cache time (seconds)", "With caching enabled, the module will only update the list after the amount of time shown here. If your database server is very busy, caching will help increasing performance. Set this value to 0 to disable caching. Recommended value: between 60 (1 minute) and 1200 (20 minutes).");
@@ -68,7 +68,7 @@ $row = $frm->addrow("Display number of forum readers?", $frm->checkbox("display_
 $frm->addhelp($row, "Display number of forum readers?", "By enabling this feature, you can show the number of visitors that are inside a forum for each forum on the index page.");
 
 $row = $frm->addrow("Show idle time for online users?", $frm->checkbox("show_idle_time", "1", "Show idle time", $PHORUM["mod_onlineusers"]["show_idle_time"]));
-$frm->addhelp($row, "Show idle time for online users?", "The time a user has been idle can be displayed after their name in the online user list. Note that enabling this feature might be considered invasive by some users.<br/><br/>For best results with this feature, \"Track User Usage\" on the General Settings page should be set to a really low value (preferably \"Constantly\"), otherwise users might show up as idle for too long.");
+$frm->addhelp($row, "Show idle time for online users?", "The time a user has been idle can be displayed after their name in the online user list. Note that enabling this feature might be considered invasive by some users.<br /><br />For best results with this feature, \"Track User Usage\" on the General Settings page should be set to a really low value (preferably \"Constantly\"), otherwise users might show up as idle for too long.");
 
 $frm->addrow(
     "Show the online users to what users?",

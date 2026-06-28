@@ -1,9 +1,9 @@
       title: Social Media Sharing
-      desc: This module allows sharing of threads via social networks.
-      author: Ray Tetzloff
+      desc: This module allows sharing of threads via modern social networks (Facebook, Twitter/X, WhatsApp, LinkedIn, etc.).
+      author: Ray Tetzloff, updated for Tireur.org
       category: integration
-      url: http://www.phorum.org/phorum5/read.php?62,151884
-      version: 1.0
+      url: http://www.tireur.org/
+      version: 2.0
 
       hook: social_share|social_share_mod_thread
       hook: css_register|social_share_mod_css_register

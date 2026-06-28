@@ -189,7 +189,7 @@ function phorum_mod_embed_images_format($data)
                 if (isset($attach['rendered_raw'])) {
                     if (!$has_images) {
                         $data[$id]['body'] .=
-                            '<br style="clear:both"/>' .
+                            '<br style="clear:both" />' .
                             '<div class="mod_embed_images_attachments">';
                         $has_images = TRUE;
                     }
@@ -198,7 +198,7 @@ function phorum_mod_embed_images_format($data)
                 }
             }
         }
-        if ($has_images) $data[$id]['body'] .= '</div><br style="clear:both"/>';
+        if ($has_images) $data[$id]['body'] .= '</div><br style="clear:both" />';
     }
 
     return $data;
@@ -259,8 +259,8 @@ function phorum_mod_embed_images_bbcode_register($tags)
 
     $tags['url'] = array(
         BBCODE_INFO_DESCRIPTION   =>
-            '[url=http://example.com]cool site![/url]<br/>' .
-            '[url]http://example.com[/url]<br/>' .
+            '[url=http://example.com]cool site![/url]<br />' .
+            '[url]http://example.com[/url]<br />' .
             'For adding website links.',
         BBCODE_INFO_HASEDITORTOOL => TRUE,
         BBCODE_INFO_DEFAULTSTATE  => 2,
@@ -356,10 +356,10 @@ function embed_images_bbcode_url_handler($content, $args, &$message)
 
 
 // Phase 2 formatting: replace all "[embed_images <key>]" links with
-// embedded image viewers. Also make sure that a <br/> is placed
+// embedded image viewers. Also make sure that a <br /> is placed
 // after the body, if an embedded image is the last item in the body.
 // That is needed to not let the floating image divs go outside the
-// message body layout (the <br/> should have style clear:both for this
+// message body layout (the <br /> should have style clear:both for this
 // to work).
 function phorum_mod_embed_images_format_fixup($messages)
 {
@@ -383,10 +383,10 @@ function phorum_mod_embed_images_format_fixup($messages)
         // Make sure that the body has a break after the last image.
         if (preg_match('!.*<(?:br ?/?|phorum break)>(.*)$!', $messages[$id]['body'], $m)) {
             if (preg_match('!\[embed_image [^\]]+\]!', $m[1])) {
-                $messages[$id]['body'] .= '<br/>';
+                $messages[$id]['body'] .= '<br />';
             }
         } else {
-            $messages[$id]['body'] .= '<br/>';
+            $messages[$id]['body'] .= '<br />';
         }
 
         // Apply final replacement for images.
@@ -568,7 +568,7 @@ function mod_embed_images_mkdir($path)
     if (is_dir($path)) return TRUE;
     if (!mod_embed_images_mkdir(dirname($path))) return FALSE;
     if (@mkdir($path) === FALSE) {
-        die("mkdir($path) failed:<br/>" . strip_tags($php_errormsg));
+        die("mkdir($path) failed:<br />" . strip_tags($php_errormsg));
     }
     return TRUE;
 }
@@ -737,7 +737,7 @@ function mod_embed_images_cache_put($key, $requested_size, $val)
 //
 function phorum_mod_embed_images_addon()
 {
-    $PHORUM    = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     $image     = NULL;
     $scaled    = NULL;
@@ -746,7 +746,7 @@ function phorum_mod_embed_images_addon()
     $mime      = NULL;
 
     $do_debug  = !empty($PHORUM['mod_embed_images']['debug']);
-    $debug     = '<b>Debug info:</b><br/>';
+    $debug     = '<b>Debug info:</b><br />';
 
     $requested_size =
         (empty($PHORUM['mod_embed_images']['max_width'])
@@ -759,7 +759,7 @@ function phorum_mod_embed_images_addon()
     {
         $file_id = $PHORUM['args']['file_id'];
         $cache_key = md5("attachment:$file_id");
-        $debug .= "Load local file: $file_id<br/>";
+        $debug .= "Load local file: $file_id<br />";
 
         // Check if the user has read access for the attachment.
         if (file_exists('./include/api/file_storage.php')) {
@@ -775,7 +775,7 @@ function phorum_mod_embed_images_addon()
     elseif (isset($PHORUM['args']['url']))
     {
         $url = $PHORUM['args']['url'];
-        $debug .= "Load file from URL: $url<br/>";
+        $debug .= "Load file from URL: $url<br />";
         $cache_key = md5("url:$url");
     }
     // Invalid Ajax request done.
@@ -789,7 +789,7 @@ function phorum_mod_embed_images_addon()
     // Cache returned an error message.
     if ($cache !== NULL && !is_array($cache)) {
         if ($do_debug) {
-            $debug .= "Cache error: $cache<br/>";    
+            $debug .= "Cache error: $cache<br />";
             die($debug);
         } else {
             die($cache);
@@ -802,7 +802,7 @@ function phorum_mod_embed_images_addon()
         // Retrieve the source image file.
         if (isset($PHORUM['args']['file_id']))
         {
-            $debug .= "Load local image file<br/>";
+            $debug .= "Load local image file<br />";
 
             $image = phorum_api_file_retrieve($file);
             // No cache for errors here. Problems here might be user
@@ -819,7 +819,7 @@ function phorum_mod_embed_images_addon()
         }
         elseif (isset($PHORUM['args']['url']))
         {
-            $debug .= "Load remote image file<br/>";
+            $debug .= "Load remote image file<br />";
             $url = $PHORUM['args']['url'];
 
             include_once("./include/api/http_get.php");
@@ -840,7 +840,7 @@ function phorum_mod_embed_images_addon()
 
         $max_w = $PHORUM['mod_embed_images']['max_width'];
         $max_h = $PHORUM['mod_embed_images']['max_height'];
-        $debug .= "Create thumbnail using {$max_w}x{$max_h} boundary<br/>";
+        $debug .= "Create thumbnail using {$max_w}x{$max_h} boundary<br />";
 
         // Create a thumbnail for the image.
         include_once("./include/api/image.php");
@@ -869,10 +869,10 @@ function phorum_mod_embed_images_addon()
             $scaled = $thumb['image'] === NULL ? $image : $thumb['image'];
 
             $debug .= "Original image was " .
-                      $thumb['cur_w'].'x'.$thumb['cur_h'] . "<br/>";
+                      $thumb['cur_w'].'x'.$thumb['cur_h'] . "<br />";
             $debug .= "Thumbnail created at " .
-                      $thumb['new_w'].'x'.$thumb['new_h'] . "<br/>";
-            $debug .= "Thumbnail MIME type: {$thumb['new_mime']}<br/>";
+                      $thumb['new_w'].'x'.$thumb['new_h'] . "<br />";
+            $debug .= "Thumbnail MIME type: {$thumb['new_mime']}<br />";
 
             $cache = array(
                 'mime'           => $thumb['new_mime'],

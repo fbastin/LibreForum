@@ -5,8 +5,8 @@
   {IF VIEWER->ERROR}
 
     <div class="mod_embed_images_error">
-      <strong>Image error</strong><br/>
-      {VIEWER->ERROR}<br/>
+      <strong>Image error</strong><br />
+      {VIEWER->ERROR}<br />
       {IF VIEWER->URL}
         <a href="{VIEWER->URL}">open image URL</a>
       {/IF}
@@ -40,7 +40,7 @@
              {IF VIEWER->H}height="{VIEWER->H}"{/IF}
              id="image_{VIEWER->ID}"
              alt="{VIEWER->DESCRIPTION}"
-             title="{VIEWER->DESCRIPTION}"/>
+             title="{VIEWER->DESCRIPTION}" />
     {IF TARGET_URL}</a>{/IF}
 
     {IF NOT VIEWER->IS_CACHED}
@@ -68,6 +68,7 @@
 {! away. This JavaScript function will then setup a viewer for the full    }
 {! size images if needed.                                                  }
 <script type="text/javascript">
+// <![CDATA[
 mod_embed_images_loadimage(
   '{VIEWER->ID}',
   '{VIEWER->THUMBNAIL_URL}',
@@ -79,4 +80,5 @@ mod_embed_images_loadimage(
   '<?php print addslashes($PHORUM['DATA']['LANG']['mod_embed_images']['LoadingImage']) ?>',
    false
 );
+// ]]>
 </script>

@@ -1,6 +1,11 @@
 Changelog:
 ----------
 
+2016-08-31 v2.5.3 by Oliver Riesen-Mallmann <oliver@riesen.org>
+
+    - Made XHTML 1.0 Transitional compliant.
+    - Changed htmlspecialchars option from ENT_COMPAT to ENT_QUOTES.
+
 2011-01-09 v2.5.2 - Maurice Makaay
 
     - Added Swedish translation. Thanks to phorum.org user sebdah.

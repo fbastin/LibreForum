@@ -1,7 +1,0 @@
-hook: after_post|mod_twitter_posts
-hook: common|mod_twitter_url
-title: Twitter Posts
-desc: Send Phorum posts to Twitter.
-author: Thomas Seifert <thomas@phorum.org>, Original Author: Brian Moon
-url: http://www.phorum.org/phorum5/read.php?62,129871,page=1
-version: 2.0.0

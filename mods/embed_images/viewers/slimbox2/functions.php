@@ -4,7 +4,7 @@ if (!defined('PHORUM')) return;
 
 function image_viewer_css_register($data)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     if (empty($PHORUM["mod_embed_images"]["slimbox2_noload"])) {
         $data['register'][] = array(
@@ -19,7 +19,7 @@ function image_viewer_css_register($data)
 
 function image_viewer_javascript_register($data)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     if (empty($PHORUM['mod_embed_images']['slimbox2_mootools_noload'])) {
         $data[] = array(

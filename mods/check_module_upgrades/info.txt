@@ -2,7 +2,7 @@ title: Check Modules for Upgrades
 category: admin
 author: Joe Curia
 desc:  This module will check all Phorum 5.2 modules for upgrades and list their status.
-version: 5.2.1.06
+version: 5.2.2
 
 hook: admin_pre|phorum_mod_check_module_upgrades_admin_pre
 hook: before_footer|phorum_mod_check_module_upgrades_before_footer

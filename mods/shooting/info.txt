@@ -1,6 +1,6 @@
 title: shooting
 desc: use a database on shooting services
-author: LibreForum Maintainer <admin@example.com>
+author: Fabian Bastin <fabian.bastin@gmail.com>
 url: 
 category: posting
 required_version: 5.2.0

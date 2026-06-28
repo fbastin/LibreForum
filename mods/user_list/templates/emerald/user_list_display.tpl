@@ -1,5 +1,19 @@
 <!-- start /mods/user_list/templates/emerald/user_list_display.tpl -->
 {IF LOGGEDIN}
+<form method="get" action="addon.php" style="margin-bottom: 15px; background: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+    <input type="hidden" name="0" value="0" />
+    <input type="hidden" name="module" value="user_list" />
+    <label for="user_search" style="font-weight: bold; margin-right: 5px;">Rechercher un membre :</label>
+    <input type="text" id="user_search" name="search" value="{USER_LIST_SEARCH}" placeholder="Nom, pseudonyme..." style="padding: 5px; border: 1px solid #ccc; border-radius: 4px; min-width: 200px;" />
+    <label style="margin-left: 10px; margin-right: 10px; font-size: 13px; font-weight: normal; cursor: pointer; vertical-align: middle;">
+        <input type="checkbox" name="case_sensitive" value="1" {IF USER_LIST_CASE_SENSITIVE}checked="checked"{/IF} style="vertical-align: middle; margin-right: 3px;" />
+        Sensible à la casse
+    </label>
+    <input type="submit" value="Rechercher" style="padding: 5px 10px; cursor: pointer;" />
+    {IF USER_LIST_SEARCH}
+        <a href="{URL->USER_LIST->All}" style="text-decoration: none; margin-left: 10px; padding: 5px 10px; background: #e0e0e0; color: #333; border-radius: 4px; font-size: 13px;">Effacer la recherche</a>
+    {/IF}
+</form>
 <table cellspacing="0" class="list user_list">
     <tr>
         <!-- <td align="center"><a href="{URL->USER_LIST->All}">Tous</a></td> -->
@@ -34,31 +48,35 @@
 </table>
 <div class="nav">
     {INCLUDE 'paging'}
-    Trier par: <a href="{URL->USER_LIST->NumberSort}">Numéro</a> / <a href="{URL->USER_LIST->All}">Nom</a>
 </div>
 <table cellspacing="0" class="list user_list">
     <tr>
 <!-- Member Number -->
-        <th align="center">No.</th>
-        <!-- <th align="center">{LANG->MemberNumber}</th> -->
+        <th align="center" width="80" style="white-space: nowrap;">
+            <a href="{URL->USER_LIST->SORT_BY_USER_ID}">No.&nbsp;{IF USER_LIST_SORT 'user_id'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a>
+        </th>
 <!-- Member -->
-        <th align="center">{LANG->Member}</th>
+        <th align="center">
+            <a href="{URL->USER_LIST->SORT_BY_USERNAME}">{LANG->Member}&nbsp;{IF USER_LIST_SORT 'username'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a>
+        </th>
             {IF ENABLE_PM}
 <!-- PM -->
                 <th align="center">{LANG->PrivateReply}</th>
 <!-- Buddy -->
                 <th align="center">{LANG->Buddy}</th>
             {/IF} {! ENABLE_PM}
-<!-- Rank (later) -->
-        <!-- <th align="center">Rank</th> -->
 <!-- Posts -->
-        <th align="center">{LANG->Posts}</th>
+        <th align="center">
+            <a href="{URL->USER_LIST->SORT_BY_POSTS}">{LANG->Posts}&nbsp;{IF USER_LIST_SORT 'posts'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a>
+        </th>
 <!-- Date Joined -->
-        <th align="center">Date d'inscription</th>
-        <!-- <th align="center">{LANG->DateReg}</th> -->
+        <th align="center">
+            <a href="{URL->USER_LIST->SORT_BY_DATE_ADDED}">Date d'inscription&nbsp;{IF USER_LIST_SORT 'date_added'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a>
+        </th>
 <!-- Last Seen -->
-        <th align="center">Dernière activité</th>
-        <!-- <th align="center">{LANG->DateActive}</th> -->
+        <th align="center">
+            <a href="{URL->USER_LIST->SORT_BY_DATE_LAST_ACTIVE}">Dernière activité&nbsp;{IF USER_LIST_SORT 'date_last_active'}{IF USER_LIST_DIR 'asc'}&uarr;{ELSE}&darr;{/IF}{/IF}</a>
+        </th>
     </tr>
 
     {LOOP USERS}

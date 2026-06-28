@@ -3,7 +3,7 @@ author: Joe Curia
 desc:  This module adds a host of security functions to the admin section.
 category: admin
 category: user_management
-version: 5.2.1.04
+version: 5.2.1.05
 url: http://www.phorum.org/phorum5/read.php?16,123253
 
 hook: lang|

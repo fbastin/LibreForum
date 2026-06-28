@@ -238,15 +238,8 @@ function event_logging_writelog($loginfo)
         $record["vroot"] = $PHORUM["vroot"];
     }
 
-    // Insert the logging record in the database.
-    phorum_db_interact(
-        DB_RETURN_RES,
-        "INSERT INTO {$PHORUM["event_logging_table"]}
-                (".implode(', ', array_keys($record)).")
-         VALUES (".implode(', ', $record).")", 
-        NULL, 
-        DB_MASTERQUERY 
-    );
+    // Write the logging record to a secure log file instead of the database.
+    event_logging_write_to_file($record);
 }
 
 /**
@@ -503,6 +496,76 @@ function event_logging_update_message_id_info($message_id, $forum_id, $thread_id
          NULL, 
          DB_MASTERQUERY 
     );
+}
+
+/**
+ * Write the log record to a secure file.
+ */
+function event_logging_write_to_file($record)
+{
+    global $PHORUM;
+
+    // Use a dedicated log file in the forum cache directory
+    $log_file = "/var/www/tireur.org/forum/cache/event_logging.log";
+
+    $levels = array(
+        EVENTLOG_LVL_DEBUG   => "DEBUG",
+        EVENTLOG_LVL_INFO    => "INFO",
+        EVENTLOG_LVL_WARNING => "WARNING",
+        EVENTLOG_LVL_ERROR   => "ERROR",
+        EVENTLOG_LVL_ALERT   => "ALERT"
+    );
+    $categories = array(
+        EVENTLOG_CAT_APPLICATION => "Application",
+        EVENTLOG_CAT_DATABASE    => "Database",
+        EVENTLOG_CAT_SECURITY    => "Security",
+        EVENTLOG_CAT_SYSTEM      => "System",
+        EVENTLOG_CAT_MODULE      => "Module"
+    );
+
+    $level = isset($record["loglevel"]) && isset($levels[$record["loglevel"]]) 
+        ? $levels[$record["loglevel"]] 
+        : "UNKNOWN";
+    $category = isset($record["category"]) && isset($categories[$record["category"]])
+        ? $categories[$record["category"]]
+        : "UNKNOWN";
+
+    $date = date("Y-m-d H:i:s", isset($record["datestamp"]) ? $record["datestamp"] : time());
+
+    // Strip surrounding quotes and unescape Phorum's SQL quoting
+    $msg = isset($record["message"]) ? stripslashes(trim($record["message"], "'")) : "";
+    $details = isset($record["details"]) ? stripslashes(trim($record["details"], "'")) : "";
+    $source = isset($record["source"]) ? stripslashes(trim($record["source"], "'")) : "unknown";
+    $ip = isset($record["ip"]) ? stripslashes(trim($record["ip"], "'")) : "";
+    $user_id = isset($record["user_id"]) ? (int)$record["user_id"] : 0;
+
+    $log_line = sprintf(
+        "[%s] [%s] [%s] [%s] [IP: %s] [User: %d] %s",
+        $date,
+        $level,
+        $category,
+        $source,
+        $ip,
+        $user_id,
+        $msg
+    );
+
+    if ($details !== "") {
+        $details_clean = str_replace(array("\r\n", "\r", "\n"), " | ", $details);
+        $log_line .= " | Details: " . $details_clean;
+    }
+
+    $log_line .= "\n";
+
+    $file_exists = file_exists($log_file);
+    $fp = @fopen($log_file, "a");
+    if ($fp) {
+        @fwrite($fp, $log_line);
+        @fclose($fp);
+        if (!$file_exists) {
+            @chmod($log_file, 0666);
+        }
+    }
 }
 
 ?>

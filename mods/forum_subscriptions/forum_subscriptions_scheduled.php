@@ -30,7 +30,7 @@ function phorum_mod_forum_subscriptions_functions_scheduled() {
     //return;
     //unset($PHORUM["phorum_mod_forum_subscriptions"]["last_queue_start"]);
     //unset($PHORUM["phorum_mod_forum_subscriptions"]["last_weekly_digest"]);
-    event_logging_writelog(array("message"   => "forum_subscriptions settings:\n\n".print_r($PHORUM["phorum_mod_forum_subscriptions"],true)));
+    //event_logging_writelog(array("message"   => "forum_subscriptions settings:\n\n".print_r($PHORUM["phorum_mod_forum_subscriptions"],true)));
     //event_logging_writelog(array("message"   => "times:\n\n".print_r(array($current_day, $week_day, $localtime),true)));
     //*/
     
@@ -169,7 +169,7 @@ function phorum_mod_forum_subscriptions_functions_scheduled() {
     // error count for this queue, set the queue to run 30 minutes later per 
     // error count (ie. 30 minutes, 60 minutes, or 90 minutes later), and clear
     // the error data.
-    if (count($queue_data["recipient_ids"]) == count($queue_data["error_data"])
+    if (count($queue_data["recipient_ids"]) == (is_array($queue_data["error_data"]) ? count($queue_data["error_data"]) : 0)
         || (!empty($PHORUM["phorum_mod_forum_subscriptions"]["last_queue_start"])
             && $PHORUM["phorum_mod_forum_subscriptions"]["last_queue_message_id"] == $queue_data["mail_data"]["message_id"])) {
         $queue_data["error_count"] += 1;

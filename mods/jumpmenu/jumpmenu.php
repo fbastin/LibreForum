@@ -150,7 +150,9 @@ function phorum_mod_jumpmenu_common()
     }
 
     $setvroot = '<script type="text/javascript">' .
+                "// <![CDATA[\n" .
                 'PhorumJumpMenu.vroot = ' . $PHORUM['vroot'] .
+                "// ]]>\n" .
                 '</script>';
 
     $PHORUM['DATA']['JUMPMENU'] = $setvroot . implode('', $menus);
@@ -168,6 +170,7 @@ function phorum_mod_jumpmenu_before_footer()
     include phorum_get_template("jumpmenu::before_footer");
 
     print "<script type=\"text/javascript\">\n" .
+          "// <![CDATA[\n" .
           "\$PJ(document).ready(function(){\n" .
           "    // Make sure that the menus are in the top level #phorum elt.\n" .
           "    // This is needed to make positioning of the menus robust.\n" .
@@ -177,6 +180,7 @@ function phorum_mod_jumpmenu_before_footer()
           "    // Initialize the Phorum jumpmenu.\n" .
           "    PhorumJumpMenu.init();\n" .
           "});\n" .
+          "// ]]>\n" .
           "</script>\n";
 }
 ?>

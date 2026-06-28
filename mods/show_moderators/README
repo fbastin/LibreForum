@@ -1,5 +1,5 @@
 Module  : Show Moderators
-Version : 1.0.1
+Version : 1.0.2
 Author  : Maurice Makaay
 
 This module requires Phorum 5.2 or later.
@@ -112,9 +112,9 @@ Customization:
         <a href="{FORUMS->MODERATORS->PROFILE">
           {FORUMS->MODERATORS->DISPLAY_NAME}
         </a>
-      {/LOOP}
+      {/LOOP FORUMS->MODERATORS}
       ..
-    {/LOOP
+    {/LOOP FORUMS}
 
   * list (list.tpl / list_threads.tpl) and read (read.tpl / read_threads.tpl)
 
@@ -129,6 +129,6 @@ Customization:
       <a href="{MODERATORS->PROFILE">
         {MODERATORS->DISPLAY_NAME}
       </a>
-    {/LOOP}
+    {/LOOP MODERATORS}
 
 

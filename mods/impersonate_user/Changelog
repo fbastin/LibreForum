@@ -1,6 +1,11 @@
 Changelog:
 ----------
 
+2016-08-31 v1.0.7 by Oliver Riesen-Mallmann <oliver@riesen.org>
+
+    - Made XHTML 1.0 Transitional compliant.
+    - Changed htmlspecialchars option from ENT_COMPAT to ENT_QUOTES.
+
 2011-01-09 v1.0.6
 
     - Added new German language files. Thanks to Oliver Riesen!

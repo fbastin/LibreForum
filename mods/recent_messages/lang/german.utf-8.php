@@ -19,7 +19,7 @@ $PHORUM['DATA']['LANG']['mod_recent_messages'] = array(
     'OlderMessages'  => 'Ältere Beiträge',
     'RecentMessages' => 'Neueste Beiträge',
     'Threads'        => 'neueste Themen',
-    'UnreadMessages' => 'Ungelesene Beitr&auml;ge',
+    'UnreadMessages' => 'Ungelesene Beiträge',
     'UpdatedThreads' => 'aktualisierte Themen'
 );
 

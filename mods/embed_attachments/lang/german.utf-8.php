@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // This file ist part of the German Language Files Package
 // Get the complete package here:
