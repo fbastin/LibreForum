@@ -33,6 +33,10 @@ function phorum_mod_markdown_format($data)
         $body = preg_replace('/<center( class="[^"]+")?>(.*?)<\/center>/is', '<span style="display: block; text-align: center;">$2</span>', $body);
         $body = preg_replace('/<div style="text-align:\s*(left|right|justify);" class="bbcode">(.*?)<\/div>/is', '<span style="display: block; text-align: $1;" class="bbcode">$2</span>', $body);
 
+        // Insert a blank line before any long separator line of dashes (20+ dashes)
+        // to prevent Parsedown from interpreting the preceding line of text as a header (H2).
+        $body = preg_replace('/([^\n]+)\n(-{20,})\s*(\n|$)/', "$1\n\n$2\n", $body);
+
         // Phorum may have auto-linked URLs inside Markdown links.
         // For example: [text](<a href="http://...">http://...</a>)
         // Or: [text](<a rel="nofollow" target="_blank" href="http://...">http://...</a>)
@@ -131,6 +135,25 @@ function phorum_mod_markdown_editor_tool_plugin()
         './mods/markdown/video_icon.gif',  // Tool button icon
         'markdown_video_editor_tool()'     // Javascript action on button click
     );
+}
+
+// Quote hook, to override the default quoting format with clean Markdown quotes.
+function phorum_mod_markdown_quote($data)
+{
+    if (!is_array($data)) return $data;
+    $author = $data[0];
+    $body = $data[1];
+
+    if (function_exists('phorum_strip_body')) {
+        $body = phorum_strip_body($body, false);
+    }
+
+    $body = trim($body);
+    $body = str_replace("\n", "\n> ", $body);
+
+    $quote_title = $author . " " . $GLOBALS["PHORUM"]["DATA"]["LANG"]["Wrote"] . ":";
+
+    return "> **" . $quote_title . "**\n> " . $body . "\n\n";
 }
 
 ?>
