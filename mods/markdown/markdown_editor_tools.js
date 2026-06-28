@@ -281,3 +281,11 @@ function editor_tools_handle_list_select(type)
     }
     editor_tools_add_tags("\n"+itemlist+"\n", '');
 }
+
+function markdown_video_editor_tool()
+{
+    var url = prompt("Veuillez saisir l'URL de la vidéo YouTube ou Vimeo :", "https://");
+    if (url == null || url == "" || url == "https://") return;
+    editor_tools_add_tags("\n" + url + "\n", "");
+    editor_tools_focus_textarea();
+}

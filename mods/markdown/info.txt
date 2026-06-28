@@ -6,6 +6,7 @@ url: https://parsedown.org/
 
 hook: format|phorum_mod_markdown_format
 hook: javascript_register|phorum_mod_markdown_javascript_register
+hook: editor_tool_plugin|phorum_mod_markdown_editor_tool_plugin
 
 # Run after BBCode if both are active.
 priority: run module after *
