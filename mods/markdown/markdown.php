@@ -34,6 +34,71 @@ function phorum_mod_markdown_format($data)
         // We need to revert this so Parsedown can parse the Markdown link correctly.
         $body = preg_replace('/\]\(\s*<a\s+[^>]*?href="([^"]+)".*?<\/a>\s*\)/i', ']($1)', $body);
 
+        // --- Video embedding start ---
+        // 1. Clean up any auto-linked HTML tags inside [video] tags
+        $body = preg_replace_callback(
+            '/\[video\](.*?)\[\/video\]/is',
+            function ($m) {
+                return '[video]' . trim(strip_tags($m[1])) . '[/video]';
+            },
+            $body
+        );
+
+        // 2. YouTube [video] tag -> iframe
+        $body = preg_replace_callback(
+            '!\[video\](?:https?://)?(?:www\.)?(?:youtube\.com/(?:watch\?v=|embed/|v/|shorts/)|youtu\.be/)([\w_-]+).*?\[/video\]!is',
+            function ($m) {
+                return '<div class="video-container"><iframe src="https://www.youtube.com/embed/' . htmlspecialchars($m[1], ENT_QUOTES, 'UTF-8') . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>';
+            },
+            $body
+        );
+
+        // 3. Vimeo [video] tag -> iframe
+        $body = preg_replace_callback(
+            '!\[video\](?:https?://)?(?:www\.)?vimeo\.com/(\d+).*?\[/video\]!is',
+            function ($m) {
+                return '<div class="video-container"><iframe src="https://player.vimeo.com/video/' . htmlspecialchars($m[1], ENT_QUOTES, 'UTF-8') . '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>';
+            },
+            $body
+        );
+
+        // 4. Auto-linked YouTube URLs -> iframe
+        $body = preg_replace_callback(
+            '/<a\s+[^>]*?href="((?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([\w_-]+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*\'\(\),~%#]*)"[^>]*>.*?<\/a>/is',
+            function ($m) {
+                return '<div class="video-container"><iframe src="https://www.youtube.com/embed/' . htmlspecialchars($m[2], ENT_QUOTES, 'UTF-8') . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>';
+            },
+            $body
+        );
+
+        // 5. Auto-linked Vimeo URLs -> iframe
+        $body = preg_replace_callback(
+            '/<a\s+[^>]*?href="((?:https?:\/\/)?(?:www\.)?vimeo\.com\/(\d+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*\'\(\),~%#]*)"[^>]*>.*?<\/a>/is',
+            function ($m) {
+                return '<div class="video-container"><iframe src="https://player.vimeo.com/video/' . htmlspecialchars($m[2], ENT_QUOTES, 'UTF-8') . '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>';
+            },
+            $body
+        );
+
+        // 6. Plain YouTube URLs not linked yet -> iframe
+        $body = preg_replace_callback(
+            '/(?<=^|\s)(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([\w_-]+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*\'\(\),~%#]*(?=\s|$)/is',
+            function ($m) {
+                return '<div class="video-container"><iframe src="https://www.youtube.com/embed/' . htmlspecialchars($m[1], ENT_QUOTES, 'UTF-8') . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>';
+            },
+            $body
+        );
+
+        // 7. Plain Vimeo URLs not linked yet -> iframe
+        $body = preg_replace_callback(
+            '/(?<=^|\s)(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(\d+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*\'\(\),~%#]*(?=\s|$)/is',
+            function ($m) {
+                return '<div class="video-container"><iframe src="https://player.vimeo.com/video/' . htmlspecialchars($m[1], ENT_QUOTES, 'UTF-8') . '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>';
+            },
+            $body
+        );
+        // --- Video embedding end ---
+
         $data[$message_id]['body'] = $parsedown->text($body);
     }
 
@@ -49,6 +114,18 @@ function phorum_mod_markdown_javascript_register($data)
     );
 
     return $data;
+}
+
+function phorum_mod_markdown_editor_tool_plugin()
+{
+    global $PHORUM;
+
+    editor_tools_register_tool(
+        'markdown_video',                  // Tool id
+        'Vidéo',                           // Tool description
+        './mods/markdown/video_icon.gif',  // Tool button icon
+        'markdown_video_editor_tool()'     // Javascript action on button click
+    );
 }
 
 ?>
