@@ -1,7 +1,7 @@
-Permissions in OpenPhorum 5
+Permissions in LibreForum 5
 =======================
 
-This document describes the way the permission system of OpenPhorum works.
+This document describes the way the permission system of LibreForum works.
 It is targeted at developers that need inside information on the
 API calls that are related to permission handling.
 
@@ -61,7 +61,7 @@ Table of contents:
 3. Some final notes
 -------------------------------------------------------------------------------
 
-   That should be all you need to know about the OpenPhorum permission system.
+   That should be all you need to know about the LibreForum permission system.
    Here is some stuff that helped explain this to the other developers:
 
    > select (256 | 16);

@@ -173,13 +173,51 @@ $min_id=0;
 $rows = NULL;
 $bodies_in_list = isset($PHORUM['TMP']['bodies_in_list']) && $PHORUM['TMP']['bodies_in_list'];
 if($PHORUM['cache_messages'] &&
-   (!$PHORUM['DATA']['LOGGEDIN'] || $PHORUM['use_cookies']) &&
-   !$PHORUM['count_views']) {
+   (!$PHORUM['DATA']['LOGGEDIN'] || $PHORUM['use_cookies'])) {
     $cache_key = $PHORUM['forum_id']."-".$PHORUM['cache_version']."-".$page."-";
     $cache_key.= $PHORUM['threaded_list']."-".$PHORUM['threaded_read']."-".$PHORUM["language"];
     $cache_key.= "-".$PHORUM["count_views"]."-".($bodies_in_list?"1":"0")."-".$PHORUM['float_to_top'];
     $cache_key.= "-".$PHORUM['user']['tz_offset'];
     $rows = phorum_cache_get('message_list',$cache_key);
+
+    // Fetch fresh viewcounts/threadviewcounts from database to bypass stale cached counts in thread list
+    if ($PHORUM['count_views'] && !empty($rows)) {
+        $mids_to_update = array();
+        foreach ($rows as $key => $row) {
+            if (isset($row['thread'])) {
+                $mids_to_update[] = (int)$row['thread'];
+            }
+        }
+        if (!empty($mids_to_update)) {
+            $mids_list = implode(',', array_unique($mids_to_update));
+            $sql = "SELECT message_id, viewcount, threadviewcount FROM " . $PHORUM['message_table'] . " WHERE message_id IN ($mids_list)";
+            $viewcounts = phorum_db_interact(DB_RETURN_ASSOCS, $sql, 'message_id');
+            if (!empty($viewcounts)) {
+                foreach ($rows as $key => $row) {
+                    $tid = $row['thread'];
+                    if (isset($viewcounts[$tid])) {
+                        $vc = $viewcounts[$tid];
+                        $new_viewcount = !empty($PHORUM['count_views_per_thread']) ? $vc['threadviewcount'] : $vc['viewcount'];
+                        $old_viewcount = !empty($PHORUM['count_views_per_thread']) ? $row['threadviewcount'] : $row['viewcount'];
+                        
+                        // Update raw values
+                        $rows[$key]['viewcount'] = $vc['viewcount'];
+                        $rows[$key]['threadviewcount'] = $vc['threadviewcount'];
+                        
+                        // Update formatted views
+                        if ($PHORUM['count_views'] == 2) {
+                            $rows[$key]['viewcount'] = number_format($new_viewcount, 0, $PHORUM['dec_sep'], $PHORUM['thous_sep']);
+                        } else {
+                            // Replace the old viewcount string in the subject
+                            $old_suffix = " ($old_viewcount " . $PHORUM['DATA']['LANG']['Views_Subject'] . ")";
+                            $new_suffix = " ($new_viewcount " . $PHORUM['DATA']['LANG']['Views_Subject'] . ")";
+                            $rows[$key]['subject'] = str_replace($old_suffix, $new_suffix, $row['subject']);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 if($rows == null) {
@@ -373,8 +411,7 @@ if($rows == null) {
     }
 
     if($PHORUM['cache_messages'] &&
-       (!$PHORUM['DATA']['LOGGEDIN'] || $PHORUM['use_cookies']) &&
-       !$PHORUM['count_views']) {
+       (!$PHORUM['DATA']['LOGGEDIN'] || $PHORUM['use_cookies'])) {
         phorum_cache_put('message_list',$cache_key,$rows);
     }
 }

@@ -49,7 +49,7 @@
       {IF MESSAGE->URL->RECENT_AUTHOR_PROFILE}<a href="{MESSAGE->URL->RECENT_AUTHOR_PROFILE}">{/IF}
         {MESSAGE->recent_author}
       {IF MESSAGE->URL->RECENT_AUTHOR_PROFILE}</a>{/IF}
-      <br/>
+      <br />
       {MESSAGE->lastpost}
     {ELSE}
       {IF MESSAGE->URL->PROFILE}<a href="{MESSAGE->URL->PROFILE}">{/IF}

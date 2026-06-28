@@ -1,11 +1,11 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.15.3. password_reset</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Developer Reference Manual"><link rel="up" href="ch03s15.html" title="3.15. Login/Logout"><link rel="prev" href="ch03s15s02.html" title="3.15.2. after_logout"><link rel="next" href="ch03s15s04.html" title="3.15.4. after_login"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s15s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s15s04.html">Next</a></td></tr></table><hr></div><div class="section" title="3.15.3. password_reset"><div class="titlepage"><div><div><h3 class="title"><a name="hook.password_reset"></a>3.15.3. password_reset</h3></div></div></div><p>
-        (OpenPhorum 5 &gt;= 5.2.13)
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.15.3. password_reset</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03s15.html" title="3.15. Login/Logout"><link rel="prev" href="ch03s15s02.html" title="3.15.2. after_logout"><link rel="next" href="ch03s15s04.html" title="3.15.4. after_login"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s15s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s15s04.html">Next</a></td></tr></table><hr></div><div class="section" title="3.15.3. password_reset"><div class="titlepage"><div><div><h3 class="title"><a name="hook.password_reset"></a>3.15.3. password_reset</h3></div></div></div><p>
+        (LibreForum 5 &gt;= 5.2.13)
       </p><p>
 
 This hook is called after handling a password reset request.
 Based on whether a user account can be found for the
 provided email address and what the account status for that
-user is, different actions are performed by OpenPhorum before
+user is, different actions are performed by LibreForum before
 calling this hook:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">If no user account can be found for the provided email
 address, then nothing is done.</li><li class="listitem">If the account is not yet approved by a moderator,

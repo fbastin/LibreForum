@@ -1,10 +1,10 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>1.3.5. Configure the database access for OpenPhorum</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Administrator Reference Manual"><link rel="up" href="ch01s03.html" title="1.3. Detailed installation instructions"><link rel="prev" href="ch01s03s04.html" title="1.3.4. Create a database and a database user"><link rel="next" href="ch01s03s06.html" title="1.3.6. Run the web based installer"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch01s03s04.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch01s03s06.html">Next</a></td></tr></table><hr></div><div class="section" title="1.3.5. Configure the database access for OpenPhorum"><div class="titlepage"><div><div><h3 class="title"><a name="id2507230"></a>1.3.5. Configure the database access for OpenPhorum</h3></div></div></div><p>
-        After setting up the database, you will have to tell OpenPhorum how
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>1.3.5. Configure the database access for LibreForum</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Administrator Reference Manual"><link rel="up" href="ch01s03.html" title="1.3. Detailed installation instructions"><link rel="prev" href="ch01s03s04.html" title="1.3.4. Create a database and a database user"><link rel="next" href="ch01s03s06.html" title="1.3.6. Run the web based installer"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch01s03s04.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch01s03s06.html">Next</a></td></tr></table><hr></div><div class="section" title="1.3.5. Configure the database access for LibreForum"><div class="titlepage"><div><div><h3 class="title"><a name="id2507230"></a>1.3.5. Configure the database access for LibreForum</h3></div></div></div><p>
+        After setting up the database, you will have to tell LibreForum how
         to access that database. The configuration for this is put in
         the file <code class="filename">include/db/config.php</code> inside your
-        OpenPhorum directory. This file is not included in the distribution.
+        LibreForum directory. This file is not included in the distribution.
         Only a differently named sample file is included (this is to
-        prevent overwriting your configuration when upgrading OpenPhorum).
+        prevent overwriting your configuration when upgrading LibreForum).
         Copy or rename the sample configuration file
         <code class="filename">include/db/config.php.sample</code> to
         <code class="filename">include/db/config.php</code>. Then edit the
@@ -20,7 +20,7 @@
         In the configuration file, you will find the following settings:
         </p><div class="variablelist"><dl><dt><span class="term">type</span></dt><dd><p>
                 This setting determines what database backend is used
-                by OpenPhorum. OpenPhorum is distributed with the a MySQL backend.
+                by LibreForum. LibreForum is distributed with the a MySQL backend.
                 If you are using MySQL for the database server, then you
                 can keep the default value <code class="literal">mysql</code> here.
               </p><p>
@@ -41,7 +41,7 @@
                 MySQL (and a lot of other database servers) can handle
                 multiple databases in one database server. Each database
                 is referenced by its own unique name. This setting is
-                used for configuring the name of the database that OpenPhorum
+                used for configuring the name of the database that LibreForum
                 has to use.
               </p><p>
                 If you have created the database using the example command
@@ -56,8 +56,8 @@
                 The password for the database user.
               </p></dd><dt><span class="term">table_prefix</span></dt><dd><p>
                 This table prefix will be prepended to all table names
-                that OpenPhorum uses. If other applications are using the
-                same database or if you have multiple OpenPhorum installations
+                that LibreForum uses. If other applications are using the
+                same database or if you have multiple LibreForum installations
                 that use the same database name, this prefix can be used to
                 prevent table name collisions. E.g. if you set the
                 prefix to <code class="literal">myprefix</code>, then the full name
@@ -76,13 +76,13 @@
                 The socket which is used by the database server to connect to.
                 Overrides the port if the hostname is localhost for mysql.
               </p></dd><dt><span class="term">down_page, </span><span class="term">upgrade_page</span></dt><dd><p>
-                OpenPhorum uses a built-in error message to inform visitors
+                LibreForum uses a built-in error message to inform visitors
                 when no database connection can be made. If you want to
                 provide a custom error message page for this, you can
                 set this setting to the URL of the page that you want
                 to display.
               </p><p>
-                OpenPhorum uses a simple built-in page to inform visitors and
+                LibreForum uses a simple built-in page to inform visitors and
                 the site admin that the database has to be upgraded.
                 If you want to provide a custom upgrade message page for
                 this, you can set this setting to the URL of the page that
@@ -96,7 +96,7 @@
             The following options apply only to the mysql-layer:
           </em></span>
           </p><div class="variablelist"><dl><dt><span class="term">mysql_use_ft</span></dt><dd><p>
-                This setting determines whether OpenPhorum will use MySQL's
+                This setting determines whether LibreForum will use MySQL's
                 full text algorithm for searching through postings.
                 If enabled, searching will be much faster.
               </p><p>
@@ -110,10 +110,10 @@
               </p></dd><dt><span class="term">mysql_php_extension</span></dt><dd><p>
                 This option defines which MySQL PHP extension should be used.
                 Either NULL, "mysql", "mysqli" or "mysqli_replication" for
-                master/slave setups. If NULL, OpenPhorum will autodetect the
+                master/slave setups. If NULL, LibreForum will autodetect the
                 extension to use.
               </p></dd><dt><span class="term">empty_search_table</span></dt><dd><p>
-                This option defines if OpenPhorum should populate the search
+                This option defines if LibreForum should populate the search
                 table with data for mysql fulltext search (useful if you
                 use a alternate search backend which doesn't use the
                 search table): 0 will put the messages into the search table,

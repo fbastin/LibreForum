@@ -48,8 +48,8 @@ function phorum_cache_get($type,$key,$version=NULL) {
                 // $version might not be set.
                 $retval=unserialize(@file_get_contents($path));
 
-                // timeout?
-                if($retval[0] < time()) {
+                // timeout or corrupt data?
+                if(!is_array($retval) || !isset($retval[0]) || $retval[0] < time()) {
                     @unlink($path);
                 // version expired?
                 } elseif ($version != NULL &&
@@ -74,8 +74,8 @@ function phorum_cache_get($type,$key,$version=NULL) {
             // $version might not be set.
             $retval=unserialize(@file_get_contents($path));
 
-            // timeout?
-            if($retval[0] < time()) {
+            // timeout or corrupt data?
+            if(!is_array($retval) || !isset($retval[0]) || $retval[0] < time()) {
                 $ret = NULL;
                 @unlink($path);
             // version expired?
@@ -107,11 +107,24 @@ function phorum_cache_put($type,$key,$data,$ttl=PHORUM_CACHE_DEFAULT_TTL,$versio
     }
     $file=$path."/data.php";
     $ttl_time=time()+$ttl;
-    if (!($fp=fopen($file,"w"))) { 
+
+    // Write to a temporary file first, then atomically rename it.
+    // This prevents concurrent reads from hitting a partially written or truncated file.
+    $tmp_file = $file . '.' . bin2hex(random_bytes(8)) . '.tmp';
+    if (!($fp=@fopen($tmp_file,"w"))) { 
         return false; 
     } 
     $ret=fwrite($fp,serialize(array($ttl_time,$data,$version)));
     fclose($fp);
+
+    if ($ret !== false) {
+        if (!@rename($tmp_file, $file)) {
+            @unlink($tmp_file);
+            return false;
+        }
+    } else {
+        @unlink($tmp_file);
+    }
 
     return $ret;
 }
@@ -169,12 +182,17 @@ function phorum_cache_purge_recursive($dir, $subdir, $total, $purged, $full) {
             $subdirs[] = "$subdir/$entry";
         } elseif ($entry == "data.php" && is_file("$dir/$subdir/$entry")) {
             $contents = @file_get_contents("$dir/$subdir/$entry");
-            $total += strlen($contents);
-            $data = unserialize($contents);
-            if ( $full || ($data[0] < time()) ) {
+            if ($contents !== false) {
+                $total += strlen($contents);
+                $data = unserialize($contents);
+                if ( $full || !is_array($data) || !isset($data[0]) || ($data[0] < time()) ) {
+                    @unlink("$dir/$subdir/$entry");
+                    $did_purge = true;
+                    $purged += strlen($contents);
+                }
+            } else {
                 @unlink("$dir/$subdir/$entry");
                 $did_purge = true;
-                $purged += strlen($contents);
             }
         }
     }

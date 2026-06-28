@@ -2,27 +2,27 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//   Copyright (C) 2010  OpenPhorum Development Team                              //
+//   Copyright (C) 2010  LibreForum Development Team                              //
 //   http://www.phorum.org                                                    //
 //                                                                            //
 //   This program is free software. You can redistribute it and/or modify     //
-//   it under the terms of either the current OpenPhorum License (viewable at     //
-//   phorum.org) or the OpenPhorum License that was distributed with this file    //
+//   it under the terms of either the current LibreForum License (viewable at     //
+//   phorum.org) or the LibreForum License that was distributed with this file    //
 //                                                                            //
 //   This program is distributed in the hope that it will be useful,          //
 //   but WITHOUT ANY WARRANTY, without even the implied warranty of           //
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     //
 //                                                                            //
-//   You should have received a copy of the OpenPhorum License                    //
+//   You should have received a copy of the LibreForum License                    //
 //   along with this program.                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 define('phorum_page','version_iframe');
 
-// Check for new versions of the OpenPhorum software. Only do this once by
+// Check for new versions of the LibreForum software. Only do this once by
 // issuing a cookie which remembers whether we need to upgrade or not.
 // This file is included within an <iframe> in the admin interface header,
 // so downtime of the phorum.org website won't affect the performance of
-// the admin interface for OpenPhorum users.
+// the admin interface for LibreForum users.
 
 require_once('./common.php');
 
@@ -45,7 +45,7 @@ setcookie("phorum_upgrade_available", $upgrade_available, 0,
 ?>
 <html>
   <head>
-    <title>OpenPhorum upgrade notification</title>
+    <title>LibreForum upgrade notification</title>
     <style type="text/css">
     body {
         background-color: white;
@@ -78,11 +78,11 @@ setcookie("phorum_upgrade_available", $upgrade_available, 0,
   <body>
   <?php if ($upgrade_available) { ?>
     <div class="notify_upgrade">
-      <a target="_top" href="admin.php?module=version">New OpenPhorum version <?php print htmlspecialchars($upgrade_available) ?> available!</a>
+      <a target="_top" href="admin.php?module=version">New LibreForum version <?php print htmlspecialchars($upgrade_available) ?> available!</a>
     </div>
   <?php } else { ?>
     <div class="notify_noupgrade">
-      Your OpenPhorum installation is up to date
+      Your LibreForum installation is up to date
     </div>
   <?php } ?>
   </body>

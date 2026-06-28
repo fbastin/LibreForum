@@ -395,6 +395,29 @@ if($page>1 && !isset($data[$thread])){
     $data[$first_message["message_id"]] = $first_message;
 }
 
+// Fetch fresh viewcounts from database to bypass stale cached counts
+if ($PHORUM['cache_messages'] && $PHORUM['count_views'] && !empty($data)) {
+    $mids_to_update = array();
+    foreach ($data as $mid => $row) {
+        if (is_numeric($mid)) {
+            $mids_to_update[] = (int)$mid;
+        }
+    }
+    if (!empty($mids_to_update)) {
+        $mids_list = implode(',', $mids_to_update);
+        $sql = "SELECT message_id, viewcount, threadviewcount FROM " . $PHORUM['message_table'] . " WHERE message_id IN ($mids_list)";
+        $viewcounts = phorum_db_interact(DB_RETURN_ASSOCS, $sql, 'message_id');
+        if (!empty($viewcounts)) {
+            foreach ($viewcounts as $mid => $vc) {
+                if (isset($data[$mid])) {
+                    $data[$mid]['viewcount'] = $vc['viewcount'];
+                    $data[$mid]['threadviewcount'] = $vc['threadviewcount'];
+                }
+            }
+        }
+    }
+}
+
 //timing_mark("after database");
 
 if(!empty($data) && isset($data[$thread]) && isset($data[$message_id])) {

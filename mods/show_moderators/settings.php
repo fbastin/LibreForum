@@ -31,12 +31,12 @@ $row = $frm->addrow('Automatically display moderators on the index page?', $frm-
 $frm->addhelp($row, 'Automatic displaying on index page',
     "If you enable automatic displaying on the index page,
      then the moderators will be appended to the forum
-     descriptions.<br/>
-     <br/>
+     descriptions.<br />
+     <br />
      If you disable this option, then you will have to
      edit the index_new.tpl and/or index.tpl to include
      the moderator info. You can make use of the following
-     variables:<br/>
+     variables:<br />
      <ul>
      <li>{FORUMS->MODERATORS}: a list of moderators over which you can run
           a {LOOP ...}. Inside the loop you can use:</li>
@@ -49,12 +49,12 @@ $row = $frm->addrow('Automatically display moderators on the list pages?', $frm-
 $frm->addhelp($row, 'Automatic displaying on list page',
     "If you enable automatic displaying on the list page,
      then the moderators will be displayed at the bottom
-     of the page.<br/>
-     <br/>
+     of the page.<br />
+     <br />
      If you disable this option, then you will have to
      edit the list.tpl and/or list_threads.tpl to include
      the moderator info. You can make use of the following
-     variables:<br/>
+     variables:<br />
      <ul>
      <li>{MODERATORS}: a list of moderators over which you can run
           a {LOOP ...}. Inside the loop you can use:</li>
@@ -67,12 +67,12 @@ $row = $frm->addrow('Automatically display moderators on the read pages?', $frm-
 $frm->addhelp($row, 'Automatic displaying on read page',
     "If you enable automatic displaying on the read page,
      then the moderators will be displayed at the bottom
-     of the page.<br/>
-     <br/>
+     of the page.<br />
+     <br />
      If you disable this option, then you will have to
      edit the read.tpl and/or read_threads.tpl to include
      the moderator info. You can make use of the following
-     variables:<br/>
+     variables:<br />
      <ul>
      <li>{MODERATORS}: a list of moderators over which you can run
           a {LOOP ...}. Inside the loop you can use:</li>

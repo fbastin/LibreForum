@@ -7,8 +7,8 @@ if (!isset($GLOBALS['PHORUM']['mod_embed_images'])) {
 }
 
 foreach (array(
-    'max_width'     => 300,
-    'max_height'    => 300,
+    'max_width'     => 200,
+    'max_height'    => 200,
     'handle_bbcode' => 1,
     'handle_html'   => 1,
     'handle_url'    => 1,
@@ -19,7 +19,8 @@ foreach (array(
     'embed_html'    => 1,
     'embed_url'     => 1,
     'embed_embatt'  => 1,
-    'embed_allatt'  => 0) as $key => $val) {
+    'embed_allatt'  => 0,
+    'debug'         => 0) as $key => $val) {
 
     if (!isset($GLOBALS['PHORUM']['mod_embed_images'][$key])) {
         $GLOBALS['PHORUM']['mod_embed_images'][$key] = $val;

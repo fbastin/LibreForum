@@ -28,7 +28,7 @@ endobj
 << /S /GoTo /D (subsection.1.3.1) >>
 endobj
 24 0 obj
-(Download OpenPhorum)
+(Download LibreForum)
 endobj
 25 0 obj
 << /S /GoTo /D (subsection.1.3.2) >>
@@ -40,7 +40,7 @@ endobj
 << /S /GoTo /D (subsection.1.3.3) >>
 endobj
 32 0 obj
-(Place the OpenPhorum files in your website's document root)
+(Place the LibreForum files in your website's document root)
 endobj
 33 0 obj
 << /S /GoTo /D (subsection.1.3.4) >>
@@ -52,7 +52,7 @@ endobj
 << /S /GoTo /D (subsection.1.3.5) >>
 endobj
 40 0 obj
-(Configure the database access for OpenPhorum)
+(Configure the database access for LibreForum)
 endobj
 41 0 obj
 << /S /GoTo /D (subsection.1.3.6) >>
@@ -64,7 +64,7 @@ endobj
 << /S /GoTo /D (subsection.1.3.7) >>
 endobj
 48 0 obj
-(Things to do after installing OpenPhorum)
+(Things to do after installing LibreForum)
 endobj
 49 0 obj
 << /S /GoTo /D (section.1.4) >>
@@ -196,7 +196,7 @@ endobj
 << /S /GoTo /D (chapter.3) >>
 endobj
 136 0 obj
-(How to configure and use the OpenPhorum Features)
+(How to configure and use the LibreForum Features)
 endobj
 137 0 obj
 << /S /GoTo /D (section.3.1) >>
@@ -244,13 +244,13 @@ endobj
 << /S /GoTo /D (section.3.3) >>
 endobj
 168 0 obj
-(OpenPhorum Modules)
+(LibreForum Modules)
 endobj
 169 0 obj
 << /S /GoTo /D (subsection.3.3.1) >>
 endobj
 172 0 obj
-(What are OpenPhorum Modules?)
+(What are LibreForum Modules?)
 endobj
 173 0 obj
 << /S /GoTo /D (subsection.3.3.2) >>
@@ -3801,7 +3801,7 @@ endobj
 /OpenAction 309 0 R
 >> endobj
 715 0 obj <<
-/Author(Maurice Makaay, Brian Moon, Thomas Seifert, Andy Taylor, and Joe Curia)/Title(OpenPhorum Administrator Reference Manual)/Subject()/Creator(DBLaTeX-0.2.10)/Producer(pdfTeX-1.40.9)/Keywords()
+/Author(Maurice Makaay, Brian Moon, Thomas Seifert, Andy Taylor, and Joe Curia)/Title(LibreForum Administrator Reference Manual)/Subject()/Creator(DBLaTeX-0.2.10)/Producer(pdfTeX-1.40.9)/Keywords()
 /CreationDate (D:20110826041628-05'00')
 /ModDate (D:20110826041628-05'00')
 /Trapped /False

@@ -1,7 +1,7 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.6. Building URLs for OpenPhorum</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Developer Reference Manual"><link rel="up" href="ch02s03.html" title="2.3. Writing your own modules"><link rel="prev" href="ch02s03s05s03.html" title="2.3.5.3. Storing data for users"><link rel="next" href="ch02s03s06s02.html" title="2.3.6.2. Build URLs for OpenPhorum PHP scripts: phorum_get_url()"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03s05s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s03s06s02.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.6. Building URLs for OpenPhorum"><div class="titlepage"><div><div><h3 class="title"><a name="modules.buildingurls"></a>2.3.6. Building URLs for OpenPhorum</h3></div></div></div><div class="section" title="2.3.6.1. Introduction"><div class="titlepage"><div><div><h4 class="title"><a name="modules.buildingurlsintro"></a>2.3.6.1. Introduction</h4></div></div></div><p>
-          You might have noticed that all URLs that are used by OpenPhorum
-          are full absolute URLs. OpenPhorum does not use relative URLs anywhere.
-          and all of the URLs that point to OpenPhorum PHP scripts are generated
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.6. Building URLs for LibreForum</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch02s03.html" title="2.3. Writing your own modules"><link rel="prev" href="ch02s03s05s03.html" title="2.3.5.3. Storing data for users"><link rel="next" href="ch02s03s06s02.html" title="2.3.6.2. Build URLs for LibreForum PHP scripts: phorum_get_url()"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03s05s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s03s06s02.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.6. Building URLs for LibreForum"><div class="titlepage"><div><div><h3 class="title"><a name="modules.buildingurls"></a>2.3.6. Building URLs for LibreForum</h3></div></div></div><div class="section" title="2.3.6.1. Introduction"><div class="titlepage"><div><div><h4 class="title"><a name="modules.buildingurlsintro"></a>2.3.6.1. Introduction</h4></div></div></div><p>
+          You might have noticed that all URLs that are used by LibreForum
+          are full absolute URLs. LibreForum does not use relative URLs anywhere.
+          and all of the URLs that point to LibreForum PHP scripts are generated
           by the function <code class="literal">phorum_get_url()</code>. This was done
           for several reasons. Here are some of them, for the curious
           developer:
@@ -15,7 +15,7 @@
               loss of cookies as a result (since cookies bind to domains).
               Loss of cookies result in the user being logged out.
             </li><li class="listitem">
-              Integrating OpenPhorum in a website is a lot easier when using
+              Integrating LibreForum in a website is a lot easier when using
               absolute URLs. When editing the header template for example,
               it should be okay to add a
               <code class="literal">&lt;base href="..."/&gt;</code> in there, pointing
@@ -23,15 +23,15 @@
               header template can use the same constructions and paths as
               the main site's header template.
             </li><li class="listitem">
-              This becomes even more important when running OpenPhorum in portable
-              or embedded setups. There, OpenPhorum will be run from some
+              This becomes even more important when running LibreForum in portable
+              or embedded setups. There, LibreForum will be run from some
               script at a random location and no longer from a script in the
-              OpenPhorum directory. By using absolute URLs, the linked resources
+              LibreForum directory. By using absolute URLs, the linked resources
               can still be found.
             </li><li class="listitem">
               Code for generating absolute URLs is needed for generating
               URLs that can be put in mail messages. It's a logical choice
-              to use the same code for generating the other URLs in OpenPhorum,
+              to use the same code for generating the other URLs in LibreForum,
               so only one URL generating function has to be maintained.
             </li><li class="listitem">
               By letting <code class="literal">phorum_get_url()</code> generate all

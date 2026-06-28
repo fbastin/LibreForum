@@ -13,7 +13,7 @@ $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["ForumSubscriptionsSettingsUpdate
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["ForumSubscriptionsUpdated"] = "Your forum subscriptions have been updated.";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["Frequency"] = "How Often";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["Immediate"] = "After Each Post";
-$PHORUM["DATA"]["LANG"]["forum_subscriptions"]["NewMessage"] = "Author: %author%\n\nSubject:\n%subject%\n\nMessage:\n%plain_body%\n\nView the full thread:\n%read_url%";
+$PHORUM["DATA"]["LANG"]["forum_subscriptions"]["NewMessage"] = "Hello,\n\nA new reply has been posted in the forum.\n\nAuthor: %author%\nSubject: %subject%\n\nView the full thread:\n%read_url%";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["NewMessageSubject"] = "New message in the %forumname% forum at %sitename%.";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["NewThreadsOnly"] = "New Threads Only";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["Never"] = "Never";

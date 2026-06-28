@@ -173,7 +173,7 @@ function phorum_mod_check_module_upgrades_before_footer() {
 				}
 			}
 			if (!empty($upgraded_mods)) {
-				$insert_str = "<div style=\\\"background-color: #FFEEEE; font-weight: bold; border: solid 2px #DD0000; padding: 5px; margin: 0 0 10px 0; text-align: center; \\\">The following mods have a newer version available:<br />$upgraded_mods</div>";
+				$insert_str = "<div style=\\\"background-color: #FFEEEE; font-weight: bold; border: solid 2px #DD0000; padding: 5px; margin: 0 0 10px 0; text-align: center; \\\">The following mods have a newer version available:<br />$upgraded_mods<\/div>";
 			}
 			$PHORUM["phorum_mod_check_module_upgrades"][$PHORUM["user"]["user_id"]]["timestamp"] = time();
 			$PHORUM["phorum_mod_check_module_upgrades"][$PHORUM["user"]["user_id"]]["upgraded_mods"] = $insert_str;
@@ -183,7 +183,9 @@ function phorum_mod_check_module_upgrades_before_footer() {
 	
 	//show notification if upgrades are available
 	if (!empty($insert_str)) {
-		print "<script>function cmu_insert_div() {
+		print "<script type=\"text/javascript\">
+			//<![CDATA[
+			function cmu_insert_div() {
 			divs = document.getElementsByTagName('div');
 			var phorum_div;
 			for (i in divs) {
@@ -196,6 +198,7 @@ function phorum_mod_check_module_upgrades_before_footer() {
 				}
 			}
 			window.onload = cmu_insert_div; 
+			//]]>
 			</script>";
 	}
 }

@@ -1,6 +1,6 @@
 title: Embed Images
 desc: This module implements several image viewers that can be used for viewing images inside forum messages. The images are shown as scaled down thumbnails in the message, so large images won't break the page layout. By clicking the image, the users can view the full size image in the configured viewer.
-version: 1.1.3
+version: 1.1.5
 require_version: 5.2.16-RC2
 author: Maurice Makaay <maurice@phorum.org>
 url: http://www.phorum.org/phorum5/read.php?62,125584

@@ -10,4 +10,9 @@
 
 include(str_replace('-informal-female', '-informal-male', __FILE__));
 
+$PHORUM['DATA']['LANG']['mod_onlineusers']['Administrator']         = 'Administratorin';
+$PHORUM['DATA']['LANG']['mod_onlineusers']['OnlineUsers']           = 'Aktive Teilnehmerinnen';
+$PHORUM['DATA']['LANG']['mod_onlineusers']['RecordNumberOfUsers']   = 'Anzahl der Teilnehmerinnen';
+$PHORUM['DATA']['LANG']['mod_onlineusers']['UsersReadingThisForum'] = '%count% Teilnehmerinnen lesen derzeit in diesem Forum.';
+
 ?>

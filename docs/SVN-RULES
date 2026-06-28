@@ -1,11 +1,11 @@
-OpenPhorum SVN Rules
+LibreForum SVN Rules
 ================
 
 This is the first file you should be reading after you get your SVN account.
 We'll assume you're basically familiar with SVN, but feel free to post
 your questions in the development forum at phorum.org.
 
-For information on OpenPhorum's SVN repository, please visit our website:
+For information on LibreForum's SVN repository, please visit our website:
 http://phorum.org/cgi-bin/trac.cgi/wiki/SVNPage
 
 Collaboration is a Good Thing(tm), and SVN lets us do this. Thus, following
@@ -93,7 +93,7 @@ the list.
 
 Happy hacking,
 
-The OpenPhorum Dev Team
+The LibreForum Dev Team
 
 
 * large parts of this file were copied from the PHP Dev Team's

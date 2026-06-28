@@ -348,11 +348,11 @@ function phorum_mod_pdfpages_addon() {
     // reset pointer to the last page
     $pdf->lastPage();
 
+    // clean up temporary image files before outputting (since Output() exits the script)
+    foreach ($tmpfiles as $tf) { @unlink($tf); }
+
     //Close and output PDF document
     $pdf->Output("forumthread_{$thread}.pdf","D");
-
-    // clean up temporary image files
-    foreach ($tmpfiles as $tf) { @unlink($tf); }
 }
 
 function phorum_mod_pdfpages_read($data) {

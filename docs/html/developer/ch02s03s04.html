@@ -1,9 +1,9 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.4. Supporting multiple languages</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Developer Reference Manual"><link rel="up" href="ch02s03.html" title="2.3. Writing your own modules"><link rel="prev" href="ch02s03s03s03.html" title="2.3.3.3. Multiple file modules"><link rel="next" href="ch02s03s05.html" title="2.3.5. Module data storage"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03s03s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s03s05.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.4. Supporting multiple languages"><div class="titlepage"><div><div><h3 class="title"><a name="modules.languages"></a>2.3.4. Supporting multiple languages</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.4. Supporting multiple languages</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch02s03.html" title="2.3. Writing your own modules"><link rel="prev" href="ch02s03s03s03.html" title="2.3.3.3. Multiple file modules"><link rel="next" href="ch02s03s05.html" title="2.3.5. Module data storage"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03s03s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s03s05.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.4. Supporting multiple languages"><div class="titlepage"><div><div><h3 class="title"><a name="modules.languages"></a>2.3.4. Supporting multiple languages</h3></div></div></div><p>
         This feature is supported by the <a class="xref" href="ch02s03s03s03.html" title="2.3.3.3. Multiple file modules">multiple file structure</a>.
       </p><p>
         If your module includes text that will be displayed to end users,
         you should strongly consider making it support multiple languages.
-        This will allow OpenPhorum installations that use a different language(s)
+        This will allow LibreForum installations that use a different language(s)
         to display output of your module in the same language(s),
         instead of the language you have written the module in.
       </p><p>
@@ -14,14 +14,14 @@
         </p><pre class="programlisting">hook: lang|</pre><p>
 
         There is no actual hook function configured here, because the
-        "lang" hook is only used as a marker for OpenPhorum. It tells OpenPhorum
+        "lang" hook is only used as a marker for LibreForum. It tells LibreForum
         that your module supports multiple languages.
       </p><p>
         Next, you must provide at least one language file with your module.
         Language files are stored in a subdirectory name "lang" inside your
         module directory. In our sample module, the full directory would be
         <code class="filename">{phorum dir}/mods/foo/lang/</code>. The language files
-        must be named identical to the main language files that OpenPhorum uses.
+        must be named identical to the main language files that LibreForum uses.
         To include both English and French, your module would require the
         following file structure:
         </p><div class="example"><a name="id2511989"></a><p class="title"><b>Example 2.4. Tree structure for a module that supports languages</b></p><div class="example-contents"><pre class="programlisting">
@@ -42,10 +42,10 @@
                     +-- french.php </pre></div></div><p><br class="example-break">
 
         The structure of your language files will be almost identical to
-        that of the main OpenPhorum language files. However, for your own
+        that of the main LibreForum language files. However, for your own
         language files it is advisable to add an extra level in the
         language variables, to avoid conflicts with language string from
-        other modules or OpenPhorum itself. Here is an example of how you
+        other modules or LibreForum itself. Here is an example of how you
         could do that:
 
         </p><div class="example"><a name="id2512012"></a><p class="title"><b>Example 2.5. Custom language file for a module</b></p><div class="example-contents"><pre class="programlisting">
@@ -68,15 +68,15 @@ $PHORUM["DATA"]["LANG"]["mod_foo"]["Hello"]</pre><p>
 {LANG-&gt;mod_foo-&gt;Hello}</pre><p>
 
       </p><p>
-        In case a OpenPhorum installation is using a language that your module
-        does not support, OpenPhorum will automatically attempt to fallback to
+        In case a LibreForum installation is using a language that your module
+        does not support, LibreForum will automatically attempt to fallback to
         English. So it is highly recommend that you include an
         <code class="filename">english.php</code> language file in all your modules.
-        If both the current language and English are not found, OpenPhorum will
+        If both the current language and English are not found, LibreForum will
         be unable to load a language for your module and will display empty
         space instead of your language strings.
       </p><p>
-        Always try to reuse strings that are already in the main OpenPhorum
+        Always try to reuse strings that are already in the main LibreForum
         language files itself. Only create custom strings when there is
         no alternative available. Having more text to translate is more
         work for translators and using core language strings helps in

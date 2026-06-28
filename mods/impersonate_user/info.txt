@@ -2,7 +2,7 @@ title: Impersonate User
 desc:  Allows administrators to (temporarily) impersonate a different user, which can be useful when investigating user specific problems.
 author: Maurice Makaay
 url: http://www.phorum.org/phorum5/read.php?62,124298
-version: 1.0.6
+version: 1.0.7
 require_version: 5.2.0
 category: admin
 category: user_management

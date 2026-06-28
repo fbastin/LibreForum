@@ -28,12 +28,13 @@ foreach ($styles as $id => $preview) {
     print "<link rel=\"alternate stylesheet\" type=\"text/css\" " .
           "title=\"" . htmlspecialchars($id) . "\" " .
           "href=\"" . $PHORUM["http_path"] . "/mods/topic_poll/styles/" .
-          htmlspecialchars($id) . "/style.css\" " .
-          "/>\n";
+          htmlspecialchars($id) . "/style.css\"" .
+          " />\n";
 }
 ?>
 
 <script type="text/javascript">
+// <![CDATA[
   function update_preview(style_id)
   {
     if (! document.getElementById) return;
@@ -52,6 +53,7 @@ foreach ($styles as $id => $preview) {
       }
     }
   }
+// ]]>
 </script> <?php
 
 // Retrieve settings for the current forum and apply default settings.
@@ -181,9 +183,9 @@ $row = $frm->addrow(
 $frm->addhelp(
     $row, "Add info to the message list for messages with polls?",
     "If you want to show in the message list whether a thread contains a
-     poll or not, you can set that up through this option.<br/><br/>
+     poll or not, you can set that up through this option.<br /><br />
      If you choose to add an icon automatically, then the icon will be
-     appended to the subject of the threads.<br/><br/>You can also
+     appended to the subject of the threads.<br /><br />You can also
      choose to only setup template variables, which you can use to
      modify the list.tpl and list_threads.tpl. If you do so, the
      template variable {MESSAGES->topic_poll} will be set inside the

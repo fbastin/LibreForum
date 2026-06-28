@@ -45,7 +45,7 @@ $GLOBALS["PHORUM"]["mod_topic_poll_causes"] = array(
  */
 function phorum_mod_topic_poll_tpl_editor_buttons()
 {
-    $PHORUM = $GLOBALS["PHORUM"];
+    global $PHORUM;
 
     // Try to find the message data for the edited post.
     // Return if we cannot find it (shouldn't happen though).
@@ -386,8 +386,7 @@ function phorum_mod_topic_poll_read($messages)
     // Get the first message and see if we need to handle a poll
     // vote or vote revocation.
     reset($messages);
-    $message_id = key($messages);
-    $message = current($messages);
+    list ($message_id, $message) = each($messages);
     $handle = false;
     if ($message["parent_id"] == 0 &&
         isset($message["meta"]["mod_topic_poll"]) &&
@@ -642,8 +641,8 @@ function phorum_mod_topic_poll_format($messages, $admin_preview = false)
             $messages[$message_id]["body"] =
                 (isset($message["meta"]["mod_topic_poll"]["position"]) &&
                  $message["meta"]["mod_topic_poll"]["position"] == 'after')
-                ? $messages[$message_id]["body"] . "<br/><br/>$poll"
-                : "$poll <br/><br/>" . $messages[$message_id]["body"];
+                ? $messages[$message_id]["body"] . "<br /><br />$poll"
+                : "$poll <br /><br />" . $messages[$message_id]["body"];
             continue;
         }
 
@@ -709,7 +708,7 @@ function phorum_mod_topic_poll_format($messages, $admin_preview = false)
         $PHORUM["DATA"]["POLL"]["NOVOTENOREAD"] =
             isset($message['topic_poll_novotenoread']) ?
             $message['topic_poll_novotenoread'] : '';
-        $PHORUM["DATA"]["POLL"]["POST_URL"] = $message["URL"]["READ"];
+        $PHORUM["DATA"]["POLL"]["POST_URL"] = (isset($message["URL"]["READ"])?$message["URL"]["READ"]:'');
 
         // Render the poll data to display in the posting.
         $lang = $PHORUM["DATA"]["LANG"]["mod_topic_poll"];
@@ -800,7 +799,7 @@ function phorum_mod_topic_poll_format($messages, $admin_preview = false)
             // Display the number of votes so far.
             $str = $lang["NumberOfVotes"];
             $str = str_replace("%votes%", $poll["total_votes"], $str);
-            if ($statusmessage != null) $statusmessage .= "<br/>";
+            if ($statusmessage != null) $statusmessage .= "<br />";
             $statusmessage .= $str;
 
             // Put the results in the template data.
@@ -840,7 +839,7 @@ function phorum_mod_topic_poll_format($messages, $admin_preview = false)
             ? $messages[$message_id]['body'] .
               $separator .
               $placeholder .
-              '<br/>'
+              '<br />'
 
             : $placeholder .
               $separator .
@@ -939,7 +938,7 @@ function phorum_mod_topic_poll_setup_templatedata($poll, $for_form = FALSE)
     // Add the generic stylsheet and then the specific style to the page
     // header data. The specific style is the one that can be used to
     //override the default style.
-    $PHORUM["DATA"]["HEAD_TAGS"] .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$PHORUM["http_path"]}/mods/topic_poll/topic_poll.css\"/>\n<link rel=\"stylesheet\" type=\"text/css\" href=\"{$PHORUM["http_path"]}/mods/topic_poll/styles/" . htmlspecialchars($style) . "/style.css\"/>";
+    $PHORUM["DATA"]["HEAD_TAGS"] .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$PHORUM["http_path"]}/mods/topic_poll/topic_poll.css\" />\n<link rel=\"stylesheet\" type=\"text/css\" href=\"{$PHORUM["http_path"]}/mods/topic_poll/styles/" . htmlspecialchars($style) . "/style.css\" />";
 
     $PHORUM["mod_topic_poll_stylesheets_added"] = true;
 }
@@ -1159,7 +1158,7 @@ function check_if_topic_poll_is_open($message)
  */
 function check_if_topic_poll_vote_was_cast($message)
 {
-    $PHORUM = $GLOBALS["PHORUM"];
+    global $PHORUM;
     $user = $PHORUM["DATA"]["LOGGEDIN"] ? $PHORUM["user"] : NULL;
 
     // No msg_id set? This might be a new message.
@@ -1229,7 +1228,7 @@ function check_if_topic_poll_vote_was_cast($message)
  */
 function phorum_mod_topic_poll_get_forumsettings($forum_id = NULL)
 {
-    $PHORUM = $GLOBALS["PHORUM"];
+    global $PHORUM;
 
     if ($forum_id == NULL) {
         $forum_id = $PHORUM["forum_id"];

@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.7.5. Full module settings page example</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Developer Reference Manual"><link rel="up" href="ch02s03s07.html" title="2.3.7. Implementing a settings screen for your module"><link rel="prev" href="ch02s03s07s04.html" title="2.3.7.4. Prevent settings.php from being loaded directly"><link rel="next" href="ch03.html" title="Chapter 3. Module hooks"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03s07s04.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.7.5. Full module settings page example"><div class="titlepage"><div><div><h4 class="title"><a name="modules.example"></a>2.3.7.5. Full module settings page example</h4></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.7.5. Full module settings page example</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch02s03s07.html" title="2.3.7. Implementing a settings screen for your module"><link rel="prev" href="ch02s03s07s04.html" title="2.3.7.4. Prevent settings.php from being loaded directly"><link rel="next" href="ch03.html" title="Chapter 3. Module hooks"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03s07s04.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.7.5. Full module settings page example"><div class="titlepage"><div><div><h4 class="title"><a name="modules.example"></a>2.3.7.5. Full module settings page example</h4></div></div></div><p>
           Here is a full example settings page, using the tools from above.
           A real settings page will often be much larger than this, but the
           basics are the same.
@@ -29,8 +29,8 @@
   // This block is standard for every settings page. The "mod" field
   // must be set to the name of the module for which the settings
   // page is written.
-  include_once "./include/admin/OpenPhorumInputForm.php";
-  $frm = new OpenPhorumInputForm ("", "post", "Submit this form");
+  include_once "./include/admin/LibreForumInputForm.php";
+  $frm = new LibreForumInputForm ("", "post", "Submit this form");
   $frm-&gt;hidden("module", "modsettings");
   $frm-&gt;hidden("mod", "foo");
 

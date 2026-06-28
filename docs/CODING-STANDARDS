@@ -1,11 +1,11 @@
-OpenPhorum 5 Coding Standards
+LibreForum 5 Coding Standards
 =========================
 
-For the most part, OpenPhorum 5 uses the standards set forth in the PEAR Coding
+For the most part, LibreForum 5 uses the standards set forth in the PEAR Coding
 Standards located at http://pear.php.net/manual/en/standards.php. We do
 however differ slightly in a few of ways.
 
-1. Header Comment - please use the header comment found in the other OpenPhorum
+1. Header Comment - please use the header comment found in the other LibreForum
    files.
 
 2. Function Naming - PEAR uses the "studly caps" naming. We like to name
@@ -14,7 +14,7 @@ however differ slightly in a few of ways.
    well.
 
 3. Variable Names - PEAR really does not address this as the code you are
-   writing belongs to your package. However, in OpenPhorum, the code you write
+   writing belongs to your package. However, in LibreForum, the code you write
    belongs to us all. Please make variable names useful and clear. Avoid
    single character variables and things like $temp.
 
@@ -26,6 +26,6 @@ auto-format features and will be used to clean up formatting.
 
 Even if you are not going to write a module, you may want to read the
 creating_mods.txt file. It covers some general concepts that exist in
-OpenPhorum that may help you understand more of the OpenPhorum code.
+LibreForum that may help you understand more of the LibreForum code.
 
 Additionally, if you will be using SVN please read the SVN-RULES file.

@@ -1,12 +1,12 @@
-OpenPhorum 5 performance notes
+LibreForum 5 performance notes
 ==========================
 
-Several of OpenPhorum's options have a tradeoff effect: enabling more 
-features can slow OpenPhorum down. This document describes which options 
+Several of LibreForum's options have a tradeoff effect: enabling more 
+features can slow LibreForum down. This document describes which options 
 these are and tries to explain the performance cost of each one.
 
 Which options you should turn off to improve performance depends 
-on the way you use your OpenPhorum installation.
+on the way you use your LibreForum installation.
 
 Table of contents:
 
@@ -33,12 +33,12 @@ Table of contents:
  1.1 DNS Lookups
  ---------------
 
-    DNS lookups cause OpenPhorum to display DNS entries (hostnames) instead
+    DNS lookups cause LibreForum to display DNS entries (hostnames) instead
     of IP addresses on posts. It also will enable checking if mail
     addresses point to valid domains.
 
     On a forum with a lot of posts, enabling this will result in a
-    significant number of queries to your DNS server. OpenPhorum's performance
+    significant number of queries to your DNS server. LibreForum's performance
     will slow down while a query is running, as it will wait for the result
     of the query.
 
@@ -52,7 +52,7 @@ Table of contents:
  ------------------------------
 
     If enabled, this option will alert users when they have new private
-    messages. On every page a logged in user visits, OpenPhorum will check
+    messages. On every page a logged in user visits, LibreForum will check
     to see if they have new private messages.
 
     If you have a large number of active users at one time with a large
@@ -71,7 +71,7 @@ Table of contents:
     requires their attention.
 
     The performance hit of this feature is basically nothing for users
-    without moderator permissions, as OpenPhorum will never perform the checks.
+    without moderator permissions, as LibreForum will never perform the checks.
     Moderators will suffer a small performance hit, depending on what type
     of moderator they are.
 
@@ -83,7 +83,7 @@ Table of contents:
  1.4 Track User Usage
  --------------------
 
-    This option controls how often OpenPhorum will record when a user was last
+    This option controls how often LibreForum will record when a user was last
     active. Setting this to be more frequent results in more accurate last
     activity data, but also causes more database writes.
 
@@ -120,7 +120,7 @@ Table of contents:
     moderators. Administrators are automatically moderators in every forum,
     and will also get the emails.
 
-    This option should not directly affect OpenPhorum's performance, but when
+    This option should not directly affect LibreForum's performance, but when
     a post is made, it will cause some emails to be created. If you have a
     large number of moderators and a lot of posts being made by users, this
     can generate a significant amount of email traffic.

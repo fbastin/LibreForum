@@ -78,3 +78,12 @@ templates/emerald/header.tpl:
     ......
     ......
 
+
+Local Customizations:
+---------------------
+1. **Member Search Feature**:
+   - Added a search form allowing administrators/users to search for a specific member by username, display name, or real name.
+2. **Case Sensitivity Toggle**:
+   - Added a "Sensible à la casse" (Case-sensitive) checkbox to the search form. When checked, it uses the MySQL `LIKE BINARY` comparison rather than the default case-insensitive `LIKE` comparison.
+
+

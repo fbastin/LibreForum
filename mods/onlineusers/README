@@ -1,5 +1,5 @@
 Module  : Online Users
-Version : 2.5.2
+Version : 2.5.3
 Authors : Chris Eaton <tridus@hiredgoons.ca> (original 5.1 module)
           Phorum user Sunbringer (initial 5.1 to 5.2 port)
           Maurice Makaay <maurice@phorum.org> (5.2 rewrite)
@@ -10,8 +10,8 @@ Additionally, it can keep track of the number of guests, visitor
 records and the number of active readers for each forum.
 
 
-Original lincense by Chris:
----------------------------
+Original license by Chris:
+--------------------------
 
 You are free to use, modify, or redistribute this code as long as I (Chris
 Eaton) am given credit for the original development somewhere. This code

@@ -1,11 +1,11 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.4. Page output</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Developer Reference Manual"><link rel="up" href="ch03.html" title="Chapter 3. Module hooks"><link rel="prev" href="ch03s03s06.html" title="3.3.6. page_&lt;phorum_page&gt;"><link rel="next" href="ch03s04s02.html" title="3.4.2. get_template_file"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s03s06.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s04s02.html">Next</a></td></tr></table><hr></div><div class="section" title="3.4. Page output"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="hooks.category.pageoutput"></a>3.4. Page output</h2></div></div></div><div class="section" title="3.4.1. phorum_shutdown"><div class="titlepage"><div><div><h3 class="title"><a name="hook.phorum_shutdown"></a>3.4.1. phorum_shutdown</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.4. Page output</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03.html" title="Chapter 3. Module hooks"><link rel="prev" href="ch03s03s06.html" title="3.3.6. page_&lt;phorum_page&gt;"><link rel="next" href="ch03s04s02.html" title="3.4.2. get_template_file"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s03s06.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s04s02.html">Next</a></td></tr></table><hr></div><div class="section" title="3.4. Page output"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="hooks.category.pageoutput"></a>3.4. Page output</h2></div></div></div><div class="section" title="3.4.1. phorum_shutdown"><div class="titlepage"><div><div><h3 class="title"><a name="hook.phorum_shutdown"></a>3.4.1. phorum_shutdown</h3></div></div></div><p>
 
 This hook gives modules a chance to easily hook into
 PHP's <a class="ulink" href="http://www.php.net/register_shutdown_function" target="_top">register_shutdown_function</a>()
 functionality.<br>
 <br>
 Code that you put in a phorum_shutdown hook will be run after
-running a OpenPhorum script finishes. This hook can be considered
+running a LibreForum script finishes. This hook can be considered
 an expert hook. Only use it if you really need it and if you
 are aware of implementation details of PHP's shutdown
 functionality.
@@ -15,7 +15,7 @@ functionality.
         </strong></span>
       </p><p>
 
-After running a OpenPhorum script finishes.
+After running a LibreForum script finishes.
       </p><p>
         <span class="bold"><strong>
           Hook input:

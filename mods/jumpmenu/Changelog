@@ -1,6 +1,10 @@
 Changelog:
 ----------
 
+2016-08-31 v1.2.2 by Oliver Riesen-Mallmann <oliver@riesen.org>
+
+    - Made XHTML 1.0 Transitional compliant.
+
 2015-09-18 v1.2.1 Oliver Riesen <oliver@riesen.org>
 
     - Bugfix for special characters in forum name.

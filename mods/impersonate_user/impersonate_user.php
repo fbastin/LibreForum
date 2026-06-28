@@ -37,7 +37,7 @@ function phorum_mod_impersonate_user_generate_checksum($user_id, $salt = '')
 // This addon will be called for doing the actual switching between users.
 function phorum_mod_impersonate_user_addon()
 {
-    $PHORUM = $GLOBALS["PHORUM"];
+    global $PHORUM;
 
     if (empty($PHORUM['args']['action'])) trigger_error(
         'Illegal call to the impersonate_user mod addon handler: ' .
@@ -301,7 +301,7 @@ function phorum_mod_impersonate_user_after_header()
 // Display the impersonate user link on the profile page.
 function phorum_mod_impersonate_user_before_footer()
 {
-    $PHORUM = $GLOBALS["PHORUM"];
+    global $PHORUM;
 
     if (!empty($PHORUM['DATA']['PROFILE']['URL']['IMPERSONATE_USER']) &&
         phorum_page == 'profile') {

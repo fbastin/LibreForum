@@ -21,10 +21,10 @@
 	<div class="info-box-body">	
 		<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">This script implements utility functions for working with images.</p>
-<p class="description"><p>OpenPhorum does not require this API for the core features. It is mainly  provided to offer module writers are stable and powerful API for  working with images.</p></p>
+<p class="description"><p>LibreForum does not require this API for the core features. It is mainly  provided to offer module writers are stable and powerful API for  working with images.</p></p>
 	<ul class="tags">
-				<li><span class="field">copyright:</span> 2010, OpenPhorum Development Team</li>
-				<li><span class="field">license:</span> OpenPhorum</li>
+				<li><span class="field">copyright:</span> 2010, LibreForum Development Team</li>
+				<li><span class="field">license:</span> LibreForum</li>
 			</ul>
 		
 			</div>
@@ -77,7 +77,7 @@
 <p class="short-description">Create an image thumbnail.</p>
 <p class="description"><p>This function can be used to create a scaled down thumbnail version of  an image. You can specifiy a width and/or a height to which to scale  down the image. The aspect ratio will always be kept. If both a width  and height are provided, then the one which requires the largest scale  down will be leading.</p></p>
 	<ul class="tags">
-				<li><span class="field">return:</span> <p>NULL is returned in case creating the thumbnail failed. The function      <a href="../../OpenPhorumAPI/BaseAPI/_base.php.html#functionphorum_api_strerror">phorum_api_strerror()</a> can be used to retrieve information      about the error which occurred.</p><p>An array is returned in case creating the thumbnail did work.      This array contains the following fields: <ul><li>image:     The scaled down image. NULL if no scaling was needed.</li><li>method:    The method that was used to create the thumbnail.</li><li>cur_w:     The width of the original $image.</li><li>cur_h:     The height of the original $image.</li><li>cur_mime:  The MIME type of the original $image.</li><li>new_w:     The width of the scaled down image.</li><li>new_h:     The height of the scaled down image.</li><li>new_mime:  The MIME type of the scaled down image,</li></ul></p></li>
+				<li><span class="field">return:</span> <p>NULL is returned in case creating the thumbnail failed. The function      <a href="../../LibreForumAPI/BaseAPI/_base.php.html#functionphorum_api_strerror">phorum_api_strerror()</a> can be used to retrieve information      about the error which occurred.</p><p>An array is returned in case creating the thumbnail did work.      This array contains the following fields: <ul><li>image:     The scaled down image. NULL if no scaling was needed.</li><li>method:    The method that was used to create the thumbnail.</li><li>cur_w:     The width of the original $image.</li><li>cur_h:     The height of the original $image.</li><li>cur_mime:  The MIME type of the original $image.</li><li>new_w:     The width of the scaled down image.</li><li>new_h:     The height of the scaled down image.</li><li>new_mime:  The MIME type of the scaled down image,</li></ul></p></li>
 			</ul>
 	
 	<div class="method-signature">

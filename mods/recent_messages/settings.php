@@ -55,8 +55,8 @@ $frm->addhelp($row, "Enable Readable Dates for \"Group by date\"?",
     "The Readable Dates module can also be used for formatting the date
      by which the \"Group by date\" option groups the messages / threads.
      If you enable this options, then terms like \"today\", \"yesterday\",
-     \"two days ago\" will be used for the grouping.<br/>
-     <br/>
+     \"two days ago\" will be used for the grouping.<br />
+     <br />
      Note that the Readable Dates module will use bigger intervals for
      older messages, so grouping will then no longer be done by day.
      You will then see things like \"12 days ago\", \"13 days ago\",

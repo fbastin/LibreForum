@@ -7,7 +7,7 @@ define('JQUERY_LIGHTBOX_VERSION', '0.5');
 
 function image_viewer_css_register($data)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     if (empty($PHORUM["mod_embed_images"]["jquery_lightbox_noload"])) {
         $data['register'][] = array(
@@ -22,7 +22,7 @@ function image_viewer_css_register($data)
 
 function image_viewer_javascript_register($data)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     if (empty($PHORUM['mod_embed_images']['jquery_lightbox_noload'])) {
         $data[] = array(
@@ -46,7 +46,9 @@ function image_viewer_after_header()
     global $PHORUM;
 
     print "<script type=\"text/javascript\">\n";
-    print "Phorum.http_path = '{$PHORUM['http_path']}';\n"; 
+    print "// <![CDATA[\n";
+    print "Phorum.http_path = '{$PHORUM['http_path']}';\n";
+    print "// ]]>\n";
     print "</script>\n";
 }
 

@@ -2,18 +2,18 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//   Copyright (C) 2010  OpenPhorum Development Team                              //
+//   Copyright (C) 2010  LibreForum Development Team                              //
 //   http://www.phorum.org                                                    //
 //                                                                            //
 //   This program is free software. You can redistribute it and/or modify     //
-//   it under the terms of either the current OpenPhorum License (viewable at     //
-//   phorum.org) or the OpenPhorum License that was distributed with this file    //
+//   it under the terms of either the current LibreForum License (viewable at     //
+//   phorum.org) or the LibreForum License that was distributed with this file    //
 //                                                                            //
 //   This program is distributed in the hope that it will be useful,          //
 //   but WITHOUT ANY WARRANTY, without even the implied warranty of           //
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     //
 //                                                                            //
-//   You should have received a copy of the OpenPhorum License                    //
+//   You should have received a copy of the LibreForum License                    //
 //   along with this program.                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -21,12 +21,12 @@ if(!defined("PHORUM_ADMIN")) return;
 
 function phorum_admin_error($error)
 {
-    echo "<div class=\"OpenPhorumAdminError\">$error</div>\n";
+    echo "<div class=\"LibreForumAdminError\">$error</div>\n";
 }
 
 function phorum_admin_okmsg($error)
 {
-    echo "<div class=\"OpenPhorumAdminOkMsg\">$error</div>\n";
+    echo "<div class=\"LibreForumAdminOkMsg\">$error</div>\n";
 }
 // phorum_get_language_info and phorum_get_template_info moved to common.php (used in the cc too)
 

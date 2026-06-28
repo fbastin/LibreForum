@@ -28,7 +28,7 @@ endobj
 << /S /GoTo /D (section.1.4) >>
 endobj
 24 0 obj
-(The OpenPhorum template language)
+(The LibreForum template language)
 endobj
 25 0 obj
 << /S /GoTo /D (subsection.1.4.1) >>
@@ -286,7 +286,7 @@ endobj
 << /S /GoTo /D (subsection.2.3.6) >>
 endobj
 196 0 obj
-(Building URLs for OpenPhorum)
+(Building URLs for LibreForum)
 endobj
 197 0 obj
 << /S /GoTo /D (subsubsection.2.3.6.1) >>
@@ -298,13 +298,13 @@ endobj
 << /S /GoTo /D (subsubsection.2.3.6.2) >>
 endobj
 204 0 obj
-(Build URLs for OpenPhorum PHP scripts: phorum\137get\137url\(\))
+(Build URLs for LibreForum PHP scripts: phorum\137get\137url\(\))
 endobj
 205 0 obj
 << /S /GoTo /D (subsubsection.2.3.6.3) >>
 endobj
 208 0 obj
-(Build URLs to files in the OpenPhorum tree)
+(Build URLs to files in the LibreForum tree)
 endobj
 209 0 obj
 << /S /GoTo /D (subsection.2.3.7) >>
@@ -4793,7 +4793,7 @@ endobj
 /Type /Annot
 /Border[0 0 0]/H/I/C[0 1 1]
 /Rect [237.986 551.716 347.231 562.62]
-/Subtype/Link/A<</Type/Action/S/URI/URI(file:../api/OpenPhorumAPI/CustomProfileFieldAPI/_custom_profile_fields.php.html)>>
+/Subtype/Link/A<</Type/Action/S/URI/URI(file:../api/LibreForumAPI/CustomProfileFieldAPI/_custom_profile_fields.php.html)>>
 >> endobj
 1468 0 obj <<
 /D [1466 0 R /XYZ 132.768 705.06 null]
@@ -14864,7 +14864,7 @@ endobj
 /OpenAction 713 0 R
 >> endobj
 3506 0 obj <<
-/Author(Maurice Makaay, Brian Moon, Thomas Seifert, Andy Taylor, and Joe Curia)/Title(OpenPhorum Developer Reference Manual)/Subject()/Creator(DBLaTeX-0.2.10)/Producer(pdfTeX-1.40.9)/Keywords()
+/Author(Maurice Makaay, Brian Moon, Thomas Seifert, Andy Taylor, and Joe Curia)/Title(LibreForum Developer Reference Manual)/Subject()/Creator(DBLaTeX-0.2.10)/Producer(pdfTeX-1.40.9)/Keywords()
 /CreationDate (D:20110826041643-05'00')
 /ModDate (D:20110826041643-05'00')
 /Trapped /False

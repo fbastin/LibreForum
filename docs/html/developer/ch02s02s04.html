@@ -1,28 +1,28 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.2.4. Hooks</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Developer Reference Manual"><link rel="up" href="ch02s02.html" title="2.2. Terminology"><link rel="prev" href="ch02s02s03.html" title="2.2.3. Add-ons"><link rel="next" href="ch02s02s05.html" title="2.2.5. Hook functions"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s02s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s02s05.html">Next</a></td></tr></table><hr></div><div class="section" title="2.2.4. Hooks"><div class="titlepage"><div><div><h3 class="title"><a name="modules.hooks"></a>2.2.4. Hooks</h3></div></div></div><p>
-        The OpenPhorum core and OpenPhorum modules are interconnected through hooks.
-        Hooks are points in the application where OpenPhorum stops and runs
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.2.4. Hooks</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch02s02.html" title="2.2. Terminology"><link rel="prev" href="ch02s02s03.html" title="2.2.3. Add-ons"><link rel="next" href="ch02s02s05.html" title="2.2.5. Hook functions"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s02s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s02s05.html">Next</a></td></tr></table><hr></div><div class="section" title="2.2.4. Hooks"><div class="titlepage"><div><div><h3 class="title"><a name="modules.hooks"></a>2.2.4. Hooks</h3></div></div></div><p>
+        The LibreForum core and LibreForum modules are interconnected through hooks.
+        Hooks are points in the application where LibreForum stops and runs
         its data through the modules that are configured to handle the
         hook. The modules can act upon and change this data.
       </p><p>
-        The following image visualizes what happens when OpenPhorum reaches
+        The following image visualizes what happens when LibreForum reaches
         a hook point in the application, for which two modules ("foo" and
         "bar") have been configured.
       </p><div class="literallayout"><p><code class="literal"><br>
-     OpenPhorum<br>
+     LibreForum<br>
    Application<br>
-       (1)                                (1) OpenPhorum is running.<br>
-        |                                 (2) OpenPhorum reaches the<br>
+       (1)                                (1) LibreForum is running.<br>
+        |                                 (2) LibreForum reaches the<br>
         |                                     hook named "some_hook".<br>
-        v           OpenPhorum                (3) OpenPhorum sends data to<br>
+        v           LibreForum                (3) LibreForum sends data to<br>
     some_hook &gt;----- data ------+             the module system.<br>
        (2)            (3)       |         (4) The module "foo" is run.<br>
                                 v         (5) The module "bar" is run.<br>
-                       (4) module "foo"   (6) The OpenPhorum data (which<br>
+                       (4) module "foo"   (6) The LibreForum data (which<br>
                                 |             might be modified by the<br>
                                 v             modules) is sent back<br>
-                       (5) module "bar"       to OpenPhorum.<br>
-                                |         (7) OpenPhorum continues running<br>
-     OpenPhorum        Modified     |             with the modified data.<br>
+                       (5) module "bar"       to LibreForum.<br>
+                                |         (7) LibreForum continues running<br>
+     LibreForum        Modified     |             with the modified data.<br>
    Application &lt;---- data ------+<br>
        (7)            (6)<br>
         |<br>

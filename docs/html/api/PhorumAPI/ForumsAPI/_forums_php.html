@@ -20,11 +20,11 @@
 			</div>
 	<div class="info-box-body">	
 		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This script implements the OpenPhorum forum admin API.</p>
-<p class="description"><p>This API is used for managing OpenPhorum forums and folders. It can be used to  retrieve information about the available forums and folders and takes care  of creating and editing them.</p><p>This API combines forums and folders into one API script, because at the  data level, they are the same kind of entity. Folders are also forums,  only they act differently based on the &quot;folder_flag&quot; field. Therefore,  folders are also identified by a forum_id.</p></p>
+<p class="short-description">This script implements the LibreForum forum admin API.</p>
+<p class="description"><p>This API is used for managing LibreForum forums and folders. It can be used to  retrieve information about the available forums and folders and takes care  of creating and editing them.</p><p>This API combines forums and folders into one API script, because at the  data level, they are the same kind of entity. Folders are also forums,  only they act differently based on the &quot;folder_flag&quot; field. Therefore,  folders are also identified by a forum_id.</p></p>
 	<ul class="tags">
-				<li><span class="field">license:</span> OpenPhorum</li>
-				<li><span class="field">copyright:</span> 2007, OpenPhorum Development Team</li>
+				<li><span class="field">license:</span> LibreForum</li>
+				<li><span class="field">copyright:</span> 2007, LibreForum Development Team</li>
 			</ul>
 		
 			</div>
@@ -51,7 +51,7 @@
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">This function can be used for building the folder paths that lead up to  forums/folders.</p>
-<p class="description"><p>The function is internally used by OpenPhorum to build the paths that are stored  in the &quot;forum_path&quot; field of the forums table. If you need access to the  path for a folder or forum, then do not call this function for retrieving  that info, but look at the &quot;forum_path&quot; field instead.</p></p>
+<p class="description"><p>The function is internally used by LibreForum to build the paths that are stored  in the &quot;forum_path&quot; field of the forums table. If you need access to the  path for a folder or forum, then do not call this function for retrieving  that info, but look at the &quot;forum_path&quot; field instead.</p></p>
 	<ul class="tags">
 				<li><span class="field">return:</span> <p>If the $forum_id parameter is a single forum_id, then a single path      is returned. If it is NULL, then an array or paths is returned, indexed      by the forum_id for which the path was built.      Each path is an array, containing the nodes in the path      (key = forum_id, value = name). The first element in a path array will      be the (v)root and the last element the forum or folder for which the      path was built.</p><p>Note: the root node (forum_id = 0) will also be returned in the      data when using NULL or 0 as the $forum_id argument. This is however a      generated node for which no database record exists. So if you are using      this functions return data for updating folders in the database, then      beware to skip the forum_id = 0 root node.</p></li>
 			</ul>
@@ -219,7 +219,7 @@
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Create or update a folder.</p>
-<p class="description"><p>This function can be used for both creating and updating OpenPhorum folders.  If no forum_id is provided in the folder data, a new folder will be created.  If a forum_id is provided, then the existing folder will be updated or a  new folder with that forum_id is created.</p></p>
+<p class="description"><p>This function can be used for both creating and updating LibreForum folders.  If no forum_id is provided in the folder data, a new folder will be created.  If a forum_id is provided, then the existing folder will be updated or a  new folder with that forum_id is created.</p></p>
 	<ul class="tags">
 				<li><span class="field">return:</span> The forum_id of the folder. For new folderss, the newly assigned      folder_id will be returned.</li>
 			</ul>
@@ -237,8 +237,8 @@
 					<li>
 				<span class="var-type">array</span>
 				<span class="var-name">$folder
-</span><span class="var-description">: An array containing folder data. This array should at least contain      a field &quot;folder_id&quot;. This field can be NULL to create a new folder      with an automatically assigned folder_id. It can also be set to a      folder_id to either update an existing folder or to create a new folder      with the provided folder_id. Other fields in the folder data are: <ul><li>name: the name to assign to the folder. OpenPhorum will not escape HTML
-       code in this name, so formatting the title using HTML is allowed.</li><li>description: the description for the folder. OpenPhorum will not escape
+</span><span class="var-description">: An array containing folder data. This array should at least contain      a field &quot;folder_id&quot;. This field can be NULL to create a new folder      with an automatically assigned folder_id. It can also be set to a      folder_id to either update an existing folder or to create a new folder      with the provided folder_id. Other fields in the folder data are: <ul><li>name: the name to assign to the folder. LibreForum will not escape HTML
+       code in this name, so formatting the title using HTML is allowed.</li><li>description: the description for the folder. LibreForum will not escape
        HTML code in this name, so formatting the description using HTML
        is allowed.</li><li>parent_id: The folder_id of the parent folder.</li><li>active: Whether the folder is active/visible (1) or not (0).</li><li>template: The name of the template to use for the folder.</li><li>language: The name of the language to use for the folder.</li><li>vroot: Whether the folder is a vroot (1) or not (0).</li></ul></span>			</li>
 				</ul>

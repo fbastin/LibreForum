@@ -2,24 +2,24 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//   Copyright (C) 2010  OpenPhorum Development Team                              //
+//   Copyright (C) 2010  LibreForum Development Team                              //
 //   http://www.phorum.org                                                    //
 //                                                                            //
 //   This program is free software. You can redistribute it and/or modify     //
-//   it under the terms of either the current OpenPhorum License (viewable at     //
-//   phorum.org) or the OpenPhorum License that was distributed with this file    //
+//   it under the terms of either the current LibreForum License (viewable at     //
+//   phorum.org) or the LibreForum License that was distributed with this file    //
 //                                                                            //
 //   This program is distributed in the hope that it will be useful,          //
 //   but WITHOUT ANY WARRANTY, without even the implied warranty of           //
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     //
 //                                                                            //
-//   You should have received a copy of the OpenPhorum License                    //
+//   You should have received a copy of the LibreForum License                    //
 //   along with this program.                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 
     if(!defined("PHORUM_ADMIN")) return;
 
-    // load the default OpenPhorum language
+    // load the default LibreForum language
     if(isset($PHORUM["default_forum_options"]["language"])){
         $lang = basename($PHORUM["default_forum_options"]["language"]);
         if (!file_exists("./include/lang/${lang}.php")) {
@@ -80,7 +80,7 @@
 ?>
 <html>
 <head>
-<title>OpenPhorum Admin</title>
+<title>LibreForum Admin</title>
 <?php
 
 // meta data with the charset from the default language
@@ -144,7 +144,7 @@ function hide_help()
 <body>
 <div id="helpdiv">
 <div id="helpdiv-hide"><a href="javascript:hide_help();"><img border="0" src="<?php print $PHORUM['http_path'] ?>/images/close.gif" height="16" width="16" /></a></div>
-<div id="helpdiv-title">&nbsp;OpenPhorum Admin Help</div>
+<div id="helpdiv-title">&nbsp;LibreForum Admin Help</div>
 <div id="helpdiv-content">
 <div id="help-title"></div>
 <div id="help-text"></div>
@@ -153,7 +153,7 @@ function hide_help()
 
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 <tr>
-    <td class="statusbar_edge">OpenPhorum Admin<small><br />version <?php echo PHORUM; ?></small></td>
+    <td class="statusbar_edge">LibreForum Admin<small><br />version <?php echo PHORUM; ?></small></td>
 <?php if(empty($module)){ // only show the versioncheck if you are on the front page of the admin ?>
     <td class="statusbar_edge" align="center" valign="middle">
       <iframe scrolling="no" frameborder="0" align="top" width="400" height="35" src="versioncheck.php"></iframe>
@@ -185,7 +185,7 @@ function hide_help()
 <form id="status-form" action="<?php echo phorum_admin_build_url('base'); ?>" method="post">
 <input type="hidden" name="phorum_admin_token" value="<?php echo $PHORUM['admin_token'];?>" />
 <input type="hidden" name="module" value="status" />
-OpenPhorum Status:
+LibreForum Status:
 <select name="status" onChange="this.form.submit();">
 <option value="normal" <?php if($PHORUM["status"]=="normal") echo "selected"; ?>>Normal</option>
 <option value="read-only"<?php if($PHORUM["status"]=="read-only") echo "selected"; ?>>Read Only</option>
@@ -218,13 +218,13 @@ OpenPhorum Status:
          *     admin_menu
          *
          * [availability]
-         *     OpenPhorum 5.2.16
+         *     LibreForum 5.2.16
          *
          * [description]
-         *     This hook allows to inject custom HTML into the OpenPhorum admin
+         *     This hook allows to inject custom HTML into the LibreForum admin
          *     menu. The hook will receive an instance of
          *     PhorumAdminMenuHookPosition which is required to determine at
-         *     which position in the OpenPhorum admin menu the module author wishes
+         *     which position in the LibreForum admin menu the module author wishes
          *     to place his custom menu. Although any HTML can be injected, it
          *     is advised to use the PhorumAdminMenu class.
          *
@@ -271,7 +271,7 @@ OpenPhorum Status:
          *         $menu->addCustom(
          *             "Guess!",
          *             "http://phorum.org/",
-         *             "OpenPhorum rocks!",
+         *             "LibreForum rocks!",
          *             "_blank"
          *         );
          *
@@ -292,7 +292,7 @@ OpenPhorum Status:
         $menu = new PhorumAdminMenu("Main Menu");
 
         $menu->add("Admin Home", "", "Takes you to the default Admin page.");
-        $menu->add("OpenPhorum Index", "index", "Takes you to the front page of the OpenPhorum.");
+        $menu->add("LibreForum Index", "index", "Takes you to the front page of the LibreForum.");
         $menu->add("Log Out", "logout", "Logs you out of the admin.");
 
         $menu->show();
@@ -305,7 +305,7 @@ OpenPhorum Status:
         $menu->add("Cache Settings", "cache", "Edit the cache settings, like which cache layer to use and what to cache.");
         $menu->add("Ban Lists", "banlist", "Edits the list of banned names, email addresses and IP addresses.");
         $menu->add("Censor List", "badwords", "Edit the list of words that are censored in posts.");
-        $menu->add("Modules", "mods", "Administer the OpenPhorum Modules that are installed.");
+        $menu->add("Modules", "mods", "Administer the LibreForum Modules that are installed.");
 
         $menu->show();
 
@@ -326,7 +326,7 @@ OpenPhorum Status:
 
         $menu->add("Edit Users", "users", "Allows administrator to edit users including deactivating them.");
         $menu->add("Edit Groups", "groups", "Allows administrator to edit groups and their forum permissions.");
-        $menu->add("Custom Profiles", "customprofile", "Allows administrator to add fields to OpenPhorum profile.");
+        $menu->add("Custom Profiles", "customprofile", "Allows administrator to add fields to LibreForum profile.");
 
         $menu->show();
 
@@ -338,7 +338,7 @@ OpenPhorum Status:
         $menu->add("Database Integrity", "rebuild", "Database Integrity Actions");
         $menu->add("Prune Messages", "message_prune", "Pruning old messages.");
         $menu->add("Purge Stale Files", "file_purge", "Purging stale files from the database.");
-        $menu->add("Purge cache", "cache_purge", "Purging the OpenPhorum cache.");
+        $menu->add("Purge cache", "cache_purge", "Purging the LibreForum cache.");
         $menu->add("System Sanity Checks", "sanity_checks", "Perform a number of sanity checks on the system to identify possible problems.");
         $menu->add("Manage Language Files", "manage_languages", "Allows administrator to create new or updated versions of language files.");
 

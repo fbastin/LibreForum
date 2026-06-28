@@ -1,6 +1,6 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.6.2. Build URLs for OpenPhorum PHP scripts: phorum_get_url()</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Developer Reference Manual"><link rel="up" href="ch02s03s06.html" title="2.3.6. Building URLs for OpenPhorum"><link rel="prev" href="ch02s03s06.html" title="2.3.6. Building URLs for OpenPhorum"><link rel="next" href="ch02s03s06s03.html" title="2.3.6.3. Build URLs to files in the OpenPhorum tree"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03s06.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s03s06s03.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.6.2. Build URLs for OpenPhorum PHP scripts: phorum_get_url()"><div class="titlepage"><div><div><h4 class="title"><a name="modules.scripturls"></a>2.3.6.2. Build URLs for OpenPhorum PHP scripts: phorum_get_url()</h4></div></div></div><p>
-          OpenPhorum uses the function <code class="literal">phorum_get_url()</code> to
-          consistenly build URLs that point to OpenPhorum PHP scripts. It is
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.6.2. Build URLs for LibreForum PHP scripts: phorum_get_url()</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch02s03s06.html" title="2.3.6. Building URLs for LibreForum"><link rel="prev" href="ch02s03s06.html" title="2.3.6. Building URLs for LibreForum"><link rel="next" href="ch02s03s06s03.html" title="2.3.6.3. Build URLs to files in the LibreForum tree"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03s06.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s03s06s03.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.6.2. Build URLs for LibreForum PHP scripts: phorum_get_url()"><div class="titlepage"><div><div><h4 class="title"><a name="modules.scripturls"></a>2.3.6.2. Build URLs for LibreForum PHP scripts: phorum_get_url()</h4></div></div></div><p>
+          LibreForum uses the function <code class="literal">phorum_get_url()</code> to
+          consistenly build URLs that point to LibreForum PHP scripts. It is
           recommended that you use this function as well when creating
           URLs to scripts yourself, so special features and future changes
           will automatically be incorporated in the links you use.
@@ -12,13 +12,13 @@
             </b></p><div class="example-contents"><pre class="programlisting">
 $url = phorum_get_url(PHORUM_PROFILE_URL, 17); </pre></div></div><p><br class="example-break">
           The argument list that this function takes, depends on the first
-          argument which tells OpenPhorum what URL type has to be built.
+          argument which tells LibreForum what URL type has to be built.
           When building other URLs, other arguments will be used.
         </p><p>
           About all URL types that <code class="literal">phorum_get_url()</code>
           supports are used for building URLs that point to the scripts
-          that are bundled with OpenPhorum. Sometimes, you might want to add
-          an extra script of your own to the OpenPhorum tree (see
+          that are bundled with LibreForum. Sometimes, you might want to add
+          an extra script of your own to the LibreForum tree (see
           <a class="xref" href="ch02s02s03.html" title="2.2.3. Add-ons">Section 2.2.3, &#8220;Add-ons&#8221;</a>). For those, you can use
           <code class="literal">phorum_get_url()</code> as well. The way to go is
           simple. You need to use <code class="literal">PHORUM_CUSTOM_URL</code> as
@@ -34,7 +34,7 @@ $url = phorum_get_url(PHORUM_PROFILE_URL, 17); </pre></div></div><p><br class="e
             </li></ul></div><p>
         </p><p>
           Here is an example of building a URL which links to the
-          add-on file <code class="filename">myfile.php</code> in the OpenPhorum
+          add-on file <code class="filename">myfile.php</code> in the LibreForum
           installation directory. Lets asume that the URL has to have the
           forum_id in it and that it needs to contain the additional
           parameters <code class="filename">foo=bar</code> and

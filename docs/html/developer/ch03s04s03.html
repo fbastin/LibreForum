@@ -1,8 +1,8 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.4.3. start_output</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Developer Reference Manual"><link rel="up" href="ch03s04.html" title="3.4. Page output"><link rel="prev" href="ch03s04s02.html" title="3.4.2. get_template_file"><link rel="next" href="ch03s04s04.html" title="3.4.4. start_output_&lt;page&gt;"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s04s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s04s04.html">Next</a></td></tr></table><hr></div><div class="section" title="3.4.3. start_output"><div class="titlepage"><div><div><h3 class="title"><a name="hook.start_output"></a>3.4.3. start_output</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.4.3. start_output</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03s04.html" title="3.4. Page output"><link rel="prev" href="ch03s04s02.html" title="3.4.2. get_template_file"><link rel="next" href="ch03s04s04.html" title="3.4.4. start_output_&lt;page&gt;"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s04s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s04s04.html">Next</a></td></tr></table><hr></div><div class="section" title="3.4.3. start_output"><div class="titlepage"><div><div><h3 class="title"><a name="hook.start_output"></a>3.4.3. start_output</h3></div></div></div><p>
 
 This hook gives modules a chance to apply some last minute
-changes to the OpenPhorum data. You can also use this hook to
-call <a class="ulink" href="http://www.php.net/ob_start" target="_top">ob_start</a>() if you need to buffer OpenPhorum's
+changes to the LibreForum data. You can also use this hook to
+call <a class="ulink" href="http://www.php.net/ob_start" target="_top">ob_start</a>() if you need to buffer LibreForum's
 full output (e.g. to do some post processing on the data
 from the <a class="xref" href="ch03s04s11.html" title="3.4.11. end_output">???</a> hook.<br>
 <br>
@@ -17,7 +17,7 @@ for output from scripts that do raw output like
         </strong></span>
       </p><p>
 
-After setting up all OpenPhorum data, right before sending the
+After setting up all LibreForum data, right before sending the
 page header template.
       </p><p>
         <span class="bold"><strong>
@@ -46,7 +46,7 @@ function phorum_mod_foo_start_output()
 
     // Add some custom data to the page title.
     $title = $PHORUM['DATA']['HTML_TITLE'];
-    $PHORUM['DATA']['HTML_TITLE'] = "-=| OpenPhorum Rocks! |=- $title";
+    $PHORUM['DATA']['HTML_TITLE'] = "-=| LibreForum Rocks! |=- $title";
 }
 </pre><p>
 

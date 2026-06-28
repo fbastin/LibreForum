@@ -2,7 +2,7 @@
    "http://www.w3.org/TR/html4/frameset.dtd">
 <html>
   <head>
-    <title>OpenPhorum documentation</title>
+    <title>LibreForum documentation</title>
   </head>
   <frameset rows="71,*" noresize="noresize"
             frameborder="no" framespacing="0" border="0">

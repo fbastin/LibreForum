@@ -1,5 +1,5 @@
 Module  : Impersonate User
-Version : 1.0.6
+Version : 1.0.7
 Author  : Maurice Makaay
 
 Allows administrators to (temporarily) impersonate a different user,

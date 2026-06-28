@@ -2,18 +2,18 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//   Copyright (C) 2010  OpenPhorum Development Team                              //
+//   Copyright (C) 2010  LibreForum Development Team                              //
 //   http://www.phorum.org                                                    //
 //                                                                            //
 //   This program is free software. You can redistribute it and/or modify     //
-//   it under the terms of either the current OpenPhorum License (viewable at     //
-//   phorum.org) or the OpenPhorum License that was distributed with this file    //
+//   it under the terms of either the current LibreForum License (viewable at     //
+//   phorum.org) or the LibreForum License that was distributed with this file    //
 //                                                                            //
 //   This program is distributed in the hope that it will be useful,          //
 //   but WITHOUT ANY WARRANTY, without even the implied warranty of           //
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     //
 //                                                                            //
-//   You should have received a copy of the OpenPhorum License                    //
+//   You should have received a copy of the LibreForum License                    //
 //   along with this program.                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
@@ -577,27 +577,27 @@ foreach($ruledefs as $filter => $def) {
 <script type="text/javascript">
 //<![CDATA[
 
-// Class OpenPhorumFilterRule
-// This class describes a single OpenPhorum filter rule.
-function OpenPhorumFilterRule(conf)
+// Class LibreForumFilterRule
+// This class describes a single LibreForum filter rule.
+function LibreForumFilterRule(conf)
 {
     // Check if we have all required config information.
     if (conf == null) {
-        throw("Illegal call of OpenPhorumFilterRule(): no config set");
+        throw("Illegal call of LibreForumFilterRule(): no config set");
         return;
     }
     if (conf.parent == null) {
-        throw("Illegal call of OpenPhorumFilterRule(): no parent in the config");
+        throw("Illegal call of LibreForumFilterRule(): no parent in the config");
         return;
     }
     if (conf.index == null) {
-        throw("Illegal call of OpenPhorumFilterRule(): no index in the config");
+        throw("Illegal call of LibreForumFilterRule(): no index in the config");
         return;
     }
 
     // Object properties -------------------------------------------------
 
-    // Information relating to the OpenPhorumFilter object which created this rule.
+    // Information relating to the LibreForumFilter object which created this rule.
     this.parent = conf.parent;
     this.index  = conf.index;
 
@@ -845,17 +845,17 @@ function OpenPhorumFilterRule(conf)
     this.onSelectFieldChange();
 }
 
-// Class OpenPhorumFilter
-// This class describes a set of OpenPhorum filter rules.
-function OpenPhorumFilter(conf)
+// Class LibreForumFilter
+// This class describes a set of LibreForum filter rules.
+function LibreForumFilter(conf)
 {
     // Check if we have all required config information.
     if (conf == null) {
-        throw("Illegal call of OpenPhorumFilter(): no config set");
+        throw("Illegal call of LibreForumFilter(): no config set");
         return;
     }
     if (conf.parent == null) {
-        throw("Illegal call of OpenPhorumFilter(): no parent in the config");
+        throw("Illegal call of LibreForumFilter(): no parent in the config");
         return;
     }
 
@@ -870,11 +870,11 @@ function OpenPhorumFilter(conf)
 
     this.addFilterRule = function(conf)
     {
-        // Create a OpenPhorumFilterRule object.
+        // Create a LibreForumFilterRule object.
         if (conf == null) conf = {};
         conf.parent = this;
         conf.index  = this.index++;
-        var ruleobj = new OpenPhorumFilterRule(conf);
+        var ruleobj = new LibreForumFilterRule(conf);
 
         // Add the rule to the filter.
         this.parent.appendChild(ruleobj.container);
@@ -922,7 +922,7 @@ function OpenPhorumFilter(conf)
 }
 
 // Create the filter object.
-var filter = new OpenPhorumFilter({
+var filter = new LibreForumFilter({
     "parent": document.getElementById("ruleset")
 });
 

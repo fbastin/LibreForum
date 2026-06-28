@@ -57,35 +57,33 @@ if(!defined("PHORUM")) return;
 function phorum_mod_user_list_start_output()
 {
     global $PHORUM;
-    $PHORUM['DATA']['URL']['USER_LIST']['All']        = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list');
-    $PHORUM['DATA']['URL']['USER_LIST']['NumberSort'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'sort=membernumber');
-    $PHORUM['DATA']['URL']['USER_LIST']['number']     = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=number');
-    $PHORUM['DATA']['URL']['USER_LIST']['A'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=A');
-    $PHORUM['DATA']['URL']['USER_LIST']['B'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=B');
-    $PHORUM['DATA']['URL']['USER_LIST']['C'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=C');
-    $PHORUM['DATA']['URL']['USER_LIST']['D'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=D');
-    $PHORUM['DATA']['URL']['USER_LIST']['E'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=E');
-    $PHORUM['DATA']['URL']['USER_LIST']['F'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=F');
-    $PHORUM['DATA']['URL']['USER_LIST']['G'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=G');
-    $PHORUM['DATA']['URL']['USER_LIST']['H'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=H');
-    $PHORUM['DATA']['URL']['USER_LIST']['I'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=I');
-    $PHORUM['DATA']['URL']['USER_LIST']['J'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=J');
-    $PHORUM['DATA']['URL']['USER_LIST']['K'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=K');
-    $PHORUM['DATA']['URL']['USER_LIST']['L'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=L');
-    $PHORUM['DATA']['URL']['USER_LIST']['M'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=M');
-    $PHORUM['DATA']['URL']['USER_LIST']['N'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=N');
-    $PHORUM['DATA']['URL']['USER_LIST']['O'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=O');
-    $PHORUM['DATA']['URL']['USER_LIST']['P'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=P');
-    $PHORUM['DATA']['URL']['USER_LIST']['Q'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=Q');
-    $PHORUM['DATA']['URL']['USER_LIST']['R'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=R');
-    $PHORUM['DATA']['URL']['USER_LIST']['S'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=S');
-    $PHORUM['DATA']['URL']['USER_LIST']['T'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=T');
-    $PHORUM['DATA']['URL']['USER_LIST']['U'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=U');
-    $PHORUM['DATA']['URL']['USER_LIST']['V'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=V');
-    $PHORUM['DATA']['URL']['USER_LIST']['W'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=W');
-    $PHORUM['DATA']['URL']['USER_LIST']['X'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=X');
-    $PHORUM['DATA']['URL']['USER_LIST']['Y'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=Y');
-    $PHORUM['DATA']['URL']['USER_LIST']['Z'] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_list', 'letter=Z');
+    
+    $search = '';
+    if (isset($PHORUM['args']['search'])) {
+        $search = trim((string)$PHORUM['args']['search']);
+    } elseif (isset($_REQUEST['search'])) {
+        $search = trim((string)$_REQUEST['search']);
+    }
+    
+    $case_sensitive = false;
+    if (isset($PHORUM['args']['case_sensitive']) && $PHORUM['args']['case_sensitive'] == '1') {
+        $case_sensitive = true;
+    } elseif (isset($_REQUEST['case_sensitive']) && $_REQUEST['case_sensitive'] == '1') {
+        $case_sensitive = true;
+    }
+    
+    $search_arg = !empty($search) ? array("search=" . urlencode($search)) : array();
+    if ($case_sensitive) {
+        $search_arg[] = "case_sensitive=1";
+    }
+
+    $PHORUM['DATA']['URL']['USER_LIST']['All']        = call_user_func_array('phorum_get_url', array_merge(array(PHORUM_ADDON_URL, 'module=user_list'), $search_arg));
+    $PHORUM['DATA']['URL']['USER_LIST']['NumberSort'] = call_user_func_array('phorum_get_url', array_merge(array(PHORUM_ADDON_URL, 'module=user_list', 'sort=membernumber'), $search_arg));
+    $PHORUM['DATA']['URL']['USER_LIST']['number']     = call_user_func_array('phorum_get_url', array_merge(array(PHORUM_ADDON_URL, 'module=user_list', 'letter=number'), $search_arg));
+    
+    foreach (range('A', 'Z') as $char) {
+        $PHORUM['DATA']['URL']['USER_LIST'][$char] = call_user_func_array('phorum_get_url', array_merge(array(PHORUM_ADDON_URL, 'module=user_list', 'letter=' . $char), $search_arg));
+    }
 }
 
 function phorum_mod_user_list_load_one_person ($user_id) {
@@ -192,6 +190,21 @@ function phorum_mod_user_list_display () {
     $dir    = isset($PHORUM['args']['dir'])    ? (string)$PHORUM['args']['dir']    : 'asc';
     $page   = isset($PHORUM['args']['page'])   ? (int)$PHORUM['args']['page']      : 1;
 
+    // get search term
+    $search = '';
+    if (isset($PHORUM['args']['search'])) {
+        $search = trim((string)$PHORUM['args']['search']);
+    } elseif (isset($_REQUEST['search'])) {
+        $search = trim((string)$_REQUEST['search']);
+    }
+
+    $case_sensitive = false;
+    if (isset($PHORUM['args']['case_sensitive']) && $PHORUM['args']['case_sensitive'] == '1') {
+        $case_sensitive = true;
+    } elseif (isset($_REQUEST['case_sensitive']) && $_REQUEST['case_sensitive'] == '1') {
+        $case_sensitive = true;
+    }
+
     if ($dir !== 'desc') $dir = 'asc';
 
     $valid_sorts = array(
@@ -222,6 +235,11 @@ function phorum_mod_user_list_display () {
     $where     = ' WHERE active = ' . PHORUM_USER_ACTIVE;
     if ( isset($letter) ):
         $where .= ' AND UPPER(username) ' . $pattern;
+    endif;
+    if ( !empty($search) ):
+        $safe_search = phorum_db_interact(DB_RETURN_QUOTED, $search);
+        $like = $case_sensitive ? 'LIKE BINARY' : 'LIKE';
+        $where .= " AND (username $like '%" . $safe_search . "%' OR display_name $like '%" . $safe_search . "%' OR real_name $like '%" . $safe_search . "%')";
     endif;
     $sql_user_list_count = $select . $from . $where . ';';
     $user_list_count = (int)phorum_db_interact(DB_RETURN_VALUE, $sql_user_list_count);
@@ -256,6 +274,8 @@ function phorum_mod_user_list_display () {
     if (isset($letter)) $args[] = "letter=$letter";
     if ($sort != 'username') $args[] = "sort=$sort";
     if ($dir != 'asc') $args[] = "dir=$dir";
+    if (!empty($search)) $args[] = "search=" . urlencode($search);
+    if ($case_sensitive) $args[] = "case_sensitive=1";
     
     $user_list_url_template = call_user_func_array('phorum_get_url', array_merge(array(PHORUM_ADDON_URL), $args));
 
@@ -268,12 +288,16 @@ function phorum_mod_user_list_display () {
         $new_dir = ($sort === $key && $dir === 'asc') ? 'desc' : 'asc';
         $hargs = array('module=user_list', "sort=$key", "dir=$new_dir");
         if (isset($letter)) $hargs[] = "letter=$letter";
+        if (!empty($search)) $hargs[] = "search=" . urlencode($search);
+        if ($case_sensitive) $hargs[] = "case_sensitive=1";
         
         $PHORUM['DATA']['URL']['USER_LIST']['SORT_BY_'.strtoupper($key)] = 
             call_user_func_array('phorum_get_url', array_merge(array(PHORUM_ADDON_URL), $hargs));
     }
     $PHORUM['DATA']['USER_LIST_SORT'] = $sort;
     $PHORUM['DATA']['USER_LIST_DIR'] = $dir;
+    $PHORUM['DATA']['USER_LIST_SEARCH'] = htmlspecialchars($search, ENT_COMPAT, $PHORUM["DATA"]["HCHARSET"]);
+    $PHORUM['DATA']['USER_LIST_CASE_SENSITIVE'] = $case_sensitive;
 
     if ($total_pages <= 5) {
         $start_page = 1;

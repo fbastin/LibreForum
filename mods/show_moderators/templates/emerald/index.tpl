@@ -4,7 +4,7 @@
 
 {IF MODERATORS}
   <span class="mod_show_moderators_index">
-    <br/>
+    <br />
     {IF MODERATOR_COUNT 1}
       {LANG->Moderator}:
     {ELSE}

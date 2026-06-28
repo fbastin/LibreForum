@@ -2,22 +2,22 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//   Copyright (C) 2010  OpenPhorum Development Team                              //
+//   Copyright (C) 2010  LibreForum Development Team                              //
 //   http://www.phorum.org                                                    //
 //                                                                            //
 //   This program is free software. You can redistribute it and/or modify     //
-//   it under the terms of either the current OpenPhorum License (viewable at     //
-//   phorum.org) or the OpenPhorum License that was distributed with this file    //
+//   it under the terms of either the current LibreForum License (viewable at     //
+//   phorum.org) or the LibreForum License that was distributed with this file    //
 //                                                                            //
 //   This program is distributed in the hope that it will be useful,          //
 //   but WITHOUT ANY WARRANTY, without even the implied warranty of           //
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     //
 //                                                                            //
-//   You should have received a copy of the OpenPhorum License                    //
+//   You should have received a copy of the LibreForum License                    //
 //   along with this program.                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 
-// Check for a new version of the OpenPhorum software. If there's a new version,
+// Check for a new version of the LibreForum software. If there's a new version,
 // inform the admin about this.
 
 if(!defined("PHORUM_ADMIN")) return;
@@ -27,13 +27,13 @@ require_once("./include/version_functions.php");
 // Put in a variable, for easy testing of other version numbers.
 $phorum_ver = PHORUM;
 
-print '<div class="OpenPhorumAdminTitle">Check for new OpenPhorum version</div>';
+print '<div class="LibreForumAdminTitle">Check for new LibreForum version</div>';
 print '<br/>';
 
 // Show the current software version.
 list ($running_type, $dummy) = phorum_parse_version($phorum_ver);
 print "You are currently running the $running_type version $phorum_ver " .
-      " of the OpenPhorum software.<br/>";
+      " of the LibreForum software.<br/>";
 
 
 // Find all available upgrades. If no releases can be found
@@ -46,15 +46,15 @@ $new_d = isset($releases["development"]) && $releases["development"]["upgrade"];
 
 // Notice: when running a snapshot version.
 if ($running_type == 'snapshot') {
-    print "<br/>If this OpenPhorum installation is run on a production server, " .
-          "the OpenPhorum team recommends upgrading to either a stable " .
+    print "<br/>If this LibreForum installation is run on a production server, " .
+          "the LibreForum team recommends upgrading to either a stable " .
           "release or the latest development release. Snapshots should " .
           "only be used for testing new bleeding edge features.<br/>";
 }
 
 // Notice: when running a stable release while a new stable is available.
 if ($running_type == 'stable' && $new_s) {
-    print "<br/>A new stable release is available. The OpenPhorum team " .
+    print "<br/>A new stable release is available. The LibreForum team " .
           "recommends upgrading to this release as soon as possible.<br/>";
 }
 
@@ -62,15 +62,15 @@ if ($running_type == 'stable' && $new_s) {
 // and development release are available.
 if ($running_type == 'development' && $new_s && $new_d) {
     print "<br/>There's both a new stable and a new development release " .
-          "available. If this OpenPhorum installation " .
-          "is run on a production server, the OpenPhorum team recommends " .
+          "available. If this LibreForum installation " .
+          "is run on a production server, the LibreForum team recommends " .
           "upgrading to the stable version.<br/>";
 }
 
 // Notice: when running a development release while a new dev is available.
 if ($running_type == 'development' && $new_d && ! $new_s) {
-    print "<br/>A new development release is available. If this OpenPhorum " .
-          "installation is run on a production server, the OpenPhorum team " .
+    print "<br/>A new development release is available. If this LibreForum " .
+          "installation is run on a production server, the LibreForum team " .
           "recommends only to upgrade in case new features are needed, " .
           "bugs you are suffering from are fixed or security holes have been " .
           "closed. Else wait until a stable release is available.<br/>";
@@ -103,6 +103,6 @@ foreach (array("stable","development") as $type) {
 
 if (! $found_upgrade) {
     print "<br/><h3 class=\"input-form-th\">" .
-          "Your OpenPhorum installation is up to date</h3>";
+          "Your LibreForum installation is up to date</h3>";
 }
 ?>

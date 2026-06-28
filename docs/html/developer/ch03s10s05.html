@@ -1,7 +1,7 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.10.5. user_delete</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Developer Reference Manual"><link rel="up" href="ch03s10.html" title="3.10. User data handling"><link rel="prev" href="ch03s10s04.html" title="3.10.4. user_list"><link rel="next" href="ch03s10s06.html" title="3.10.6. user_save_groups"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s10s04.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s10s06.html">Next</a></td></tr></table><hr></div><div class="section" title="3.10.5. user_delete"><div class="titlepage"><div><div><h3 class="title"><a name="hook.user_delete"></a>3.10.5. user_delete</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.10.5. user_delete</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03s10.html" title="3.10. User data handling"><link rel="prev" href="ch03s10s04.html" title="3.10.4. user_list"><link rel="next" href="ch03s10s06.html" title="3.10.6. user_save_groups"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s10s04.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s10s06.html">Next</a></td></tr></table><hr></div><div class="section" title="3.10.5. user_delete"><div class="titlepage"><div><div><h3 class="title"><a name="hook.user_delete"></a>3.10.5. user_delete</h3></div></div></div><p>
 
 Modules can use this hook to run some additional user cleanup
-tasks or or to keep some external system in sync with the OpenPhorum
+tasks or or to keep some external system in sync with the LibreForum
 user data.
       </p><p>
         <span class="bold"><strong>
@@ -38,7 +38,7 @@ function phorum_mod_foo_user_delete($user_id)
     $user = phorum_api_user_get($user_id);
 
     // Log user delete through syslog.
-    openlog("OpenPhorum", LOG_PID | LOG_PERROR, LOG_LOCAL0);
+    openlog("LibreForum", LOG_PID | LOG_PERROR, LOG_LOCAL0);
     syslog(LOG_NOTICE, "Delete user registration: $user[username]");
 
     return $user_id;

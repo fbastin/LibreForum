@@ -1,6 +1,6 @@
 title: Single Notification
 desc: This module limits the notifications to a single notification per thread until the forum is visited again.
-version: 0.9
+version: 0.9.1
 category: email
 author: Thomas Seifert
 url: http://www.phorum-support.de

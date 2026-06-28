@@ -69,10 +69,10 @@ function onlineusers_db_install()
         }
         // for old installs, remove the data-part of onlineusers
         if(isset($PHORUM['mod_onlineusers']['data'])) {
-        	unset($PHORUM['mod_onlineusers']['data']);
-        	$settings['mod_onlineusers']=$PHORUM['mod_onlineusers'];
+          unset($PHORUM['mod_onlineusers']['data']);
+          $settings['mod_onlineusers']=$PHORUM['mod_onlineusers'];
         }
-        
+
         // Save our settings.
         if (!phorum_db_update_settings($settings)) {
             print "<b>Unexpected situation on installing " .
@@ -80,9 +80,9 @@ function onlineusers_db_install()
                   "mod_onlineusers_installed setting failed";
             return false;
         }
-        
 
-           
+
+
     }
 
     return true;
@@ -97,7 +97,7 @@ function onlineusers_db_install()
 function onlineusers_db_delete($track_id,$type='guest')
 {
     global $PHORUM;
-    
+
     if(is_array($track_id)) {
         $track_cond = "IN('".implode("','",$track_id)."')";
     } else {
@@ -172,7 +172,7 @@ function onlineusers_db_insertreplace($track_id,$type='guest',$date_last_active,
          (vroot,type,track_id,date_last_active,last_active_forum,hide_activity)
          VALUES ({$PHORUM['vroot']},'$type','$track_id',$date_last_active,$last_active_forum,$hide_activity)"
     );
-    
+
     //print_var($row);
 
     return $row;

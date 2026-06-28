@@ -70,7 +70,7 @@ display: inline;
 {ELSE}
   <link rel="stylesheet" type="text/css" href="{URL->CSS}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{URL->CSS_PRINT}" media="print" />
-  <link rel="stylesheet" type="text/css" href="/css/tireur.min.css?v=20260624c" media="all"/>
+  <link rel="stylesheet" type="text/css" href="/css/tireur.min.css?v=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'].'/css/tireur.min.css'); ?>" media="all"/>
   <link rel="stylesheet" type="text/css" href="/css/lucide.css?v=1" media="all"/>
 {/IF}
 
@@ -219,6 +219,7 @@ Some Icons courtesy of:
         <a href="{URL->SEARCH}">{LANG->Advanced}</a>
       </form>
     </div> <!-- end of div id=search-area -->
+    <div style="clear: both;"></div>
 
     {! This <div> holds info about the active page (heading and description) }
     <div id="page-info">

@@ -1,24 +1,24 @@
 Preliminary Upgrade-Instructions
 ================================
 
-This document describes the OpenPhorum upgrading process. Please keep in mind, 
+This document describes the LibreForum upgrading process. Please keep in mind, 
 that these instructions are neither complete, nor final. If you find
 problems in upgrading which are not described here or if you have 
 useful additions, please let us know.
 
 Table of contents:
 
-1. Upgrading from a OpenPhorum5 version to another OpenPhorum5 version
+1. Upgrading from a LibreForum5 version to another LibreForum5 version
    1.1 Upgrading the database
    1.1.1 Preparations
    1.1.2 From a webbrowser
    1.1.3 From a system console
    1.2 Upgrading templates and hacks
-2. Upgrading from OpenPhorum 3.4.x to OpenPhorum5
-3. Upgrading from OpenPhorum 5.0 or 5.1 to OpenPhorum 5.2
+2. Upgrading from LibreForum 3.4.x to LibreForum5
+3. Upgrading from LibreForum 5.0 or 5.1 to LibreForum 5.2
 
 
-1. Upgrading from a OpenPhorum5 version to another OpenPhorum5 version
+1. Upgrading from a LibreForum5 version to another LibreForum5 version
 -------------------------------------------------------------------------------
 
 
@@ -36,12 +36,12 @@ Table of contents:
 
    Here are the steps for upgrading:
 
-   - Backup your existing OpenPhorum5 installation.
+   - Backup your existing LibreForum5 installation.
      Before doing an upgrade, it is always wise to make a good backup
-     of your running system. Make a backup your OpenPhorum install directory 
-     and the database in which your OpenPhorum tables are stored;
+     of your running system. Make a backup your LibreForum install directory 
+     and the database in which your LibreForum tables are stored;
 
-   - Download a newer OpenPhorum5 package;
+   - Download a newer LibreForum5 package;
    
    - Extract the files and put them on top of the current installation;
    
@@ -64,7 +64,7 @@ Table of contents:
   1.1.3 From a system console
   ---------------------------
 
-  In the scripts directory of your OpenPhorum installation, you will find
+  In the scripts directory of your LibreForum installation, you will find
   the script "console_upgrade.php". Go to the scripts directory and
   execute the script from there. On most systems, you can do this using
   the following command:
@@ -73,29 +73,29 @@ Table of contents:
 
   If you want to run this script from a different locations, then edit
   the script and update the $PHORUM_DIRECTORY variable to match the
-  location of your OpenPhorum installation.
+  location of your LibreForum installation.
 
 
  1.2 Upgrading templates and hacks
  ---------------------------------
    
-   For minor upgrades, the OpenPhorum team has the policy that templates
+   For minor upgrades, the LibreForum team has the policy that templates
    should not change. For example, if you are upgrading version 5.1.1
    to 5.1.2, you can simply keep the old templates.
 
-   Template functionality might change between major OpenPhorum releases.
-   For example, templates that were made for OpenPhorum 5.0.x are not
-   compatible with the templates for OpenPhorum 5.1.x. So to upgrade these,
+   Template functionality might change between major LibreForum releases.
+   For example, templates that were made for LibreForum 5.0.x are not
+   compatible with the templates for LibreForum 5.1.x. So to upgrade these,
    you'll have to build new templates, based on the new default template
    that is included in the distribution. Simply copying the old template
    will most probably result in errors and missing functionality.
    
    If you are doing a minor upgrade and you have to preserve changes that
    were made to the default template (which is not the recommended way
-   of customizing OpenPhorum, see creating_templates.txt), you can follow one
+   of customizing LibreForum, see creating_templates.txt), you can follow one
    of the following options:
    
-   - Extract the new OpenPhorum distribution to its own directory and reapply 
+   - Extract the new LibreForum distribution to its own directory and reapply 
      your changes before putting it over the existing installation;
      
    - Create a backup of your existing installation. Install the new
@@ -103,20 +103,20 @@ Table of contents:
      the new version while it is "live".
    
 
-2. Upgrading from OpenPhorum 3.4.x to OpenPhorum5
+2. Upgrading from LibreForum 3.4.x to LibreForum5
 -------------------------------------------------------------------------------
 
-   - Download and unpack the OpenPhorum5 package;
+   - Download and unpack the LibreForum5 package;
    
    - Follow the installation instructions in docs/install.txt. Install 
-     OpenPhorum5 is a new directory. 
+     LibreForum5 is a new directory. 
    
    - Convert the old forum data:
    
-     In the scripts directory of your OpenPhorum5 distribution, you will find
+     In the scripts directory of your LibreForum5 distribution, you will find
      a script named phorum3to5convert.php. Instructions for using this
      script can be found at the top of this script itself. The script will
-     convert your old forum to OpenPhorum5. Everything, but permission levels,
+     convert your old forum to LibreForum5. Everything, but permission levels,
      is converted.
    
    - Update the posted message counters for the users:
@@ -126,12 +126,12 @@ Table of contents:
      of posts for users to the right value. So if you want correct numbers
      to show up in the user profiles, just run this script once AFTER the
      conversion has been completed. To run it, you will have to copy it
-     over to the main OpenPhorum5 directory. After that you can either run
+     over to the main LibreForum5 directory. After that you can either run
      it from the command line or by opening it from your webbrowser. See
      also the instructions in the script itself.
 
 
-3. Upgrading from OpenPhorum 5.0 or 5.1 to OpenPhorum 5.2
+3. Upgrading from LibreForum 5.0 or 5.1 to LibreForum 5.2
 -------------------------------------------------------------------------------
 
    - The primary change for upgrading between 5.1 and 5.2 was the changes to 

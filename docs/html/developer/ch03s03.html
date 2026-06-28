@@ -1,7 +1,7 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.3. Request initialization</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Developer Reference Manual"><link rel="up" href="ch03.html" title="Chapter 3. Module hooks"><link rel="prev" href="ch03s02s04.html" title="3.2.4. scheduled"><link rel="next" href="ch03s03s02.html" title="3.3.2. common_pre"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02s04.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s03s02.html">Next</a></td></tr></table><hr></div><div class="section" title="3.3. Request initialization"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="hooks.category.requestinitialization"></a>3.3. Request initialization</h2></div></div></div><div class="section" title="3.3.1. parse_request"><div class="titlepage"><div><div><h3 class="title"><a name="hook.parse_request"></a>3.3.1. parse_request</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.3. Request initialization</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03.html" title="Chapter 3. Module hooks"><link rel="prev" href="ch03s02s04.html" title="3.2.4. scheduled"><link rel="next" href="ch03s03s02.html" title="3.3.2. common_pre"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02s04.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s03s02.html">Next</a></td></tr></table><hr></div><div class="section" title="3.3. Request initialization"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="hooks.category.requestinitialization"></a>3.3. Request initialization</h2></div></div></div><div class="section" title="3.3.1. parse_request"><div class="titlepage"><div><div><h3 class="title"><a name="hook.parse_request"></a>3.3.1. parse_request</h3></div></div></div><p>
 
 This hook gives modules a chance to tweak the request environment,
-before OpenPhorum parses and handles the request data. For tweaking the
+before LibreForum parses and handles the request data. For tweaking the
 request environment, some of the options are:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Changing the value of <code class="literal">$_REQUEST["forum_id"]</code>
@@ -9,17 +9,17 @@ to override the used forum_id.
 </li><li class="listitem">
 Changing the value of <code class="literal">$_SERVER["QUERY_STRING"]</code>
 or setting the global override variable
-<code class="literal">$PHORUM_CUSTOM_QUERY_STRING</code> to feed OpenPhorum a
+<code class="literal">$PHORUM_CUSTOM_QUERY_STRING</code> to feed LibreForum a
 different query string than the one provided by the webserver.
 </li></ul></div><p>
-Tweaking the request data should result in data that OpenPhorum can handle.
+Tweaking the request data should result in data that LibreForum can handle.
       </p><p>
         <span class="bold"><strong>
           Call time:
         </strong></span>
       </p><p>
 
-Right before OpenPhorum runs the request parsing code in
+Right before LibreForum runs the request parsing code in
 <code class="filename">common.php</code>.
       </p><p>
         <span class="bold"><strong>

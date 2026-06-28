@@ -1,4 +1,4 @@
-<br style="clear:both"/>
+<br style="clear:both" />
 <form action="{URL->RECENT_MESSAGES}" method="post">
   {POST_VARS}
   <div class="options">

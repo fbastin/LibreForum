@@ -1,6 +1,6 @@
 title: Topic Poll
 desc: This module makes it possible to add polls to forum threads. For each forum you can configure who can create and who can answer polls.
-version: 1.0.20
+version: 1.0.22
 require_version: 5.1.23
 author: Maurice Makaay <maurice@phorum.org>
 url: http://www.phorum.org/phorum5/read.php?62,123477

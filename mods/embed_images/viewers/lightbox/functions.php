@@ -3,7 +3,7 @@ if (!defined('PHORUM')) return;
 
 function image_viewer_css_register($data)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     if (empty($PHORUM["mod_embed_images"]["lightbox_noload"])) {
         $data['register'][] = array(
@@ -18,7 +18,7 @@ function image_viewer_css_register($data)
 
 function image_viewer_javascript_register($data)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     if (empty($PHORUM['mod_embed_images']['lightbox_noload_prototype'])) {
         $data[] = array(
@@ -66,7 +66,7 @@ function image_viewer_common()
     $images = $PHORUM['http_path'] .
               "/mods/embed_images/viewers/lightbox/code/images";
     $PHORUM['DATA']['HEAD_TAGS'] .=
-        "<script type=\"text/javascript\">\n" .
+        "<script type=\"text/javascript\">\n// <![CDATA[\n" .
         "  fileLoadingImage = '$images/loading.gif';\n" .
         "  fileBottomNavCloseImage = '$images/close.gif';\n" .
         "</script>" .
@@ -81,7 +81,7 @@ function image_viewer_common()
         "  #nextLink:hover, #nextLink:visited:hover {\n" .
         "    background: url($images/nextlabel.gif) right 15% no-repeat;\n" .
         "  }\n" .
-        "</style>\n";
+        "// ]]>\n</style>\n";
 }
 
 ?>

@@ -106,8 +106,8 @@ $row = $frm->addrow(
 $frm->addhelp($row,
     "BBcode [img] tags",
     "If this option is enabled, then the module will recognize images that
-     are placed in the body using a BBcode [img] tag.<br/>
-     <br/>
+     are placed in the body using a BBcode [img] tag.<br />
+     <br />
      <strong>Note:</strong> The BBcode module itself does not need to be
      enabled for this option to work."
 );
@@ -119,8 +119,8 @@ $row = $frm->addrow(
 $frm->addhelp($row,
     "HTML &lt;img&gt; tags",
     "If this option is enabled, then the module will recognize images that
-     are placed in the body using an HTML &lt;img&gt; tag.<br/>
-     <br/>
+     are placed in the body using an HTML &lt;img&gt; tag.<br />
+     <br />
      <strong>Note:</strong> This option will only work if the HTML mod is
      enabled as well. The Phorum team does not recommend using the HTML mod,
      because wrong HTML can cause havoc on your page layout."
@@ -147,9 +147,9 @@ $frm->addhelp($row,
     "If you have installed and enabled the Embed Attachments module as well,
      then users will be able to place links to attachments in line in the
      body. These links look like
-     <nobr>\"[attachment &lt;file id&gt; &lt;description&gt;]\"</nobr><br/>
+     <span style=\"white-space: nowrap\">\"[attachment &lt;file id&gt; &lt;description&gt;]\"</span><br />
      With this option enabled, these links will be shown as embedded images
-     in case the attachment contains a .gif .jpg or .png file.<br/>"
+     in case the attachment contains a .gif .jpg or .png file.<br />"
 );
 
 $row = $frm->addrow(
@@ -179,18 +179,18 @@ $frm->addhelp($row,
      displaying full size images (in case a visitor clicks on an image
      in the message). The option \"Browser\" will open a new browser window
      to show the image. The other options will display the image in a
-     fancy way within the active window.<br/>
-     <br/>
+     fancy way within the active window.<br />
+     <br />
      The preferred fancy displaying method is \"jQuery FancyBox\", because
      it makes use of the jQuery javascript library that is bundled with
      Phorum and because the viewer provides some good features (like
-     automatically scaling to fit the browser window).<br/>
-     <br/>
+     automatically scaling to fit the browser window).<br />
+     <br />
      You might want to run \"Lightbox\" if you are already using lightbox,
      prototypejs and/or scriptaculous on your site. You might want to
      run \"Slimbox\" if you are already using slimbox or mootools on
-     your site.<br/>
-     <br/>
+     your site.<br />
+     <br />
      If unsure what to use, then simply configure the viewers one by one
      and test them out to see which one best fits your needs."
 );
@@ -227,13 +227,13 @@ $frm->addhelp($row,
     "By default, this module will use the Phorum cache for caching scaled down
      images and their data. This cache won't be permanent, but for scaled down
      images, it makes perfect sense to have a somewhat permanent cache (since
-     scaling is pretty expensive server operation).<br/>
-     <br/>
+     scaling is pretty expensive server operation).<br />
+     <br />
      Using this option, you can specify a directory that this module can use
      for storing scaled images. Note that this directory should be writable
      for the webserver. It can be provided as an absolute path or a path
-     relative to the Phorum install dir.<br/>
-     <br/>
+     relative to the Phorum install dir.<br />
+     <br />
      <strong>Security notice</strong>: If your installation contains a closed
      forum for which the image attachments should be kept private, you should
      make sure that the cache directory is either outside the document root or
@@ -253,8 +253,8 @@ $frm->addhelp($row,
      certain URL, then you can enter that URL here. If a URL is
      configured, Phorum can load the scaled images directly through the
      direct URL, which improves the performance by saving on PHP scripts
-     that have to run.<br/>
-     <br/>
+     that have to run.<br />
+     <br />
      <strong>Security notice</strong>: If your installation contains a closed
      forum for which the image attachments should be kept private, you should
      not make use of this option. In that case, the cache directory should
@@ -276,7 +276,7 @@ $frm->addhelp($row,
      This module uses this feature to download images directly
      to the server, where they can be inspected and scaled down
      when needed. The hosting platform must support one of the
-     following features to make this work:<br/>
+     following features to make this work:<br />
      <ul>
        <li>The \"curl\" PHP module must be loaded or</li>
        <li>The \"sockets\" PHP module must be loaded or</li>
@@ -297,8 +297,8 @@ $frm->addhelp($row,
      http_get API. If the platform support check returns \"OK\",
      but this check returns \"NOT OK\", then the hosting platform
      might be blocking outgoing HTTP connections from the
-     webserver.<br/>
-     <br/>
+     webserver.<br />
+     <br />
      Please contact your hosting provider if this check returns \"NOT OK\"."
 );
 
@@ -314,7 +314,7 @@ $frm->addhelp($row,
     "The hosting platform must support image scaling.
      This module uses this feature to downscale images when needed.
      The hosting platform must support one of the following features
-     to make this work:<br/>
+     to make this work:<br />
      <ul>
        <li>The \"gd\" PHP module must be loaded or</li>
        <li>The \"imagick\" PHP module must be loaded or</li>
@@ -339,6 +339,7 @@ $frm->show();
 ?>
 
 <script type="text/javascript">
+// <![CDATA[
 function toggleImageViewer()
 {
     var s = document.getElementById('image_viewer');
@@ -355,4 +356,5 @@ function toggleImageViewer()
 }
 
 toggleImageViewer();
+// ]]>
 </script>

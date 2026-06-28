@@ -778,19 +778,37 @@ function phorum_read_file($file)
  */
 function phorum_write_file($file, $data)
 {
-    // Write the data to the file.
-    if (! $fp = fopen($file, "w")) trigger_error(
-        "phorum_write_file: failed to write to file " .
-        "\"" . htmlspecialchars($file) . "\". This is probably caused by " .
-        "the file permissions on your Phorum cache directory",
-        E_USER_ERROR
-    );
+    // Write the data to a temporary file first, then atomically rename it.
+    // This prevents concurrent threads from including a partially written template.
+    $tmp_file = $file . '.' . bin2hex(random_bytes(8)) . '.tmp';
+    if (! $fp = @fopen($tmp_file, "w")) {
+        // Fallback to directly opening the file if temporary file creation fails
+        $tmp_file = null;
+        if (! $fp = fopen($file, "w")) trigger_error(
+            "phorum_write_file: failed to write to file " .
+            "\"" . htmlspecialchars($file) . "\". This is probably caused by " .
+            "the file permissions on your Phorum cache directory",
+            E_USER_ERROR
+        );
+    }
     fputs($fp, $data);
     if (! fclose($fp)) trigger_error(
         "phorum_write_file: error on closing the file " .
         "\"" . htmlspecialchars($file) . "\". Is your disk full?",
         E_USER_ERROR
     );
+
+    if ($tmp_file !== null) {
+        if (!@rename($tmp_file, $file)) {
+            @unlink($tmp_file);
+            trigger_error(
+                "phorum_write_file: failed to rename temporary file to " .
+                "\"" . htmlspecialchars($file) . "\". This is probably caused by " .
+                "the file permissions on your Phorum cache directory",
+                E_USER_ERROR
+            );
+        }
+    }
 
     // A special check on the created outputfile. We have seen strange
     // things happen on Windows2000 where the webserver could not read

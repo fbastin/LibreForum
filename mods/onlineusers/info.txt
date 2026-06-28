@@ -1,6 +1,6 @@
 title: Online Users
 desc: This module shows which users have been seen online recently. Additionally, it can keep track of the number of guests, visitor records and the number of active readers for each forum.
-version: 2.5.2
+version: 2.5.3
 require_version: 5.2.0
 author: Chris Eaton (5.1), Maurice Makaay (5.2 rewrite), Thomas Seifert (preliminary database support)
 link: http://www.phorum-support.de/

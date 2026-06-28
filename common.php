@@ -1,18 +1,18 @@
 <?php
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//   Copyright (C) 2010  OpenPhorum Development Team                              //
+//   Copyright (C) 2010  LibreForum Development Team                              //
 //   http://www.phorum.org                                                    //
 //                                                                            //
 //   This program is free software. You can redistribute it and/or modify     //
-//   it under the terms of either the current OpenPhorum License (viewable at     //
-//   phorum.org) or the OpenPhorum License that was distributed with this file    //
+//   it under the terms of either the current LibreForum License (viewable at     //
+//   phorum.org) or the LibreForum License that was distributed with this file    //
 //                                                                            //
 //   This program is distributed in the hope that it will be useful,          //
 //   but WITHOUT ANY WARRANTY, without even the implied warranty of           //
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     //
 //                                                                            //
-//   You should have received a copy of the OpenPhorum License                    //
+//   You should have received a copy of the LibreForum License                    //
 //   along with this program.                                                 //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
@@ -60,8 +60,8 @@ if (!function_exists('random_bytes')) {
 // Initialize variables and constants and load required libraries
 // ----------------------------------------------------------------------
 
-// the OpenPhorum version
-define( "PHORUM", "6.0.2" );
+// the LibreForum version
+define( "PHORUM", "6.1.0" );
 
 // our database schema version in format of year-month-day-serial
 define( "PHORUM_SCHEMA_VERSION", "2010101500" );
@@ -70,7 +70,7 @@ define( "PHORUM_SCHEMA_VERSION", "2010101500" );
 define( "PHORUM_SCHEMA_PATCHLEVEL", "2026062600" );
 
 /*
-// Send headers to prevent caching of dynamic OpenPhorum pages.
+// Send headers to prevent caching of dynamic LibreForum pages.
 // This ensures that session changes (login/logout) are reflected immediately.
 if (!defined('PHORUM_ADMIN') && !empty($_SERVER['REMOTE_ADDR'])) {
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -79,7 +79,7 @@ if (!defined('PHORUM_ADMIN') && !empty($_SERVER['REMOTE_ADDR'])) {
 }
 */
 
-// Initialize the global $PHORUM variable, which holds all OpenPhorum data.
+// Initialize the global $PHORUM variable, which holds all LibreForum data.
 global $PHORUM;
 $PHORUM = array
 (
@@ -130,12 +130,12 @@ if (empty( $GLOBALS["PHORUM_ALT_DBCONFIG"] ) || $GLOBALS["PHORUM_ALT_DBCONFIG"]=
 
     // Load configuration.
     if (! include_once( "./include/db/config.php" )) {
-        print '<html><head><title>OpenPhorum error</title></head><body>';
-        print '<h2>OpenPhorum database configuration error</h2>';
+        print '<html><head><title>LibreForum error</title></head><body>';
+        print '<h2>LibreForum database configuration error</h2>';
 
         // No database configuration found.
         if (!file_exists("./include/db/config.php")) { ?>
-            OpenPhorum has been installed on this server, but the configuration<br/>
+            LibreForum has been installed on this server, but the configuration<br/>
             for the database connection has not yet been made. Please read<br/>
             <a href="docs/install.txt">docs/install.txt</a> for installation
             instructions. <?php
@@ -144,7 +144,7 @@ if (empty( $GLOBALS["PHORUM_ALT_DBCONFIG"] ) || $GLOBALS["PHORUM_ALT_DBCONFIG"]=
             // Unable to read the configuration file.
             if (!$fp) { ?>
                 A database configuration file was found in
-                ./include/db/config.php,<br/>OpenPhorum was unable to read it.
+                ./include/db/config.php,<br/>LibreForum was unable to read it.
                 Please check the file permissions<br/>for this file. <?php
             // Unknown error.
             } else {
@@ -194,17 +194,17 @@ if(!phorum_db_check_connection()){
 
 
 // ----------------------------------------------------------------------
-// Load and process the OpenPhorum settings
+// Load and process the LibreForum settings
 // ----------------------------------------------------------------------
 
-// Load the OpenPhorum settings from the database.
+// Load the LibreForum settings from the database.
 phorum_db_load_settings();
 
 // checking for upgrade or new install
 if (!defined('PHORUM_ADMIN')) {
     if (!isset($PHORUM['internal_version']))
     {
-        echo "<html><head><title>OpenPhorum error</title></head><body>No OpenPhorum settings were found. Either this is a brand new installation of OpenPhorum or there is a problem with your database server. If this is a new install, please <a href=\"admin.php\">go to the admin page</a> to complete the installation. If not, check your database server.</body></html>";
+        echo "<html><head><title>LibreForum error</title></head><body>No LibreForum settings were found. Either this is a brand new installation of LibreForum or there is a problem with your database server. If this is a new install, please <a href=\"admin.php\">go to the admin page</a> to complete the installation. If not, check your database server.</body></html>";
         exit();
     } elseif ($PHORUM['internal_version'] < PHORUM_SCHEMA_VERSION ||
               !isset($PHORUM['internal_patchlevel']) ||
@@ -213,7 +213,7 @@ if (!defined('PHORUM_ADMIN')) {
             phorum_redirect_by_url($PHORUM["DBCONFIG"]["upgrade_page"]);
             exit();
         }
-        echo "<html><head><title>Upgrade notification</title></head><body>It looks like you have installed a new version of OpenPhorum.<br/>Please visit the admin page to complete the upgrade!</body></html>";
+        echo "<html><head><title>Upgrade notification</title></head><body>It looks like you have installed a new version of LibreForum.<br/>Please visit the admin page to complete the upgrade!</body></html>";
         exit();
     }
 }
@@ -265,12 +265,12 @@ $PHORUM['cache_layer'] = basename($PHORUM['cache_layer']);
 require_once( "./include/cache/$PHORUM[cache_layer].php" );
 
 // Load phorum_get_url().
-// This function is used for generating all OpenPhorum URLs.
+// This function is used for generating all LibreForum URLs.
 require_once("./include/phorum_get_url.php");
 
 // Setup the template path and http path. These are put in a variable to give
 // module authors a chance to override them. This can be especially useful
-// for distibuting a module that contains a full OpenPhorum template as well.
+// for distibuting a module that contains a full LibreForum template as well.
 // For switching, the function phorum_switch_template() can be used.
 $PHORUM['template_path'] = dirname(__FILE__) . '/templates';
 $PHORUM['cache'] = dirname(__FILE__) . '/cache';
@@ -332,7 +332,7 @@ if (isset($_SERVER['QUERY_STRING']) &&
  *
  * [description]
  *     This hook gives modules a chance to tweak the request environment,
- *     before OpenPhorum parses and handles the request data. For tweaking the
+ *     before LibreForum parses and handles the request data. For tweaking the
  *     request environment, some of the options are:
  *     <ul>
  *       <li>
@@ -342,17 +342,17 @@ if (isset($_SERVER['QUERY_STRING']) &&
  *       <li>
  *         Changing the value of <literal>$_SERVER["QUERY_STRING"]</literal>
  *         or setting the global override variable
- *         <literal>$PHORUM_CUSTOM_QUERY_STRING</literal> to feed OpenPhorum a
+ *         <literal>$PHORUM_CUSTOM_QUERY_STRING</literal> to feed LibreForum a
  *         different query string than the one provided by the webserver.
  *       </li>
  *     </ul>
- *     Tweaking the request data should result in data that OpenPhorum can handle.
+ *     Tweaking the request data should result in data that LibreForum can handle.
  *
  * [category]
  *     Request initialization
  *
  * [when]
- *     Right before OpenPhorum runs the request parsing code in
+ *     Right before LibreForum runs the request parsing code in
  *     <filename>common.php</filename>.
  *
  * [input]
@@ -504,13 +504,13 @@ $PHORUM["DATA"]["FORUM_ID"] = $PHORUM["forum_id"];
 
 if ( !defined( "PHORUM_ADMIN" ) ) {
 
-    // if the OpenPhorum is disabled, display a message.
+    // if the LibreForum is disabled, display a message.
     if(isset($PHORUM["status"]) && $PHORUM["status"]==PHORUM_MASTER_STATUS_DISABLED){
         if(!empty($PHORUM["disabled_url"])){
             header("Location: ".$PHORUM["disabled_url"]);
             exit();
         } else {
-            echo "This OpenPhorum is currently disabled.  Please contact the web site owner at ".$PHORUM['system_email_from_address']." for more information.\n";
+            echo "This LibreForum is currently disabled.  Please contact the web site owner at ".$PHORUM['system_email_from_address']." for more information.\n";
             exit();
         }
     }
@@ -530,7 +530,7 @@ if ( !defined( "PHORUM_ADMIN" ) ) {
              *     This hook is called in case a forum_id is requested for
              *     an unknown or inaccessible forum. It can be used for
              *     doing things like logging the bad requests or fully
-             *     overriding OpenPhorum's default behavior for these cases
+             *     overriding LibreForum's default behavior for these cases
              *     (which is redirecting the user back to the index page).
              *
              * [category]
@@ -539,7 +539,7 @@ if ( !defined( "PHORUM_ADMIN" ) ) {
              * [when]
              *     In <filename>common.php</filename>, right after detecting
              *     that a requested forum does not exist or is inaccessible
-             *     and right before redirecting the user back to the OpenPhorum
+             *     and right before redirecting the user back to the LibreForum
              *     index page.
              *
              * [input]
@@ -670,7 +670,7 @@ if ( !defined( "PHORUM_ADMIN" ) ) {
 
      *
      * [description]
-     *     This hook gives modules a chance to override OpenPhorum variables
+     *     This hook gives modules a chance to override LibreForum variables
      *     and settings, after the active user has been loaded. The settings
      *     for the active forum are also loaded before this hook is called,
      *     therefore this hook can be used for overriding general settings,
@@ -796,7 +796,7 @@ if ( !defined( "PHORUM_ADMIN" ) ) {
     // and HTML escape the title.
     $PHORUM["DATA"]["HTML_TITLE"] = htmlspecialchars(strip_tags($PHORUM["DATA"]["HTML_TITLE"]), ENT_COMPAT, $PHORUM["DATA"]["HCHARSET"]);
 
-    // if the OpenPhorum is disabled, display a message.
+    // if the LibreForum is disabled, display a message.
     if( empty($PHORUM["user"]["admin"]) ) {
         if(isset($PHORUM["status"]) && $PHORUM["status"]==PHORUM_MASTER_STATUS_ADMIN_ONLY && phorum_page != 'css' && phorum_page != 'javascript'){
             // set all our URL's
@@ -868,9 +868,9 @@ if ( !defined( "PHORUM_ADMIN" ) ) {
      *     common
      *
      * [description]
-     *     This hook gives modules a chance to override OpenPhorum variables
+     *     This hook gives modules a chance to override LibreForum variables
      *     and settings near the end of the <filename>common.php</filename>
-     *     script. This can be used to override the OpenPhorum (settings)
+     *     script. This can be used to override the LibreForum (settings)
      *     variables that are setup during this script.
      *
      * [category]
@@ -906,17 +906,17 @@ if ( !defined( "PHORUM_ADMIN" ) ) {
      *     page_<phorum_page>
      *
      * [availability]
-     *     OpenPhorum 5 >= 5.2.7
+     *     LibreForum 5 >= 5.2.7
      *
      *
      * [description]
      *     This hook gives modules a chance to run hook code for a specific
-     *     OpenPhorum page near the end of the the <filename>common.php</filename>
+     *     LibreForum page near the end of the the <filename>common.php</filename>
      *     script.<sbr/>
      *     <sbr/>
-     *     It gives modules a chance to override OpenPhorum variables
+     *     It gives modules a chance to override LibreForum variables
      *     and settings near the end of the <filename>common.php</filename>
-     *     script. This can be used to override the OpenPhorum (settings)
+     *     script. This can be used to override the LibreForum (settings)
      *     variables that are setup during this script.
      *     <sbr/>
      *     The <literal>phorum_page</literal> definition that is set
@@ -934,7 +934,7 @@ if ( !defined( "PHORUM_ADMIN" ) ) {
      *     <sbr/>
      *     You can look at this as if the hook is called at the start of the
      *     called script, since including <filename>common.php</filename>
-     *     is about the first thing that a OpenPhorum script does.
+     *     is about the first thing that a LibreForum script does.
      *
      * [input]
      *     No input.
@@ -1064,7 +1064,7 @@ function phorum_shutdown()
     global $PHORUM;
 
     // Strange things happen during shutdown
-    // make sure we are still in the OpenPhorum dir
+    // make sure we are still in the LibreForum dir
     chdir(dirname(__FILE__));
 
     /*
@@ -1077,7 +1077,7 @@ function phorum_shutdown()
      *     functionality.<sbr/>
      *     <sbr/>
      *     Code that you put in a phorum_shutdown hook will be run after
-     *     running a OpenPhorum script finishes. This hook can be considered
+     *     running a LibreForum script finishes. This hook can be considered
      *     an expert hook. Only use it if you really need it and if you
      *     are aware of implementation details of PHP's shutdown
      *     functionality.
@@ -1086,7 +1086,7 @@ function phorum_shutdown()
      *     Page output
      *
      * [when]
-     *     After running a OpenPhorum script finishes.
+     *     After running a LibreForum script finishes.
      *
      * [input]
      *     No input.
@@ -1172,7 +1172,7 @@ function phorum_check_read_common()
  *
  * This function can be used to setup the data that is needed for activating
  * a different template or template storage path. This can be especially
- * useful for modules that can use this function to switch OpenPhorum to a
+ * useful for modules that can use this function to switch LibreForum to a
  * template that is stored inside the module's directory (so no file copying
  * required to get the module's template tree into place). If for example
  * module "Foo" has a template directory "./mods/foo/templates/bar", then
@@ -1186,11 +1186,11 @@ function phorum_check_read_common()
  * </code>
  *
  * Beware that after doing this, the module's template directory is expected
- * to carry a full standard OpenPhorum template and not only templates that are
+ * to carry a full standard LibreForum template and not only templates that are
  * required by the module for access through the "foo::templatename"
  * construction. Therefore, this template needs to have an info.php that
  * describes the template and a copy of all other template files that
- * OpenPhorum normally uses.
+ * LibreForum normally uses.
  *
  * @param string $template
  *     The name of the template to active (e.g. "emerald", "lightweight", etc.)
@@ -1255,7 +1255,7 @@ function phorum_get_template_file( $page )
      *     get_template_file
      *
      * [availability]
-     *     OpenPhorum 5 >= 5.2.11
+     *     LibreForum 5 >= 5.2.11
      *
      * [description]
      *     Allow modules to have influence on the results of the
@@ -1286,12 +1286,12 @@ function phorum_get_template_file( $page )
      *     elements. When the "source" element is set after running the
      *     hook, then the file named in this element is directly used as
      *     the template source. It must end in either ".php" or ".tpl" to
-     *     be accepted as a template source. OpenPhorum does not do any additional
+     *     be accepted as a template source. LibreForum does not do any additional
      *     checking on this source file name. It is the module's duty to
      *     provide a correct source file name.<sbr/>
      *     Otherwise, the template source file is determined based on
      *     the value of the "page" element, following the standard
-     *     OpenPhorum template resolving rules.
+     *     LibreForum template resolving rules.
      *
      * [example]
      *     <hookcode>
@@ -1419,8 +1419,8 @@ function phorum_output($templates) {
      *
      * [description]
      *     This hook gives modules a chance to apply some last minute
-     *     changes to the OpenPhorum data. You can also use this hook to
-     *     call <phpfunc>ob_start</phpfunc> if you need to buffer OpenPhorum's
+     *     changes to the LibreForum data. You can also use this hook to
+     *     call <phpfunc>ob_start</phpfunc> if you need to buffer LibreForum's
      *     full output (e.g. to do some post processing on the data
      *     from the <hook>end_output</hook> hook.<sbr/>
      *     <sbr/>
@@ -1434,7 +1434,7 @@ function phorum_output($templates) {
      *     Page output
      *
      * [when]
-     *     After setting up all OpenPhorum data, right before sending the
+     *     After setting up all LibreForum data, right before sending the
      *     page header template.
      *
      * [input]
@@ -1451,7 +1451,7 @@ function phorum_output($templates) {
      *
      *         // Add some custom data to the page title.
      *         $title = $PHORUM['DATA']['HTML_TITLE'];
-     *         $PHORUM['DATA']['HTML_TITLE'] = "-=| OpenPhorum Rocks! |=- $title";
+     *         $PHORUM['DATA']['HTML_TITLE'] = "-=| LibreForum Rocks! |=- $title";
      *     }
      *     </hookcode>
      */
@@ -1461,7 +1461,7 @@ function phorum_output($templates) {
 
     /*
      * [availability]
-     *     OpenPhorum 5 >= 5.2.16
+     *     LibreForum 5 >= 5.2.16
      *
      * [hook]
      *     start_output_<page>
@@ -1477,7 +1477,7 @@ function phorum_output($templates) {
      *     Page output
      *
      * [when]
-     *     After setting up all OpenPhorum data, right before sending the
+     *     After setting up all LibreForum data, right before sending the
      *     page header template.
      *
      * [input]
@@ -1524,7 +1524,7 @@ function phorum_output($templates) {
 
     /*
      * [availability]
-     *     OpenPhorum 5 >= 5.2.16
+     *     LibreForum 5 >= 5.2.16
      *
      * [hook]
      *     before_footer_<page>
@@ -1631,7 +1631,7 @@ function phorum_output($templates) {
 
     /*
      * [availability]
-     *     OpenPhorum 5 >= 5.2.16
+     *     LibreForum 5 >= 5.2.16
      *
      * [hook]
      *     end_output_<page>
@@ -1680,7 +1680,7 @@ function phorum_get_template( $page )
     // This might for example happen if a template contains code like
     // {INCLUDE template} instead of {INCLUDE "template"}.
     if ($page === NULL || $page == "") {
-        print "<h1>OpenPhorum Template Error</h1>";
+        print "<h1>LibreForum Template Error</h1>";
         print "phorum_get_template() was called with an empty page name.<br/>";
         print "This might indicate a template problem.<br/>";
         if (function_exists('debug_print_backtrace')) {
@@ -1961,10 +1961,10 @@ function print_var( $var, $admin_only = FALSE )
 }
 
 /**
- * Generates an MD5 signature for a piece of data using OpenPhorum's secret
+ * Generates an MD5 signature for a piece of data using LibreForum's secret
  * private key. This can be used to sign data which travels an unsafe path
  * (for example data that is sent to a user's browser and then back to
- * OpenPhorum) and for which tampering should be prevented.
+ * LibreForum) and for which tampering should be prevented.
  *
  * @param $data The data to sign.
  * @return $signature The signature for the data.
@@ -1994,7 +1994,7 @@ function phorum_check_data_signature($data, $signature)
  *
  * For protecting forms against CSRF attacks, a signed posting token
  * is utilized. This posting token must be included in the POST request.
- * Without the token, OpenPhorum will not accept the POST data.
+ * Without the token, LibreForum will not accept the POST data.
  *
  * This function will check whether we are handling a POST request.
  * If yes, then check if an anti-CSRF token is provided in the POST data.
@@ -2063,16 +2063,16 @@ function phorum_check_posting_token($target_page = NULL)
  *                      to this function is skipped by default, so you don't
  *                      have to count that in.
  * @param $hidepath   - NULL to not hide paths or a string to replace the
- *                      OpenPhorum path with.
+ *                      LibreForum path with.
  *
  * @return $backtrace - The back trace in text format or NULL if no back trace
  *                      was generated.
  */
-function phorum_generate_backtrace($skip = 0, $hidepath = "{path to OpenPhorum}")
+function phorum_generate_backtrace($skip = 0, $hidepath = "{path to LibreForum}")
 {
-    // Allthough OpenPhorum 4.3.0 is the required PHP version
-    // for OpenPhorum at the time of writing, people might still be running
-    // OpenPhorum on older PHP versions. For those people, we'll skip
+    // Allthough LibreForum 4.3.0 is the required PHP version
+    // for LibreForum at the time of writing, people might still be running
+    // LibreForum on older PHP versions. For those people, we'll skip
     // creation of a back trace.
 
     $backtrace = NULL;
@@ -2144,9 +2144,9 @@ function phorum_database_error($error)
      * [description]
      *     Give modules a chance to handle or process database errors.
      *     This can be useful to implement addional logging backends and/or
-     *     alerting mechanisms. Another option is to fully override OpenPhorum's
+     *     alerting mechanisms. Another option is to fully override LibreForum's
      *     default database error handling by handling the error and then
-     *     calling exit() from the hook to prevent the default OpenPhorum code
+     *     calling exit() from the hook to prevent the default LibreForum code
      *     from running.<sbr/>
      *     <sbr/>
      *     Note: If you decide to use the full override scenario, then
@@ -2180,7 +2180,7 @@ function phorum_database_error($error)
      *     function phorum_mod_foo_database_error($error)
      *     {
      *         // Log database errors to syslog facility "LOCAL0".
-     *         openlog("OpenPhorum", LOG_PID | LOG_PERROR, LOG_LOCAL0);
+     *         openlog("LibreForum", LOG_PID | LOG_PERROR, LOG_LOCAL0);
      *         syslog(LOG_ERR, $error);
      *
      *         return $error;
@@ -2203,11 +2203,11 @@ function phorum_database_error($error)
     // Start the error page.
     ?>
     <html>
-    <head><title>OpenPhorum database error</title></head>
+    <head><title>LibreForum database error</title></head>
     <body>
-    <h1>OpenPhorum Database Error</h1>
+    <h1>LibreForum Database Error</h1>
 
-    Sorry, a OpenPhorum database error occurred.<br/>
+    Sorry, a LibreForum database error occurred.<br/>
     <?php
 
     // In admin scripts, we will always include the
@@ -2261,7 +2261,7 @@ function phorum_database_error($error)
 
             $data = array(
               "mailmessage" =>
-                  "A database error occured in your OpenPhorum installation.\n".
+                  "A database error occured in your LibreForum installation.\n".
                   "\n" .
                   "Error message:\n" .
                   "--------------\n" .
@@ -2272,7 +2272,7 @@ function phorum_database_error($error)
                    ? "Backtrace:\n----------\n\n$backtrace"
                    : ""),
               "mailsubject" =>
-                  "OpenPhorum: A database error occured"
+                  "LibreForum: A database error occured"
             );
 
             $adminmail = $PHORUM["system_email_from_address"];

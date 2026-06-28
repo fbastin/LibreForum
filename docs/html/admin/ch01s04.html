@@ -1,11 +1,11 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>1.4. Additional issues</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Administrator Reference Manual"><link rel="up" href="ch01.html" title="Chapter 1. Installation instructions"><link rel="prev" href="ch01s03s07.html" title="1.3.7. Things to do after installing OpenPhorum"><link rel="next" href="ch01s04s02.html" title="1.4.2. Additional issues for Windows"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch01s03s07.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch01s04s02.html">Next</a></td></tr></table><hr></div><div class="section" title="1.4. Additional issues"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="install.additionalissues"></a>1.4. Additional issues</h2></div></div></div><div class="section" title="1.4.1. Additional issues for UNIX (Linux, BSD, Solaris, etc.)"><div class="titlepage"><div><div><h3 class="title"><a name="id2508106"></a>1.4.1. Additional issues for UNIX (Linux, BSD, Solaris, etc.)</h3></div></div></div><div class="section" title="1.4.1.1. Cache directory"><div class="titlepage"><div><div><h4 class="title"><a name="id2508113"></a>1.4.1.1. Cache directory</h4></div></div></div><p>
-          In the OpenPhorum settings, there is an entry called "Cache Directory".
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>1.4. Additional issues</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Administrator Reference Manual"><link rel="up" href="ch01.html" title="Chapter 1. Installation instructions"><link rel="prev" href="ch01s03s07.html" title="1.3.7. Things to do after installing LibreForum"><link rel="next" href="ch01s04s02.html" title="1.4.2. Additional issues for Windows"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch01s03s07.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch01s04s02.html">Next</a></td></tr></table><hr></div><div class="section" title="1.4. Additional issues"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="install.additionalissues"></a>1.4. Additional issues</h2></div></div></div><div class="section" title="1.4.1. Additional issues for UNIX (Linux, BSD, Solaris, etc.)"><div class="titlepage"><div><div><h3 class="title"><a name="id2508106"></a>1.4.1. Additional issues for UNIX (Linux, BSD, Solaris, etc.)</h3></div></div></div><div class="section" title="1.4.1.1. Cache directory"><div class="titlepage"><div><div><h4 class="title"><a name="id2508113"></a>1.4.1.1. Cache directory</h4></div></div></div><p>
+          In the LibreForum settings, there is an entry called "Cache Directory".
           On UNIX systems, the installer will have set that to the default
           location <code class="filename">/tmp</code>.
           The cache directory is used
           for storing cached data and compiled templates. You can change
           the location of your cache directory if you do not want the
-          OpenPhorum files to be in <code class="filename">/tmp</code> or if you see
+          LibreForum files to be in <code class="filename">/tmp</code> or if you see
           the following kind of error message:
           </p><pre class="screen">
 Warning:
@@ -14,7 +14,7 @@ failed to open stream: permission denied in
 /path/to/phorum/include/templates.php on line 184</pre><p>
           If you want to change the cache directory settings, we advise
           you to change it to <code class="filename">./cache</code> (this directory
-          is already in the OpenPhorum directory).
+          is already in the LibreForum directory).
         </p><p>
           You will have to make sure
           that this directory is writable by the webserver. Most likely

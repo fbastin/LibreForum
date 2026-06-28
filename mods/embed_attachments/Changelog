@@ -1,6 +1,10 @@
 Changelog:
 ----------
 
+2016-0831 v1.0.2
+
+    - Changed htmlspecialchars option from ENT_COMPAT to ENT_QUOTES.
+
 2007-12-12 v1.0.1
 
     - Added German language. Thanks Hiiri and Oliver Riesen!

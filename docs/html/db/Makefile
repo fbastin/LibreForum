@@ -4,14 +4,14 @@ all:
 	(cd ../../..; phpdoc \
 	       -f $(FILES) \
 	       -t docs/html/db \
-	       -ti "OpenPhorum DB Layer Documentation" \
-	       -o HTML:frames:phphtmllib -dn OpenPhorumDBLayer)
+	       -ti "LibreForum DB Layer Documentation" \
+	       -o HTML:frames:phphtmllib -dn LibreForumDBLayer)
 	cp index.html.custom index.html
 
 clean:
 	/bin/rm -f *.html
 	/bin/rm -fR media
 	/bin/rm -fR docs
-	/bin/rm -fR OpenPhorumDBLayer/
+	/bin/rm -fR LibreForumDBLayer/
 	/bin/rm -fR __examplesource
 

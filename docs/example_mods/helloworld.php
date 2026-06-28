@@ -1,9 +1,9 @@
 <?php
 
-// This is an example of a single file module for OpenPhorum. Almost all
+// This is an example of a single file module for LibreForum. Almost all
 // programming courses start out with building a program that displays
-// "Hello, world!" on screen. The OpenPhorum developers have followed 
-// the tradition and created "Hello, world!" for the OpenPhorum module
+// "Hello, world!" on screen. The LibreForum developers have followed 
+// the tradition and created "Hello, world!" for the LibreForum module
 // system.
 
 if(!defined("PHORUM")) return;

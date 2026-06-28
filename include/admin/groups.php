@@ -2,18 +2,18 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//   Copyright (C) 2010  OpenPhorum Development Team                              //
+//   Copyright (C) 2010  LibreForum Development Team                              //
 //   http://www.phorum.org                                                    //
 //                                                                            //
 //   This program is free software. You can redistribute it and/or modify     //
-//   it under the terms of either the current OpenPhorum License (viewable at     //
-//   phorum.org) or the OpenPhorum License that was distributed with this file    //
+//   it under the terms of either the current LibreForum License (viewable at     //
+//   phorum.org) or the LibreForum License that was distributed with this file    //
 //                                                                            //
 //   This program is distributed in the hope that it will be useful,          //
 //   but WITHOUT ANY WARRANTY, without even the implied warranty of           //
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     //
 //                                                                            //
-//   You should have received a copy of the OpenPhorum License                    //
+//   You should have received a copy of the LibreForum License                    //
 //   along with this program.                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -165,7 +165,7 @@
         $frm->addrow("Allow Membership Requests:", $frm->select_tag("open", $open_options, $group["open"], ""));
         $frm->show();
 
-        echo "<br /><hr class=\"OpenPhorumAdminHR\" /><br />";
+        echo "<br /><hr class=\"LibreForumAdminHR\" /><br />";
 
 
         $frm = new PhorumInputForm ("", "post", "Update");
@@ -230,7 +230,7 @@
 
         $frm = new PhorumInputForm ("", "post");
 
-        $frm->addbreak("OpenPhorum Group Admin");
+        $frm->addbreak("LibreForum Group Admin");
 
         $frm->hidden("module", "groups");
 
@@ -241,22 +241,22 @@
         $frm->show();
 
         $frm_url = phorum_admin_build_url('base');
-        echo "<hr class=\"OpenPhorumAdminHR\" />";
+        echo "<hr class=\"LibreForumAdminHR\" />";
         echo "<form action=\"$frm_url\" method=\"post\">\n";
         echo "<input type=\"hidden\" name=\"phorum_admin_token\" value=\"{$PHORUM['admin_token']}\">\n";
         echo "<input type=\"hidden\" name=\"module\" value=\"groups\">\n";
         echo "<input type=\"hidden\" name=\"action\" value=\"deleteGroups\">\n";
-        echo "<table border=\"0\" cellspacing=\"1\" cellpadding=\"0\" class=\"OpenPhorumAdminTable\" width=\"100%\">\n";
+        echo "<table border=\"0\" cellspacing=\"1\" cellpadding=\"0\" class=\"LibreForumAdminTable\" width=\"100%\">\n";
         echo "<tr>\n";
-        echo "    <td class=\"OpenPhorumAdminTableHead\">Group</td>\n";
-        echo "    <td class=\"OpenPhorumAdminTableHead\">Delete</td>\n";
+        echo "    <td class=\"LibreForumAdminTableHead\">Group</td>\n";
+        echo "    <td class=\"LibreForumAdminTableHead\">Delete</td>\n";
         echo "</tr>\n";
 
         foreach($groups as $group){
             $edit_url = phorum_admin_build_url(array('module=groups','edit=1','group_id='.$group['group_id']));
             echo "<tr>\n";
-            echo "    <td class=\"OpenPhorumAdminTableRow\"><a href=\"$edit_url\">".htmlspecialchars($group['name'])."</a></td>\n";
-            echo "    <td class=\"OpenPhorumAdminTableRow\">Delete? <input type=\"checkbox\" name=\"deleteIds[]\" value=\"{$group['group_id']}\"></td>\n";
+            echo "    <td class=\"LibreForumAdminTableRow\"><a href=\"$edit_url\">".htmlspecialchars($group['name'])."</a></td>\n";
+            echo "    <td class=\"LibreForumAdminTableRow\">Delete? <input type=\"checkbox\" name=\"deleteIds[]\" value=\"{$group['group_id']}\"></td>\n";
             echo "</tr>\n";
         }
         echo "<tr><td colspan=\"2\" align=\"right\"><input type=\"submit\" name=\"submit\" value=\"Delete Selected\"></td></tr>";

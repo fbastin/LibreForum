@@ -15,7 +15,7 @@ function phorum_mod_embed_attachments_javascript_register($data)
 // Add a link to the body if auto add link is enabled.
 function phorum_mod_embed_attachments_after_attach($args)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     if (empty($PHORUM["mod_embed_attachments"]["auto_add_link"])) {
         return $args;
@@ -51,7 +51,7 @@ function phorum_mod_embed_attachments_after_detach($args)
 function phorum_mod_embed_attachments_attachmentbuttons($attachment)
 {
     // Setup template data.
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
     $PHORUM['DATA']['EMBED_ATTACHMENTS']['NAME'] =
         preg_replace("/[^\w_=+:\.-]/", "", $attachment["name"]);
     $PHORUM['DATA']['EMBED_ATTACHMENTS']['FILE_ID'] =
@@ -119,7 +119,7 @@ function phorum_mod_embed_attachments_format($messages)
                 );
             }
 
-            $description = htmlspecialchars($m[2][$match_id], ENT_COMPAT, $PHORUM["DATA"]["HCHARSET"]);
+            $description = htmlspecialchars($m[2][$match_id], ENT_QUOTES, $PHORUM["DATA"]["HCHARSET"]);
             $attachment['description'] = $description;
 
             // Give modules a chance to provide rendered content for
@@ -184,7 +184,7 @@ function phorum_mod_embed_attachments_format($messages)
 
 function phorum_mod_embed_attachments_format_fixup($messages)
 {
-    $PHORUM = $GLOBALS['PHORUM'];
+    global $PHORUM;
 
     if (!empty($PHORUM['mod_embed_attachments']['format_fixup'])) {
         $format_fixup = $PHORUM['mod_embed_attachments']['format_fixup'];

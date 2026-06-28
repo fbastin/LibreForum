@@ -1,13 +1,13 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.13.7. admin_menu</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Developer Reference Manual"><link rel="up" href="ch03s13.html" title="3.13. Admin interface"><link rel="prev" href="ch03s13s06.html" title="3.13.6. admin_css_file"><link rel="next" href="ch03s13s08.html" title="3.13.8. admin_forum_delete"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s13s06.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s13s08.html">Next</a></td></tr></table><hr></div><div class="section" title="3.13.7. admin_menu"><div class="titlepage"><div><div><h3 class="title"><a name="hook.admin_menu"></a>3.13.7. admin_menu</h3></div></div></div><p>
-        (OpenPhorum 5.2.16)
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.13.7. admin_menu</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03s13.html" title="3.13. Admin interface"><link rel="prev" href="ch03s13s06.html" title="3.13.6. admin_css_file"><link rel="next" href="ch03s13s08.html" title="3.13.8. admin_forum_delete"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s13s06.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s13s08.html">Next</a></td></tr></table><hr></div><div class="section" title="3.13.7. admin_menu"><div class="titlepage"><div><div><h3 class="title"><a name="hook.admin_menu"></a>3.13.7. admin_menu</h3></div></div></div><p>
+        (LibreForum 5.2.16)
       </p><p>
 
-This hook allows to inject custom HTML into the OpenPhorum admin
+This hook allows to inject custom HTML into the LibreForum admin
 menu. The hook will receive an instance of
-OpenPhorumAdminMenuHookPosition which is required to determine at
-which position in the OpenPhorum admin menu the module author wishes
+LibreForumAdminMenuHookPosition which is required to determine at
+which position in the LibreForum admin menu the module author wishes
 to place his custom menu. Although any HTML can be injected, it
-is advised to use the OpenPhorumAdminMenu class.
+is advised to use the LibreForumAdminMenu class.
 Use the methods appendAt(position, html) and appendLast(html) to
 tell where you want them to appear.
       </p><p>
@@ -23,7 +23,7 @@ Admin header
         </strong></span>
       </p><p>
 
-Object of OpenPhorumAdminMenuHookPosition
+Object of LibreForumAdminMenuHookPosition
       </p><p>
         <span class="bold"><strong>
           Hook output:
@@ -40,7 +40,7 @@ Return the object
 </p><pre class="programlisting">
 function phorum_mod_foo_admin_menu($pos)
 {
-    $menu = new OpenPhorumAdminMenu("MyImportantLinks");
+    $menu = new LibreForumAdminMenu("MyImportantLinks");
     $menu-&gt;addCustom(
         "Event log",
         phorum_admin_build_url(array(
@@ -60,11 +60,11 @@ function phorum_mod_foo_admin_menu($pos)
 
     $pos-&gt;appendLast($menu-&gt;getHtml());
 
-    $menu = new OpenPhorumAdminMenu("Who rocks?");
+    $menu = new LibreForumAdminMenu("Who rocks?");
     $menu-&gt;addCustom(
         "Guess!",
         "http://phorum.org/",
-        "OpenPhorum rocks!",
+        "LibreForum rocks!",
         "_blank"
     );
 

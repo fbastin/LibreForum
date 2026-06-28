@@ -44,7 +44,7 @@ if (isset($_POST['do_search']))
             $search_operators[] = '*';
         }
         $PHORUM['DATA']['SEARCH_USERNAME'] =
-            htmlspecialchars($search, ENT_COMPAT, $PHORUM["DATA"]["HCHARSET"]);
+            htmlspecialchars($search, ENT_QUOTES, $PHORUM["DATA"]["HCHARSET"]);
     }
     if (isset($_REQUEST['search_display_name'])) {
         $search = trim($_REQUEST['search_display_name']);
@@ -54,7 +54,7 @@ if (isset($_POST['do_search']))
             $search_operators[] = '*';
         }
         $PHORUM['DATA']['SEARCH_DISPLAY_NAME'] =
-            htmlspecialchars($search, ENT_COMPAT, $PHORUM["DATA"]["HCHARSET"]);
+            htmlspecialchars($search, ENT_QUOTES, $PHORUM["DATA"]["HCHARSET"]);
     }
     if (isset($_REQUEST['search_email'])) {
         $search = trim($_REQUEST['search_email']);
@@ -64,7 +64,7 @@ if (isset($_POST['do_search']))
             $search_operators[] = '*';
         }
         $PHORUM['DATA']['SEARCH_EMAIL'] =
-            htmlspecialchars($search, ENT_COMPAT, $PHORUM["DATA"]["HCHARSET"]);
+            htmlspecialchars($search, ENT_QUOTES, $PHORUM["DATA"]["HCHARSET"]);
     }
 
     // Find a list of matching user_ids to display on the current page.
@@ -93,8 +93,8 @@ $safe_users = array();
 foreach ($users as $id => $user)
 {
     $safe_users[$id] = array('user_id' => $user['user_id']);
-    $safe_users[$id]['username'] = htmlspecialchars($user['username'], ENT_COMPAT, $PHORUM["DATA"]["HCHARSET"]);
-    $safe_users[$id]['email'] = htmlspecialchars($user['email'], ENT_COMPAT, $PHORUM["DATA"]["HCHARSET"]);
+    $safe_users[$id]['username'] = htmlspecialchars($user['username'], ENT_QUOTES, $PHORUM["DATA"]["HCHARSET"]);
+    $safe_users[$id]['email'] = htmlspecialchars($user['email'], ENT_QUOTES, $PHORUM["DATA"]["HCHARSET"]);
     $safe_users[$id]['display_name'] = empty($PHORUM['custom_display_name']) 
         ? htmlspecialchars($user['display_name'])
         : $user['display_name'];

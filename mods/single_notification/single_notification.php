@@ -25,7 +25,7 @@ function mod_single_notification_email_user_start($input) {
 	list($addresses,$maildata)=$input;
 	
 	// act only on New message reply
-	if($input[1]['mailmessagetpl'] == 'NewReplyMessage') {
+	if(isset($input[1]['mailmessagetpl']) && $input[1]['mailmessagetpl'] == 'NewReplyMessage') {
 		// check if entry for email,thread,forum exists,
 		// if it exists, remove his email from the $addresses list
 		$returns = mod_single_notification_db_check($addresses,$maildata['forum_id'],$maildata['thread_id']);

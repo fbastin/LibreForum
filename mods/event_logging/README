@@ -26,15 +26,15 @@ Installation instructions:
 Viewing the event logs:
 -----------------------
 
+NOTE: The local installation of this module has been customized to write logs directly to a disk file instead of the database to optimize performance. 
+The logs are recorded in:
+`/var/www/tireur.org/forum/cache/event_logging.log`
+
+Consequently, the web-based log viewer in the Phorum administration panel will remain empty. You should consult the logs directly on the server (e.g. using `tail -f forum/cache/event_logging.log`).
+
 After activating the module, the event log should start logging Phorum
 events. You could force logging some events by logging on and off and by
 posting a message in a forum.
-
-To view the logged events, login as administrator in Phorum's
-administrative interface and go the the "Modules" section. Then open
-the settings page for the "Event Logging" module. On that page, you will
-find a link "View logged events", which can be used to browse through
-the gathered log messages.
 
 For a more specific view, you can use the "Filter logged events" page.
 There you can setup a filter for only showing a subset of the available

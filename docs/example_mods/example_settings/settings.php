@@ -29,11 +29,11 @@ if (!isset($PHORUM["mod_example_settings"]["displaytext"]))
 if (!isset($PHORUM["mod_example_settings"]["displaycount"]))
     $PHORUM["mod_example_settings"]["displaycount"] = 1;
 
-// We build the settings form by using the OpenPhorumInputForm object. When
+// We build the settings form by using the LibreForumInputForm object. When
 // creating your own settings screen, you'll only have to change the
 // "mod" hidden parameter to the name of your own module.
-include_once "./include/admin/OpenPhorumInputForm.php";
-$frm = new OpenPhorumInputForm ("", "post", "Save");
+include_once "./include/admin/LibreForumInputForm.php";
+$frm = new LibreForumInputForm ("", "post", "Save");
 $frm->hidden("module", "modsettings");
 $frm->hidden("mod", "example_settings"); 
 

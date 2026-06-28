@@ -1,6 +1,15 @@
-OpenPhorum 5 Changelog
+LibreForum 5 Changelog
   
 --------------------------------------------------------------------------------
+  
+Sun Jun 28 08:00:00 2026 -0400: Frédéric Bastin
+* version bump to 6.1.0 for release
+* Added member search feature to user_list module with case sensitivity support
+* Integrated single_notification module logic into forum_subscriptions module
+* Redirected event_logging to filesystem logging to prevent database bloat
+* Solved PHP 8.0+ / 8.4 compatibilities in mail queue, digests, and event logging
+* Manual XHTML/standard fixes backported to check_module_upgrades (v5.2.2)
+
   
   
 Fri Sep 9 10:11:49 2011 -0500: Brian Moon
@@ -34,7 +43,7 @@ Fri Jul 8 10:38:16 2011 +0200: Thomas Seifert
 * # fixing undefined variables
 
 Fri Jul 8 10:22:10 2011 +0200: Thomas Seifert
-* fixed "multibyte chop corruption" (fixes #865, thanks to OpenPhorum user glen!)
+* fixed "multibyte chop corruption" (fixes #865, thanks to LibreForum user glen!)
 
 Fri Jul 8 10:10:15 2011 +0200: Thomas Seifert
 * fixed "Follow mode is not kept when quoting" (fixes #869, thanks to mariusmuja)
@@ -52,7 +61,7 @@ Tue Jul 5 11:42:59 2011 +0200: Thomas Seifert
 * fixing invalid message but upon splitting threads. Thanks to rfc! (Fixing #870)
 
 Tue Jul 5 11:38:55 2011 +0200: Thomas Seifert
-* fixing php warning when OpenPhorum is set to Read-Only. Thanks to rfc! (fixes #871)
+* fixing php warning when LibreForum is set to Read-Only. Thanks to rfc! (fixes #871)
 
 Fri Jul 1 11:24:16 2011 +0200: Thomas Seifert
 * # checking for sapi instead of remote_addr as there are some systems where the ip address is set on cli too, depending on the environment
@@ -145,7 +154,7 @@ Mon Jan 24 05:27:29 2011 +0000: mmakaay
 Sat Jan 22 17:28:47 2011 +0000: ts77
 * # precaution against a race condition when two messages are posted at the same second.
 
-   OpenPhorum 5 Changelog (Up to Version 5.2.16 - pre-GIT)
+   LibreForum 5 Changelog (Up to Version 5.2.16 - pre-GIT)
    --------------------------------------------------------------------------------
    
    2011-01-18 19:58  mmakaay
@@ -166,7 +175,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2010-11-16 11:58  mmakaay
 	* Added an API function phorum_api_user_get_active_user(), which can
 	  be used to retrieve the data for the currently active (i.e. logged
-	  in) OpenPhorum user. When no user is logged in, then the function will
+	  in) LibreForum user. When no user is logged in, then the function will
 	  return NULL.
 
    2010-11-12 07:43  mmakaay
@@ -186,12 +195,12 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  inside these divs will be correctly wrapped by the div.
 
    2010-10-28 21:08  mmakaay
-	* The OpenPhorum JavaScript library (jQuery + the OpenPhorum javascript
+	* The LibreForum JavaScript library (jQuery + the LibreForum javascript
 	  code) is now available from within the admin interface as well.
 	  Template specific javascript code and javascript code that is
 	  supplied by modules are not included in the package that is loaded
 	  by the admin interface (to prevent loading code that might be
-	  assuming to be run in the OpenPhorum front end.)
+	  assuming to be run in the LibreForum front end.)
 
    2010-10-26 13:58  mmakaay
 	* Added a hook "after_post_redirect" that can be used to tweak the
@@ -201,7 +210,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2010-10-22 09:43  mmakaay
 	* Implemented phorum_api_image_supported() and
 	  phorum_api_http_get_supported() which can be used to check if the
-	  hosting platform supports the respective OpenPhorum API layers.
+	  hosting platform supports the respective LibreForum API layers.
 
    2010-10-22 08:18  mmakaay
 	* MFT # backported API method phorum_api_http_get_supported()
@@ -245,7 +254,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 
    2010-10-11 23:28  mmakaay
 	* Release Spam Hurdles version 2.0.2 as the default version for both
-	  OpenPhorum 5.2 and the OpenPhorum development trunk.
+	  LibreForum 5.2 and the LibreForum development trunk.
 
    2010-07-16 12:02  ts77
 	* added attachments as input to the send_email hook (thanks to
@@ -304,7 +313,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 
    2010-05-20 09:46  ts77
 	* fixed timezone setting in forum settings panel. it got off with
-	  dst enabled (closing #950, thanks to OpenPhorum user Skye for the
+	  dst enabled (closing #950, thanks to LibreForum user Skye for the
 	  notice)
 
    2010-04-23 22:45  mmakaay
@@ -333,8 +342,8 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	* fixed pm_send_init hook, thanks to Charlie Brown (in #941)
 
    2010-03-18 12:20  mmakaay
-	* Fix for #938: client.js.php steps on javascript OpenPhorum object The
-	  way in which existence of the OpenPhorum object was checked was wrong
+	* Fix for #938: client.js.php steps on javascript LibreForum object The
+	  way in which existence of the LibreForum object was checked was wrong
 	  because of some legacy code in the Ajax js lib. This change should
 	  fix the issue.
 
@@ -370,7 +379,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  this issue) * Fixed the possibility of bypassing the original
 	  password check when changing the password through the control
 	  center. Risk: this might be used by a malicious user to change the
-	  password for a user that is logged into OpenPhorum on a computer that
+	  password for a user that is logged into LibreForum on a computer that
 	  the malicious user has direct access to (e.g. a computer in a
 	  library or internet cafe, where the user forgot to logout). *
 	  Fixed an XSS issue in the personal file management panel in the
@@ -404,7 +413,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2010-02-16 16:01  ts77
 	* added force_{okmsg|error} to hook_info in control.php to allow
 	  overriding the messages without fully overriding the panel. Thanks
-	  to OpenPhorum user Phil Connolly for the idea.
+	  to LibreForum user Phil Connolly for the idea.
 
    2010-02-12 15:36  ts77
 	* added json2.js json parser for decoding json (could be used for
@@ -455,7 +464,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2009-12-09 08:04  mmakaay
 	* Fix for correctly blocking posts to closed topics, in case the
 	  reply message was started before the topic was closed. Thanks to
-	  OpenPhorum user cactux for the problem report.
+	  LibreForum user cactux for the problem report.
 
    2009-12-04 21:10  mmakaay
 	* Added a new hook "pm_before_editor" to the PM script, as requested
@@ -509,8 +518,8 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  for empty param (fixing #887)
 
    2009-10-14 13:52  ts77
-	* turning TYPE=MyISAM into ENGINE=MyISAM to make OpenPhorum compatible
-	  with more recent MySQL versions. This effectively makes OpenPhorum
+	* turning TYPE=MyISAM into ENGINE=MyISAM to make LibreForum compatible
+	  with more recent MySQL versions. This effectively makes LibreForum
 	  incompatible with MySQL4 which is therefore stated in the install
 	  docs.
 
@@ -521,7 +530,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	* Added a sanity check to see if the version of PHP is 5.0.0 or
 	  higher. When the version is lower, then a critical error is
 	  returned. Effectively, people that are running PHP4 won't be able
-	  to install OpenPhorum anymore, unless they upgrade to PHP5.
+	  to install LibreForum anymore, unless they upgrade to PHP5.
 
    2009-09-29 06:41  mmakaay
 	* Moved the hard-coded max message length to a definition in
@@ -543,9 +552,9 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 
    2009-08-16 23:33  mmakaay
 	* Added a "no longer bundled" list to the Modules API. Modules that
-	  are no longer included in the OpenPhorum distro can be registered in
-	  this list. If OpenPhorum finds an enabled module that is no longer
-	  bundled with OpenPhorum and that has a version that is lower than the
+	  are no longer included in the LibreForum distro can be registered in
+	  this list. If LibreForum finds an enabled module that is no longer
+	  bundled with LibreForum and that has a version that is lower than the
 	  version as configured in the list, it will suggest the admin to
 	  upgrade the module to the separately distributed version. This
 	  feature was added for informing admins about the HTML module that
@@ -594,8 +603,8 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2009-07-27 15:42  mmakaay
 	* - Added a new logged event: User requests a new password. Thanks
 	  to CBiLL for the idea. This feature requires a new hook that is
-	  only available in OpenPhorum 5.2.13 and up. - Modified the failed
-	  login event: if the username that was used is known to OpenPhorum,
+	  only available in LibreForum 5.2.13 and up. - Modified the failed
+	  login event: if the username that was used is known to LibreForum,
 	  then the user_id is set for the event. This way, failed login
 	  events can be filtered by the username as long as an existing
 	  username was used. Thanks to CBiLL for the idea. - Fixed a bug:
@@ -673,7 +682,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2009-05-29 17:29  mmakaay
 	* Fixed a permission checking issue for the file.php script. Read
 	  access for the forum in which the file is stored was not correctly
-	  checked. Thanks to OpenPhorum user "FF" for finding the bug.
+	  checked. Thanks to LibreForum user "FF" for finding the bug.
 
    2009-05-18 23:54  mmakaay
 	* Logs can now be downloaded from the even viewer settings page
@@ -769,7 +778,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 
    2009-03-13 16:39  mmakaay
 	* Implemented a new hook "css_filter" that can be used for
-	  post-processing OpenPhorum's CSS code (e.g. compression of the code).
+	  post-processing LibreForum's CSS code (e.g. compression of the code).
 
    2009-03-11 01:14  mmakaay
 	* Added a layer of protection against CSRF (Cross Site Request
@@ -785,7 +794,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  influence the phorum_get_template_file() function. The name of the
 	  template to load can be updated (e.g. to change "index_new" to
 	  "yourmod::index_new") and the template source file to use can be
-	  returned (e.g. to tell OpenPhorum that the "pm" template has to be
+	  returned (e.g. to tell LibreForum that the "pm" template has to be
 	  handled by a custom script named
 	  "./mods/yourmod/pm_page_handler.php").
 
@@ -831,7 +840,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	* added experimental attachment support to the smtp-mail module
 
    2008-12-06 10:56  mmakaay
-	* Close the database connection explicitly at the end of the OpenPhorum
+	* Close the database connection explicitly at the end of the LibreForum
 	  script, to prevent lingering MySQL connections from overloading
 	  the MySQL server.
 
@@ -860,7 +869,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2008-11-19 15:05  mmakaay
 	* Improved the JSON handling using the PEAR library on systems that
 	  do not implement json_encode() and/or json_decode(). Thanks to
-	  OpenPhorum user "rasta" for the coding idea.
+	  LibreForum user "rasta" for the coding idea.
 
    2008-11-13 09:05  mmakaay
 	* Reverted [3700]: allow_email_notify is a per-forum setting and not
@@ -921,7 +930,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2008-10-14 07:40  mmakaay
 	* Fixed a problem in the phorum_api_file_store() function call,
 	  which could cause storing a file with a message or user to fail.
-	  This had no effect on the existing core OpenPhorum code by sheer luck,
+	  This had no effect on the existing core LibreForum code by sheer luck,
 	  but when using the API call, things might go wrong, depending on
 	  the order in which the file info fields were stored in the $file
 	  argument.
@@ -945,7 +954,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 
    2008-10-04 08:55  mmakaay
 	* Fixed "AND" based queries for
-	  phorum_api_user_search_custom_profile_field(). Thanks to OpenPhorum
+	  phorum_api_user_search_custom_profile_field(). Thanks to LibreForum
 	  user jjarvis98 for noticing the bug and to Azumandias for
 	  providing the fix.
 
@@ -975,7 +984,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2008-09-01 07:41  mmakaay
 	* Fixed the classic index style (directory browsing mode) for the
 	  classic 0.4 template. It did not yet reflect a change in the
-	  datastructures that we use for the index page in OpenPhorum 5.2,
+	  datastructures that we use for the index page in LibreForum 5.2,
 	  causing folders to not show up in that view.
 
    2008-09-01 06:33  mmakaay
@@ -1010,8 +1019,8 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  printable encoded, even if there are no special characters in it.
 
    2008-08-04 17:57  mmakaay
-	* OpenPhorum3 script updated for the new phorum_db_file_save() call in
-	  OpenPhorum 5.2. Thanks to Simon King who posted the patch in our
+	* LibreForum3 script updated for the new phorum_db_file_save() call in
+	  LibreForum 5.2. Thanks to Simon King who posted the patch in our
 	  support forums.
 
    2008-07-22 07:23  mmakaay
@@ -1071,7 +1080,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  can always see the email addresses of the users. For moderators,
 	  this can be restricted by setting the PHORUM_MOD_EMAIL_VIEW
 	  constant to false in include/constants.php. Some more fine grained
-	  control for email address displaying will be added to OpenPhorum 5.3.
+	  control for email address displaying will be added to LibreForum 5.3.
 
    2008-06-16 10:15  ts77
 	* quote anonymous authors with their name (fixing #744)
@@ -1153,10 +1162,10 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2008-05-03 13:53  mmakaay
 	* Backported the phorum_switch_template() function from trunk to
 	  5.2. This new function makes it possible to switch the active
-	  OpenPhorum template to a template that is stored in any directory.
-	  This is for example useful if a module includes a full OpenPhorum
+	  LibreForum template to a template that is stored in any directory.
+	  This is for example useful if a module includes a full LibreForum
 	  template, where the template is packaged with the module code.
-	  With this new function, the OpenPhorum can activate the module's
+	  With this new function, the LibreForum can activate the module's
 	  template without the need for the admin to copy the template to
 	  the main templates directory.
 
@@ -1333,7 +1342,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  1582, which was temporarily implemented in the MySQL server
 	  (versions 5.1.15 up to 5.1.20). This error code has been reverted
 	  to the original error code 1062 in the fix for MySQL bug report
-	  #28842. Unfortunately we have to add this work around to OpenPhorum
+	  #28842. Unfortunately we have to add this work around to LibreForum
 	  for this now. References: -
 	  http://dev.mysql.com/doc/refman/5.1/en/news-5-1-20.html -
 	  http://bugs.mysql.com/bug.php?id=28842
@@ -1449,7 +1458,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 
    2007-11-02 12:36  mmakaay
 	* Modules can now register for adding additional CSS code to the
-	  base OpenPhorum CSS code using the module system. This way, we can
+	  base LibreForum CSS code using the module system. This way, we can
 	  prevent the need to either add additional <link>s for CSS to the
 	  pages (more file downloads per page) or add additional CSS code to
 	  the <head> section of the pages (more data to download per page).
@@ -1520,7 +1529,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2007-09-03 14:29  mmakaay
 	* Implemented a new hook "cc_panel", which can be used to build
 	  extra cc panels from a module, without having to copy script files
-	  into the OpenPhorum tree. This one goes along nicely with the
+	  into the LibreForum tree. This one goes along nicely with the
 	  tpl_cc_menu_options_hook and tpl_cc_menu_moderator_hook hooks.
 
    2007-08-23 09:01  mmakaay
@@ -1615,7 +1624,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	* Improved switching between user selected templates. The new
 	  template is now displayed immediately. Also fixed a bug with
 	  handling of user templates that are set to no longer existaning
-	  templates (OpenPhorum would fall back to the default template, but
+	  templates (LibreForum would fall back to the default template, but
 	  things like images and other items depending on the template name
 	  would point to the user template name).
 
@@ -1625,7 +1634,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  make use of a new language file variable
 	  $PHORUM['DATA']['HCHARSET']. This one can be set different from
 	  the CHARSET, to prevent spawning of PHP warnings, because of
-	  unsupported character sets. If HCHARSET is empty, then OpenPhorum will
+	  unsupported character sets. If HCHARSET is empty, then LibreForum will
 	  automatically use the standard CHARSET for htmlspecialchars().
 
    2007-07-03 09:13  ts77
@@ -1657,7 +1666,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  in pathinfo for file download URLs". If this option is enabled
 	  (disabled by default), then pathinfo will be added to file
 	  download URLs, to trick browser into using the correct filename
-	  when downloading OpenPhorum files through file.php (normally, "Save as
+	  when downloading LibreForum files through file.php (normally, "Save as
 	  ..." would result in the default save file name "file.php"). Note:
 	  this feature requires a webserver which understands pathinfo in
 	  the URLs. Most webservers do as far as I know.
@@ -1721,7 +1730,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	* added hook for modifying default search settings
 
    2007-05-08 00:36  mmakaay
-	* First version of a OpenPhorum C extension for speeding up tasks by
+	* First version of a LibreForum C extension for speeding up tasks by
 	  means of pure C-code. The extension should never be mandatory. It
 	  should only provide fast and light weight alternatives for the
 	  pure PHP-code solutions. # The first function that is targeted by
@@ -1745,7 +1754,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  new way of deleting custom fields. If an admin accidentally
 	  deleted a field, then he can create a new field with the same
 	  name, which will give him the choice of restoring the deleted
-	  field or creating a fully new field. The rest of OpenPhorum has to be
+	  field or creating a fully new field. The rest of LibreForum has to be
 	  investigated to see where the new delete system has impact (a
 	  couple of changes are probably needed).
 
@@ -1753,7 +1762,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	* Fixed bug #547
 
    2007-05-02 15:22  mmakaay
-	* Announcements module is in OpenPhorum trunk
+	* Announcements module is in LibreForum trunk
 
    2007-05-02 11:37  mmakaay
 	* Fixed search bug: when selecting specific forums to search: Fatal
@@ -1777,12 +1786,12 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  systems by means of a module. This layer is still work in
 	  progress. There are probably a few more file related functions
 	  that can go in this file storage API. I also started on an idea
-	  for providing a real OpenPhorum API, by moving generic code from the
+	  for providing a real LibreForum API, by moving generic code from the
 	  front end scripts to API libraries. The goal that I have in mind
 	  for this is to make it possible to add additional API's (like Ajax
-	  and SOAP) to OpenPhorum, without having to write API code that copies
+	  and SOAP) to LibreForum, without having to write API code that copies
 	  loads and loads of the core code from the front end scripts. A
-	  structured and documented API for OpenPhorum should also provide
+	  structured and documented API for LibreForum should also provide
 	  better and stable support for module writers. The API code can be
 	  found in include/api/*.
 
@@ -1909,7 +1918,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  internally. One for the main database schema version and one for
 	  the database schema patch level. This system solves some problems
 	  that we have with the current upgrade system in case we are doing
-	  upgrade to both a stable and a development version of OpenPhorum. See
+	  upgrade to both a stable and a development version of LibreForum. See
 	  also phorum.org's development Wiki for more info on the design of
 	  the new upgrade system. I also put the table upgrade function
 	  inside include/version_functions.php, so both the console and the
@@ -1933,9 +1942,9 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  for the new schema/patch upgrade system. # # Note: # Within the
 	  rules of the upgrade system it is fine to always run all # patch
 	  level upgrades prior to the schema upgrades (because patches imply
-	  # that older versions of OpenPhorum are patched too, which means that
+	  # that older versions of LibreForum are patched too, which means that
 	  all # the patches should be able to run on the last schema upgrade
-	  version for # the oldest patched version of OpenPhorum. We have to
+	  version for # the oldest patched version of LibreForum. We have to
 	  beware that with the # above up-side-down system, this might not
 	  be the case. If we ever write # a 5.1/5.2 schema upgrade which
 	  should be executed before a 5.2 patch # to work, then we have to
@@ -2022,7 +2031,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  warnings and continue installing.
 
    2006-10-02 20:16  mmakaay
-	* Added sanity check for checking if all important OpenPhorum files are
+	* Added sanity check for checking if all important LibreForum files are
 	  available
 
    2006-10-02 15:07  ts77
@@ -2307,7 +2316,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 
    2006-02-03 13:14  mmakaay
 	* Fixed bug: admin could not relogin with cookies disabled in
-	  OpenPhorum's settings
+	  LibreForum's settings
 
    2006-01-28 22:02  ts77
 	* "first version of console-upgrade script. not yet tested"
@@ -2531,7 +2540,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2005-10-10 13:59  mmakaay
 	* New template feature: {HOOK hook_name arg1 arg2 .. argn} # Hooks
 	  can now also be called in templates. This is solely for # being
-	  able to let modules writers extend the forms that OpenPhorum uses. #
+	  able to let modules writers extend the forms that LibreForum uses. #
 	  If one hook argument is used, the hook code will translate to: #
 	  phorum_hook(hook_name, arg1) # If multiple hook arguments are
 	  used, it will translate to: # phorum_hook(hook_name, array(arg1,
@@ -2542,7 +2551,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	* Added new hooks to make alternate attachment storage possible
 
    2005-10-06 23:21  mmakaay
-	* Activated the new editor code in the OpenPhorum core. # This revision
+	* Activated the new editor code in the LibreForum core. # This revision
 	  does not contain cleanup of the old code. # That will be done in a
 	  separate revision.
 
@@ -2586,7 +2595,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2005-10-01 22:24  mmakaay
 	* Added a new option "System Sanity Checks" to the admin panel. This
 	  can be used to run a number of checks on the system to see if it
-	  is configured correctly for using OpenPhorum. # Implementation: # #
+	  is configured correctly for using LibreForum. # Implementation: # #
 	  All checks are stored as single PHP files in the directory #
 	  include/admin/sanity_checks/ # Each file you create there must at
 	  least have the following: # # * A variable $check_description
@@ -2614,7 +2623,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  hooks
 
    2005-09-24 11:43  mmakaay
-	* Cleaned up and updated the OpenPhorum5 docs directory.
+	* Cleaned up and updated the LibreForum5 docs directory.
 
    2005-09-22 14:15  mmakaay
 	* Added e-mail notifications for new private messages. The user can
@@ -2652,8 +2661,8 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  trash bin. # # Notes: # # Because the way messages are stored has
 	  changed, the old PM calls # from mysql.php have been deprecated.
 	  When calling these functions, # an error message will be shown.
-	  This will only be done in case # non-OpenPhorum scripts call the old
-	  functions. OpenPhorum uses the new API. # # In the database migration
+	  This will only be done in case # non-LibreForum scripts call the old
+	  functions. LibreForum uses the new API. # # In the database migration
 	  script, dropping the old private messages # table is not yet
 	  included, so in case of problems a rollback is # possible without
 	  loosing the old private messages. This will be # incorporated as
@@ -2708,7 +2717,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  attachments always replaced the complete list of attachments,
 	  instead of adding attachments to it; * Added some more explanation
 	  for the attachment admin parameters, to make clear what an empty
-	  or zero value means to OpenPhorum; * The list of allowed file types is
+	  or zero value means to LibreForum; * The list of allowed file types is
 	  not shown anymore in the template case no list is set in the admin
 	  interface (so you won't get "You are allowed to attach files of
 	  the following type:" without any options behind it on screen);
@@ -2756,7 +2765,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 
    2005-08-18 17:23  brian
 	* Fixed issues with upgrading and made sure no on could run the
-	  install or upgrade on a running OpenPhorum.
+	  install or upgrade on a running LibreForum.
 
    2005-08-12 21:08  ts77
 	* "changed merge thread to reinsert messages (#60)"
@@ -2906,7 +2915,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 
    2005-06-16 03:55  brian
 	* Added new ability to toggle the status of the forum. Normal, Read
-	  Only, Admin Only and Disabled. Also, OpenPhorum will display a message
+	  Only, Admin Only and Disabled. Also, LibreForum will display a message
 	  when the database is down and optionally redirect to a URL you set
 	  up in the DB config file.
 
@@ -2961,7 +2970,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    ---------------------------------------------------------------------------------
    
    
-OpenPhorum 5 Changelog
+LibreForum 5 Changelog
 ---------------------------------------------------------------------------
 
 Release: phorum.5.0.15
@@ -3013,7 +3022,7 @@ Release: phorum.5.0.14
    * checking new user-email also against existing emails - ts77
      (02/16/2005)
 
-   * Renamed settings variables to comply with OpenPhorum standards - sheik
+   * Renamed settings variables to comply with LibreForum standards - sheik
      (02/08/2005)
 
    * disallowing time-zone-selection works now too if a user already
@@ -3567,7 +3576,7 @@ Release: phorum.5.0.4.beta
    * implemented dates formatted by locale - ts77 (03/21/2004)
 
    * Added the date a user is registered and the ability to track when a
-     user last used OpenPhorum. - brian (03/17/2004)
+     user last used LibreForum. - brian (03/17/2004)
 
    * Added ability to detect if cookies are off on the browser. - brian
      (03/17/2004)
@@ -3675,7 +3684,7 @@ Release: phorum.5.0.1.alpha
      thread - brian (05/25/2003)
 
    * Fixed lost password so that it now sends a temp password like
-     OpenPhorum 3 does. - brian (05/25/2003)
+     LibreForum 3 does. - brian (05/25/2003)
 
    * Public users can no longer post using registered names. - brian
      (05/25/2003)
@@ -3780,7 +3789,7 @@ Release: phorum.5.0.0.alpha
    * changed user functions to all be named phorum_user_* - brian
      (01/10/2003)
 
-   * added a wrapper to allow multiple OpenPhorum's from one source base -
+   * added a wrapper to allow multiple LibreForum's from one source base -
      brian (01/10/2003)
 
    * added first moderation-parts (delete message and delete message

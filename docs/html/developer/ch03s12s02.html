@@ -1,12 +1,12 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.12.2. send_mail</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="OpenPhorum Developer Reference Manual"><link rel="up" href="ch03s12.html" title="3.12. Moderation"><link rel="prev" href="ch03s12.html" title="3.12. Moderation"><link rel="next" href="ch03s12s03.html" title="3.12.3. moderation"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s12.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s12s03.html">Next</a></td></tr></table><hr></div><div class="section" title="3.12.2. send_mail"><div class="titlepage"><div><div><h3 class="title"><a name="hook.send_mail"></a>3.12.2. send_mail</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.12.2. send_mail</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03s12.html" title="3.12. Moderation"><link rel="prev" href="ch03s12.html" title="3.12. Moderation"><link rel="next" href="ch03s12s03.html" title="3.12.3. moderation"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s12.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s12s03.html">Next</a></td></tr></table><hr></div><div class="section" title="3.12.2. send_mail"><div class="titlepage"><div><div><h3 class="title"><a name="hook.send_mail"></a>3.12.2. send_mail</h3></div></div></div><p>
 
 This hook can be used for implementing an alternative mail sending
-system. The hook should return true if OpenPhorum should still send the
-mails. If you do not want to have OpenPhorum send the mails also, return
+system. The hook should return true if LibreForum should still send the
+mails. If you do not want to have LibreForum send the mails also, return
 false.<br>
 <br>
 The SMTP module is a good example of using this hook to replace
-OpenPhorum's default mail sending system.
+LibreForum's default mail sending system.
       </p><p>
         <span class="bold"><strong>
           Call time:

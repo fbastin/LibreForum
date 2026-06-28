@@ -131,3 +131,9 @@ want to educate your users as to the different options available.
         simple_rounded\
             cc_menu_item.tpl
             cc_panel.tpl
+
+========          Local Customizations          ========
+1. **Email Template Adjustment**:
+   - The body of notification emails (`%plain_body%`) has been removed from `lang/french.php` and `lang/english.php` to hide message contents and prompt users to visit the site to read replies.
+2. **Single Notification Bridging**:
+   - Integrated with the `single_notification` module in `forum_subscriptions_after_post.php` to avoid sending multiple notifications for subsequent replies until the user visits the thread/forum.

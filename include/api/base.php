@@ -1,18 +1,18 @@
 <?php
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//   Copyright (C) 2010  OpenPhorum Development Team                              //
+//   Copyright (C) 2010  LibreForum Development Team                              //
 //   http://www.phorum.org                                                    //
 //                                                                            //
 //   This program is free software. You can redistribute it and/or modify     //
-//   it under the terms of either the current OpenPhorum License (viewable at     //
-//   phorum.org) or the OpenPhorum License that was distributed with this file    //
+//   it under the terms of either the current LibreForum License (viewable at     //
+//   phorum.org) or the LibreForum License that was distributed with this file    //
 //                                                                            //
 //   This program is distributed in the hope that it will be useful,          //
 //   but WITHOUT ANY WARRANTY, without even the implied warranty of           //
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     //
 //                                                                            //
-//   You should have received a copy of the OpenPhorum License                    //
+//   You should have received a copy of the LibreForum License                    //
 //   along with this program.                                                 //
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
@@ -24,17 +24,17 @@
  * If you include any of the other API scripts in your code, then this script
  * should be included as well.
  *
- * @package    OpenPhorumAPI
+ * @package    LibreForumAPI
  * @subpackage BaseAPI
- * @copyright  2010, OpenPhorum Development Team
- * @license    OpenPhorum License, http://www.phorum.org/license.txt
+ * @copyright  2010, LibreForum Development Team
+ * @license    LibreForum License, http://www.phorum.org/license.txt
  */
 
 if (!defined("PHORUM")) return;
 
 // {{{ Constant and variable definitions
 
-// Initialize the OpenPhorum API space.
+// Initialize the LibreForum API space.
 $GLOBALS["PHORUM"]["API"] = array(
     "errno" => NULL,
     "error" => NULL
@@ -66,7 +66,7 @@ define("PHORUM_ERRNO_INTEGRITY",       4);
  */
 define("PHORUM_ERRNO_INVALIDINPUT",    5);
 
-// A mapping of OpenPhorum errno values to a human readable counter part.
+// A mapping of LibreForum errno values to a human readable counter part.
 $GLOBALS["PHORUM"]["API"]["errormessages"] = array(
     PHORUM_ERRNO_ERROR        => "An error occurred.",
     PHORUM_ERRNO_NOACCESS     => "Permisison denied.",
@@ -79,7 +79,7 @@ $GLOBALS["PHORUM"]["API"]["errormessages"] = array(
 
 // {{{ Function: phorum_api_error_set
 /**
- * Set a OpenPhorum API error.
+ * Set a LibreForum API error.
  *
  * @param integer $errno
  *     The errno value for the error that occurred. There are several
@@ -116,7 +116,7 @@ function phorum_api_error_set($errno, $error = NULL)
 
 // {{{ Function: phorum_api_errno
 /**
- * Retrieve the error code for the last OpenPhorum API function that was called.
+ * Retrieve the error code for the last LibreForum API function that was called.
  *
  * @return mixed
  *     The error code or NULL if no error was set.
@@ -133,7 +133,7 @@ function phorum_api_errno()
 
 // {{{ Function: phorum_api_strerror
 /**
- * Retrieve the error message for the last OpenPhorum API function that was called.
+ * Retrieve the error message for the last LibreForum API function that was called.
  *
  * @return mixed
  *     The error message or NULL if no error was set.

@@ -1,6 +1,6 @@
 title: User List
 desc: Present a list of active users.
-version: 1.1.0
+version: 1.1.1
 author: Jim Lehmann a.k.a. Ravenswood
 url: http://www.scriptmonkeys.us/
 category: user_features

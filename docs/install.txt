@@ -1,4 +1,4 @@
-OpenPhorum 5 Installation instructions
+LibreForum 5 Installation instructions
 ==================================
 
 Contents:
@@ -6,13 +6,13 @@ Contents:
 1. Requirements
 2. Quickstart guide
 3. Detailed installation instructions
-   3.1 Download OpenPhorum
+   3.1 Download LibreForum
    3.2 Unpack the downloaded archive
-   3.3 Place the OpenPhorum files in your website's document root
+   3.3 Place the LibreForum files in your website's document root
    3.4 Create a database and a database user
    3.5 Configure the database access
    3.6 Run the web based installer
-   3.7 Things to do after installing OpenPhorum
+   3.7 Things to do after installing LibreForum
 4. Additional issues
    4.1 Additional issues for UNIX (Linux, BSD, Solaris, etc.)
        4.1.2 Cache directory
@@ -27,24 +27,24 @@ Contents:
 -------------------------------------------------------------------------------
 
 
-   Requirements for running OpenPhorum are:
+   Requirements for running LibreForum are:
 
    * A webserver
 
    * PHP, version 5 or above.
 
-     PHP4 is over 5 years old. As of OpenPhorum 5.2 there are some functions
-     used in OpenPhorum which *require* PHP5 as they didn't exist before.
+     PHP4 is over 5 years old. As of LibreForum 5.2 there are some functions
+     used in LibreForum which *require* PHP5 as they didn't exist before.
      Therefor PHP5 is a requirement now. 
 
    * A MySQL server, version 5 or above.
 
      MySQL has discontinued active development for all version below 5.0. The
-     OpenPhorum teams uses 5.0 for all development. MySQL 5.0.15 was the first
+     LibreForum teams uses 5.0 for all development. MySQL 5.0.15 was the first
      production release of the 5.0 branch.
-     Since the first release of OpenPhorum 5.2 we were only testing against MySQL-5
+     Since the first release of LibreForum 5.2 we were only testing against MySQL-5
      but weren explicitly using MySQL-4 incompatible queries. 
-     As of OpenPhorum 5.2.14 there were changes needed to make OpenPhorum work with more
+     As of LibreForum 5.2.14 there were changes needed to make LibreForum work with more
      recent MySQL versions and therefore MySQL-5 or higher is a requirement now.
 
    If you do not run your own website, but have hosted your website with
@@ -56,11 +56,11 @@ Contents:
 -------------------------------------------------------------------------------
 
 
-   This is the quickstart guide for installing OpenPhorum, aimed at people that
+   This is the quickstart guide for installing LibreForum, aimed at people that
    are used to working with websites, PHP and databases. If you are having
    problems following this guide, then please read chapter 3 instead.
 
-   1. Unpack OpenPhorum into a directory below your website's document root;
+   1. Unpack LibreForum into a directory below your website's document root;
    2. Create a database and a full-access database user for that database;
    3. Edit include/db/config.php.sample, save it as include/db/config.php;
    4. Open {phorum url}/admin.php in your web browser and finish the install.
@@ -70,10 +70,10 @@ Contents:
 -------------------------------------------------------------------------------
 
 
- 3.1 Download OpenPhorum
+ 3.1 Download LibreForum
  -------------------
 
-   If you haven't already done so, download the latest OpenPhorum distribution
+   If you haven't already done so, download the latest LibreForum distribution
    from http://phorum.org/downloads.php
 
 
@@ -100,13 +100,13 @@ Contents:
    shell> tar xvf phorum-x.y.z.tar
 
 
- 3.3 Place the OpenPhorum files in your website's document root
+ 3.3 Place the LibreForum files in your website's document root
  ----------------------------------------------------------
 
    The document root for a website is the directory in which your site's
    web pages are stored. If your website's URL is "http://www.example.com"
-   and you place the OpenPhorum files in a directory called "forum" inside
-   your document root, your OpenPhorum installation will be available at the
+   and you place the LibreForum files in a directory called "forum" inside
+   your document root, your LibreForum installation will be available at the
    URL "http://www.example.com/forum". From now on, we will name this
    URL simply {phorum url}. So if you see {phorum url}/admin.php, using the
    example we mean http://www.example.com/forum/admin.php
@@ -119,7 +119,7 @@ Contents:
    the files to your website's document root. In most cases, you will use
    FTP for this, but some hosting providers require SCP (secure copy,
    which is more secure than FTP). If you do not know how or where to
-   upload the OpenPhorum files, please contact your hosting provider.
+   upload the LibreForum files, please contact your hosting provider.
 
    Security note:
    (simply ignore this if it does not make sense to you)
@@ -127,16 +127,16 @@ Contents:
    for the webserver (using the infamous "chmod 777"). DO NOT DO THIS
    FOR ANY OF THE PHORUM FILES. The webserver only needs read access on
    the distribution files, because all dynamic data is stored in the
-   database. If you run into problems running OpenPhorum, it will never be
-   because you "forgot" to do "chmod 777" on any the OpenPhorum files.
+   database. If you run into problems running LibreForum, it will never be
+   because you "forgot" to do "chmod 777" on any the LibreForum files.
 
 
  3.4 Create a database and a database user
  -----------------------------------------
 
-   OpenPhorum stores all its data in a database. So you now need to create
+   LibreForum stores all its data in a database. So you now need to create
    a database. Officially, only the MySQL database server is supported
-   by OpenPhorum, so we recommend to use MySQL whenever possible.
+   by LibreForum, so we recommend to use MySQL whenever possible.
 
    If you have hosted your site with a hosting provider, then ask
    your hosting provider to setup the database and a full access
@@ -161,9 +161,9 @@ Contents:
  3.5 Configure the database access
  ---------------------------------
 
-   After setting up the database, you'll have to tell OpenPhorum how the
+   After setting up the database, you'll have to tell LibreForum how the
    database can be accessed. This configuration is put in the file
-   include/db/config.php inside your OpenPhorum directory. This file is
+   include/db/config.php inside your LibreForum directory. This file is
    not in the distribution. Only a differently named sample file is
    included.
 
@@ -180,12 +180,12 @@ Contents:
  3.6 Run the web based installer
  -------------------------------
 
-   Now all is in place to run OpenPhorum's installer script.
+   Now all is in place to run LibreForum's installer script.
    Open {phorum url}/admin.php using your web browser. This is the admin
    interface, which will automatically detect that a fresh install has
    to be performed.
 
-   Follow the instructions on screen to finish the OpenPhorum installation.
+   Follow the instructions on screen to finish the LibreForum installation.
 
    In case you do not see the installer, but a blank screen instead,
    something is wrong. Please check the following:
@@ -203,12 +203,12 @@ Contents:
    - Did all files get uploaded and was filename case properly preserved
      by your FTP client? There are some FTP clients which upload all files
      using lower case only. Check whether the files
-     include/admin/OpenPhorumAdminMenu.php and include/admin/OpenPhorumInputForm.php
+     include/admin/LibreForumAdminMenu.php and include/admin/LibreForumInputForm.php
      are uploaded, using exactly these names and not something like
      include/admin/phorumadminmenu.php for example.
 
 
- 3.7 Things to do after installing OpenPhorum
+ 3.7 Things to do after installing LibreForum
  ----------------------------------------
 
    Now the installation is complete, test if the forum is working
@@ -220,9 +220,9 @@ Contents:
    to solve them.
 
    Login into the admin interface at {phorum url}/admin.php and check
-   out what settings can be done to customize OpenPhorum to your likings.
+   out what settings can be done to customize LibreForum to your likings.
 
-   Customize the looks of OpenPhorum to your needs by creating a custom
+   Customize the looks of LibreForum to your needs by creating a custom
    template. Instructions can be found in docs/creating_templates.txt.
 
    Read the additional issues for your system (below), docs/faq.txt
@@ -252,7 +252,7 @@ Contents:
    /path/to/phorum/include/templates.php on line 184
 
    If you change the the Cache Directory, the best bet is to set it
-   to ./cache and make that dir (that is already there in the OpenPhorum dir)
+   to ./cache and make that dir (that is already there in the LibreForum dir)
    writable by the web server. Most likely this means making it world
    writeable (chmod 777). If you do not have access to the shell prompt
    of the server and are using only FTP to access the server, please see
@@ -276,7 +276,7 @@ Contents:
    failed to open stream: Permission denied in
    c:\path\to\phorum\include\templates.php on line 184
 
-   You will need to change the Cache Directory. The OpenPhorum team is not
+   You will need to change the Cache Directory. The LibreForum team is not
    very familiar with Windows as a web server platform. We can only tell
    you that it will need to be something that the web server can write to.
    Changing the Cache Directory to ./cache has worked for some.
@@ -296,7 +296,7 @@ Contents:
 
    If you have no access to the php.ini file and the system administrator
    is not willing to update it for you, you will have to install the
-   SMTP module for OpenPhorum. You can download this module from the module page:
+   SMTP module for LibreForum. You can download this module from the module page:
    http://phorum.org/cgi-bin/trac.cgi/wiki/ListOfModules
    In the settings for this module, you can specify the SMTP server to use
    for sending mail. When using this module, you will completely bypass PHP's
@@ -323,7 +323,7 @@ Contents:
 5. Support
 -------------------------------------------------------------------------------
 
-   If you have questions about installing OpenPhorum, please visit the website
+   If you have questions about installing LibreForum, please visit the website
    http://phorum.org/ and ask the development team for help in the
    Support forum. Also read the file docs/faq.txt for answers to the most
    common questions.

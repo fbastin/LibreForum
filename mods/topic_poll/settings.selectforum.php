@@ -7,13 +7,13 @@
     Below, you see all the forums that are available. For each forum, you can configure
     if and how polls can be used by clicking the "Configure" button. If creating polls
     is enabled for a forum, then its name will be printed in bold.
-    <br/><br/>
+    <br /><br />
 
-    <form action="<?php print htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST">
+    <form action="<?php print htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
     <input type="hidden" name="phorum_admin_token"
-           value="<?php print $PHORUM['admin_token'] ?>"/>
-    <input type="hidden" name="module" value="modsettings"/>
-    <input type="hidden" name="mod" value="topic_poll"/>
+           value="<?php print $PHORUM['admin_token'] ?>" />
+    <input type="hidden" name="module" value="modsettings" />
+    <input type="hidden" name="mod" value="topic_poll" />
 
     <table border="0" cellspacing="2" cellpadding="2" class="input-form-table" width="100%">
     <tr class="input-form-tr">
@@ -38,7 +38,7 @@
 
         $name = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", $level);
         $name .= '<img border="0" src="'.$PHORUM["http_path"].'/mods/topic_poll/images/' .
-            ($node["folder_flag"] ? "folder.gif" : "forum.gif") . '"/> ' .
+            ($node["folder_flag"] ? "folder.gif" : "forum.gif") . '" alt="" /> ' .
                  ((!$node["folder_flag"] && $settings["permission"] != 0) ? "<b>" : "") .
                  $node["name"] .
                  ((!$node["folder_flag"] && $settings["permission"] != 0) ? "</b>" : "");
@@ -56,9 +56,9 @@
               <td width="100%" valign="middle" align="left" class="input-form-td" nowrap="nowrap">
                 <?php print $name ?>
               </td>
-              <td valign="middle" alignt="right" class="input-form-td">
+              <td valign="middle" align="right" class="input-form-td">
                 <input type="submit" name="edit:<?php print $node["forum_id"] ?>"
-                 value="Configure"/>
+                 value="Configure" />
               </td>
             </tr>
         <?php

@@ -21,11 +21,11 @@
 			</div>
 	<div class="info-box-body">	
 		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This script implements the OpenPhorum custom profile fields API.</p>
-<p class="description"><p>Custom profile fields are a way of dynamically extending the available  data fields for a user, without having to extend the user database table  with additional fields.</p><p>This API can be used for handling the configuration of these custom  profile fields. The actual use of the fields is fully integrated in the  OpenPhorum user API.</p></p>
+<p class="short-description">This script implements the LibreForum custom profile fields API.</p>
+<p class="description"><p>Custom profile fields are a way of dynamically extending the available  data fields for a user, without having to extend the user database table  with additional fields.</p><p>This API can be used for handling the configuration of these custom  profile fields. The actual use of the fields is fully integrated in the  LibreForum user API.</p></p>
 	<ul class="tags">
-				<li><span class="field">license:</span> OpenPhorum</li>
-				<li><span class="field">copyright:</span> 2007, OpenPhorum Development Team</li>
+				<li><span class="field">license:</span> LibreForum</li>
+				<li><span class="field">copyright:</span> 2007, LibreForum Development Team</li>
 			</ul>
 		
 			</div>
@@ -80,7 +80,7 @@
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Retrieve the information for a custom profile field by its name.</p>
 	<ul class="tags">
-				<li><span class="field">return:</span> <p>If no profile field could be found for the name, then NULL will      be returned. Otherwise the field configuration will be returned.      The field configuration is an array, containing the fields:      &quot;id&quot;, &quot;name&quot;, &quot;length&quot; and &quot;html_disabled&quot;.</p><p>If the field was marked as deleted by the      <a href="../../OpenPhorumAPI/CustomProfileFieldAPI/_custom_profile_fields_php.html#functionphorum_api_custom_profile_field_delete">phorum_api_custom_profile_field_delete()</a> function, then the      field &quot;deleted&quot; will be available and set to a true value.</p></li>
+				<li><span class="field">return:</span> <p>If no profile field could be found for the name, then NULL will      be returned. Otherwise the field configuration will be returned.      The field configuration is an array, containing the fields:      &quot;id&quot;, &quot;name&quot;, &quot;length&quot; and &quot;html_disabled&quot;.</p><p>If the field was marked as deleted by the      <a href="../../LibreForumAPI/CustomProfileFieldAPI/_custom_profile_fields_php.html#functionphorum_api_custom_profile_field_delete">phorum_api_custom_profile_field_delete()</a> function, then the      field &quot;deleted&quot; will be available and set to a true value.</p></li>
 			</ul>
 	
 	<div class="method-signature">
@@ -110,7 +110,7 @@
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Check and fix the custom profile field configuration.</p>
-<p class="description"><p>This function has mainly been implemented for fixing problems that  are introduced by modules that create custom profile fields on their  own. Besides that, it was also written to upgrade the profile field  configuration, because OpenPhorum 5.2 introduced some new fields in  the config.</p></p>
+<p class="description"><p>This function has mainly been implemented for fixing problems that  are introduced by modules that create custom profile fields on their  own. Besides that, it was also written to upgrade the profile field  configuration, because LibreForum 5.2 introduced some new fields in  the config.</p></p>
 	
 	<div class="method-signature">
 		<span class="method-result">void</span>
@@ -159,7 +159,7 @@
            custom profile field length. If this field is missing or set
            to NULL, then the default length 255 will be used.</li></ul> <ul><li>html_disabled: If this field is set to a true value, then
            special HTML characters are not usable in this field. When
-           displaying the custom field's data, OpenPhorum will automatically
+           displaying the custom field's data, LibreForum will automatically
            escape these characters. Only use a false value for this
            field if the data that will be saved in the field is really safe
            for direct use in a web page (to learn about the security risks
@@ -217,7 +217,7 @@
 <p class="short-description">Restore a previously deleted custom profile field.</p>
 <p class="description"><p>If a profile field is deleted, it's settings and data are not deleted.  The field is only flagged as deleted. This function can be used for  reverting the delete action.</p></p>
 	<ul class="tags">
-				<li><span class="field">return:</span> TRUE if the restore was successfull or FALSE if there was an error.      The functions <a href="../../OpenPhorumAPI/BaseAPI/_base_php.html#functionphorum_api_strerror">phorum_api_strerror()</a> and      <a href="../../OpenPhorumAPI/BaseAPI/_base_php.html#functionphorum_api_errno">phorum_api_errno()</a> can be used to retrieve information about      the error which occurred.</li>
+				<li><span class="field">return:</span> TRUE if the restore was successfull or FALSE if there was an error.      The functions <a href="../../LibreForumAPI/BaseAPI/_base_php.html#functionphorum_api_strerror">phorum_api_strerror()</a> and      <a href="../../LibreForumAPI/BaseAPI/_base_php.html#functionphorum_api_errno">phorum_api_errno()</a> can be used to retrieve information about      the error which occurred.</li>
 			</ul>
 	
 	<div class="method-signature">
