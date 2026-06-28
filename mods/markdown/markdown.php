@@ -24,6 +24,31 @@ function phorum_mod_markdown_format($data)
 
         $body = $message['body'];
 
+        // Protect math blocks from Parsedown
+        $math_blocks = array();
+        
+        // 1. Extract block math $$...$$
+        $body = preg_replace_callback(
+            '/(?<!\\\\)\$\$(.+?)\$\$/s',
+            function($matches) use (&$math_blocks) {
+                $idx = count($math_blocks);
+                $math_blocks['%%MATH_BLOCK_' . $idx . '%%'] = '$$' . $matches[1] . '$$';
+                return '%%MATH_BLOCK_' . $idx . '%%';
+            },
+            $body
+        );
+
+        // 2. Extract inline math $...$
+        $body = preg_replace_callback(
+            '/(?<!\\\\)\$([^\$\n]+?)\$/',
+            function($matches) use (&$math_blocks) {
+                $idx = count($math_blocks);
+                $math_blocks['%%MATH_INLINE_' . $idx . '%%'] = '$' . $matches[1] . '$';
+                return '%%MATH_INLINE_' . $idx . '%%';
+            },
+            $body
+        );
+
         // Phorum adds '<phorum break>' before newlines in phorum_format_messages.
         // We remove them to let Markdown handle the layout correctly.
         $body = str_replace('<phorum break>', '', $body);
@@ -108,7 +133,14 @@ function phorum_mod_markdown_format($data)
         );
         // --- Video embedding end ---
 
-        $data[$message_id]['body'] = $parsedown->text($body);
+        $body_parsed = $parsedown->text($body);
+
+        // Restore protected math blocks
+        if (!empty($math_blocks)) {
+            $body_parsed = strtr($body_parsed, $math_blocks);
+        }
+
+        $data[$message_id]['body'] = $body_parsed;
     }
 
     return $data;
