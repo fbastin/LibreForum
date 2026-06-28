@@ -16,6 +16,7 @@ LibreForum is a modernized fork of the classic Phorum 5.2 discussion board.
 - Security headers (X-Frame-Options, etc.).
 - "Force Password Change" feature for improved user security.
 - Improved database error handling.
+- **Markdown & Video Auto-Embedding**: Integrated Markdown formatting support with native YouTube/Vimeo video auto-embedding (simply paste the video URL on its own line) and updated editor toolbar tools.
 
 ## Installation
 
