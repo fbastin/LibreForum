@@ -64,7 +64,7 @@ function phorum_mod_markdown_format($data)
 
         // 4. Auto-linked YouTube URLs -> iframe
         $body = preg_replace_callback(
-            '/<a\s+[^>]*?href="((?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([\w_-]+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*\'\(\),~%#]*)"[^>]*>.*?<\/a>/is',
+            '/\[?<a\s+[^>]*?href="((?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([\w_-]+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*\'\(\),~%#]*)"[^>]*>.*?<\/a>\]?/is',
             function ($m) {
                 return '<div class="video-container"><iframe src="https://www.youtube.com/embed/' . htmlspecialchars($m[2], ENT_QUOTES, 'UTF-8') . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>';
             },
@@ -73,7 +73,7 @@ function phorum_mod_markdown_format($data)
 
         // 5. Auto-linked Vimeo URLs -> iframe
         $body = preg_replace_callback(
-            '/<a\s+[^>]*?href="((?:https?:\/\/)?(?:www\.)?vimeo\.com\/(\d+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*\'\(\),~%#]*)"[^>]*>.*?<\/a>/is',
+            '/\[?<a\s+[^>]*?href="((?:https?:\/\/)?(?:www\.)?vimeo\.com\/(\d+)[a-z0-9;\/\?:@=\&\$\-_\.\+!*\'\(\),~%#]*)"[^>]*>.*?<\/a>\]?/is',
             function ($m) {
                 return '<div class="video-container"><iframe src="https://player.vimeo.com/video/' . htmlspecialchars($m[2], ENT_QUOTES, 'UTF-8') . '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>';
             },
