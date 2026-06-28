@@ -28,6 +28,11 @@ function phorum_mod_markdown_format($data)
         // We remove them to let Markdown handle the layout correctly.
         $body = str_replace('<phorum break>', '', $body);
 
+        // Replace HTML block-level alignment tags (center, div) with inline-level spans (with display: block)
+        // to prevent Parsedown from disabling Markdown parsing inside them.
+        $body = preg_replace('/<center( class="[^"]+")?>(.*?)<\/center>/is', '<span style="display: block; text-align: center;">$2</span>', $body);
+        $body = preg_replace('/<div style="text-align:\s*(left|right|justify);" class="bbcode">(.*?)<\/div>/is', '<span style="display: block; text-align: $1;" class="bbcode">$2</span>', $body);
+
         // Phorum may have auto-linked URLs inside Markdown links.
         // For example: [text](<a href="http://...">http://...</a>)
         // Or: [text](<a rel="nofollow" target="_blank" href="http://...">http://...</a>)
