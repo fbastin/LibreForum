@@ -32,7 +32,7 @@ function phorum_mod_markdown_format($data)
         // For example: [text](<a href="http://...">http://...</a>)
         // Or: [text](<a rel="nofollow" target="_blank" href="http://...">http://...</a>)
         // We need to revert this so Parsedown can parse the Markdown link correctly.
-        $body = preg_replace('/\]\(\s*<a\s+[^>]*?href="([^"]+)".*?<\/a>\s*\)/i', ']($1)', $body);
+        $body = preg_replace('/\]\(\s*\[?<a\s+[^>]*?href="([^"]+)".*?<\/a>\]?\s*\)/i', ']($1)', $body);
 
         // --- Video embedding start ---
         // 1. Clean up any auto-linked HTML tags inside [video] tags
