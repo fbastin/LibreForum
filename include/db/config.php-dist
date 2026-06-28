@@ -16,7 +16,7 @@ $PHORUM['DBCONFIG']=array(
     // description of the configuration options.
     'type'          => 'mysql',
     'name'          => 'phorum',
-    'server'        => 'localhost',
+    'server'        => '127.0.0.1',
     'user'          => 'phorum_user',
     'password'      => 'phorum_password',
     'table_prefix'  => 'phorum',
