@@ -1,6 +1,6 @@
-# OpenPhorum
+# LibreForum
 
-OpenPhorum is a modernized fork of the classic Phorum 5.2 discussion board. 
+LibreForum is a modernized fork of the classic Phorum 5.2 discussion board. 
 
 ## Goals
 
@@ -26,7 +26,7 @@ OpenPhorum is a modernized fork of the classic Phorum 5.2 discussion board.
 
 ## History
 
-This project originated as a fork of Phorum 5.2.23, maintained for the OpenPhorum community, before being spun off as an independent effort to keep the Phorum spirit alive in the modern web era.
+This project originated as a fork of Phorum 5.2.23, maintained for the LibreForum community, before being spun off as an independent effort to keep the Phorum spirit alive in the modern web era.
 
 ## License
 

@@ -1,4 +1,4 @@
-# OpenPhorum .gitignore
+# LibreForum .gitignore
 
 # Database configuration
 include/db/config.php

@@ -2,7 +2,7 @@
 /*  mod_birthdays: Shows a list of users who have birthdays today
     author: Juergen Hansen (mail@jhansen.info)
         based on mod_forumstats by Thomas Seifert (thomas.seifert@mysnip.de)
-	modified by OpenPhorum Maintainer (admin@example.com) for OpenPhorum
+	modified by LibreForum Maintainer (admin@example.com) for LibreForum
 	The modifications include a test for active users and correct the date
 	comparisons for leap years.
     license: You are free to use, modify, or redistribute this code so long 

@@ -1,6 +1,6 @@
 title: Calendar
 desc: Provides a calendar to the forum members.
-author: OpenPhorum Maintainer (admin@example.com)
+author: LibreForum Maintainer (admin@example.com)
 url: http://www.example.com
 category: user_features
 category: integration

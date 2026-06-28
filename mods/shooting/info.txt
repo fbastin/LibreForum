@@ -1,6 +1,6 @@
 title: shooting
 desc: use a database on shooting services
-author: OpenPhorum Maintainer <admin@example.com>
+author: LibreForum Maintainer <admin@example.com>
 url: 
 category: posting
 required_version: 5.2.0

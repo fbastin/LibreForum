@@ -1,6 +1,6 @@
 title: Wiki
 desc: Wiki sur les armes
-author: OpenPhorum Maintainer (admin@example.com)
+author: LibreForum Maintainer (admin@example.com)
 url: http://www.example.com
 category: integration
 required_version: 5.2.0
