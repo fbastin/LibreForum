@@ -57,11 +57,11 @@
             {/IF}
 
 
-  {IF PROFILE->mod_google_maps->city}
-                <dt>{LANG->mod_google_maps->Location}:&nbsp;</dt>
+  {IF PROFILE->mod_openstreetmap->city}
+                <dt>{LANG->mod_openstreetmap->Location}:&nbsp;</dt>
                 <dd>
-    {PROFILE->mod_google_maps->country},
-    {PROFILE->mod_google_maps->city}</dd>
+    {PROFILE->mod_openstreetmap->country},
+    {PROFILE->mod_openstreetmap->city}</dd>
   {/IF}
         </dl>
 
