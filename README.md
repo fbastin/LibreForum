@@ -20,14 +20,10 @@ LibreForum is a modernized fork of the classic Phorum 5.2 discussion board.
 ## Installation
 
 1. Clone this repository.
-2. Copy `include/db/config.php.sample` (if available) to `include/db/config.php` and fill in your database credentials.
+2. Copy `include/db/config.php-dist` to `include/db/config.php` and fill in your database credentials.
 3. Ensure the `cache/` and `files/` directories are writable by the web server.
 4. Run the installer or upgrade scripts as needed.
 
-## History
-
-This project originated as a fork of Phorum 5.2.23, maintained for the LibreForum community, before being spun off as an independent effort to keep the Phorum spirit alive in the modern web era.
-
 ## License
 
-Phorum is licensed under the [Phorum License](http://www.phorum.org/license.txt).
+LibreForum is licensed under the Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE) for details.
