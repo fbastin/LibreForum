@@ -194,6 +194,7 @@ define('DB_MASTERQUERY',   128);
 define('LIST_RECENT_MESSAGES',   0);
 define('LIST_RECENT_THREADS',    1);
 define('LIST_UPDATED_THREADS',   2);
+define('LIST_UNREAD_MESSAGES',   3);
 /**#@-*/
 
 // }}}
@@ -695,6 +696,7 @@ function phorum_db_get_recent_messages($length, $offset = 0, $forum_id = 0, $thr
     {
         switch($list_type) {
             case LIST_RECENT_MESSAGES:
+            case LIST_UNREAD_MESSAGES:
                 $use_key = 'new_count';
                 break;
             case LIST_RECENT_THREADS:
@@ -710,6 +712,7 @@ function phorum_db_get_recent_messages($length, $offset = 0, $forum_id = 0, $thr
     {
         switch($list_type) {
             case LIST_RECENT_MESSAGES:
+            case LIST_UNREAD_MESSAGES:
                 $use_key = 'PRIMARY';
                 break;
             case LIST_RECENT_THREADS:

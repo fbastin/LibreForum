@@ -335,6 +335,20 @@ function mod_recent_messages_setup_templatedata()
 	  : PHORUM_NEWFLAGS_BY_MESSAGE;
     $messages = phorum_api_newflags_format_messages($messages, $mode);
 
+    // If the user selected the "Unread messages" view, filter out
+    // any messages that do not carry the 'new' flag (i.e. already read).
+    if ($view_type == LIST_UNREAD_MESSAGES && !empty($PHORUM['user']['user_id'])) {
+        foreach ($messages as $id => $message) {
+            if (empty($message['new'])) {
+                unset($messages[$id]);
+                // Also remove from the per-folder tracking.
+                foreach ($messages_per_folder as $fid => $mids) {
+                    unset($messages_per_folder[$fid][$id]);
+                }
+            }
+        }
+    }
+
     // ----------------------------------------------------------------------
     // Setup template data.
     // ----------------------------------------------------------------------
