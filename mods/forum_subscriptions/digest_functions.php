@@ -133,6 +133,7 @@ function phorum_mod_forum_subscriptions_prepare_digest($frequency, $current_day)
                     "frequency"   => $frequency,
                     "digest_id"   => $digest_id . "_" . $forum_id . "_" . PHORUM_MOD_FORUM_SUB_SUBSCRIBE_ALL,
                     "digest_start"  => phorum_date($PHORUM['short_date'], $start_time),
+                    "forum_subscriptions_url" => phorum_get_url(PHORUM_CONTROLCENTER_URL, "panel=forum_subscriptions"),
                 );
                 phorum_mod_forum_subscriptions_db_mailqueue_add_digest($all_posts_subscribers, $mail_data);
                 if ($debug_i == 1) {
@@ -160,6 +161,7 @@ function phorum_mod_forum_subscriptions_prepare_digest($frequency, $current_day)
                     "frequency"   => $frequency,
                     "digest_id"   => $digest_id . "_" . $forum_id . "_" . PHORUM_MOD_FORUM_SUB_SUBSCRIBE_NEW_THREAD,
                     "digest_start"  => phorum_date($PHORUM['short_date'], $start_time),
+                    "forum_subscriptions_url" => phorum_get_url(PHORUM_CONTROLCENTER_URL, "panel=forum_subscriptions"),
                 );
                 phorum_mod_forum_subscriptions_db_mailqueue_add_digest($new_threads_subscribers, $mail_data);
                 if ($debug_i == 1) {

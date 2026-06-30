@@ -299,7 +299,7 @@
 				"NewUnModeratedMessage"   =>      "Un nouveau message a été envoyé sur un forum que vous modérez. Le message a été envoyé par %author% Le sujet est %subject% . Il peut être lu sur l'URL suivant %read_url% ",
 				"NewUnModeratedSubject" =>      "Nouveau message dans le forum",
 				"NewPrivateMessages"  	=>      "Nouveau(x) message(s) privé(s)",
-				"NewReplyMessage"   		=>      "Bonjour, Vous recevez ce courriel car vous suivez la discussion : %subject% <%read_url%> Pour arrêter de recevoir cette discussion, cliquez ici : <%remove_url%> Pour arrêter de recevoir des courriels mais laisser cette discussion dans votre liste de suivi, cliquez ici : <%noemail_url%> Pour voir les discussions que vous suivez, cliquez ici : <%followed_threads_url%>",
+				"NewReplyMessage"   		=>      "Bonjour,\n\nVous recevez ce courriel car vous suivez la discussion :\n\n  %subject%\n  <%read_url%>\n\nPour ne plus suivre cette discussion, cliquez ici :\n<%remove_url%>\n\nPour ne plus recevoir de courriels tout en gardant cette discussion dans votre liste de suivi, cliquez ici :\n<%noemail_url%>\n\nPour voir les discussions que vous suivez, cliquez ici :\n<%followed_threads_url%>",
 				"NewReplySubject"   		=>      "[%forumname%] Nouvelle réponse: %subject%",
 				"NewTopic"   						=>      "Nouveau sujet",
 				"NewPassword"   				=>      "Nouveau mot de passe",

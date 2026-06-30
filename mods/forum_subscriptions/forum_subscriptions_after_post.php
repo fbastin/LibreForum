@@ -94,6 +94,7 @@ function phorum_mod_forum_subscriptions_functions_after_post($data = NULL, $queu
                 "remove_url"  => phorum_get_url(PHORUM_FOLLOW_URL, $data['thread'], "remove=1"),
                 "noemail_url" => phorum_get_url(PHORUM_FOLLOW_URL, $data['thread'], "noemail=1"),
                 "followed_threads_url" => phorum_get_url(PHORUM_CONTROLCENTER_URL, "panel=" . PHORUM_CC_SUBSCRIPTION_THREADS),
+                "forum_subscriptions_url" => phorum_get_url(PHORUM_CONTROLCENTER_URL, "panel=forum_subscriptions"),
                 "msgid"       => $data["msgid"]
             );
             
@@ -103,6 +104,7 @@ function phorum_mod_forum_subscriptions_functions_after_post($data = NULL, $queu
                 $mail_data["remove_url"] = preg_replace("!,{0,1}" . PHORUM_SESSION_LONG_TERM . "=" . urlencode($_POST[PHORUM_SESSION_LONG_TERM]) . "!", "", $mail_data["remove_url"]);
                 $mail_data["noemail_url"] = preg_replace("!,{0,1}" . PHORUM_SESSION_LONG_TERM . "=" . urlencode($_POST[PHORUM_SESSION_LONG_TERM]) . "!", "", $mail_data["noemail_url"]);
                 $mail_data["followed_threads_url"] = preg_replace("!,{0,1}" . PHORUM_SESSION_LONG_TERM . "=" . urlencode($_POST[PHORUM_SESSION_LONG_TERM]) . "!", "", $mail_data["followed_threads_url"]);
+                $mail_data["forum_subscriptions_url"] = preg_replace("!,{0,1}" . PHORUM_SESSION_LONG_TERM . "=" . urlencode($_POST[PHORUM_SESSION_LONG_TERM]) . "!", "", $mail_data["forum_subscriptions_url"]);
             }
             // if the admin has opted to use mail queues, insert this message
             // and its recipients as a new mail queue, then we are done
@@ -302,6 +304,7 @@ function phorum_mod_forum_subscriptions_functions_after_post($data = NULL, $queu
                         $mail_data["mailmessage"] = str_replace("%$key%", $mail_data[$key], $mail_data["mailmessage"]);
                         $mail_data["mailsubject"] = str_replace("%$key%", $mail_data[$key], $mail_data["mailsubject"]);
                     }
+                    $mail_data["mailsubject"] = mb_encode_mimeheader($mail_data["mailsubject"], "UTF-8");
                 } else {
                     $frequency = $mail_data["frequency"];
                     $lang_frequency = ($frequency == PHORUM_MOD_FORUM_SUB_FREQUENCY_DAILY)

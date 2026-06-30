@@ -2,7 +2,7 @@
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["AllForums"] = "All Forums";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["AllForumsDigestFormat"] = "%SubjectIntro%%subject%\n%AuthorIntro%%author% - %DatestampIntro%%datestamp%\n%ForumIntro%%forum_name%\n\n%plain_body%\n\n%ReadURLIntro%%read_url%";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["AlreadySubscribedToAllForums"] = "You have already subscribed to receive emails from all forums.<br>You need to change that setting before you can subscribe to an individual forum.";
-$PHORUM["DATA"]["LANG"]["forum_subscriptions"]["DailyDigestBody"] = "Your have subscribed to a daily message digest from %forumname%.  Here are the message(s) from %digest_start%.\n\n%digest%\n\nIf you no longer wish to receive this digest, please visit the Control Center at %sitename% and change your Forum Subscriptions settings.";
+$PHORUM["DATA"]["LANG"]["forum_subscriptions"]["DailyDigestBody"] = "Your have subscribed to a daily message digest from %forumname%.  Here are the message(s) from %digest_start%.\n\n%digest%\n\nIf you no longer wish to receive this digest, adjust \"Forum subscriptions\" in \"My profile\":\n%forum_subscriptions_url%";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["DailyDigests"] = "Once Per Day in a Single Email";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["DailyDigestSubject"] = "Daily message digest from %forumname%";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["DigestSeparator"] = "\n\n----------------------------\n\n";
@@ -13,7 +13,7 @@ $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["ForumSubscriptionsSettingsUpdate
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["ForumSubscriptionsUpdated"] = "Your forum subscriptions have been updated.";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["Frequency"] = "How Often";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["Immediate"] = "After Each Post";
-$PHORUM["DATA"]["LANG"]["forum_subscriptions"]["NewMessage"] = "Hello,\n\nA new reply has been posted in the forum.\n\nAuthor: %author%\nSubject: %subject%\n\nView the full thread:\n%read_url%";
+$PHORUM["DATA"]["LANG"]["forum_subscriptions"]["NewMessage"] = "Hello,\n\nA new message has been posted in the %forumname% forum.\n\nAuthor: %author%\nSubject: %subject%\n\nView the full thread:\n%read_url%\n\n---\nYou are receiving this email because you subscribed to new messages in this forum. To change or stop it, adjust \"What Should Be Emailed\" and \"How Often\" under \"Forum subscriptions\" in \"My profile\":\n%forum_subscriptions_url%";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["NewMessageSubject"] = "New message in the %forumname% forum at %sitename%.";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["NewThreadsOnly"] = "New Threads Only";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["Never"] = "Never";
@@ -26,7 +26,7 @@ $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["SubscribeToAllForums"] = "Subscr
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["SubscribeToForum"] = "Subscribe to Forum";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["SubscriptionType"] = "What Should Be Emailed";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["ThreadsAndReplies"] = "New Threads and Replies";
-$PHORUM["DATA"]["LANG"]["forum_subscriptions"]["WeeklyDigestBody"] = "Your have subscribed to a weekly message digest from %forumname%.  Here are the message(s) from the week beginning on %digest_start%.\n\n%digest%\n\nIf you no longer wish to receive this digest, please visit the Control Center at %sitename% and change your Forum Subscriptions settings.";
+$PHORUM["DATA"]["LANG"]["forum_subscriptions"]["WeeklyDigestBody"] = "Your have subscribed to a weekly message digest from %forumname%.  Here are the message(s) from the week beginning on %digest_start%.\n\n%digest%\n\nIf you no longer wish to receive this digest, adjust \"Forum subscriptions\" in \"My profile\":\n%forum_subscriptions_url%";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["WeeklyDigests"] = "Once Per Week in a Single Email";
 $PHORUM["DATA"]["LANG"]["forum_subscriptions"]["WeeklyDigestSubject"] = "Weekly message digest from %forumname%";
 
