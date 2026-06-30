@@ -52,7 +52,8 @@ form {
 display: inline;
 }
 </style>
-<link rel="icon" href="../gun.ico" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
 
 <title>{HTML_TITLE}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -194,63 +195,68 @@ Some Icons courtesy of:
     {! the Phorum start location (leaving a "breadcrumb" at every step }
     {! deeper into the site structure.) }
     <div id="breadcrumb">
-      {VAR FIRST TRUE}
-      {LOOP BREADCRUMBS}
-        {IF NOT FIRST} &gt;{/IF}
-        {IF BREADCRUMBS->URL}
-          <a {IF BREADCRUMBS->ID AND BREADCRUMBS->TYPE}rel="breadcrumb-{BREADCRUMBS->TYPE}[{BREADCRUMBS->ID}]"{/IF} href="{BREADCRUMBS->URL}">{BREADCRUMBS->TEXT}</a>
-        {ELSE}
-          {BREADCRUMBS->TEXT}
-        {/IF}
-        {VAR FIRST FALSE}
-      {/LOOP BREADCRUMBS}
-<span id="breadcrumbx"></span>
+      <div id="breadcrumb-trail">
+        {VAR FIRST TRUE}
+        {LOOP BREADCRUMBS}
+          {IF NOT FIRST} &gt;{/IF}
+          {IF BREADCRUMBS->URL}
+            <a {IF BREADCRUMBS->ID AND BREADCRUMBS->TYPE}rel="breadcrumb-{BREADCRUMBS->TYPE}[{BREADCRUMBS->ID}]"{/IF} href="{BREADCRUMBS->URL}">{BREADCRUMBS->TEXT}</a>
+          {ELSE}
+            {BREADCRUMBS->TEXT}
+          {/IF}
+          {VAR FIRST FALSE}
+        {/LOOP BREADCRUMBS}
+        <span id="breadcrumbx"></span>
+      </div>
+      {! Forum search, integrated into the breadcrumb bar to save space }
+      <div id="search-area" class="icon-zoom">
+        <form id="header-search-form" action="{URL->SEARCH}" method="get">
+          {POST_VARS}
+          <input type="hidden" name="phorum_page" value="search" />
+          <input type="hidden" name="match_forum" value="ALL" />
+          <input type="hidden" name="match_dates" value="0" />
+          <input type="hidden" name="match_threads" value="0" />
+          <input type="hidden" name="match_type" value="ALL" />
+          <input type="text" name="search" size="20" value="" class="styled-text" placeholder="{LANG->Search}&hellip;" /><input type="submit" value="{LANG->Search}" class="styled-button" />
+          <a href="{URL->SEARCH}">{LANG->Advanced}</a>
+        </form>
+      </div> <!-- end of div id=search-area -->
     </div> <!-- end of div id=breadcrumb -->
-    {! This div holds the search form }
-    <div id="search-area" class="icon-zoom">
-      <form id="header-search-form" action="{URL->SEARCH}" method="get">
-        {POST_VARS}
-        <input type="hidden" name="phorum_page" value="search" />
-        <input type="hidden" name="match_forum" value="ALL" />
-        <input type="hidden" name="match_dates" value="0" />
-        <input type="hidden" name="match_threads" value="0" />
-        <input type="hidden" name="match_type" value="ALL" />
-        <input type="text" name="search" size="20" value="" class="styled-text" /><input type="submit" value="{LANG->Search}" class="styled-button" /><br />
-        <a href="{URL->SEARCH}">{LANG->Advanced}</a>
-      </form>
-    </div> <!-- end of div id=search-area -->
-    <div style="clear: both;"></div>
 
-    {! This <div> holds info about the active page (heading and description) }
-    <div id="page-info">
-      {IF HEADING}
+    {! This div holds info about the active page (heading and description).     }
+    {! It is only emitted when there is an actual heading to show, so the forum }
+    {! index renders no empty page-info box.                                    }
+    {IF HEADING}
         {! This is custom set heading }
-          <span class="h1 heading">{HEADING}</span class="h1">
-        {IF HTML_DESCRIPTION}
-          <div class="description">{HTML_DESCRIPTION}</div>
-        {/IF}
+        <div id="page-info">
+          <span class="h1 heading">{HEADING}</span>
+          {IF HTML_DESCRIPTION}
+            <div class="description">{HTML_DESCRIPTION}</div>
+          {/IF}
+        </div>
       {ELSEIF MESSAGE->subject}
         {! This is a threaded read page }
-        <span class="h1 heading">{MESSAGE->subject}</span class="h1">
+        <div id="page-info">
+          <span class="h1 heading">{MESSAGE->subject}</span>
+        </div>
       {ELSEIF TOPIC->subject}
         {! This is a read page }
-        <span class="h1 heading">{TOPIC->subject}</span class="h1">
-        <div class="description">{LANG->Postedby} {IF TOPIC->URL->PROFILE}<a href="{TOPIC->URL->PROFILE}">{/IF}{TOPIC->author}{IF TOPIC->URL->PROFILE}</a>{/IF}&nbsp;</div>
+        <div id="page-info">
+          <span class="h1 heading">{TOPIC->subject}</span>
+          <div class="description">{LANG->Postedby} {IF TOPIC->URL->PROFILE}<a href="{TOPIC->URL->PROFILE}">{/IF}{TOPIC->author}{IF TOPIC->URL->PROFILE}</a>{/IF}&nbsp;</div>
+        </div>
       {ELSEIF NAME}
         {! This is a forum page other than a read page or a folder page }
-        <span class="h1 heading">{NAME}</span class="h1">{! replace with path see http://www.phorum.org/cgi-bin/trac.cgi/ticket/213 }
-        {IF HTML_DESCRIPTION}
-          <div class="description">{HTML_DESCRIPTION}&nbsp;</div>
-        {/IF}
+        <div id="page-info">
+          <span class="h1 heading">{NAME}</span>
+          {IF HTML_DESCRIPTION}
+            <div class="description">{HTML_DESCRIPTION}&nbsp;</div>
+          {/IF}
+        </div>
       {ELSE}
-        {! This is the index }
-        <span class="h1 heading">{TITLE}</span class="h1">
-        {IF HTML_DESCRIPTION}
-          <div class="description">{HTML_DESCRIPTION}&nbsp;</div>
-        {/IF}
+        {! This is the index: no page-info heading is shown here on purpose,    }
+        {! it is redundant with the site branding and too restrictive.          }
       {/IF}
-
-    </div> <!-- end of div id=page-info -->
 
     {! The template variable GLOBAL_ERROR can be used to show an error }
     {! message at the start of the page. }
