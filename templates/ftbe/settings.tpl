@@ -79,3 +79,14 @@
 {VAR top_background_image ""}
 {VAR message_background_image ""}
 
+{! -- Modern Theme Compatibility Fallbacks (prevents PHP warnings) -- }
+{VAR errorfontcolor "#e74c3c"}
+{VAR navbackcolor "var(--color-bg)"}
+{VAR navhoverbackcolor "var(--color-surface-hover)"}
+{VAR navhoverlinkcolor "var(--color-accent-light)"}
+{VAR navtextweight "normal"}
+{VAR tablebordercolor "var(--color-border)"}
+{VAR navfont "var(--font-sans)"}
+{VAR navfontsize "0.88rem"}
+
+
