@@ -138,6 +138,9 @@ Some Icons courtesy of:
 <meta property="og:image" content="https://www.tireur.org/images/logo-site.png" />
 <meta property="og:locale" content="fr_BE" />
 <meta name="theme-color" content="#141D26">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="var opts = new Object(); var d1 = new Object(); d1.left = '$$'; d1.right = '$$'; d1.display = true; var d2 = new Object(); d2.left = '$'; d2.right = '$'; d2.display = false; var d3 = new Object(); d3.left = '\\('; d3.right = '\\)'; d3.display = false; var d4 = new Object(); d4.left = '\\['; d4.right = '\\]'; d4.display = true; opts.delimiters = [d1, d2, d3, d4]; opts.throwOnError = false; renderMathInElement(document.body, opts);"></script>
 </head>
 
 {! Start of the page body. }
