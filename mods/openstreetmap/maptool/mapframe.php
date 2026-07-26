@@ -66,11 +66,11 @@ $lang = $PHORUM["DATA"]["LANG"]["mod_openstreetmap"];
       #map { height: 100%; width: 100%; }
     </style>
     <title>OpenStreetMap interface</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
-    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="/js/vendor/leaflet/leaflet.css?v=1.9.4" />
+    <script src="/js/vendor/leaflet/leaflet.js?v=1.9.4"></script>
+    <link rel="stylesheet" href="/js/vendor/leaflet-markercluster/MarkerCluster.css?v=1.4.1" />
+    <link rel="stylesheet" href="/js/vendor/leaflet-markercluster/MarkerCluster.Default.css?v=1.4.1" />
+    <script src="/js/vendor/leaflet-markercluster/leaflet.markercluster.js?v=1.4.1"></script>
 
     <script type="text/javascript">
     //<![CDATA[
