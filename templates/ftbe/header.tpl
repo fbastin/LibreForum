@@ -134,9 +134,11 @@ Some Icons courtesy of:
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Tireur.org" />
 <meta property="og:title" content="{HTML_TITLE}" />
-{! URL->INDEX est retiré par Phorum sur la page d'index elle-même }
-{! (index_new.php), d'où la troisième branche : l'URL de base suffit. }
-<meta property="og:url" content="https://www.tireur.org/forum/{IF URL->READ}{URL->READ}{ELSEIF URL->INDEX}{URL->INDEX}{/IF}" />
+{! og:url se bâtit sur la requête courante, et non sur URL->READ / URL->INDEX : }
+{! la première n'est jamais définie à ce niveau (seulement par ligne, dans      }
+{! list.php et read.php) et la seconde renvoie déjà une URL absolue, que le     }
+{! préfixe codé en dur doublait. Tout fil annonçait donc l'index en canonique.  }
+<meta property="og:url" content="https://www.tireur.org<?php echo htmlspecialchars(strtok($_SERVER['REQUEST_URI'], '#'), ENT_QUOTES, 'UTF-8'); ?>" />
 <meta property="og:image" content="https://www.tireur.org/images/logo-site.png" />
 <meta property="og:locale" content="fr_BE" />
 <meta name="theme-color" content="#141D26">
