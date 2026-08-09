@@ -89,4 +89,37 @@
 {VAR navfont "var(--font-sans)"}
 {VAR navfontsize "0.88rem"}
 
+{! -- Suite des mêmes secours, laissés vides à dessein.                      -- }
+{! -- css.tpl référence ces 25 clés, que rien n'a jamais définies : elles se -- }
+{! -- rendaient donc en chaîne vide, et le forum est stylé depuis           -- }
+{! -- /css/tireur.min.css, chargé après. Les définir vides laisse la        -- }
+{! -- feuille servie identique à l'octet près et supprime l'avertissement.  -- }
+{! -- Leur rendre de vraies valeurs relève d'un choix de rendu, pas d'un    -- }
+{! -- correctif : ce serait rappliquer un habillage absent depuis toujours. -- }
+{VAR altbackcolor ""}
+{VAR altlisttextcolor ""}
+{VAR backcolor ""}
+{VAR defaultfont ""}
+{VAR defaultfontsize ""}
+{VAR defaulttextcolor ""}
+{VAR forumwidth ""}
+{VAR headerbackcolor ""}
+{VAR headerfont ""}
+{VAR headerfontsize ""}
+{VAR headertextcolor ""}
+{VAR headertextweight ""}
+{VAR largefont ""}
+{VAR largefontsize ""}
+{VAR listlinecolor ""}
+{VAR listmodlinkcolor ""}
+{VAR listpagelinkcolor ""}
+{VAR narrowtablewidth ""}
+{VAR navtextcolor ""}
+{VAR newflagcolor ""}
+{VAR okmsgfontcolor ""}
+{VAR smallfontsize ""}
+{VAR tablewidth ""}
+{VAR tinyfont ""}
+{VAR tinyfontsize ""}
+
 
