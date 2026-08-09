@@ -1,6 +1,16 @@
 /* BEGIN TEMPLATE css.tpl */
 
-* {margin: 0; padding: 0; border: none;}
+/* Règle inopérante, laissée en commentaire pour mémoire : le moteur de
+   gabarit de Phorum prend ses accolades pour un appel de variable, la
+   cherche sous la clé « margin: » et ne rend que l'astérisque. Le forum
+   est servi sans cette remise à zéro depuis toujours ; la rétablir
+   déplacerait marges et espacements sur toutes les pages.
+   Accolades découpées sur plusieurs lignes : le moteur ne reconnaît un
+   appel de variable que s'il tient sur une seule.
+* {
+    margin: 0; padding: 0; border: none;
+}
+*/
 
 /* overall style */
 body {
