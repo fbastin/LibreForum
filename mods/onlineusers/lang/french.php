@@ -10,6 +10,7 @@ $PHORUM["DATA"]["LANG"]["mod_onlineusers"] = array(
     "Guests"                 => "Anonymes",
     "RecordNumberOfUsers"    => "Record de membres connect&eacute;s",
     "RecordNumberOfGuests"   => "Record d'anonymes connect&eacute;s",
+    "on"                     => "le",
     "UsersReadingThisForum"  => "%count% personnes lisent ce forum.",
     "UsersReadingThisForum1" => "%count% personne lit ce forum."
 );

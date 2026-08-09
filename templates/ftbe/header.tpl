@@ -134,7 +134,9 @@ Some Icons courtesy of:
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Tireur.org" />
 <meta property="og:title" content="{HTML_TITLE}" />
-<meta property="og:url" content="https://www.tireur.org/forum/{IF URL->READ}{URL->READ}{ELSE}{URL->INDEX}{/IF}" />
+{! URL->INDEX est retiré par Phorum sur la page d'index elle-même }
+{! (index_new.php), d'où la troisième branche : l'URL de base suffit. }
+<meta property="og:url" content="https://www.tireur.org/forum/{IF URL->READ}{URL->READ}{ELSEIF URL->INDEX}{URL->INDEX}{/IF}" />
 <meta property="og:image" content="https://www.tireur.org/images/logo-site.png" />
 <meta property="og:locale" content="fr_BE" />
 <meta name="theme-color" content="#141D26">

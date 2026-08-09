@@ -338,7 +338,9 @@ function mod_onlineusers_get_guest_list()
 function mod_onlineusers_update()
 {
     global $PHORUM;
-    $data = $PHORUM['mod_onlineusers']['data'];
+    // Absent au premier appel, avant que le cache ne soit peuplé. Toutes les
+    // clés lues plus bas sont réassignées ici même, l'amorce peut donc être vide.
+    $data = $PHORUM['mod_onlineusers']['data'] ?? array();
 
     $data['users']       = mod_onlineusers_get_user_list();
     $data['usercount']   = count($data['users']);
