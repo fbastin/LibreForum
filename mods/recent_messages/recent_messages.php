@@ -189,7 +189,7 @@ function mod_recent_messages_setup_templatedata()
                 );
             }
         }
-        // Standard Phorum date formatting.
+        // Standard LibreForum date formatting.
         else
         {
             $messages[$id]['datestamp'] =
@@ -204,7 +204,7 @@ function mod_recent_messages_setup_templatedata()
             }
         }
 
-        // These are always formatted using the standard Phorum date formatting.
+        // These are always formatted using the standard LibreForum date formatting.
         $messages[$id]['date'] =
             phorum_date($PHORUM['short_date'], $date);
         $messages[$id]['time'] =
@@ -403,7 +403,7 @@ function mod_recent_messages_setup_templatedata()
         '<input type="hidden" name="module" value="recent_messages" />';
 
     // Listing unread messages can only be done for authenticated users
-    // and for versions of Phorum that provide db backend support for it.
+    // and for versions of LibreForum that provide db backend support for it.
     if (!empty($PHORUM['user']['user_id']) &&
         defined('LIST_UNREAD_MESSAGES')) {
         $PHORUM['DATA']['ALLOW_UNREAD_MESSAGES'] = TRUE;

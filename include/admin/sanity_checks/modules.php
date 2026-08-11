@@ -43,7 +43,7 @@
                 if (count($mods) > 1) return array(
                     PHORUM_SANITY_WARN,
                     "You have activated multiple modules that handle
-                     Phorum's \"".htmlspecialchars($hook)."\" hook.
+                     LibreForum's \"".htmlspecialchars($hook)."\" hook.
                      However, this hook is normally only handled by
                      one module at a time. Keeping all modules
                      activated might lead to some unexpected results.

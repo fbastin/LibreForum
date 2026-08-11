@@ -15,7 +15,7 @@
 	$ass_menu .= "\n<td class='menuoff' id='ass_menu_search_settings' width='240px' onmouseover=\"menuon(this)\" onmouseout=\"menuoff(this)\" onclick=\"window.open('./admin.php?module=modsettings&mod=admin_security_suite&misc=search_admin_settings&phorum_admin_token=".$PHORUM["admin_token"]."', '_parent')\">Search Saved Settings For Bad Code</td>";
 	$ass_menu .= "\n<td>&nbsp;</td></tr></table>";
 
-	//View logs - Removed as of Phorum 5.2 - same funcionality available from "Event Logging" module.
+	//View logs - Removed as of LibreForum 5.2 - same funcionality available from "Event Logging" module.
 
 	//Search Admin Settings for Bad Code
 	if (isset($_REQUEST["misc"]) && $_REQUEST["misc"] == "search_admin_settings") {
@@ -87,7 +87,7 @@
 		return; 
 	}
 
-	// Manage Users with Admin Access - Removed as of Phorum 5.2 - same funcionality available from "Edit Users"
+	// Manage Users with Admin Access - Removed as of LibreForum 5.2 - same funcionality available from "Edit Users"
 	
     // save settings
     if(count($_POST)){

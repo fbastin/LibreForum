@@ -19,7 +19,7 @@
 
 // Check some of the settings for validity
 
-$phorum_check = "Valid Phorum settings";
+$phorum_check = "Valid LibreForum settings";
 
 function phorum_check_settings($is_install = FALSE)
 {

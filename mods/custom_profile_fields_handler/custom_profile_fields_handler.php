@@ -113,6 +113,6 @@ function phorum_mod_custom_profile_fields_handler_user_delete($user_id)
         if (function_exists('tireur_anon_log')) tireur_anon_log('ERREUR hook user_delete #' . (int)$user_id . ' : ' . $e->getMessage());
         error_log('anonymize user_delete #' . (int)$user_id . ' : ' . $e->getMessage());
     }
-    return $user_id;   // un hook Phorum renvoie son argument
+    return $user_id;   // un hook LibreForum renvoie son argument
 }
 ?>

@@ -353,7 +353,7 @@ function submit_email_form(send_type) {
 	}
 }
 
-//The following code was finely crafted by the Phorum Development team before being hacked
+//The following code was finely crafted by the LibreForum Development team before being hacked
 //into the simply functional format found here.  My thanks go out to them for their
 //hard work and willingness to share.
 

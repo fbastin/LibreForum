@@ -1,6 +1,6 @@
 function mod_embed_images_initviewer(container, image, link, url, message_id)
 {
-    var imgpath = Phorum.http_path +
+    var imgpath = LibreForum.http_path +
                   '/mods/embed_images/viewers/jquery_lightbox/code/images/';
 
     var settings = {

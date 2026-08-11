@@ -18,7 +18,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * This script implements the Phorum custom profile fields API.
+ * This script implements the LibreForum custom profile fields API.
  *
  * Custom profile fields are a way of dynamically extending the available
  * data fields for a user, without having to extend the user database table
@@ -26,7 +26,7 @@
  *
  * This API can be used for handling the configuration of these custom
  * profile fields. The actual use of the fields is fully integrated in the 
- * Phorum user API.
+ * LibreForum user API.
  *
  * @package    PhorumAPI
  * @subpackage CustomProfileFieldAPI
@@ -78,7 +78,7 @@ define('PHORUM_MAX_CPLENGTH', 65000);
  *
  *     - html_disabled: If this field is set to a true value, then
  *           special HTML characters are not usable in this field. When
- *           displaying the custom field's data, Phorum will automatically
+ *           displaying the custom field's data, LibreForum will automatically
  *           escape these characters. Only use a false value for this
  *           field if the data that will be saved in the field is really safe
  *           for direct use in a web page (to learn about the security risks
@@ -157,7 +157,7 @@ function phorum_api_custom_profile_field_configure($field)
         return phorum_api_error_set(
             PHORUM_ERRNO_INVALIDINPUT,
             "The name \"{$field['name']}\" is reserved for internal use " .
-            'by Phorum. Please choose a different name for your custom ' .
+            'by LibreForum. Please choose a different name for your custom ' .
             'profile field.'
         );
     }
@@ -354,7 +354,7 @@ function phorum_api_custom_profile_field_restore($id)
  * This function has mainly been implemented for fixing problems that
  * are introduced by modules that create custom profile fields on their
  * own. Besides that, it was also written to upgrade the profile field
- * configuration, because Phorum 5.2 introduced some new fields in
+ * configuration, because LibreForum 5.2 introduced some new fields in
  * the config.
  */
 function phorum_api_custom_profile_field_checkconfig()

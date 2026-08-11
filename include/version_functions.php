@@ -28,7 +28,7 @@ if (!isset($PHORUM["internal_patchlevel"])) {
 }
 
 /**
- * Parses a Phorum version number.
+ * Parses a LibreForum version number.
  *
  * The following version numberings are recognized:
  *
@@ -162,7 +162,7 @@ function phorum_compare_version($version1, $version2)
 }
 
 /**
- * Retrieves the available software versions from the Phorum website.
+ * Retrieves the available software versions from the LibreForum website.
  * The format of the data returned from the server is two lines. The first
  * line is for the stable version and the second for the development version.
  * Each line contains pipe separated values, with the following fields in it:
@@ -202,12 +202,12 @@ function phorum_available_releases()
 }
 
 /**
- * Finds out if there are any upgrades available for a version of Phorum.
+ * Finds out if there are any upgrades available for a version of LibreForum.
  *
  * @param version - the version to check for (default is the running version)
  * @return releases - An array of available releases with the
  *         "upgrade" field set in case the release would be an
- *         upgrade for the currently running Phorum software.
+ *         upgrade for the currently running LibreForum software.
  */
 function phorum_find_upgrades($version = PHORUM)
 {
@@ -328,7 +328,7 @@ function phorum_dbupgrade_getupgrades()
  * @param $upgrades - An upgrade description. One element from the array
  *                    as returned by phorum_dbupgrade_getupgrades().
  * @param $update_internal_version - whether to update the internal version
- *                    for Phorum or not. This one is TRUE by default.
+ *                    for LibreForum or not. This one is TRUE by default.
  *                    It can be used by scripts that have to re-run an old
  *                    single upgrade file and for which the internal version
  *                    should not be put back to an old value.
@@ -385,7 +385,7 @@ function phorum_dbupgrade_run($upgrade, $update_internal_version = TRUE)
             $msg.= "An error occured during this upgrade:<br/><br/>\n" .
                    "<span style=\"color:red\">$err</span><br/><br/>\n" .
                    "Please make note of this error and contact the " .
-                   "Phorum Dev Team for help.\nYou can try to continue " .
+                   "LibreForum Dev Team for help.\nYou can try to continue " .
                    "with the rest of the upgrade.<br/>\n";
         } else {
             $msg.= "The upgrade was successful.<br/>\n";
@@ -401,7 +401,7 @@ function phorum_dbupgrade_run($upgrade, $update_internal_version = TRUE)
 
     } else {
         return "The upgrade file ".htmlspecialchars($upgradefile)." " .
-               "cannot be opened by Phorum for reading. Please check " .
+               "cannot be opened by LibreForum for reading. Please check " .
                "the file permissions for this file and try again.";
     }
 }

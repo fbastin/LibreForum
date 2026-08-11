@@ -578,7 +578,7 @@ foreach($ruledefs as $filter => $def) {
 //<![CDATA[
 
 // Class PhorumFilterRule
-// This class describes a single Phorum filter rule.
+// This class describes a single LibreForum filter rule.
 function PhorumFilterRule(conf)
 {
     // Check if we have all required config information.
@@ -846,7 +846,7 @@ function PhorumFilterRule(conf)
 }
 
 // Class PhorumFilter
-// This class describes a set of Phorum filter rules.
+// This class describes a set of LibreForum filter rules.
 function PhorumFilter(conf)
 {
     // Check if we have all required config information.

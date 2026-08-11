@@ -1,13 +1,13 @@
 #!/usr/bin/php
 <?php
 /*
-This script converts viewcount data from mod_viewcount to Phorum's internal viewcounter.
-To use it, copy the script to your main Phorum directory (eg: /phorum5), and run it from the command line.
+This script converts viewcount data from mod_viewcount to LibreForum's internal viewcounter.
+To use it, copy the script to your main LibreForum directory (eg: /phorum5), and run it from the command line.
 "php convertViewCount.php"
 It should work from a web browser also, although if output buffering is enabled it may not
 output anything until it is completed.
 
-If you are enabling Phorum's internal viewcount setting, you should disable mod_viewcount.
+If you are enabling LibreForum's internal viewcount setting, you should disable mod_viewcount.
 */
 
 if ('cli' != php_sapi_name()) {

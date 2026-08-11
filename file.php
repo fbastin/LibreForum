@@ -57,7 +57,7 @@ $flags = empty($PHORUM['args']['download'])
 phorum_api_file_send($file, $flags);
 
 // Exit here explicitly for not giving back control to portable and
-// embedded Phorum setups.
+// embedded LibreForum setups.
 exit(0);
 
 ?>

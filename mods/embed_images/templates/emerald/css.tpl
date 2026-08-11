@@ -79,7 +79,7 @@
     margin-top: 20px;
 }
 
-/* Should be in the main Phorum CSS too, but let's make sure. */
+/* Should be in the main LibreForum CSS too, but let's make sure. */
 #phorum div.message-body br {
     clear: both;
 }

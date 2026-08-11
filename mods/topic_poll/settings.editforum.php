@@ -113,7 +113,7 @@ $choices = array(
   "1" => "Any user (including anonymous)",
   "2" => "Registered users",
   "3" => "Moderators for this forum",
-  "4" => "Phorum administrators",
+  "4" => "LibreForum administrators",
 );
 
 $frm->addrow(

@@ -20,7 +20,7 @@
 /**
  * This script implements the newflags API.
  *
- * Phorum's newflags system keeps track of unread messages for registered
+ * LibreForum's newflags system keeps track of unread messages for registered
  * users. It does so by administering the messages that the users have read
  * in the database. This is done per forum. All messages prior to the oldest
  * message that is marked read for the forum are considered read implicitly.
@@ -80,10 +80,10 @@ define('PHORUM_MARKREAD_FORUMS', 3);
 
 // {{{ Function: phorum_api_newflags_by_forum()
 /**
- * Retrieve newflags data for a forum for the active Phorum user.
+ * Retrieve newflags data for a forum for the active LibreForum user.
  *
  * This is mainly an internal helper function, which normally is
- * called from other Phorum core code. There should be no need for
+ * called from other LibreForum core code. There should be no need for
  * you to call it from other code.
  *
  * @param mixed $forum
@@ -162,7 +162,7 @@ function phorum_api_newflags_by_forum($forum)
 
 // {{{ Function: phorum_api_newflags_format_messages()
 /**
- * Add newflag info for the active Phorum user to a list of messages.
+ * Add newflag info for the active LibreForum user to a list of messages.
  *
  * In the message data for messages that should have the new flag enabled,
  * a field $msg["new"] is added. This field is initialized to the language
@@ -252,7 +252,7 @@ function phorum_api_newflags_format_messages($messages, $mode = PHORUM_NEWFLAGS_
 
 // {{{ Function: phorum_api_newflags_firstunread()
 /**
- * Find the first unread message in a thread for the active Phorum user.
+ * Find the first unread message in a thread for the active LibreForum user.
  *
  * @param integer $thread_id
  *     The message_id of the thread for which to find the first unread message.
@@ -291,7 +291,7 @@ function phorum_api_newflags_firstunread($thread_id)
 
 // {{{ Function: phorum_api_newflags_markread()
 /**
- * Mark forums, threads or messages as read for the active Phorum user.
+ * Mark forums, threads or messages as read for the active LibreForum user.
  *
  * @param mixed $markread_ids
  *     This parameter provides the ids of the items that have to be marked

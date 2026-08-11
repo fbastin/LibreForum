@@ -21,7 +21,7 @@
     // files and directories can be created in it. Also
     // do a basic check on Phorums caching API.
 
-    $phorum_check = "Phorum cache";
+    $phorum_check = "LibreForum cache";
 
     function phorum_check_cache($is_install = FALSE)
     {
@@ -98,21 +98,21 @@
         rmdir($dummy_dir);
 
         // All seems OK. Do a final system check where we check
-        // the caching system like the Phorum system will do.
+        // the caching system like the LibreForum system will do.
         phorum_cache_put('sanity_checks', 'dummy', 'dummy');
         $entry = phorum_cache_get('sanity_checks', 'dummy');
         phorum_cache_remove('sanity_checks', 'dummy');
         if ($entry != 'dummy') return array(
             PHORUM_SANITY_WARN,
-            "There might be a problem in Phorum's caching system.
+            "There might be a problem in LibreForum's caching system.
              Storing and retrieving a dummy key failed. If you
-             experience problems with your Phorum installation,
+             experience problems with your LibreForum installation,
              it might be because of this.",
             "As a work around, you can disable the caching facilities
              in the admin interface (note: this will not remove this
              warning; it will only keep you out of troubles by making
              sure that the caching system is not used). Please contact
-             the Phorum developers to find out what the problem is.",
+             the LibreForum developers to find out what the problem is.",
         );
 
         return array (PHORUM_SANITY_OK, NULL, NULL);

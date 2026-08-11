@@ -13,7 +13,7 @@ $PHORUM['DATA']['BREADCRUMBS'][] = array(
 // Build standard URLs.
 phorum_build_common_urls();
 
-// Inlude for Phorum 5.2. This API layer is replaced with the custom field
+// Inlude for LibreForum 5.2. This API layer is replaced with the custom field
 // API which handles custom fields for forums and messages too. The
 // backward compatibility code in 5.3 will catch the old style API calls.
 if (file_exists('./include/api/custom_profile_fields.php')) {

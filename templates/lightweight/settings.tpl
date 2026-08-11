@@ -19,7 +19,7 @@
 {VAR gauge_image "templates/emerald/images/gauge.gif"}
 
 {! --- Apply some compression to the template data. This feature is      --- }
-{! --- implemented by Phorum's template parsing code. Possible values    --- }
+{! --- implemented by LibreForum's template parsing code. Possible values    --- }
 {! --- for this setting are:                                             --- }
 {! --- 0 - Apply no compression at all.                                  --- }
 {! --- 1 - Remove white space at start of lines and empty lines.         --- }

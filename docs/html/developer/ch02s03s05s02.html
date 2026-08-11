@@ -1,16 +1,16 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.5.2. Storing data for messages</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Phorum Developer Reference Manual"><link rel="up" href="ch02s03s05.html" title="2.3.5. Module data storage"><link rel="prev" href="ch02s03s05.html" title="2.3.5. Module data storage"><link rel="next" href="ch02s03s05s03.html" title="2.3.5.3. Storing data for users"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03s05.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s03s05s03.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.5.2. Storing data for messages"><div class="titlepage"><div><div><h4 class="title"><a name="modules.storemessagedata"></a>2.3.5.2. Storing data for messages</h4></div></div></div><p>
-          If your module needs to store data along with a Phorum message,
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.5.2. Storing data for messages</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch02s03s05.html" title="2.3.5. Module data storage"><link rel="prev" href="ch02s03s05.html" title="2.3.5. Module data storage"><link rel="next" href="ch02s03s05s03.html" title="2.3.5.3. Storing data for users"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03s05.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s03s05s03.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.5.2. Storing data for messages"><div class="titlepage"><div><div><h4 class="title"><a name="modules.storemessagedata"></a>2.3.5.2. Storing data for messages</h4></div></div></div><p>
+          If your module needs to store data along with a LibreForum message,
           the easiest way is to make use of the meta information array that
           is attached to each message array
           (<code class="literal">$message["meta"]</code>).
           This array is a regular PHP array, which is stored in the
           database as serialized data (see <a class="ulink" href="http://www.php.net/serialize" target="_top">PHP's serialize manual</a>).
-          Because Phorum and other modules make use of this meta data as
+          Because LibreForum and other modules make use of this meta data as
           well, you should never squash it, neither access the meta data
           in the database directly. Instead use the methods described in
           this section.
         </p><p>
-          To prevent name space collissions with other modules or Phorum,
+          To prevent name space collissions with other modules or LibreForum,
           it is good practice to create only one key in the meta data
           array named <code class="literal">mod_&lt;yourmodule&gt;</code> (in our
           example: <code class="literal">mod_foo</code>). If your module needs to
@@ -49,7 +49,7 @@ $message["meta"]["mod_foo"] = array(
             </span></em>
             There are some hooks that send a full message structure to the
             hook functions. These can change the message structure before
-            returning it to Phorum. Examples are the hooks
+            returning it to LibreForum. Examples are the hooks
             "hook.before_post" and "before_edit". For these kind of
             hooks, you can update the meta information in the message
             structure and be done with it. Here's an example of what this
@@ -67,7 +67,7 @@ function phorum_mod_foo_before_post ($message)
     $message["meta"]["mod_foo"]["foodata"] = "Some data";
     $message["meta"]["mod_foo"]["bardata"] = "Some more data";
 
-    // Return the updated message. Phorum will take care of
+    // Return the updated message. LibreForum will take care of
     // storing the "mod_foo" array in the database.
     return $message;
 } </pre><p>

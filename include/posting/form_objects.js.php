@@ -1,76 +1,76 @@
 // Valid object ids for textarea objects to handle. The first object
 // that can be matched will be use as the object to work with.
 // This is done to arrange for backward compatibility between
-// Phorum versions.
-Phorum.textarea_ids = new Array(
-    'phorum_textarea',  // Phorum 5.1
-    'body',             // Phorum 5.2
+// LibreForum versions.
+LibreForum.textarea_ids = new Array(
+    'phorum_textarea',  // LibreForum 5.1
+    'body',             // LibreForum 5.2
     'message'           // PM interface
 );
 
 // Valid object ids for subject text field objects to handle.
-Phorum.subject_ids = new Array(
-    'phorum_subject',   // Phorum 5.1
-    'subject'           // Phorum 5.2
+LibreForum.subject_ids = new Array(
+    'phorum_subject',   // LibreForum 5.1
+    'subject'           // LibreForum 5.2
 );
 
 // Some variables for storing objects that we need globally.
-Phorum.textarea_obj = null;
-Phorum.subject_obj = null;
+LibreForum.textarea_obj = null;
+LibreForum.subject_obj = null;
 
 // A variable for storing the current selection range of the 
 // textarea. Needed for working around an MSIE problem.
-Phorum.textarea_range = null;
+LibreForum.textarea_range = null;
 
 // ----------------------------------------------------------------------
 // Uitilty functions
 // ----------------------------------------------------------------------
 
-// Find the Phorum textarea object and return it. In case of
+// Find the LibreForum textarea object and return it. In case of
 // problems, null will be returned.
-Phorum.get_textarea = function()
+LibreForum.get_textarea = function()
 {
-    if (Phorum.textarea_obj != null) {
-        return Phorum.textarea_obj;
+    if (LibreForum.textarea_obj != null) {
+        return LibreForum.textarea_obj;
     }
 
-    for (var i=0; Phorum.textarea_ids[i]; i++) {
-        Phorum.textarea_obj =
-            document.getElementById(Phorum.textarea_ids[i]);
-        if (Phorum.textarea_obj) break;
+    for (var i=0; LibreForum.textarea_ids[i]; i++) {
+        LibreForum.textarea_obj =
+            document.getElementById(LibreForum.textarea_ids[i]);
+        if (LibreForum.textarea_obj) break;
     }
 
-    if (! Phorum.textarea_obj) {
+    if (! LibreForum.textarea_obj) {
         alert('No textarea found on the current page.');
         return null;
     }
 
-    return Phorum.textarea_obj;
+    return LibreForum.textarea_obj;
 }
 
-// Find the Phorum subject field object and return it. In case of
+// Find the LibreForum subject field object and return it. In case of
 // problems, null will be returned.
-Phorum.get_subjectfield = function()
+LibreForum.get_subjectfield = function()
 {
-    if (Phorum.subject_obj != null) {
-        return Phorum.subject_obj;
+    if (LibreForum.subject_obj != null) {
+        return LibreForum.subject_obj;
     }
 
-    for (var i=0; Phorum.subject_ids[i]; i++) {
-        Phorum.subject_obj =
-            document.getElementById(Phorum.subject_ids[i]);
-        if (Phorum.subject_obj) break;
+    for (var i=0; LibreForum.subject_ids[i]; i++) {
+        LibreForum.subject_obj =
+            document.getElementById(LibreForum.subject_ids[i]);
+        if (LibreForum.subject_obj) break;
     }
 
-    if (! Phorum.subject_obj) {
+    if (! LibreForum.subject_obj) {
         return null;
     }
 
-    return Phorum.subject_obj;
+    return LibreForum.subject_obj;
 }
 
 // Strip whitespace from the start and end of a string.
-Phorum.strip_whitespace = function(str, return_stripped)
+LibreForum.strip_whitespace = function(str, return_stripped)
 {
     var strip_pre = '';
     var strip_post = '';
@@ -109,36 +109,36 @@ Phorum.strip_whitespace = function(str, return_stripped)
 
 // Save the selection range of the textarea. This is needed because
 // sometimes clicking in a popup can clear the selection in MSIE.
-Phorum.store_range = function()
+LibreForum.store_range = function()
 {
-    var ta = Phorum.get_textarea();
+    var ta = LibreForum.get_textarea();
     if (ta == null || ta.setSelectionRange || ! document.selection) return;
     ta.focus();
-    Phorum.textarea_range = document.selection.createRange();
+    LibreForum.textarea_range = document.selection.createRange();
 }
 
 // Restored a saved textarea selection range.
-Phorum.restore_range = function()
+LibreForum.restore_range = function()
 {
-    if (Phorum.textarea_range != null)
+    if (LibreForum.textarea_range != null)
     {
-        Phorum.textarea_range.select();
-        Phorum.textarea_range = null;
+        LibreForum.textarea_range.select();
+        LibreForum.textarea_range = null;
     }
 }
 
 // Move the focus to the textarea.
-Phorum.focus_textarea = function()
+LibreForum.focus_textarea = function()
 {
-    var textarea_obj = Phorum.get_textarea();
+    var textarea_obj = LibreForum.get_textarea();
     if (textarea_obj == null) return;
     textarea_obj.focus();
 }
 
 // Move the focus to the subject field.
-Phorum.focus_subjectfield = function()
+LibreForum.focus_subjectfield = function()
 {
-    var subjectfield_obj = Phorum.get_subjectfield();
+    var subjectfield_obj = LibreForum.get_subjectfield();
     if (subjectfield_obj == null) return;
 
     subjectfield_obj.focus();
@@ -152,13 +152,13 @@ Phorum.focus_subjectfield = function()
 // tags around the selected text. If no text is selected and a prompt_str
 // is provided, then prompt the user for the data to place inside
 // the tags.
-Phorum.add_tags = function(pre, post, target, prompt_str)
+LibreForum.add_tags = function(pre, post, target, prompt_str)
 {
     var text;
     var pretext;
     var posttext;
     var range;
-    var ta = target ? target : Phorum.get_textarea();
+    var ta = target ? target : LibreForum.get_textarea();
     if (ta == null) return;
 
     // Store the current scroll offset, so we can restore it after
@@ -180,7 +180,7 @@ Phorum.add_tags = function(pre, post, target, prompt_str)
 
         // Strip whitespace from text selection and move it to the
         // pre- and post.
-        var res = Phorum.strip_whitespace(text, true);
+        var res = LibreForum.strip_whitespace(text, true);
         text = res[0];
         pre = res[1] + pre;
         post = post + res[2];
@@ -220,7 +220,7 @@ Phorum.add_tags = function(pre, post, target, prompt_str)
 
         // Strip whitespace from text selection and move it to the
         // pre- and post.
-        var res = Phorum.strip_whitespace(text, true);
+        var res = LibreForum.strip_whitespace(text, true);
         text = res[0];
         pre = res[1] + pre;
         post = post + res[2];

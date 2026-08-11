@@ -14,8 +14,8 @@ $user_id = phorum_api_user_authenticate(
 );
 if (!$user_id) die("Username or password incorrect!\n");
 
-// Make the authenticated user the active user for Phorum. This is all
-// that is needed to tell Phorum that this user is logged in.
+// Make the authenticated user the active user for LibreForum. This is all
+// that is needed to tell LibreForum that this user is logged in.
 $set_active = phorum_api_user_set_active_user(
     PHORUM_FORUM_SESSION,     // for a standard front end forum session
     $user_id,                 // the user_id that has to be the active user

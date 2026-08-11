@@ -18,13 +18,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * This script implements the Phorum file storage API.
+ * This script implements the LibreForum file storage API.
  *
- * A "Phorum file" is a file which is used from within Phorum as a
+ * A "LibreForum file" is a file which is used from within LibreForum as a
  * personal user file (which can be uploaded through the user's control
  * center) or as a message attachment.
  *
- * By default, the contents of a Phorum file are stored in the Phorum
+ * By default, the contents of a LibreForum file are stored in the LibreForum
  * database, but this API does support modules that change this behavior
  * (e.g. by storing file contents on a filesystem instead).
  *
@@ -40,13 +40,13 @@ if (!defined("PHORUM")) return;
 
 /**
  * Function call flag, which tells {@link phorum_api_file_retrieve()}
- * that the retrieved Phorum file data has to be returned to the caller.
+ * that the retrieved LibreForum file data has to be returned to the caller.
  */
 define("PHORUM_FLAG_GET",              1);
 
 /**
  * Function call flag, which tells {@link phorum_api_file_retrieve()}
- * that the retrieved Phorum file can be sent to the browser directly.
+ * that the retrieved LibreForum file can be sent to the browser directly.
  */
 define("PHORUM_FLAG_SEND",             2);
 
@@ -142,7 +142,7 @@ function phorum_api_file_get_mimetype($filename)
  * file or a message attachment.
  *
  * Note that the checks for message attachments aren't all checks that are
- * done by Phorum. The attachment posting script does run some additional
+ * done by LibreForum. The attachment posting script does run some additional
  * checks on the message level (e.g. to see if the maximum cumulative
  * attachment size is not exceeded).
  *
@@ -156,7 +156,7 @@ function phorum_api_file_get_mimetype($filename)
  *     attachments (PHORUM_LINK_MESSAGE). Next to that, interesting file
  *     fields to pass to this function are "filesize" (to check maximum size)
  *     and "filename" (to check allowed file type extensions). A "user_id"
- *     field can either be provided or the user_id of the active Phorum
+ *     field can either be provided or the user_id of the active LibreForum
  *     user will be used.
  *
  * @return array
@@ -333,7 +333,7 @@ function phorum_api_file_check_write_access($file)
  *         </ul>
  *     </li>
  *     <li>user_id: The user to link a file to. If none is provided, then
-           the user_id of the active Phorum user will be used.</li>
+           the user_id of the active LibreForum user will be used.</li>
  *     <li>message_id: The message to link a file to or 0 if it's no
  *         message attachment.</li>
  *     </ul>
@@ -525,7 +525,7 @@ function phorum_api_file_store($file)
         $file = $hook_result;
     }
 
-    // Phorum stores the files in base64 format in the database, to
+    // LibreForum stores the files in base64 format in the database, to
     // prevent problems with upgrading and migrating database servers.
     // The ASCII representation for the files will always be safe to dump
     // and restore. So here we will base64 encode the file data.
@@ -670,17 +670,17 @@ function phorum_api_file_check_read_access($file_id, $flags = 0)
         $PHORUM["file_offsite"] != PHORUM_OFFSITE_ANYSITE &&
         preg_match($matchhost, $_SERVER["HTTP_REFERER"])) {
 
-        // Generate the base URL for the Phorum.
+        // Generate the base URL for the LibreForum.
         $base = strtolower(phorum_get_url(PHORUM_BASE_URL));
 
         // Strip query string from the base URL. We mainly want to
-        // check if the location matches the Phorum location.
+        // check if the location matches the LibreForum location.
         // Otherwise, we might get in troubles with things like
         // URI authentication, where a session id is added to the URL.
         $base = preg_replace('/\?.*$/', '', $base);
 
         // FORUMONLY: Links to forum files are only allowed from the forum.
-        // Check if the referrer URL starts with the base Phorum URL.
+        // Check if the referrer URL starts with the base LibreForum URL.
         if ($PHORUM["file_offsite"] == PHORUM_OFFSITE_FORUMONLY) {
             $refbase = substr($_SERVER["HTTP_REFERER"], 0, strlen($base));
             if (strcasecmp($base, $refbase) != 0) return phorum_api_error_set(
@@ -690,7 +690,7 @@ function phorum_api_file_check_read_access($file_id, $flags = 0)
             );
         }
         // THISSITE: Links to forum files are allowed from anywhere on
-        // the website where Phorum is hosted.
+        // the website where LibreForum is hosted.
         elseif ($PHORUM["file_offsite"] == PHORUM_OFFSITE_THISSITE) {
             if (preg_match($matchhost, $_SERVER["HTTP_REFERER"], $rm) &&
                 preg_match($matchhost, $base, $bm) &&
@@ -708,9 +708,9 @@ function phorum_api_file_check_read_access($file_id, $flags = 0)
 
 // {{{ Function: phorum_api_file_retrieve
 /**
- * Retrieve a Phorum file.
+ * Retrieve a LibreForum file.
  *
- * This function can handle Phorum file retrieval in multiple ways:
+ * This function can handle LibreForum file retrieval in multiple ways:
  * either return the file to the caller or send it directly to the user's
  * browser (based on the $flags parameter). Sending it directly to the
  * browser allows for the implementation of modules that don't have to buffer
@@ -817,17 +817,17 @@ function phorum_api_file_retrieve($file, $flags = PHORUM_FLAG_GET)
     }
 
     // If no module handled file retrieval, we will retrieve the
-    // file from the Phorum database.
+    // file from the LibreForum database.
     if ($file["file_data"] === NULL)
     {
         $dbfile = phorum_db_file_get($file["file_id"], TRUE);
         if (empty($dbfile)) return phorum_api_error_set(
             PHORUM_ERRNO_NOTFOUND,
-            "Phorum file (id {$file["file_id"]}) could not be " .
+            "LibreForum file (id {$file["file_id"]}) could not be " .
             "retrieved from the database."
         );
 
-        // Phorum stores the files in base64 format in the database, to
+        // LibreForum stores the files in base64 format in the database, to
         // prevent problems with dumping and restoring databases.
         $file["file_data"] = base64_decode($dbfile["file_data"]);
     }
@@ -1064,7 +1064,7 @@ function phorum_api_file_check_delete_access($file_id)
 
 // {{{ Function: phorum_api_file_delete
 /**
- * Delete a Phorum file.
+ * Delete a LibreForum file.
  *
  * @example file_delete.php Delete a file.
  *
@@ -1090,13 +1090,13 @@ function phorum_api_file_delete($file)
 
     // Allow storage modules to handle the file data removal.
     // Modules should be aware of the fact that files don't have to
-    // exist. The Phorum core does not throw errors when deleting a
+    // exist. The LibreForum core does not throw errors when deleting a
     // non existent file. Therefore modules should accept that case
     // as well, without throwing errors.
     if (isset($PHORUM["hooks"]["file_delete"]))
         phorum_hook("file_delete", $file_id);
 
-    // Delete the file from the Phorum database.
+    // Delete the file from the LibreForum database.
     phorum_db_file_delete($file_id);
 }
 // }}}
@@ -1107,7 +1107,7 @@ function phorum_api_file_delete($file)
  *
  * @param string $link_type
  *     The type of link to retrieve from the database. Normally this is one
- *     of the Phorum built-in link types, but it can also be a custom
+ *     of the LibreForum built-in link types, but it can also be a custom
  *     link type (e.g. if a module uses the file storage on its own).
  *     This parameter can be NULL to retrieve any link type.
  *
@@ -1132,7 +1132,7 @@ function phorum_api_file_list($link_type = NULL, $user_id = NULL, $message_id = 
 
 // {{{ Function: phorum_api_file_purge_stale()
 /**
- * This function is used for purging stale files from the Phorum system.
+ * This function is used for purging stale files from the LibreForum system.
  *
  * @param boolean $do_purge
  *     If this parameter is set to a false value (the default), then no
@@ -1141,7 +1141,7 @@ function phorum_api_file_list($link_type = NULL, $user_id = NULL, $message_id = 
  *     then the stale files will be purged for real.
  *
  * @return array
- *     An array of stale Phorum files, indexed by file_id. Every item in
+ *     An array of stale LibreForum files, indexed by file_id. Every item in
  *     this array is an array on its own, containing the fields:
  *     - file_id: the file id of the stale file
  *     - filename: the name of the stale file
@@ -1168,7 +1168,7 @@ function phorum_api_file_purge_stale($do_purge)
      *     File storage
      *
      * [when]
-     *     Right after Phorum created its own list of stale files.
+     *     Right after LibreForum created its own list of stale files.
      *
      * [input]
      *     An array containing stale files, indexed by file_id. Each item
@@ -1313,13 +1313,13 @@ function phorum_api_file_safe_to_view($file)
 
 // {{{ Function: phorum_api_file_exists
 /**
- * Check if a Phorum file exists.
+ * Check if a LibreForum file exists.
  *
  * (this is a simple wrapper function around the
  * {@link phorum_api_file_check_read_access()} function)
  *
  * @param integer $file_id
- *     The file_id of the Phorum file to check.
+ *     The file_id of the LibreForum file to check.
  *
  * @return bool
  *     TRUE in case the file exists or FALSE if it doesn't.
@@ -1358,7 +1358,7 @@ function phorum_api_file_send($file, $flags = 0) {
 
 // {{{ Function: phorum_api_file_get
 /**
- * Retrieve and return a Phorum file.
+ * Retrieve and return a LibreForum file.
  *
  * (this is a simple wrapper function around the
  * {@link phorum_api_file_retrieve()} function)

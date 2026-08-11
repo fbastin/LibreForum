@@ -126,7 +126,7 @@ elseif ($do_attach && ! empty($_FILES))
 
         // Handle PHP upload errors.
         // PHP 4.2.0 and later can set an error field for the file
-        // upload, indicating a specific error. In Phorum 5.1, we only
+        // upload, indicating a specific error. In LibreForum 5.1, we only
         // have an error message for too large uploads. Other error
         // messages will get a generic file upload error.
         if (isset($file["error"]) && $file["error"]) {

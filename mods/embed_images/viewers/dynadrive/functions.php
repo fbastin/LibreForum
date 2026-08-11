@@ -39,7 +39,7 @@ function image_viewer_common()
     $PHORUM["DATA"]["HEAD_TAGS"] .=
 
         # Make sure that the loading feedback divs are always hidden,
-        # even if Phorum loads CSS after JavaScript.
+        # even if LibreForum loads CSS after JavaScript.
         "<style type=\"text/css\">\n" .
         "#thumbBox {visibility:hidden;}\n" .
         "#thumbLoading {visibility:hidden;}\n" .

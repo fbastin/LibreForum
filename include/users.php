@@ -20,10 +20,10 @@
 if ( !defined( "PHORUM" ) ) return;
 
 /**
- * These functions are Phorum's interface to the user data.  If you want
+ * These functions are LibreForum's interface to the user data.  If you want
  * to use your own user data, just replace these functions.
  *
- * The functions do use Phorum's database layer.  Of course, it is not
+ * The functions do use LibreForum's database layer.  Of course, it is not
  * required.
  */
 // if you write your own user layer, set this to false

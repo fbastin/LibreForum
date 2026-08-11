@@ -34,7 +34,7 @@
              scripts that are not carefully written. See also
              http://www.php.net/register_globals for more info on this
              subject.<br/><br/>
-             Although the Phorum development team always tries to write code
+             Although the LibreForum development team always tries to write code
              which cannot be affected by this setting in any way, we can never 
              guarantee that it will be 100% safe.",
             "Disable \"register_globals\" in the PHP configuration file

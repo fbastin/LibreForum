@@ -196,7 +196,7 @@ echo $data;
 phorum_hook('feed_sent');
 
 // Exit here explicitly for not giving back control to portable and
-// embedded Phorum setups.
+// embedded LibreForum setups.
 exit(0);
 
 ?>

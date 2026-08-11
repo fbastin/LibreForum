@@ -4,7 +4,7 @@ if (! defined("PHORUM")) return;
 $PHORUM['DATA']['HEADING'] = 'Ajax layer example page';
 $PHORUM['DATA']['HTML_DESCRIPTION'] =
     'This page demonstrates some features of ' .
-    'the Phorum Ajax layer.';
+    'the LibreForum Ajax layer.';
 
 include(phorum_get_template('header'));
 
@@ -45,7 +45,7 @@ function updateState(state) {
 
 function helloworld() {
   clearState();
-  Phorum.Ajax.call({
+  LibreForum.Ajax.call({
     "call"          : "helloworld",
     "onRequest"     : function (rb) { setLoading('request: '+rb); },
     "onResponse"    : function (rb) { setLoading('response: '+rb); },
@@ -64,7 +64,7 @@ function helloworld() {
 function checkpm() {
   var id = document.getElementById('checkpm_user_id').value;
   clearState();
-  Phorum.Ajax.call({
+  LibreForum.Ajax.call({
     "call"          : "checkpm",
     "user_id"       : id,
     "onRequest"     : function (rb) { setLoading('request: '+rb); },
@@ -81,7 +81,7 @@ function checkpm() {
 <?php print htmlspecialchars($clientjs) ?><br/>
 Version:
 <script type="text/javascript">
-  document.write(Phorum.Ajax.version)
+  document.write(LibreForum.Ajax.version)
 </script>
 <br/>
 <br/>

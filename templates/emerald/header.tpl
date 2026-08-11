@@ -34,7 +34,7 @@ if ($PHORUM['DATA']['CHARSET']) {
   <link rel="stylesheet" type="text/css" href="{URL->CSS_PRINT}" media="print" />
 {/IF}
 
-{! Load Javascript code. This code origins from core Phorum javascript }
+{! Load Javascript code. This code origins from core LibreForum javascript }
 {! code, template javascript code (templates/.../javascript.tpl) and }
 {! modules that add their code using the "javascript_register" module hook. }
 <script type="text/javascript" src="{URL->JAVASCRIPT}"></script>
@@ -47,13 +47,13 @@ if ($PHORUM['DATA']['CHARSET']) {
 {/IF}
 
 {! Sometimes, a page redirect is needed. This code is used to redirect the }
-{! browser to a different page, if a URL->REDIRECT is set from Phorum. }
+{! browser to a different page, if a URL->REDIRECT is set from LibreForum. }
 {IF URL->REDIRECT}
   <meta http-equiv="refresh" content="{IF REDIRECT_TIME}{REDIRECT_TIME}{ELSE}5{/IF}; url={URL->REDIRECT}" />
 {/IF}
 
 {! The meta description for the page. This is initially filled from the }
-{! option "Phorum Description" under "General Settings" in the Phorum }
+{! option "LibreForum Description" under "General Settings" in the LibreForum }
 {! admin interface. Modules can override this description by overriding }
 {! the template variable $PHORUM['DATA']['DESCRIPTION']. }
 {IF DESCRIPTION}
@@ -61,8 +61,8 @@ if ($PHORUM['DATA']['CHARSET']) {
 {/IF}
 
 {! Additional tags for the <head> section of the page. This is initially }
-{! filled from the option "Phorum Head Tags" under "General Settings" in }
-{! the Phorum admin interface. Modules that need to add data to the <head> }
+{! filled from the option "LibreForum Head Tags" under "General Settings" in }
+{! the LibreForum admin interface. Modules that need to add data to the <head> }
 {! section dynamically can do so by adding that data to the template }
 {! variable $PHORUM['DATA']['HEAD_TAGS']. }
 {HEAD_TAGS}
@@ -97,8 +97,8 @@ Some Icons courtesy of:
 <body onload="{IF FOCUS_TO_ID}var focuselt=document.getElementById('{FOCUS_TO_ID}'); if (focuselt) focuselt.focus();{/IF}">
 
   {! Please, always keep this <div> in your template and do not change its id }
-  {! It acts as the main Phorum content container, which will be used for }
-  {! styling the pages using CSS and possibly for finding the Phorum content }
+  {! It acts as the main LibreForum content container, which will be used for }
+  {! styling the pages using CSS and possibly for finding the LibreForum content }
   {! through JavaScript. If you are creating your own template, we advice you }
   {! to also keep all other id=".." and class=".." properties from the }
   {! template files in your code, unless you know what you are doing by }
@@ -107,7 +107,7 @@ Some Icons courtesy of:
 
   {IF NOT PRINTVIEW}
 
-    {! This <div> shows code that relates to the currently active Phorum user }
+    {! This <div> shows code that relates to the currently active LibreForum user }
     {! or shows code for logging in or creating a new profile if there is no }
     {! user logged in. }
     <div id="user-info" class="{IF LOGGEDIN}logged-in{ELSE}logged-out{/IF}">
@@ -147,7 +147,7 @@ Some Icons courtesy of:
 
     {! This <div> holds the breadcrumb navigation code. This breadcrumb }
     {! navigation shows the user where he is on the site, relative to }
-    {! the Phorum start location (leaving a "breadcrumb" at every step }
+    {! the LibreForum start location (leaving a "breadcrumb" at every step }
     {! deeper into the site structure.) }
     <div id="breadcrumb">
       {VAR FIRST TRUE}

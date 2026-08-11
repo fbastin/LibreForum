@@ -1,4 +1,4 @@
-// Settings for the FancyBox as used in Phorum. When other options are
+// Settings for the FancyBox as used in LibreForum. When other options are
 // needed, then these can be overridden.
 // For an overview of the possible settings, see http://fancybox.net/api
 var phorum_fancybox_settings = {

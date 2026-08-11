@@ -19,7 +19,7 @@
 <li><span class="src-comm">hook:  user_session_destroy|test_user_session_destroy</span></li>
 <li><span class="src-comm">title: User API hook demo</span></li>
 <li><span class="src-comm">desc:  This module is a demo for demonstrating the user API hooks, which can be used for implementing external user authentication and session.</span></li>
-<li><span class="src-comm">author: Phorum Dev Team</span></li>
+<li><span class="src-comm">author: LibreForum Dev Team</span></li>
 <li><span class="src-comm">url: http://www.phorum.org/</span></li>
 <li><span class="src-comm">*/</span></li>
 <li>&nbsp;</li>
@@ -28,7 +28,7 @@
 <li>&nbsp;</li>
 <li><span class="src-comm">// We can authenticate the user against our own user database.</span></li>
 <li><span class="src-comm">// This demo hook will authenticate the user with username &quot;foo&quot;</span></li>
-<li><span class="src-comm">// and password &quot;bar&quot; as the Phorum user with user_id = 1.</span></li>
+<li><span class="src-comm">// and password &quot;bar&quot; as the LibreForum user with user_id = 1.</span></li>
 <li><span class="src-key">function </span><span class="src-id">test_user_authenticate</span><span class="src-sym">(</span><span class="src-var">$data</span><span class="src-sym">)</span></li>
 <li><span class="src-sym">{</span></li>
 <li>    <span class="src-comm">// Only do this for the forum session. We do not touch the admin session.</span></li>
@@ -43,8 +43,8 @@
 <li>    <span class="src-key">return </span><span class="src-var">$data</span><span class="src-sym">;</span></li>
 <li><span class="src-sym">}</span></li>
 <li>&nbsp;</li>
-<li><span class="src-comm">// This hook overrides creating a Phorum user session. Instead of running</span></li>
-<li><span class="src-comm">// a Phorum session, we use the PHP session system to track the logged</span></li>
+<li><span class="src-comm">// This hook overrides creating a LibreForum user session. Instead of running</span></li>
+<li><span class="src-comm">// a LibreForum session, we use the PHP session system to track the logged</span></li>
 <li><span class="src-comm">// in user. We do this by storing the active user_id in the $_SESSION</span></li>
 <li><span class="src-comm">// variable.</span></li>
 <li><span class="src-key">function </span><span class="src-id">test_user_session_create</span><span class="src-sym">(</span><span class="src-var">$type</span><span class="src-sym">)</span></li>
@@ -58,9 +58,9 @@
 <li>    <span class="src-sym">}</span></li>
 <li><span class="src-sym">}</span></li>
 <li>&nbsp;</li>
-<li><span class="src-comm">// This hook overrides the Phorum user session restore process. We use</span></li>
+<li><span class="src-comm">// This hook overrides the LibreForum user session restore process. We use</span></li>
 <li><span class="src-comm">// the user id that we stored in the PHP $_SESSION variable as the</span></li>
-<li><span class="src-comm">// active Phorum user.</span></li>
+<li><span class="src-comm">// active LibreForum user.</span></li>
 <li><span class="src-key">function </span><span class="src-id">test_user_session_restore</span><span class="src-sym">(</span><span class="src-var">$data</span><span class="src-sym">)</span></li>
 <li><span class="src-sym">{</span></li>
 <li>    <span class="src-key">if </span><span class="src-sym">(</span><span class="src-var">$_SESSION</span><span class="src-sym">[</span><span class="src-str">'loggedin_user'</span><span class="src-sym">]</span><span class="src-sym">) </span><span class="src-sym">{</span></li>
@@ -75,8 +75,8 @@
 <li>    <span class="src-key">return </span><span class="src-var">$data</span><span class="src-sym">;</span></li>
 <li><span class="src-sym">}</span></li>
 <li>&nbsp;</li>
-<li><span class="src-comm">// This hook overrides destroying a Phorum user session. Instead of destroying</span></li>
-<li><span class="src-comm">// a Phorum session, we clear the user_id that is stored in the $_SESSION</span></li>
+<li><span class="src-comm">// This hook overrides destroying a LibreForum user session. Instead of destroying</span></li>
+<li><span class="src-comm">// a LibreForum session, we clear the user_id that is stored in the $_SESSION</span></li>
 <li><span class="src-comm">// variable.</span></li>
 <li><span class="src-key">function </span><span class="src-id">test_user_session_destroy</span><span class="src-sym">(</span><span class="src-var">$type</span><span class="src-sym">)</span></li>
 <li><span class="src-sym">{</span></li>

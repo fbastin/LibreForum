@@ -417,7 +417,7 @@ function phorum_mod_forum_subscriptions_functions_after_post($data = NULL, $queu
                 $headers      = "From: $sender_name <$sender_address>\r\n";
                 $headers      .= "Message-ID: <".$messageid.">\r\n";
                 $headers      .= "MIME-Version: 1.0\r\n";
-                // set a unique email boundary based on the Phorum message_id
+                // set a unique email boundary based on the LibreForum message_id
                 $bndp          = "fsub_bndp_".$mail_data['message_id'];
                 if ($debug_i == 1) {
                     if (function_exists('event_logging_writelog')) {

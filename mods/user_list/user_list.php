@@ -352,14 +352,14 @@ function phorum_mod_user_list_display () {
     // This is a cheat to allow us to use only 5* template files for over 40 Scriptmonkeys templates
 
     // *Actually, 6...
-    //  OK, This is complicated. The way Phorum handles templates is, it takes a tpl file and all tpl files it INCLUDEs and
+    //  OK, This is complicated. The way LibreForum handles templates is, it takes a tpl file and all tpl files it INCLUDEs and
     //   "compiles" them into executable PHP code, which is then cached. For the Scriptmonkeys templates, there are cases where
     //    there will be two templates with identical tpl files which INCLUDE different "paging.tpl" files -- for example, if you
-    //     are using the Bad Fish template and you look at the user list page, Phorum would load the file "user_list_display_sm1.tpl"
+    //     are using the Bad Fish template and you look at the user list page, LibreForum would load the file "user_list_display_sm1.tpl"
     //      (as it was originally called), which would then INCLUDE paging.tpl. Since there is no paging.tpl file in the
-    //       mods/user_list/templates/emerald directory, Phorum would get it from templates/badfish. So far, so good. The problem
-    //        is that Phorum would then cache the results. Meaning that if the user switches to, for example, the Blue Lime
-    //         template, and the views the user list page, this is what happens: Phorum will see that the file it is supposed to use
+    //       mods/user_list/templates/emerald directory, LibreForum would get it from templates/badfish. So far, so good. The problem
+    //        is that LibreForum would then cache the results. Meaning that if the user switches to, for example, the Blue Lime
+    //         template, and the views the user list page, this is what happens: LibreForum will see that the file it is supposed to use
     //          is mods/user_list/templates/emerald/user_list_display_sm1.tpl, but instead of loading it and compiling it, it will grab
     //           the cached copy of it which includes templates/badfish/paging.tpl. Unfortunately, it was supposed to use
     //            templates/bluelime/paging.tpl, which is completely different. So, the user list itself will appear fine but the page

@@ -118,7 +118,7 @@
             "Ban items can be used to deny new user registrations and
              posting of (private) messages, based on various criteria.
              If a ban item applies to a user action, then this action
-             will be fully blocked by Phorum. This can for example be used
+             will be fully blocked by LibreForum. This can for example be used
              to block user registrations and postings from certain IP
              addresses or to prevent certain words from being used in
              forum messages.<br />
@@ -133,7 +133,7 @@
         $row = $frm->addrow("Field To Match", $frm->select_tag("type", $ban_types, $type));
         $frm->addhelp($row, "Field To Match", "
             Below, you will find an overview of what
-            ban items are used by what Phorum actions:<br/>
+            ban items are used by what LibreForum actions:<br/>
             <br/>
             <b>User registration</b>:<br/>
             \"Name/User Name\" checks the new username<br/>

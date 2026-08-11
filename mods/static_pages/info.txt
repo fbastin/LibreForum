@@ -1,5 +1,5 @@
 title: Static Pages
-desc: This module allows for the creation of pages of text which will be displayed using the colors and style of the current Phorum template.
+desc: This module allows for the creation of pages of text which will be displayed using the colors and style of the current LibreForum template.
 version: 1.0
 author: Jim Lehmann a.k.a. Ravenswood
 url: http://www.scriptmonkeys.us/

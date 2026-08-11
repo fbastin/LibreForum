@@ -1,6 +1,6 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.2. Module information</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Phorum Developer Reference Manual"><link rel="up" href="ch02s03.html" title="2.3. Writing your own modules"><link rel="prev" href="ch02s03.html" title="2.3. Writing your own modules"><link rel="next" href="ch02s03s03.html" title="2.3.3. Module file structure"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s03s03.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.2. Module information"><div class="titlepage"><div><div><h3 class="title"><a name="modules.moduleinfo"></a>2.3.2. Module information</h3></div></div></div><p>
-        Module information is the glue between your module and Phorum.
-        It provides information to Phorum about your module.
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.2. Module information</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch02s03.html" title="2.3. Writing your own modules"><link rel="prev" href="ch02s03.html" title="2.3. Writing your own modules"><link rel="next" href="ch02s03s03.html" title="2.3.3. Module file structure"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s03s03.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.2. Module information"><div class="titlepage"><div><div><h3 class="title"><a name="modules.moduleinfo"></a>2.3.2. Module information</h3></div></div></div><p>
+        Module information is the glue between your module and LibreForum.
+        It provides information to LibreForum about your module.
         Before we explain how to add this module information to your
         module, we will first explain what data can be put in there
         and how that data is formatted.
@@ -42,7 +42,7 @@
                 <p>
                   This describes which
                   <a class="xref" href="ch02s02s05.html" title="2.2.5. Hook functions">hook functions</a>
-                  are called for which Phorum hooks. The value consists of
+                  are called for which LibreForum hooks. The value consists of
                   two fields, separated by a pipe "|" symbol. The first
                   field contains the name of the hook that this module is
                   hooking into. The second field contains the name of the
@@ -127,7 +127,7 @@
                   This describes which phorum version is required to use
                   this module. Modules with a requirement above the current
                   phorum version are automatically disabled when going to
-                  the modules page. This feature was added in Phorum 5.2.
+                  the modules page. This feature was added in LibreForum 5.2.
                 </p>
                 <p>
                   Example:<br>
@@ -158,7 +158,7 @@
                 <p>
                   Example:<br>
                   <code class="literal">
-                    author: John Doe, Phorum hacker<br>
+                    author: John Doe, LibreForum hacker<br>
                     url: http://example.com/phorum/mod_foo/<br>
                     version: 0.9.1-alpha<br>
                     release_date: May 17th, 2007
@@ -183,7 +183,7 @@
                   categories. Available categories to choose from are:
                   </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><span class="bold"><strong>admin</strong></span><br>
                       Modules that are useful for performing administrative
-                      tasks and for handling advanced Phorum configuration.
+                      tasks and for handling advanced LibreForum configuration.
                     </li><li class="listitem"><span class="bold"><strong>bbcode</strong></span><br>
                       Modules that implement extra BBcode tags.
                     </li><li class="listitem"><span class="bold"><strong>embed_content</strong></span><br>
@@ -195,11 +195,11 @@
                       attachments and/or linked files.
                     </li><li class="listitem"><span class="bold"><strong>phorum3conversion</strong></span><br>
                       Modules that can help sites to convert from the
-                      old Phorum 3 system to Phorum 5.
+                      old LibreForum 3 system to LibreForum 5.
                     </li><li class="listitem"><span class="bold"><strong>email</strong></span><br>
                       Modules that extend or enhance the email system.
                     </li><li class="listitem"><span class="bold"><strong>integration</strong></span><br>
-                      Modules that can be used for integrating Phorum with
+                      Modules that can be used for integrating LibreForum with
                       other systems.
                     </li><li class="listitem"><span class="bold"><strong>user_management</strong></span><br>
                       These modules deal with user registration, logging in
@@ -214,15 +214,15 @@
                       or that replace the full message search backend.
                     </li><li class="listitem"><span class="bold"><strong>seo</strong></span><br>
                       Modules that apply search engine optimization
-                      measures to Phorum.
+                      measures to LibreForum.
                     </li><li class="listitem"><span class="bold"><strong>spam</strong></span><br>
-                      Modules that help protecting Phorum against spam.
+                      Modules that help protecting LibreForum against spam.
                     </li><li class="listitem"><span class="bold"><strong>user_features</strong></span><br>
                       Modules that give the users new options and enhance
                       their experience.
                     </li><li class="listitem"><span class="bold"><strong>viewlayout</strong></span><br>
                       Modules that add information to or alter the view /
-                      layout of Phorum pages.
+                      layout of LibreForum pages.
                     </li><li class="listitem"><span class="bold"><strong>uncategorized</strong></span><br>
                       Modules that do not have a category assigned. This one
                       is mainly mentioned for completeness. In the online
@@ -246,7 +246,7 @@
         module "foo" might look like:
         </p><div class="example"><a name="example.moduleinfo"></a><p class="title"><b>Example 2.1. Module information</b></p><div class="example-contents"><pre class="programlisting">
 title: Foo
-desc: This is the Foo module for Phorum. Nothing exciting...
+desc: This is the Foo module for LibreForum. Nothing exciting...
 version: 1.0.2
 release_date: Jan 1st, 2008
 url: http://www.phorum.org
@@ -260,7 +260,7 @@ hook: yet_another_hook|phorum_mod_foo_some_other_hook
 
 priority: run some_hook before some_other_module</pre></div></div><p><br class="example-break">
 
-        What this module info does, is telling Phorum that when it gets to
+        What this module info does, is telling LibreForum that when it gets to
         "some_other_hook", it will have to call the function
         <code class="literal">phorum_mod_foo_some_other_hook()</code> in your module.
         It also tells that for "yet_another_hook" the same function has to

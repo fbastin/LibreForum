@@ -4,7 +4,7 @@ Creating custom fields for user profiles
 *** THIS DOCUMENT IS UNDER DEVELOPMENT, SO IT'S NOT YET COMPLETE ***
 
 This documents describes how you can create your own custom fields
-within the profiles of Phorum users. 
+within the profiles of LibreForum users. 
 
 
 Table of contents:
@@ -20,8 +20,8 @@ Table of contents:
 1. Introduction
 -------------------------------------------------------------------------------
 
-   Phorum users all have their own profile. In this profile, data about
-   the user is stored. By default, Phorum stores for example the
+   LibreForum users all have their own profile. In this profile, data about
+   the user is stored. By default, LibreForum stores for example the
    username, email address and signature in the user profile. Also
    user settings like the privacy options are stored in there.
 
@@ -30,9 +30,9 @@ Table of contents:
    displayed in user profile screens or storing data and settings for
    your mods (see also docs/creating_mods.txt, section 2.5).
 
-   Phorum has an easy, built-in system to extend the profile fields,
+   LibreForum has an easy, built-in system to extend the profile fields,
    without requiring you to change the structure of the database. So there's
-   no need to actually add columns to the table in which Phorum users are
+   no need to actually add columns to the table in which LibreForum users are
    stored in the database.
 
    This document will explain how to use the custom profile field system.
@@ -42,7 +42,7 @@ Table of contents:
 -------------------------------------------------------------------------------
 
 
-   Go to the admin for your Phorum installation ({phorum url}/admin.php).
+   Go to the admin for your LibreForum installation ({phorum url}/admin.php).
    There you go to "Custom Profiles" under "Users/Groups". In this screen
    you can create, update and delete custom user profile fields.
 
@@ -60,7 +60,7 @@ Table of contents:
      Remark:
      If you are creating a field for a mod, we recommend you to prefix
      the field name with mod_<module name>, to prevent collisions with
-     Phorum and other mods. So if you add the shoe_size for a module
+     LibreForum and other mods. So if you add the shoe_size for a module
      named "foo", you would name the field "mod_foo_shoe_size".
      (see also creating_mods.txt, section 3.7.4).
 
@@ -101,7 +101,7 @@ Table of contents:
    directory if you are using a custom template).
    
    All you have to do is create a standard HTML input field and give it
-   the name of your custom field. Phorum will automatically take care
+   the name of your custom field. LibreForum will automatically take care
    of storing the field's data in the database.
    
    In the template you can make use of {REGISTER->fieldname} to get

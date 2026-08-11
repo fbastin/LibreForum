@@ -1,6 +1,6 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.11.4. user_session_destroy</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Phorum Developer Reference Manual"><link rel="up" href="ch03s11.html" title="3.11. User authentication and session handling"><link rel="prev" href="ch03s11s03.html" title="3.11.3. user_session_restore"><link rel="next" href="ch03s12.html" title="3.12. Moderation"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s11s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s12.html">Next</a></td></tr></table><hr></div><div class="section" title="3.11.4. user_session_destroy"><div class="titlepage"><div><div><h3 class="title"><a name="hook.user_session_destroy"></a>3.11.4. user_session_destroy</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.11.4. user_session_destroy</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03s11.html" title="3.11. User authentication and session handling"><link rel="prev" href="ch03s11s03.html" title="3.11.3. user_session_restore"><link rel="next" href="ch03s12.html" title="3.12. Moderation"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s11s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s12.html">Next</a></td></tr></table><hr></div><div class="section" title="3.11.4. user_session_destroy"><div class="titlepage"><div><div><h3 class="title"><a name="hook.user_session_destroy"></a>3.11.4. user_session_destroy</h3></div></div></div><p>
 
-Allow modules to override Phorum's session destroy management or
+Allow modules to override LibreForum's session destroy management or
 to even fully omit destroying a session (for example useful
 if the hook <a class="xref" href="ch03s11s03.html" title="3.11.3. user_session_restore">???</a> is used
 to inherit an external session from some 3rd party application).
@@ -10,7 +10,7 @@ to inherit an external session from some 3rd party application).
         </strong></span>
       </p><p>
 
-Just before Phorum runs its own session destroy code
+Just before LibreForum runs its own session destroy code
 in the user API function
 <code class="literal">phorum_api_user_session_destroy()</code>.
       </p><p>
@@ -28,7 +28,7 @@ or <code class="literal">PHORUM_ADMIN_SESSION</code>.
         </strong></span>
       </p><p>
 
-Same as input if Phorum has to run its standard session
+Same as input if LibreForum has to run its standard session
 destroy code or NULL if that code should be fully skipped.
       </p><p>
         <span class="bold"><strong>
@@ -37,12 +37,12 @@ destroy code or NULL if that code should be fully skipped.
       </p><p>
 
 See the <a class="xref" href="ch03s11s02.html" title="3.11.2. user_session_create">???</a> hook for an example
-of how to let Phorum setup the PHP session that is destroyed
+of how to let LibreForum setup the PHP session that is destroyed
 in this example hook.
 </p><pre class="programlisting">
 function phorum_mod_foo_user_session_destroy($type)
 {
-    // Let Phorum handle destroying of admin sessions on its own.
+    // Let LibreForum handle destroying of admin sessions on its own.
     if ($type == PHORUM_ADMIN_SESSION) return $type;
 
     // Override the session handling for front end forum sessions.
@@ -52,7 +52,7 @@ function phorum_mod_foo_user_session_destroy($type)
     if (!session_id()) session_start();
 
     // After starting the PHP session, we can clear the session
-    // data for the Phorum user. In the user_session_create hook
+    // data for the LibreForum user. In the user_session_create hook
     // example code, we stored the user_id for the active user
     // in the session. Here we clear that data. We could also
     // have destroyed the full PHP session, but in that case we
@@ -60,7 +60,7 @@ function phorum_mod_foo_user_session_destroy($type)
     // other PHP scripts.
     unset($_SESSION['phorum_user_id']);
 
-    // Tell Phorum not to run its own session destroy code.
+    // Tell LibreForum not to run its own session destroy code.
     return NULL;
 }
 </pre><p>

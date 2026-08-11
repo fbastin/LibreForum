@@ -4,7 +4,7 @@
   <section>
     <title>Requirements</title>
     <para>
-      Requirement for running Phorum are:
+      Requirement for running LibreForum are:
       <itemizedlist>
         <listitem>A webserver (like Apache or Microsoft IIS);</listitem>
         <listitem>PHP, version 5.2 or above;</listitem>
@@ -19,12 +19,12 @@
   <section>
     <title>Quickstart guide</title>
     <para>
-      This is the quickstart guide for installing Phorum, aimed at people
+      This is the quickstart guide for installing LibreForum, aimed at people
       that are used to working with websites, PHP and databases. If you
       are having problems following this guide, then please read
       <xref linkend="installation.detailed"/> instead.
       <itemizedlist>
-        <listitem>Unpack Phorum into a directory below your website's document root;</listitem>
+        <listitem>Unpack LibreForum into a directory below your website's document root;</listitem>
         <listitem>Create a database and a full access database user for that database;</listitem>
         <listitem>Edit <filename>include/db/config.php.sample</filename>, save it as <filename>include/db/config.php</filename>;</listitem>
         <listitem>Open <filename>{phorum url}/admin.php</filename> in your web browser and finish the install.</listitem>
@@ -36,10 +36,10 @@
     <title>Detailed installation instructions</title>
 
     <section>
-      <title>Download Phorum</title>
+      <title>Download LibreForum</title>
       <para>
         If you haven't already done so, download the latest stable
-        Phorum distribution from &www.phorum.org;.
+        LibreForum distribution from &www.phorum.org;.
       </para>
     </section>
 
@@ -72,15 +72,15 @@ shell&gt; <literal>tar xvf phorum-x.y.z.tar</literal></screen>
     </section>
 
     <section>
-      <title>Place the Phorum files in your website's document root</title>
+      <title>Place the LibreForum files in your website's document root</title>
       <para>
         <remark>TODO: this section should be in a document conventions
         section</remark>
         The document root for a website is the directory in which your
         site's web pages are stored. If your website's URL is
-        <filename>http://www.example.com</filename> and you place the Phorum
+        <filename>http://www.example.com</filename> and you place the LibreForum
         files in a directory called <filename>forum</filename> inside
-        your document root, your Phorum installation will be available
+        your document root, your LibreForum installation will be available
         at the URL <filename>http://www.example.com/forum</filename>.
         From now on, we will name this URL simply
         <filename>{phorum url}</filename>. So if you
@@ -104,7 +104,7 @@ shell&gt; <literal>tar xvf phorum-x.y.z.tar</literal></screen>
         in doubt, refer to the client's documentation. However, some
         hosting providers require SCP (secure copy, which is more
         secure than FTP). If you do not know how or where to upload
-        the Phorum files, please contact your hosting provider.
+        the LibreForum files, please contact your hosting provider.
       </para>
       <para>
         <note>
@@ -118,8 +118,8 @@ shell&gt; <literal>tar xvf phorum-x.y.z.tar</literal></screen>
           </emphasis>
           The webserver only needs read access on the distribution files,
           because all dynamic data is stored in the database. If you run
-          into problems running Phorum, it will never be because you
-          "forgot to do chmod 777" on any of the Phorum files.<sbr/>
+          into problems running LibreForum, it will never be because you
+          "forgot to do chmod 777" on any of the LibreForum files.<sbr/>
           <sbr/>
           The only directory that might have to be made writable for the
           webserver is <filename>./cache</filename>
@@ -132,12 +132,12 @@ shell&gt; <literal>tar xvf phorum-x.y.z.tar</literal></screen>
     <section id="installation.createdb">
       <title>Create a database and a database user</title>
       <para>
-        Phorum stores all its data in a database. So if you do not already
-        have a database which you will be using for Phorum, you now need to
+        LibreForum stores all its data in a database. So if you do not already
+        have a database which you will be using for LibreForum, you now need to
         create one. Officially, only the
         <ulink url="http://www.mysql.com/">MySQL</ulink>
         database server is supported
-        by Phorum, so we recommend to use MySQL whenever possible.
+        by LibreForum, so we recommend to use MySQL whenever possible.
       </para>
       <para>
         If you have hosted your site with a hosting provider,
@@ -162,7 +162,7 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
         Of course, for security reasons you would not use "myuser" and
         "mypassword" but a username and password that you made up
         yourself. Also "localhost" should match the hostname of the MySQL
-        server to which Phorum will connect.
+        server to which LibreForum will connect.
       </para>
       <para>
         If you are unsure on how to create a database and a database user,
@@ -171,14 +171,14 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
     </section>
 
     <section>
-      <title>Configure the database access for Phorum</title>
+      <title>Configure the database access for LibreForum</title>
       <para>
-        After setting up the database, you will have to tell Phorum how
+        After setting up the database, you will have to tell LibreForum how
         to access that database. The configuration for this is put in
         the file <filename>include/db/config.php</filename> inside your
-        Phorum directory. This file is not included in the distribution.
+        LibreForum directory. This file is not included in the distribution.
         Only a differently named sample file is included (this is to
-        prevent overwriting your configuration when upgrading Phorum).
+        prevent overwriting your configuration when upgrading LibreForum).
         Copy or rename the sample configuration file
         <filename>include/db/config.php.sample</filename> to
         <filename>include/db/config.php</filename>. Then edit the
@@ -200,7 +200,7 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
             <listitem>
               <para>
                 This setting determines what database backend is used
-                by Phorum. Phorum is distributed with the a MySQL backend.
+                by LibreForum. LibreForum is distributed with the a MySQL backend.
                 If you are using MySQL for the database server, then you
                 can keep the default value <literal>mysql</literal> here.
               </para>
@@ -234,7 +234,7 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
                 MySQL (and a lot of other database servers) can handle
                 multiple databases in one database server. Each database
                 is referenced by its own unique name. This setting is
-                used for configuring the name of the database that Phorum
+                used for configuring the name of the database that LibreForum
                 has to use.
               </para>
               <para>
@@ -268,8 +268,8 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
             <listitem>
               <para>
                 This table prefix will be prepended to all table names
-                that Phorum uses. If other applications are using the
-                same database or if you have multiple Phorum installations
+                that LibreForum uses. If other applications are using the
+                same database or if you have multiple LibreForum installations
                 that use the same database name, this prefix can be used to
                 prevent table name collisions. E.g. if you set the
                 prefix to <literal>myprefix</literal>, then the full name
@@ -307,7 +307,7 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
             <term>down_page</term>
             <listitem>
               <para>
-                Phorum uses a built-in error message to inform visitors
+                LibreForum uses a built-in error message to inform visitors
                 when no database connection can be made. If you want to
                 provide a custom error message page for this, you can
                 set this setting to the URL of the page that you want
@@ -317,7 +317,7 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
             <term>upgrade_page</term>
             <listitem>
               <para>
-                Phorum uses a simple built-in page to inform visitors and
+                LibreForum uses a simple built-in page to inform visitors and
                 the site admin that the database has to be upgraded.
                 If you want to provide a custom upgrade message page for
                 this, you can set this setting to the URL of the page that
@@ -344,7 +344,7 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
             <term>mysql_use_ft</term>
             <listitem>
               <para>
-                This setting determines whether Phorum will use MySQL's
+                This setting determines whether LibreForum will use MySQL's
                 full text algorithm for searching through postings.
                 If enabled, searching will be much faster.
               </para>
@@ -365,7 +365,7 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
               <para>
                 This option defines which MySQL PHP extension should be used.
                 Either NULL, "mysql", "mysqli" or "mysqli_replication" for
-                master/slave setups. If NULL, Phorum will autodetect the
+                master/slave setups. If NULL, LibreForum will autodetect the
                 extension to use.
               </para>
             </listitem>
@@ -374,7 +374,7 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
             <term>empty_search_table</term>
             <listitem>
               <para>
-                This option defines if Phorum should populate the search
+                This option defines if LibreForum should populate the search
                 table with data for mysql fulltext search (useful if you
                 use a alternate search backend which doesn't use the
                 search table): 0 will put the messages into the search table,
@@ -447,7 +447,7 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
       <title>Run the web based installer</title>
       <para>
         Now that you have uploaded the files, created the database and
-        configured the database access for Phorum, you are ready to
+        configured the database access for LibreForum, you are ready to
         run the web based installation script. Open
         <filename>{phorum url}/admin.php</filename> using your
         web browser. This is the administration interface, which will
@@ -455,13 +455,13 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
         performed.
       </para>
       <para>
-        Follow the instructions on screen to finish the Phorum
+        Follow the instructions on screen to finish the LibreForum
         installation.
       </para>
     </section>
 
     <section>
-      <title>Things to do after installing Phorum</title>
+      <title>Things to do after installing LibreForum</title>
       <para>
         <remark>TODO Once the FAQ is documented, this needs a pointer</remark>
         Now the installation is complete, you could continue with
@@ -481,13 +481,13 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
           <listitem>
             Login into the admin interface at
             <filename>{forum url}/admin.php</filename>
-            and check out what settings can be done to customize Phorum
+            and check out what settings can be done to customize LibreForum
             to your likings. This is also the place where you can
             create new forums.
             <sbr/><sbr/>
           </listitem>
           <listitem>
-            Customize the looks of Phorum to your needs by creating a
+            Customize the looks of LibreForum to your needs by creating a
             custom template. Instructions for this can be found in
             the templates section of the developer manual.
             <sbr/><sbr/>
@@ -495,7 +495,7 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
           <listitem>
             Read the <xref linkend="install.additionalissues"/> for your
             system, the FAQ and any other parts of the documentation that
-            may help you understand Phorum.
+            may help you understand LibreForum.
           </listitem>
         </itemizedlist>
       </para>
@@ -509,13 +509,13 @@ mysql&gt; <literal>GRANT ALL ON phorum.* TO 'myuser'@'localhost' IDENTIFIED BY '
       <section>
         <title>Cache directory</title>
         <para>
-          In the Phorum settings, there is an entry called "Cache Directory".
+          In the LibreForum settings, there is an entry called "Cache Directory".
           On UNIX systems, the installer will have set that to the default
           location <filename>/tmp</filename>.
           The cache directory is used
           for storing cached data and compiled templates. You can change
           the location of your cache directory if you do not want the
-          Phorum files to be in <filename>/tmp</filename> or if you see
+          LibreForum files to be in <filename>/tmp</filename> or if you see
           the following kind of error message:
           <screen>
 Warning:
@@ -524,7 +524,7 @@ failed to open stream: permission denied in
 /path/to/phorum/include/templates.php on line 184</screen>
           If you want to change the cache directory settings, we advise
           you to change it to <filename>./cache</filename> (this directory
-          is already in the Phorum directory).
+          is already in the LibreForum directory).
         </para>
         <para>
           You will have to make sure
@@ -547,12 +547,12 @@ shell&gt; <literal>chmod 777 cache</literal></screen>
       <section>
         <title>Cache directory</title>
         <para>
-          In the Phorum settings, there is an entry called "Cache Directory".
+          In the LibreForum settings, there is an entry called "Cache Directory".
           On Windows systems, the installer will have set that to the default
           location <filename>C:\Windows\Temp</filename>. The cache directory
           is used for storing cached data and compiled templates. You can
           change the location of your cache directory if you do not want the
-          Phorum files to be in <filename>C:\Windows\Temp</filename>
+          LibreForum files to be in <filename>C:\Windows\Temp</filename>
           or if you see the following kind of error message:
           <screen>
 Warning:
@@ -562,7 +562,7 @@ c:\path\to\phorum\include\templates.php on line 184</screen>
           In that case, you will have to change the cache directory
           setting to point to a valid location. We advise you to change
           it to <filename>./cache</filename> (this directory is already
-          in the Phorum directory). Make sure that the webserver can
+          in the LibreForum directory). Make sure that the webserver can
           write files to this directory.
         </para>
       </section>
@@ -583,8 +583,8 @@ c:\path\to\phorum\include\templates.php on line 184</screen>
           <remark>TODO: module is bundled with 5.2</remark>
           If you have no access to the php.ini file and the system
           administrator is not willing to update it for you, you will have to
-          install the SMTP module for Phorum. You can download this module
-          from the Phorum &listofmodules;.
+          install the SMTP module for LibreForum. You can download this module
+          from the LibreForum &listofmodules;.
           In the settings for this module, you can specify the SMTP to use
           for sending mail. When using this module, you will completely
           bypass PHP's built-in mail system.
@@ -612,7 +612,7 @@ c:\path\to\phorum\include\templates.php on line 184</screen>
     <title>Support</title>
     <para>
       <remark>TODO: Link to FAQ</remark>
-      If you have questions about installing Phorum which
+      If you have questions about installing LibreForum which
       are not answered by this manual, then please visit the website
       &www.phorum.org; and ask the development team for help in the support
       forum.

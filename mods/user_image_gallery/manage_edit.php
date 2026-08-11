@@ -3,7 +3,7 @@
 // switch(0):
 // default:     // set-up fake goto
 
-// The primary purpose of class.upload.php is to handle uploaded files, but Phorum already handles uploaded files pefectly well.
+// The primary purpose of class.upload.php is to handle uploaded files, but LibreForum already handles uploaded files pefectly well.
 // We're using class.upload.php for its secondary functions -- a large collection of image-manipulation routines.
 include_once('./mods/user_image_gallery/include/class.upload.php');
 

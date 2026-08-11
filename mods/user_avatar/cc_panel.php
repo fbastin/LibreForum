@@ -208,7 +208,7 @@ if (isset($PHORUM["user"]["mod_user_avatar"]["users_avatars"]))
 // Unset the active avatar if the avatar file doesn't exist anymore
 // or upgrade an old avatar file if the avatar file is available as
 // a personal user file (that was the way of storing avatars for the
-// Phorum 5.1 version of the module).
+// LibreForum 5.1 version of the module).
 if (!empty($PHORUM["user"]["mod_user_avatar"]["avatar"]) &&
     $PHORUM["user"]["mod_user_avatar"]["avatar"] != -1 &&
     !isset($avatars[$PHORUM["user"]["mod_user_avatar"]["avatar"]]))

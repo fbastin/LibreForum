@@ -18,11 +18,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 define('phorum_page','version_iframe');
 
-// Check for new versions of the Phorum software. Only do this once by
+// Check for new versions of the LibreForum software. Only do this once by
 // issuing a cookie which remembers whether we need to upgrade or not.
 // This file is included within an <iframe> in the admin interface header,
 // so downtime of the phorum.org website won't affect the performance of
-// the admin interface for Phorum users.
+// the admin interface for LibreForum users.
 
 require_once('./common.php');
 
@@ -45,7 +45,7 @@ setcookie("phorum_upgrade_available", $upgrade_available, 0,
 ?>
 <html>
   <head>
-    <title>Phorum upgrade notification</title>
+    <title>LibreForum upgrade notification</title>
     <style type="text/css">
     body {
         background-color: white;
@@ -78,11 +78,11 @@ setcookie("phorum_upgrade_available", $upgrade_available, 0,
   <body>
   <?php if ($upgrade_available) { ?>
     <div class="notify_upgrade">
-      <a target="_top" href="admin.php?module=version">New Phorum version <?php print htmlspecialchars($upgrade_available) ?> available!</a>
+      <a target="_top" href="admin.php?module=version">New LibreForum version <?php print htmlspecialchars($upgrade_available) ?> available!</a>
     </div>
   <?php } else { ?>
     <div class="notify_noupgrade">
-      Your Phorum installation is up to date
+      Your LibreForum installation is up to date
     </div>
   <?php } ?>
   </body>

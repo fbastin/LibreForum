@@ -62,7 +62,7 @@ phorum_build_common_urls();
  *     <ul>
  *     <li><b>css</b><br>
  *         The name of the css file that was requested for the css.php
- *         script. Phorum requests either "css" or "css_print".
+ *         script. LibreForum requests either "css" or "css_print".
  *         The module can use this parameter to decide whether
  *         CSS code has to be registered or not.</li>
  *     <li><b>register</b><br>
@@ -84,13 +84,13 @@ phorum_build_common_urls();
  *             <ul>
  *             <li><b>file(&lt;path to filename&gt;)</b><br>
  *                 For including a static CSS file. The path should be
- *                 absolute or relative to the Phorum install directory,
+ *                 absolute or relative to the LibreForum install directory,
  *                 e.g. "<literal>file(mods/foobar/baz.css)</literal>".
  *                 Because this file is loaded using a PHP include() call,
  *                 it is possible to include PHP code in this file. Mind that
  *                 this code is stored interpreted in the cache.</li>
  *             <li><b>template(&lt;template name&gt;)</b><br>
- *                 For including a Phorum template,
+ *                 For including a LibreForum template,
  *                 e.g. "<literal>template(foobar::baz)</literal>"</li>
  *             <li><b>function(&lt;function name&gt;)</b><br>
  *                 For calling a function to retrieve the CSS code,
@@ -314,10 +314,10 @@ if ($content === null)
      *     css_filter
      *
      * [availability]
-     *     Phorum 5 >= 5.2.11
+     *     LibreForum 5 >= 5.2.11
      *
      * [description]
-     *     This hook can be used to apply a filter to the Phorum CSS
+     *     This hook can be used to apply a filter to the LibreForum CSS
      *     code. This can for example be used for compressing or cleaning
      *     up the CSS.
      *
@@ -371,7 +371,7 @@ header("Last-Modified: " . gmdate('D, d M Y H:i:s \G\M\T', $last_modified));
 echo $content;
 
 // Exit here explicitly for not giving back control to portable and
-// embedded Phorum setups.
+// embedded LibreForum setups.
 exit(0);
 
 ?>

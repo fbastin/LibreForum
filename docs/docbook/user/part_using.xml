@@ -1,5 +1,5 @@
 <chapter id="using.main">
- <title>Using Phorum</title>
+ <title>Using LibreForum</title>
  
  <section>
   <title>Create a Profile</title>
@@ -60,7 +60,7 @@
    displayed. First, enter the subject of your topic, and then the message
    section. You can add smilies, formatting, links, pictures and more to 
    your post by using the editor tools located above the message box, which
-   is present on most Phorum installations. Hover over the buttons for a
+   is present on most LibreForum installations. Hover over the buttons for a
    description of what they do, and for help with BBCode (Bulletin Board
    Code) and smilies, click on the ? button on the right. 
    <sbr />

@@ -1,6 +1,6 @@
 # LibreForum
 
-LibreForum is a modernized fork of the classic Phorum 5.2 discussion board. 
+LibreForum is a modernized fork of the classic LibreForum 5.2 discussion board. 
 
 ## Goals
 

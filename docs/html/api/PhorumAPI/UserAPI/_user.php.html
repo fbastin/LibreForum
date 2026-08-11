@@ -21,14 +21,14 @@
 			</div>
 	<div class="info-box-body">	
 		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This script implements the Phorum user API.</p>
-<p class="description"><p>The user API is used for managing users and user related data. The API  does also implement the Phorum session system, which is used for  remembering authenticated users. See the documentation for the function  <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_session_create">phorum_api_user_session_create()</a> for more information on  Phorum user sessions.</p><p>The Phorum user API supports modules which can override Phorum's  authentication and session handling. And example module is provided  with the user API documentation.</p></p>
+<p class="short-description">This script implements the LibreForum user API.</p>
+<p class="description"><p>The user API is used for managing users and user related data. The API  does also implement the LibreForum session system, which is used for  remembering authenticated users. See the documentation for the function  <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_session_create">phorum_api_user_session_create()</a> for more information on  LibreForum user sessions.</p><p>The LibreForum user API supports modules which can override LibreForum's  authentication and session handling. And example module is provided  with the user API documentation.</p></p>
 	<ul class="tags">
 				<li><span class="field">copyright:</span> 2010, Phorum Development Team</li>
 				<li><span class="field">todo:</span> Document what fields are in a user record.</li>
 				<li><span class="field">todo:</span> Create in line docs for all hook calls.</li>
 				<li><span class="field">example:</span> <a href="../../__examplesource/exsource_um5-docs_include_api_examples_user_auth_module.php_7598515aa6231339afc2525e2e2d9ecc.html">Authentication override module example</a></li>
-				<li><span class="field">license:</span> Phorum</li>
+				<li><span class="field">license:</span> LibreForum</li>
 			</ul>
 		
 			</div>
@@ -132,7 +132,7 @@
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Function call flag, which tells <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_save">phorum_api_user_save()</a> that the  password field should be stored as is.</p>
-<p class="description"><p>This can be used to feed Phorum MD5 encrypted passwords. Normally,  the password field would be MD5 encrypted by the function. This will  keep the phorum_api_user_save() function from double encrypting the password.</p></p>
+<p class="description"><p>This can be used to feed LibreForum MD5 encrypted passwords. Normally,  the password field would be MD5 encrypted by the function. This will  keep the phorum_api_user_save() function from double encrypting the password.</p></p>
 	
 		
 </div>
@@ -222,7 +222,7 @@
 	</div>
 	
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">If a user API is written as a replacement for the standard Phorum user API,  where the replacement API is incompatible with the standard API, then this  define should be set to FALSE. That will disable the user management  functions in the admin interface.</p>
+<p class="short-description">If a user API is written as a replacement for the standard LibreForum user API,  where the replacement API is incompatible with the standard API, then this  define should be set to FALSE. That will disable the user management  functions in the admin interface.</p>
 	
 		
 </div>
@@ -312,7 +312,7 @@
 	</div>
 	
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Subscription type, which tells Phorum to make the forums or threads that  a user is subscribed to accessible from the followed threads interface in  the control center. No mail is sent for new messages, but the user can  check for new messages using that interface.</p>
+<p class="short-description">Subscription type, which tells LibreForum to make the forums or threads that  a user is subscribed to accessible from the followed threads interface in  the control center. No mail is sent for new messages, but the user can  check for new messages using that interface.</p>
 	
 		
 </div>
@@ -327,7 +327,7 @@
 	</div>
 	
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Subscription type, which tells Phorum to periodially send a mail message,  containing a list of new messages in forums or threads that a user is  subscribed to. There is currently no support for this type of subscription  in the Phorum core code.</p>
+<p class="short-description">Subscription type, which tells LibreForum to periodially send a mail message,  containing a list of new messages in forums or threads that a user is  subscribed to. There is currently no support for this type of subscription  in the LibreForum core code.</p>
 	
 		
 </div>
@@ -342,7 +342,7 @@
 	</div>
 	
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Subscription type, which tells Phorum to send out a mail message for  every new forum or thread that a user is subscribed to.</p>
+<p class="short-description">Subscription type, which tells LibreForum to send out a mail message for  every new forum or thread that a user is subscribed to.</p>
 	
 		
 </div>
@@ -357,7 +357,7 @@
 	</div>
 	
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Subscription type, which tells Phorum explicitly that the user  does not have a subscription of any kind for the forum or thread.</p>
+<p class="short-description">Subscription type, which tells LibreForum explicitly that the user  does not have a subscription of any kind for the forum or thread.</p>
 	
 		
 </div>
@@ -639,7 +639,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$type</span><span class="var-description">: <p>The type of session for which authentication is run. This must be      one of <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a> or <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_ADMIN_SESSION">PHORUM_ADMIN_SESSION</a>.</p><p>This parameter is mostly used for logging purposes and for giving      mods a chance to handle user authentication for only a certain type      of session. It is not used for denying authentication if for example      a standard user tries to authenticate for the admin interface. Those      restrictions are handled in a different part of the user API.</p><p>See the documentation for <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_session_create">phorum_api_user_session_create()</a>      for more information on Phorum user sessions.</p></span>			</li>
+				<span class="var-name">$type</span><span class="var-description">: <p>The type of session for which authentication is run. This must be      one of <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a> or <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_ADMIN_SESSION">PHORUM_ADMIN_SESSION</a>.</p><p>This parameter is mostly used for logging purposes and for giving      mods a chance to handle user authentication for only a certain type      of session. It is not used for denying authentication if for example      a standard user tries to authenticate for the admin interface. Those      restrictions are handled in a different part of the user API.</p><p>See the documentation for <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_session_create">phorum_api_user_session_create()</a>      for more information on LibreForum user sessions.</p></span>			</li>
 					<li>
 				<span class="var-type">string</span>
 				<span class="var-name">$username</span><span class="var-description">: The username for the user.</span>			</li>
@@ -686,7 +686,7 @@
        user has access rights</li></ul></span>			</li>
 					<li>
 				<span class="var-type">mixed</span>
-				<span class="var-name">$user</span><span class="var-description">: Specifies the user to look at. Available options are: <ul><li>0 (zero, the default) to look at the active Phorum user.</li><li>A full user data array.</li><li>A single user_id.</li></ul></span>			</li>
+				<span class="var-name">$user</span><span class="var-description">: Specifies the user to look at. Available options are: <ul><li>0 (zero, the default) to look at the active LibreForum user.</li><li>A full user data array.</li><li>A single user_id.</li></ul></span>			</li>
 				</ul>
 		
 	
@@ -730,7 +730,7 @@
        user has access rights.</li></ul></span>			</li>
 					<li>
 				<span class="var-type">mixed</span>
-				<span class="var-name">$user</span><span class="var-description">: Specifies the user to look at. Available options are: <ul><li>0 (zero, the default) to look at the active Phorum user.</li><li>A full user data array.</li><li>A single user_id.</li></ul></span>			</li>
+				<span class="var-name">$user</span><span class="var-description">: Specifies the user to look at. Available options are: <ul><li>0 (zero, the default) to look at the active LibreForum user.</li><li>A full user data array.</li><li>A single user_id.</li></ul></span>			</li>
 				</ul>
 		
 	
@@ -743,7 +743,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Delete a Phorum user.</p>
+<p class="short-description">Delete a LibreForum user.</p>
 	
 	<div class="method-signature">
 		<span class="method-result">void</span>
@@ -794,7 +794,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Retrieve data for Phorum users.</p>
+<p class="short-description">Retrieve data for LibreForum users.</p>
 	<ul class="tags">
 				<li><span class="field">return:</span> If the $user_id parameter is a single user_id, then either an array      containing user data is returned or NULL if the user was not found.      If the $user_id parameter is an array of user_ids, then an array      of user data arrays is returned, indexed by the user_id.      Users for user_ids that are not found are not included in the      returned array.</li>
 			</ul>
@@ -832,10 +832,10 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Retrieve the active Phorum user.</p>
-<p class="description"><p>This function was added in Phorum 5.2.16.</p></p>
+<p class="short-description">Retrieve the active LibreForum user.</p>
+<p class="description"><p>This function was added in LibreForum 5.2.16.</p></p>
 	<ul class="tags">
-				<li><span class="field">return:</span> This method will return the data for the active Phorum user or    NULL when this user is an anonymous user (i.e. not logged in.)</li>
+				<li><span class="field">return:</span> This method will return the data for the active LibreForum user or    NULL when this user is an anonymous user (i.e. not logged in.)</li>
 			</ul>
 	
 	<div class="method-signature">
@@ -874,7 +874,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">mixed</span>
-				<span class="var-name">$user_id</span><span class="var-description">: Either a single user_id, an array of user_ids or NULL to use the      user_id of the active Phorum user.</span>			</li>
+				<span class="var-name">$user_id</span><span class="var-description">: Either a single user_id, an array of user_ids or NULL to use the      user_id of the active LibreForum user.</span>			</li>
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$fallback</span><span class="var-description">: The fallback display name to use in case the user is unknown or NULL      to use the &quot;AnonymousUser&quot; language string.</span>			</li>
@@ -922,7 +922,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This function can be used to retrieve the value for a user setting  that was stored by the <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_save_settings">phorum_api_user_save_settings()</a> function  for the active Phorum user.</p>
+<p class="short-description">This function can be used to retrieve the value for a user setting  that was stored by the <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_save_settings">phorum_api_user_save_settings()</a> function  for the active LibreForum user.</p>
 	<ul class="tags">
 				<li><span class="field">return:</span> The value of the setting or NULL if it is not available.</li>
 			</ul>
@@ -999,7 +999,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">mixed</span>
-				<span class="var-name">$user_id</span><span class="var-description">: The user_id for which to increment the posts counter      or NULL (the default) to increment the posts counter for the      active Phorum user.</span>			</li>
+				<span class="var-name">$user_id</span><span class="var-description">: The user_id for which to increment the posts counter      or NULL (the default) to increment the posts counter for the      active LibreForum user.</span>			</li>
 				</ul>
 		
 	
@@ -1012,7 +1012,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Retrieve a list of Phorum users.</p>
+<p class="short-description">Retrieve a list of LibreForum users.</p>
 	<ul class="tags">
 				<li><span class="field">return:</span> An array of users, indexed by user_id. Each element in the array      is an array, containing the fields &quot;user_id&quot;, &quot;username&quot; and      &quot;display_name&quot;.</li>
 				<li><span class="field">todo:</span> Do we really need phorum_api_user_list() or could we use the        phorum_api_user_search() functionality in combination with        phorum_api_user_get() instead?</li>
@@ -1102,7 +1102,7 @@
 				<span class="var-name">$type</span><span class="var-description">: The type of subscription. Available types are: <ul><li><a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_SUBSCRIPTION_MESSAGE">PHORUM_SUBSCRIPTION_MESSAGE</a></li><li><a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_SUBSCRIPTION_BOOKMARK">PHORUM_SUBSCRIPTION_BOOKMARK</a></li><li><a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_SUBSCRIPTION_DIGEST">PHORUM_SUBSCRIPTION_DIGEST</a></li></ul></span>			</li>
 					<li>
 				<span class="var-type">boolean</span>
-				<span class="var-name">$ignore_active_user</span><span class="var-description">: If this parameter is set to FALSE (it is TRUE by default), then the      active Phorum user will be excluded from the list.</span>			</li>
+				<span class="var-name">$ignore_active_user</span><span class="var-description">: If this parameter is set to FALSE (it is TRUE by default), then the      active LibreForum user will be excluded from the list.</span>			</li>
 				</ul>
 		
 	
@@ -1150,8 +1150,8 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Create or update Phorum users.</p>
-<p class="description"><p>This function can be used for both creating and updating Phorum users.  If the user_id in the user data is NULL, a new user will be created.  If a user_id is provided, then the existing user will be updated or a  new user with that user_id is created.</p><p>Often when calling this function yourself, you will be doing that for  synchronizing a user from some external system with the Phorum database.  For those cases, the most basic use of this API function can be found  in the examples below.  <div class="src-code"><ol><li><div class="src-line">&nbsp;<span class="src-var">$user&nbsp;</span>=&nbsp;<span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<p class="short-description">Create or update LibreForum users.</p>
+<p class="description"><p>This function can be used for both creating and updating LibreForum users.  If the user_id in the user data is NULL, a new user will be created.  If a user_id is provided, then the existing user will be updated or a  new user with that user_id is created.</p><p>Often when calling this function yourself, you will be doing that for  synchronizing a user from some external system with the LibreForum database.  For those cases, the most basic use of this API function can be found  in the examples below.  <div class="src-code"><ol><li><div class="src-line">&nbsp;<span class="src-var">$user&nbsp;</span>=&nbsp;<span class="src-key">array</span><span class="src-sym">(</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;user_id&quot;&nbsp;&nbsp;&nbsp;</span>=&gt;&nbsp;<span class="src-num">1234</span><span class="src-sym">,</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;username&quot;&nbsp;&nbsp;</span>=&gt;&nbsp;<span class="src-str">'johndoe'</span><span class="src-sym">,</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;password&quot;&nbsp;&nbsp;</span>=&gt;&nbsp;<span class="src-str">'#barbar#'</span><span class="src-sym">,</span></div></li>
@@ -1188,7 +1188,7 @@
 				<span class="var-name">$user</span><span class="var-description">: An array containing user data. This array should at least contain      a field &quot;user_id&quot;. This field can be NULL to create a new user      with an automatically assigned user_id. It can also be set to a      user_id to either update an existing user or to create a new user      with the provided user_id.      If a new user is created, then all user fields must be provided      in the user data.</span>			</li>
 					<li>
 				<span class="var-type">int</span>
-				<span class="var-name">$flags</span><span class="var-description">: If the flag <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FLAG_RAW_PASSWORD">PHORUM_FLAG_RAW_PASSWORD</a> is set, then the      password fields (&quot;password&quot; and &quot;password_temp&quot;) are considered to be      MD5 encrypted already. So this can be used to feed Phorum existing MD5      encrypted passwords.</span>			</li>
+				<span class="var-name">$flags</span><span class="var-description">: If the flag <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FLAG_RAW_PASSWORD">PHORUM_FLAG_RAW_PASSWORD</a> is set, then the      password fields (&quot;password&quot; and &quot;password_temp&quot;) are considered to be      MD5 encrypted already. So this can be used to feed LibreForum existing MD5      encrypted passwords.</span>			</li>
 				</ul>
 		
 	
@@ -1230,8 +1230,8 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This function quickly updates the Phorum users table, using all fields in  the user data as real user table fields.</p>
-<p class="description"><p>This is the quickest way to update the user table. Care has to be taken  by the calling function though, to provide the information exactly as the  Phorum users table expects it. Only use this function if speed is really  an issue.</p></p>
+<p class="short-description">This function quickly updates the LibreForum users table, using all fields in  the user data as real user table fields.</p>
+<p class="description"><p>This is the quickest way to update the user table. Care has to be taken  by the calling function though, to provide the information exactly as the  LibreForum users table expects it. Only use this function if speed is really  an issue.</p></p>
 	
 	<div class="method-signature">
 		<span class="method-result">void</span>
@@ -1257,8 +1257,8 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Create or update user settings for the active Phorum user.</p>
-<p class="description"><p>This function can be used to store arbitrairy settings for the active  Phorum user in the database. The main goal for this function is to store  user settings which are not available as a Phorum user table field in  the database. These are settings which do not really belong to the Phorum  core, but which are for example used for remembering some kind of state  in a user interface (templates). Since each user interface might require  different settings, a dynamic settings storage like this is required.</p><p>If you are writing modules that need to store data for a user, then please  do not use this function. Instead, use custom profile fields. The data  that is stored using this function can be best looked at as if it were  session data.</p></p>
+<p class="short-description">Create or update user settings for the active LibreForum user.</p>
+<p class="description"><p>This function can be used to store arbitrairy settings for the active  LibreForum user in the database. The main goal for this function is to store  user settings which are not available as a LibreForum user table field in  the database. These are settings which do not really belong to the LibreForum  core, but which are for example used for remembering some kind of state  in a user interface (templates). Since each user interface might require  different settings, a dynamic settings storage like this is required.</p><p>If you are writing modules that need to store data for a user, then please  do not use this function. Instead, use custom profile fields. The data  that is stored using this function can be best looked at as if it were  session data.</p></p>
 	
 	<div class="method-signature">
 		<span class="method-result">void</span>
@@ -1386,12 +1386,12 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Create a Phorum user session.</p>
-<p class="description"><p>Before calling this function, the variable $PHORUM['use_cookies']  should be set to one of PHORUM_NO_COOKIES,  PHORUM_USE_COOKIES or PHORUM_REQUIRE_COOKIES.</p><p>Phorum does not use PHP sessions. Instead, it uses its own session  management system for remembering logged in users. There are  multiple reasons for that, amongst which are:</p><p><ul><li>the lack of session support (on some PHP installs);</li><li>missing out of the box load balancing support (sessions are normally
+<p class="short-description">Create a LibreForum user session.</p>
+<p class="description"><p>Before calling this function, the variable $PHORUM['use_cookies']  should be set to one of PHORUM_NO_COOKIES,  PHORUM_USE_COOKIES or PHORUM_REQUIRE_COOKIES.</p><p>LibreForum does not use PHP sessions. Instead, it uses its own session  management system for remembering logged in users. There are  multiple reasons for that, amongst which are:</p><p><ul><li>the lack of session support (on some PHP installs);</li><li>missing out of the box load balancing support (sessions are normally
    written to local session state files, so multiple machines would not
    work well together);</li><li>file I/O problems (both performance and file system permissions can
-   be a problem);</li><li>the amount of unneeded overhead that is caused by the PHP session system;</li><li>the fact that Phorum also supports URI based sessions (without cookie).</li></ul>  This function can be used to create or maintain a login session for a  Phorum user. A prerequisite is that an active Phorum user is set through  the <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_set_active_user">phorum_api_user_set_active_user()</a> function, before calling  this function.</p><p>There are two session types available: <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a>  (used for the front end application) and <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_ADMIN_SESSION">PHORUM_ADMIN_SESSION</a>  (used for the administrative back end).</p><p>Admin sessions are used for the administrative back end system. For  security reasons, the back end does not share the front end session,  but uses a fully separate session instead. This session does not  have a timeout restriction, but it does not survive closing the  browser. It is always tracked using a cookie, never using URI  authentication (for security reasons).</p><p>The forum sessions can be split up into long term and short term sessions:</p><p><ul><li>Long term session:
-   The standard Phorum user session. This session is long lasting and will
+   be a problem);</li><li>the amount of unneeded overhead that is caused by the PHP session system;</li><li>the fact that LibreForum also supports URI based sessions (without cookie).</li></ul>  This function can be used to create or maintain a login session for a  LibreForum user. A prerequisite is that an active LibreForum user is set through  the <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_set_active_user">phorum_api_user_set_active_user()</a> function, before calling  this function.</p><p>There are two session types available: <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a>  (used for the front end application) and <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_ADMIN_SESSION">PHORUM_ADMIN_SESSION</a>  (used for the administrative back end).</p><p>Admin sessions are used for the administrative back end system. For  security reasons, the back end does not share the front end session,  but uses a fully separate session instead. This session does not  have a timeout restriction, but it does not survive closing the  browser. It is always tracked using a cookie, never using URI  authentication (for security reasons).</p><p>The forum sessions can be split up into long term and short term sessions:</p><p><ul><li>Long term session:
+   The standard LibreForum user session. This session is long lasting and will
    survive after closing the browser (unless the long term session timeout
    is set to zero). If tighter security is not enabled, then this session
    is all a user needs to fully use all forum options. This session is
@@ -1401,7 +1401,7 @@
    to use all forum functions, unless there is a short term session active
    (e.g. posting forum messages and reading/writing private messages are
    restricted). This session is tracked using a cookie. If URI authentication
-   is in use (because of admin config or cookie-less browsers) Phorum will
+   is in use (because of admin config or cookie-less browsers) LibreForum will
    only look at the long term session (even in tighter security mode), since
    URI authentication can be considered to be short term by nature.</li></ul></p></p>
 	<ul class="tags">
@@ -1436,8 +1436,8 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Destroy a Phorum user session.</p>
-<p class="description"><p>This will destroy a Phorum user session and set the active  Phorum user to the anonymous user.</p></p>
+<p class="short-description">Destroy a LibreForum user session.</p>
+<p class="description"><p>This will destroy a LibreForum user session and set the active  LibreForum user to the anonymous user.</p></p>
 	
 	<div class="method-signature">
 		<span class="method-result">void</span>
@@ -1450,7 +1450,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$type</span><span class="var-description">: The type of session to destroy. This must be one of      <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a> or <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_ADMIN_SESSION">PHORUM_ADMIN_SESSION</a>.      See the documentation for <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_session_create">phorum_api_user_session_create()</a>      for more information on Phorum user sessions.</span>			</li>
+				<span class="var-name">$type</span><span class="var-description">: The type of session to destroy. This must be one of      <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a> or <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_ADMIN_SESSION">PHORUM_ADMIN_SESSION</a>.      See the documentation for <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_session_create">phorum_api_user_session_create()</a>      for more information on LibreForum user sessions.</span>			</li>
 				</ul>
 		
 	
@@ -1463,7 +1463,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Restore a Phorum user session.</p>
+<p class="short-description">Restore a LibreForum user session.</p>
 <p class="description"><p>This function will check for a valid user session for either the  forum or the admin interface (based on the $type parameter). If a valid  session is found, then the user session will be restored.</p><p>Before calling this function, the variable $PHORUM['use_cookies']  should be set to one of PHORUM_NO_COOKIES,  PHORUM_USE_COOKIES or PHORUM_REQUIRE_COOKIES.</p></p>
 	<ul class="tags">
 				<li><span class="field">return:</span> TRUE in case a valid session is detected, otherwise FALSE.      Note that a <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a> will return TRUE if      a long term session is detected and that the sort term session      might be missing. Code which depends on short term sessions should      investigate the $PHORUM[&quot;DATA&quot;][&quot;FULLY_LOGGEDIN&quot;] variable.</li>
@@ -1480,7 +1480,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$type</span><span class="var-description">: The type of session to check for. This must be one of      <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a> or <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_ADMIN_SESSION">PHORUM_ADMIN_SESSION</a>.      See the documentation for <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_session_create">phorum_api_user_session_create()</a>      for more information on Phorum user sessions.</span>			</li>
+				<span class="var-name">$type</span><span class="var-description">: The type of session to check for. This must be one of      <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a> or <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_ADMIN_SESSION">PHORUM_ADMIN_SESSION</a>.      See the documentation for <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_session_create">phorum_api_user_session_create()</a>      for more information on LibreForum user sessions.</span>			</li>
 				</ul>
 		
 	
@@ -1493,8 +1493,8 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Set the active Phorum user.</p>
-<p class="description"><p>This function can be used to setup the Phorum data in $PHORUM['user']  to indicate which user is logged in or to setup the anonymous user.  Calling this function is all that is needed to tell Phorum which user  is logged in (or to tell that no user is logged in by setting up the  anonymous user in $PHORUM['user']).</p><p>Next to setting up the user data, the function will handle user activity  tracking (based on the &quot;track_user_activity&quot; setting) and setup some  special (template) variables:</p><p>The variabe $PHORUM[&quot;DATA&quot;][&quot;ADMINISTRATOR&quot;] will be set to TRUE if  the active user is an administrator, FALSE otherwise.</p><p>For type <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a>, the following extra variables  will be filled:</p><p><ul><li>$PHORUM[&quot;DATA&quot;][&quot;LOGGEDIN&quot;]:
+<p class="short-description">Set the active LibreForum user.</p>
+<p class="description"><p>This function can be used to setup the LibreForum data in $PHORUM['user']  to indicate which user is logged in or to setup the anonymous user.  Calling this function is all that is needed to tell LibreForum which user  is logged in (or to tell that no user is logged in by setting up the  anonymous user in $PHORUM['user']).</p><p>Next to setting up the user data, the function will handle user activity  tracking (based on the &quot;track_user_activity&quot; setting) and setup some  special (template) variables:</p><p>The variabe $PHORUM[&quot;DATA&quot;][&quot;ADMINISTRATOR&quot;] will be set to TRUE if  the active user is an administrator, FALSE otherwise.</p><p>For type <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a>, the following extra variables  will be filled:</p><p><ul><li>$PHORUM[&quot;DATA&quot;][&quot;LOGGEDIN&quot;]:
    TRUE if the user is logged in, FALSE otherwise.</li></ul> <ul><li>$PHORUM[&quot;DATA&quot;][&quot;FULLY_LOGGEDIN&quot;]:
    TRUE if a short term session is active (by setting the
    <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FLAG_SESSION_ST">PHORUM_FLAG_SESSION_ST</a> flag for the $flags parameter),
@@ -1515,7 +1515,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$type</span><span class="var-description">: The type of session for which to set the active user. This must be      one of <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a> or <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_ADMIN_SESSION">PHORUM_ADMIN_SESSION</a>.      See the documentation for <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_session_create">phorum_api_user_session_create()</a>      for more information on Phorum user sessions.</span>			</li>
+				<span class="var-name">$type</span><span class="var-description">: The type of session for which to set the active user. This must be      one of <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a> or <a href="../../PhorumAPI/UserAPI/_user.php.html#definePHORUM_ADMIN_SESSION">PHORUM_ADMIN_SESSION</a>.      See the documentation for <a href="../../PhorumAPI/UserAPI/_user.php.html#functionphorum_api_user_session_create">phorum_api_user_session_create()</a>      for more information on LibreForum user sessions.</span>			</li>
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$user</span><span class="var-description">: The user_id or the full user data array for the user that has to be      the active user or NULL if the active user has to be set to the      anonymous user (the default).</span>			</li>
@@ -1535,7 +1535,7 @@
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Subscribe a user to a thread.</p>
-<p class="description"><p>Remark: Currently, there is no active support for subscribing to forums  using subscription type PHORUM_SUBSCRIPTION_DIGEST in the Phorum core.</p></p>
+<p class="description"><p>Remark: Currently, there is no active support for subscribing to forums  using subscription type PHORUM_SUBSCRIPTION_DIGEST in the LibreForum core.</p></p>
 	
 	<div class="method-signature">
 		<span class="method-result">void</span>

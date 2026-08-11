@@ -71,7 +71,7 @@ function phorum_mod_readable_dates_read($data)
     foreach ($data as $id => $message)
     {
         // Format the user registration date.
-        // Phorum itself already does some readable date like stuff on its own,
+        // LibreForum itself already does some readable date like stuff on its own,
         // so we have to format orig_date_added ourselves here.
         if ($PHORUM["mod_readable_dates"]["read_userregdate"] &&
             !empty($data[$id]['user']['date_added'])) {

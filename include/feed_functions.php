@@ -13,7 +13,7 @@ function phorum_feed_make_rss($messages, $forums, $feed_url, $feed_title, $feed_
     $buffer.= "        <description>".htmlspecialchars($feed_description, ENT_COMPAT, $PHORUM['DATA']['HCHARSET'])."</description>\n";
     $buffer.= "        <link>".htmlspecialchars($feed_url, ENT_COMPAT, $PHORUM['DATA']['HCHARSET'])."</link>\n";
     $buffer.= "        <lastBuildDate>".htmlspecialchars(date("r"), ENT_COMPAT, $PHORUM['DATA']['HCHARSET'])."</lastBuildDate>\n";
-    $buffer.= "        <generator>".htmlspecialchars("Phorum ".PHORUM, ENT_COMPAT, $PHORUM['DATA']['HCHARSET'])."</generator>\n";
+    $buffer.= "        <generator>".htmlspecialchars("LibreForum ".PHORUM, ENT_COMPAT, $PHORUM['DATA']['HCHARSET'])."</generator>\n";
 
     // Lookup the plain text usernames for the authenticated authors.
     $users = $messages['users'];
@@ -83,7 +83,7 @@ function phorum_feed_make_atom($messages, $forums, $feed_url, $feed_title, $feed
     $buffer.= "    <link rel=\"self\" href=\"".htmlspecialchars($self, ENT_COMPAT, $PHORUM['DATA']['HCHARSET'])."\" />\n";
     $buffer.= "    <id>".htmlspecialchars($feed_url, ENT_COMPAT, $PHORUM['DATA']['HCHARSET'])."</id>\n";
     $buffer.= "    <updated>".htmlspecialchars(date("c"), ENT_COMPAT, $PHORUM['DATA']['HCHARSET'])."</updated>\n";
-    $buffer.= "    <generator>".htmlspecialchars("Phorum ".PHORUM, ENT_COMPAT, $PHORUM['DATA']['HCHARSET'])."</generator>\n";
+    $buffer.= "    <generator>".htmlspecialchars("LibreForum ".PHORUM, ENT_COMPAT, $PHORUM['DATA']['HCHARSET'])."</generator>\n";
 
     // Lookup the plain text usernames for the authenticated authors.
     $users = $messages['users'];

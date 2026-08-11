@@ -2,8 +2,8 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
 
-  <!ENTITY book_description 'the Phorum user reference manual'>
-  <!ENTITY book_title 'Phorum User Reference Manual'>
+  <!ENTITY book_description 'the LibreForum user reference manual'>
+  <!ENTITY book_title 'LibreForum User Reference Manual'>
 
   <!ENTITY bookinfo SYSTEM "../bookinfo.xml">
   <!ENTITY part_preface SYSTEM "../part_preface.xml">
@@ -12,7 +12,7 @@
   <!ENTITY part_using SYSTEM "part_using.xml">
   <!ENTITY part_control SYSTEM "part_control.xml">
   
-  <!ENTITY phorum.org '<ulink url="http://www.phorum.org/">Phorum.org</ulink>'>
+  <!ENTITY phorum.org '<ulink url="http://www.phorum.org/">LibreForum.org</ulink>'>
   <!ENTITY www.phorum.org '<ulink url="http://www.phorum.org/">http://www.phorum.org</ulink>'>
 ]>
 

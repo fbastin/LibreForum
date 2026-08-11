@@ -19,7 +19,7 @@
 <li><div class="src-line"><span class="src-comm">hook:&nbsp;&nbsp;user_session_destroy|test_user_session_destroy</span></div></li>
 <li><div class="src-line"><span class="src-comm">title:&nbsp;User&nbsp;API&nbsp;hook&nbsp;demo</span></div></li>
 <li><div class="src-line"><span class="src-comm">desc:&nbsp;&nbsp;This&nbsp;module&nbsp;is&nbsp;a&nbsp;demo&nbsp;for&nbsp;demonstrating&nbsp;the&nbsp;user&nbsp;API&nbsp;hooks,&nbsp;which&nbsp;can&nbsp;be&nbsp;used&nbsp;for&nbsp;implementing&nbsp;external&nbsp;user&nbsp;authentication&nbsp;and&nbsp;session.</span></div></li>
-<li><div class="src-line"><span class="src-comm">author:&nbsp;Phorum&nbsp;Dev&nbsp;Team</span></div></li>
+<li><div class="src-line"><span class="src-comm">author:&nbsp;LibreForum&nbsp;Dev&nbsp;Team</span></div></li>
 <li><div class="src-line"><span class="src-comm">url:&nbsp;http://www.phorum.org/</span></div></li>
 <li><div class="src-line"><span class="src-comm">*/</span></div></li>
 <li><div class="src-line">&nbsp;</div></li>
@@ -28,7 +28,7 @@
 <li><div class="src-line">&nbsp;</div></li>
 <li><div class="src-line"><span class="src-comm">//&nbsp;We&nbsp;can&nbsp;authenticate&nbsp;the&nbsp;user&nbsp;against&nbsp;our&nbsp;own&nbsp;user&nbsp;database.</span></div></li>
 <li><div class="src-line"><span class="src-comm">//&nbsp;This&nbsp;demo&nbsp;hook&nbsp;will&nbsp;authenticate&nbsp;the&nbsp;user&nbsp;with&nbsp;username&nbsp;&quot;foo&quot;</span></div></li>
-<li><div class="src-line"><span class="src-comm">//&nbsp;and&nbsp;password&nbsp;&quot;bar&quot;&nbsp;as&nbsp;the&nbsp;Phorum&nbsp;user&nbsp;with&nbsp;user_id&nbsp;=&nbsp;1.</span></div></li>
+<li><div class="src-line"><span class="src-comm">//&nbsp;and&nbsp;password&nbsp;&quot;bar&quot;&nbsp;as&nbsp;the&nbsp;LibreForum&nbsp;user&nbsp;with&nbsp;user_id&nbsp;=&nbsp;1.</span></div></li>
 <li><div class="src-line"><span class="src-key">function&nbsp;</span><span class="src-id">test_user_authenticate</span><span class="src-sym">(</span><span class="src-var">$data</span><span class="src-sym">)</span></div></li>
 <li><div class="src-line"><span class="src-sym">{</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//&nbsp;Only&nbsp;do&nbsp;this&nbsp;for&nbsp;the&nbsp;forum&nbsp;session.&nbsp;We&nbsp;do&nbsp;not&nbsp;touch&nbsp;the&nbsp;admin&nbsp;session.</span></div></li>
@@ -43,8 +43,8 @@
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">return&nbsp;</span><span class="src-var">$data</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line"><span class="src-sym">}</span></div></li>
 <li><div class="src-line">&nbsp;</div></li>
-<li><div class="src-line"><span class="src-comm">//&nbsp;This&nbsp;hook&nbsp;overrides&nbsp;creating&nbsp;a&nbsp;Phorum&nbsp;user&nbsp;session.&nbsp;Instead&nbsp;of&nbsp;running</span></div></li>
-<li><div class="src-line"><span class="src-comm">//&nbsp;a&nbsp;Phorum&nbsp;session,&nbsp;we&nbsp;use&nbsp;the&nbsp;PHP&nbsp;session&nbsp;system&nbsp;to&nbsp;track&nbsp;the&nbsp;logged</span></div></li>
+<li><div class="src-line"><span class="src-comm">//&nbsp;This&nbsp;hook&nbsp;overrides&nbsp;creating&nbsp;a&nbsp;LibreForum&nbsp;user&nbsp;session.&nbsp;Instead&nbsp;of&nbsp;running</span></div></li>
+<li><div class="src-line"><span class="src-comm">//&nbsp;a&nbsp;LibreForum&nbsp;session,&nbsp;we&nbsp;use&nbsp;the&nbsp;PHP&nbsp;session&nbsp;system&nbsp;to&nbsp;track&nbsp;the&nbsp;logged</span></div></li>
 <li><div class="src-line"><span class="src-comm">//&nbsp;in&nbsp;user.&nbsp;We&nbsp;do&nbsp;this&nbsp;by&nbsp;storing&nbsp;the&nbsp;active&nbsp;user_id&nbsp;in&nbsp;the&nbsp;$_SESSION</span></div></li>
 <li><div class="src-line"><span class="src-comm">//&nbsp;variable.</span></div></li>
 <li><div class="src-line"><span class="src-key">function&nbsp;</span><span class="src-id">test_user_session_create</span><span class="src-sym">(</span><span class="src-var">$type</span><span class="src-sym">)</span></div></li>
@@ -58,9 +58,9 @@
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
 <li><div class="src-line"><span class="src-sym">}</span></div></li>
 <li><div class="src-line">&nbsp;</div></li>
-<li><div class="src-line"><span class="src-comm">//&nbsp;This&nbsp;hook&nbsp;overrides&nbsp;the&nbsp;Phorum&nbsp;user&nbsp;session&nbsp;restore&nbsp;process.&nbsp;We&nbsp;use</span></div></li>
+<li><div class="src-line"><span class="src-comm">//&nbsp;This&nbsp;hook&nbsp;overrides&nbsp;the&nbsp;LibreForum&nbsp;user&nbsp;session&nbsp;restore&nbsp;process.&nbsp;We&nbsp;use</span></div></li>
 <li><div class="src-line"><span class="src-comm">//&nbsp;the&nbsp;user&nbsp;id&nbsp;that&nbsp;we&nbsp;stored&nbsp;in&nbsp;the&nbsp;PHP&nbsp;$_SESSION&nbsp;variable&nbsp;as&nbsp;the</span></div></li>
-<li><div class="src-line"><span class="src-comm">//&nbsp;active&nbsp;Phorum&nbsp;user.</span></div></li>
+<li><div class="src-line"><span class="src-comm">//&nbsp;active&nbsp;LibreForum&nbsp;user.</span></div></li>
 <li><div class="src-line"><span class="src-key">function&nbsp;</span><span class="src-id">test_user_session_restore</span><span class="src-sym">(</span><span class="src-var">$data</span><span class="src-sym">)</span></div></li>
 <li><div class="src-line"><span class="src-sym">{</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">if&nbsp;</span><span class="src-sym">(</span><span class="src-var">$_SESSION</span><span class="src-sym">[</span><span class="src-str">'loggedin_user'</span><span class="src-sym">]</span><span class="src-sym">)&nbsp;</span><span class="src-sym">{</span></div></li>
@@ -75,8 +75,8 @@
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">return&nbsp;</span><span class="src-var">$data</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line"><span class="src-sym">}</span></div></li>
 <li><div class="src-line">&nbsp;</div></li>
-<li><div class="src-line"><span class="src-comm">//&nbsp;This&nbsp;hook&nbsp;overrides&nbsp;destroying&nbsp;a&nbsp;Phorum&nbsp;user&nbsp;session.&nbsp;Instead&nbsp;of&nbsp;destroying</span></div></li>
-<li><div class="src-line"><span class="src-comm">//&nbsp;a&nbsp;Phorum&nbsp;session,&nbsp;we&nbsp;clear&nbsp;the&nbsp;user_id&nbsp;that&nbsp;is&nbsp;stored&nbsp;in&nbsp;the&nbsp;$_SESSION</span></div></li>
+<li><div class="src-line"><span class="src-comm">//&nbsp;This&nbsp;hook&nbsp;overrides&nbsp;destroying&nbsp;a&nbsp;LibreForum&nbsp;user&nbsp;session.&nbsp;Instead&nbsp;of&nbsp;destroying</span></div></li>
+<li><div class="src-line"><span class="src-comm">//&nbsp;a&nbsp;LibreForum&nbsp;session,&nbsp;we&nbsp;clear&nbsp;the&nbsp;user_id&nbsp;that&nbsp;is&nbsp;stored&nbsp;in&nbsp;the&nbsp;$_SESSION</span></div></li>
 <li><div class="src-line"><span class="src-comm">//&nbsp;variable.</span></div></li>
 <li><div class="src-line"><span class="src-key">function&nbsp;</span><span class="src-id">test_user_session_destroy</span><span class="src-sym">(</span><span class="src-var">$type</span><span class="src-sym">)</span></div></li>
 <li><div class="src-line"><span class="src-sym">{</span></div></li>

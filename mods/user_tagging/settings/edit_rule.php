@@ -469,7 +469,7 @@ $frm->addhelp(
      automatically:
      <ul>
      <li>%count% = the matching post count for the user</li>
-     <li>%http_path% = the URL to the root of the Phorum install</li>
+     <li>%http_path% = the URL to the root of the LibreForum install</li>
      </ul>"
 );
 

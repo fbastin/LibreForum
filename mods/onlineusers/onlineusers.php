@@ -169,7 +169,7 @@ function phorum_mod_onlineusers_before_footer($is_header = FALSE)
         $idle = 0;
         if ($PHORUM['user']['user_id'] &&
             $user['user_id'] == $PHORUM['user']['user_id']) {
-            // NOOP: Don't show idle time for the active Phorum user.
+            // NOOP: Don't show idle time for the active LibreForum user.
         }
         elseif ($PHORUM['mod_onlineusers']['show_idle_time']) {
             $idle_secs = time() - $user['date_last_active'];

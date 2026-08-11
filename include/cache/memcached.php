@@ -19,7 +19,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * This script implements the Phorum memcached-based caching-layer.
+ * This script implements the LibreForum memcached-based caching-layer.
  *
  * To use this layer, both a memcached server and the "memcache"
  * PHP pecl module are required.

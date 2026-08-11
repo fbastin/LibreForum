@@ -1,12 +1,12 @@
 <chapter id="modules.main">
 
-  <title>Phorum Modules</title>
+  <title>LibreForum Modules</title>
 
   <section id="modules.intro">
     <title>Introduction</title>
     <para>
-      Modules are (often) small extensions to Phorum-functionality without
-      sacrificing performance of the Phorum-core. You can install them if
+      Modules are (often) small extensions to LibreForum-functionality without
+      sacrificing performance of the LibreForum-core. You can install them if
       needed for using their functionalities.<sbr/>
       For an overview of the currently available modules, please take a look
       at our &listofmodules;.
@@ -17,7 +17,7 @@
     <title>How do I install a module?</title>
     <para>
       All modules are installed inside the subdirectory "mods" of your
-      Phorum installation directory. There are two types of modules:
+      LibreForum installation directory. There are two types of modules:
       single file and multi file modules.
       <itemizedlist>
         <listitem>

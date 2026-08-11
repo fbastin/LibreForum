@@ -8,8 +8,8 @@ if(!defined("PHORUM")) return;
 * This is free software that you may use for any purpose that you
 * see fit.  Just don't claim that you wrote it.
 ********************************************************************
-* Edits made by Brian Moon <brian@phorum.org> of the Phorum Dev
-* Team to fit the Phorum coding standards.  Original located at
+* Edits made by Brian Moon <brian@phorum.org> of the LibreForum Dev
+* Team to fit the LibreForum coding standards.  Original located at
 * http://shaunwagner.com/projects/php/diff_patch.html
 ********************************************************************
 * This file contains the diff and patch functions written for PHP.

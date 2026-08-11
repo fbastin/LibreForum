@@ -99,11 +99,11 @@ include_once "./include/admin/PhorumInputForm.php";
 
 $frm = new PhorumInputForm ( "", "post" );
 $frm->hidden( "module", "cache" );
-$frm->addbreak( "Phorum Cache Settings" );
+$frm->addbreak( "LibreForum Cache Settings" );
 $row=$frm->addrow( "Cache Directory", $frm->text_box( "cache", $PHORUM["cache"], 30 ) );
 $frm->addhelp($row, "Cache Directory",
     "Caching is used to take some load off the database and web server.
-     The cache directory is used for caching preprocessed Phorum templates
+     The cache directory is used for caching preprocessed LibreForum templates
      and for caching data in case \"file system based\" is selected as
      the cache layer below.<br/>
      <br/>
@@ -112,17 +112,17 @@ $frm->addhelp($row, "Cache Directory",
      system).<br/>
      <br/>
      If your server has PHP Safe Mode enabled, you will need to create a
-     directory under your Phorum directory and make it writable by the web
+     directory under your LibreForum directory and make it writable by the web
      server (you can use the directory \"./cache\" which was included in the
-     Phorum distribution for this purpose)."
+     LibreForum distribution for this purpose)."
 );
 
 $frm->addbreak("Which template data to cache (uses cache directory)");
 
 $row=$frm->addrow( "Enable Caching stylesheet data (CSS):", $frm->select_tag( "cache_css", array( "No", "Yes" ), $PHORUM["cache_css"] ) );
 $frm->addhelp($row, "Cache stylesheet",
-    "Phorum uses a system where modules can add data to the main stylesheet
-     for the pages. By enabling this feature, Phorum can cache the dynamically
+    "LibreForum uses a system where modules can add data to the main stylesheet
+     for the pages. By enabling this feature, LibreForum can cache the dynamically
      generated data and improve caching of the stylesheet data in the browsers
      of your visitors. Enabling this feature is highly recommended. Only
      disable it if you are having problems with it."
@@ -130,8 +130,8 @@ $frm->addhelp($row, "Cache stylesheet",
 
 $row=$frm->addrow( "Enable Caching JavaScript code:", $frm->select_tag( "cache_javascript", array( "No", "Yes" ), $PHORUM["cache_javascript"] ) );
 $frm->addhelp($row, "Cache JavaScript",
-    "Phorum uses a system where modules can provide JavaScript code for the
-     pages. By enabling this feature, Phorum can cache the dynamically
+    "LibreForum uses a system where modules can provide JavaScript code for the
+     pages. By enabling this feature, LibreForum can cache the dynamically
      generated data and improve caching of the JavaScript data in the browsers
      of your visitors. Enabling this feature is highly recommended. Only
      disable it if you are having problems with it."

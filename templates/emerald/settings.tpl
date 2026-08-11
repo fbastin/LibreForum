@@ -16,7 +16,7 @@
 {DEFINE show_notify_for_pages "index,list,cc"}
 
 {! --- Apply some compression to the template data. This feature is      --- }
-{! --- implemented by Phorum's template parsing code. Possible values    --- }
+{! --- implemented by LibreForum's template parsing code. Possible values    --- }
 {! --- for this setting are:                                             --- }
 {! --- 0 - Apply no compression at all.                                  --- }
 {! --- 1 - Remove white space at start of lines and empty lines.         --- }
@@ -40,7 +40,7 @@
 {VAR font_x_small   "75%"}
 {VAR font_xx_small  "65%"}
 
-{! -- The maximum width of the Phorum content (the div with id "phorum")  -- }
+{! -- The maximum width of the LibreForum content (the div with id "phorum")  -- }
 {VAR max_width "900px"}  {! -- CSS size values allowed. No effect in MSIE 6 }
 {VAR max_width_ie "900"} {! -- px width values allowed. Sets max MSIE 6 width }
 

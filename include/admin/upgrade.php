@@ -47,10 +47,10 @@ switch ($step) {
 
         $frm = new PhorumInputForm ("", "post", "Continue -&gt;");
 
-        $frm->addbreak("Phorum Upgrade");
+        $frm->addbreak("LibreForum Upgrade");
         $frm->addmessage("
-            This wizard will upgrade Phorum on your server.<br/>
-            Phorum has confirmed that it can connect to your database.<br/>
+            This wizard will upgrade LibreForum on your server.<br/>
+            LibreForum has confirmed that it can connect to your database.<br/>
             Press continue when you are ready to start the upgrade.");
         $frm->hidden("module", "upgrade");
         $frm->hidden("step", "1");

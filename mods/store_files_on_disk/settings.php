@@ -15,7 +15,7 @@ if (isset($_POST['path']))
     {
         phorum_admin_error(
             "No path was entered. Please enter the path that has to be " .
-            "used for storing Phorum files."
+            "used for storing LibreForum files."
         );
         $error = TRUE;
     }
@@ -29,7 +29,7 @@ if (isset($_POST['path']))
         $error = TRUE;
     }
 
-    // Check if Phorum can write to the storage path.
+    // Check if LibreForum can write to the storage path.
     else {
         ini_set('track_errors', 1);
         $dummy = "$path/mod_store_files_on_disk_dummy";
@@ -37,7 +37,7 @@ if (isset($_POST['path']))
         if (@mkdir($dummy) == FALSE) {
             phorum_admin_error(
                 "The path that you entered seems invalid. " .
-                "Phorum is unable to create subdirectories beneath it. " .
+                "LibreForum is unable to create subdirectories beneath it. " .
                 "The error returned from the system was: " .
                 $php_errormsg
             );
@@ -65,7 +65,7 @@ $frm->hidden("mod", "store_files_on_disk");
 $frm->addbreak("Edit settings for the \"Store files on disk\" module");
 $frm->addmessage(
     "Please, enter the filesystem path (either relative or absolute)
-     of the directory that you want to use for storing the Phorum files.
+     of the directory that you want to use for storing the LibreForum files.
      This path does not need to be below the webserver's document root
      (it is even preferable to have it outside the document root).
      The webserver must be allowed to write to the directory.<br/>

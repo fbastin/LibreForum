@@ -1,11 +1,11 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>1.3.3. Place the Phorum files in your website's document root</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Phorum Administrator Reference Manual"><link rel="up" href="ch01s03.html" title="1.3. Detailed installation instructions"><link rel="prev" href="ch01s03s02.html" title="1.3.2. Unpack the downloaded archive"><link rel="next" href="ch01s03s04.html" title="1.3.4. Create a database and a database user"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch01s03s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch01s03s04.html">Next</a></td></tr></table><hr></div><div class="section" title="1.3.3. Place the Phorum files in your website's document root"><div class="titlepage"><div><div><h3 class="title"><a name="id2507019"></a>1.3.3. Place the Phorum files in your website's document root</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>1.3.3. Place the LibreForum files in your website's document root</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Administrator Reference Manual"><link rel="up" href="ch01s03.html" title="1.3. Detailed installation instructions"><link rel="prev" href="ch01s03s02.html" title="1.3.2. Unpack the downloaded archive"><link rel="next" href="ch01s03s04.html" title="1.3.4. Create a database and a database user"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch01s03s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch01s03s04.html">Next</a></td></tr></table><hr></div><div class="section" title="1.3.3. Place the LibreForum files in your website's document root"><div class="titlepage"><div><div><h3 class="title"><a name="id2507019"></a>1.3.3. Place the LibreForum files in your website's document root</h3></div></div></div><p>
         <em><span class="remark">TODO: this section should be in a document conventions
         section</span></em>
         The document root for a website is the directory in which your
         site's web pages are stored. If your website's URL is
-        <code class="filename">http://www.example.com</code> and you place the Phorum
+        <code class="filename">http://www.example.com</code> and you place the LibreForum
         files in a directory called <code class="filename">forum</code> inside
-        your document root, your Phorum installation will be available
+        your document root, your LibreForum installation will be available
         at the URL <code class="filename">http://www.example.com/forum</code>.
         From now on, we will name this URL simply
         <code class="filename">{phorum url}</code>. So if you
@@ -27,7 +27,7 @@
         in doubt, refer to the client's documentation. However, some
         hosting providers require SCP (secure copy, which is more
         secure than FTP). If you do not know how or where to upload
-        the Phorum files, please contact your hosting provider.
+        the LibreForum files, please contact your hosting provider.
       </p><p>
         </p><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><span class="emphasis"><em>
             (simply ignore this if it does not make sense to you)
@@ -39,8 +39,8 @@
           </em></span>
           The webserver only needs read access on the distribution files,
           because all dynamic data is stored in the database. If you run
-          into problems running Phorum, it will never be because you
-          "forgot to do chmod 777" on any of the Phorum files.<br><br>
+          into problems running LibreForum, it will never be because you
+          "forgot to do chmod 777" on any of the LibreForum files.<br><br>
           The only directory that might have to be made writable for the
           webserver is <code class="filename">./cache</code>
           (see <a class="xref" href="ch01s04.html" title="1.4. Additional issues">additional issues</a>).

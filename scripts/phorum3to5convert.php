@@ -7,36 +7,36 @@
 ***** PHP VERSION 5.1.0 OR HIGHER IS REQUIRED FOR RUNNING THIS SCRIPT
 ***** THE SCRIPT IS WRITTEN FOR UPGRADING PHORUM 3.4.x
 
-This script will convert the data from a Phorum 3 database to a Phorum 5
+This script will convert the data from a LibreForum 3 database to a LibreForum 5
 database. It does not change any of the old phorum3-tables. The data is
-only copied over to the new Phorum 5 tables.
+only copied over to the new LibreForum 5 tables.
 
 
 **** BEFORE YOU USE THIS SCRIPT ****
 
-WARNING: The Phorum 3 and Phorum 5 tables in your MySQL database must be using
+WARNING: The LibreForum 3 and LibreForum 5 tables in your MySQL database must be using
 the same character set and collation.  Before attempting to upgrade, please
 make sure the tables and the settings all use the same character set.
 
 
 Instructions:
 
-1. Be sure your Phorum 3 is running a 3.4.x version. If you are running
-   an older version of Phorum 3, first upgrade to 3.4.x.
+1. Be sure your LibreForum 3 is running a 3.4.x version. If you are running
+   an older version of LibreForum 3, first upgrade to 3.4.x.
 
-2. Copy or move this script one directory up, to the main Phorum 5 directory.
+2. Copy or move this script one directory up, to the main LibreForum 5 directory.
 
 3. Edit the $CONVERT variables below to match the settings of your
    phorum3 installation.
 
-4. Install Phorum 5 as usual. For speed and reliability, preferably use the
-   same database as the database where Phorum 3 lives. Because Phorum 5 uses
-   a table prefix (typically "phorum_"), the tables for Phorum 3 and Phorum 5
+4. Install LibreForum 5 as usual. For speed and reliability, preferably use the
+   same database as the database where LibreForum 3 lives. Because LibreForum 5 uses
+   a table prefix (typically "phorum_"), the tables for LibreForum 3 and LibreForum 5
    can safely live next to each other in the same database.
 
-5. Empty the phorum_messages and phorum_forums tables of the Phorum 5
+5. Empty the phorum_messages and phorum_forums tables of the LibreForum 5
    installation. You can do this either by dropping all forums from the
-   Phorum 5 admin interface or by issuing the appropriate SQL queries from
+   LibreForum 5 admin interface or by issuing the appropriate SQL queries from
    the MySQL prompt or from a database tool like "phpmyadmin". The queries
    to execute are (replace "phorum" with your own table_prefix if you changed
    this during install):
@@ -64,7 +64,7 @@ Instructions:
 
    *** THIS STEP MAY TAKE A WHILE ***
 
-8. Take a look at the Phorum 5 forums to see if everything was converted
+8. Take a look at the LibreForum 5 forums to see if everything was converted
    correctly.
 
 9. Delete the upgrade script phorum3to5convert.php.
@@ -86,12 +86,12 @@ define("PHORUM_SCRIPT", 1);
 
 /***** CONFIGURATION FOR THE CONVERSION *****/
 
-// The data for connecting to the old Phorum 3 database.
+// The data for connecting to the old LibreForum 3 database.
 $CONVERT['old_dbhost'] = "localhost";
 $CONVERT['old_dbuser'] = "phorum5";
 $CONVERT['old_dbpass'] = "phorum5";
 
-// The name of the old Phorum 3 database.
+// The name of the old LibreForum 3 database.
 $CONVERT['olddb'] = "phorum";
 
 // The main-table-name for phorum3 (default is "forums")
@@ -102,7 +102,7 @@ $CONVERT['forumstable'] = "forums";
 // shell prompt, make it "\n".
 $CONVERT['lbr'] = "<br>\n";
 
-// The full path to the directory where the attachments for Phorum 3.4.x
+// The full path to the directory where the attachments for LibreForum 3.4.x
 // are stored (like in the old admin).
 $CONVERT['attachmentdir'] = "/full/path/to/files";
 

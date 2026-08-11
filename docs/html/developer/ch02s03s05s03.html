@@ -1,5 +1,5 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.5.3. Storing data for users</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Phorum Developer Reference Manual"><link rel="up" href="ch02s03s05.html" title="2.3.5. Module data storage"><link rel="prev" href="ch02s03s05s02.html" title="2.3.5.2. Storing data for messages"><link rel="next" href="ch02s03s06.html" title="2.3.6. Building URLs for Phorum"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03s05s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s03s06.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.5.3. Storing data for users"><div class="titlepage"><div><div><h4 class="title"><a name="modules.storeuserdata"></a>2.3.5.3. Storing data for users</h4></div></div></div><div class="section" title="2.3.5.3.1. Custom profile fields for users"><div class="titlepage"><div><div><h5 class="title"><a name="modules.customuserfields"></a>2.3.5.3.1. Custom profile fields for users</h5></div></div></div><p>
-            If your module needs to store data along with a Phorum user,
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>2.3.5.3. Storing data for users</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch02s03s05.html" title="2.3.5. Module data storage"><link rel="prev" href="ch02s03s05s02.html" title="2.3.5.2. Storing data for messages"><link rel="next" href="ch02s03s06.html" title="2.3.6. Building URLs for LibreForum"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02s03s05s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02s03s06.html">Next</a></td></tr></table><hr></div><div class="section" title="2.3.5.3. Storing data for users"><div class="titlepage"><div><div><h4 class="title"><a name="modules.storeuserdata"></a>2.3.5.3. Storing data for users</h4></div></div></div><div class="section" title="2.3.5.3.1. Custom profile fields for users"><div class="titlepage"><div><div><h5 class="title"><a name="modules.customuserfields"></a>2.3.5.3.1. Custom profile fields for users</h5></div></div></div><p>
+            If your module needs to store data along with a LibreForum user,
             you can make use of custom profile fields. These fields will
             be accessible from within the user data. E.g. if you create
             a custom profile field named "foobar", the value of that field
@@ -34,7 +34,7 @@
                 if you only need to store one single value. If you need to
                 store more values, then use the format
                 <code class="literal">mod_&lt;module name&gt;_&lt;field name&gt;</code>.
-                This prevents the risk of clashing with standard Phorum user
+                This prevents the risk of clashing with standard LibreForum user
                 fields or custom fields that are added for other modules.
                 For example, the "foo" module could use the field names
                 <code class="literal">mod_foo_size</code> and
@@ -42,7 +42,7 @@
               </li><li class="listitem"><span class="bold"><strong>Field Length:</strong></span><br>
                 If you want some field to contain a predefined maximum number
                 of characters, then fill in that number of characters in this
-                field. Before storing the field data to the database, Phorum
+                field. Before storing the field data to the database, LibreForum
                 will trim the data down if it is longer than the defined number
                 of characters. If you need no limit, you can also use
                 <code class="literal">65000</code> here.
@@ -60,7 +60,7 @@
             </strong></span>
           </p><p>
             Instead, you can also create a single field for storing
-            a complete array of information. Phorum will automatically take care
+            a complete array of information. LibreForum will automatically take care
             of storing this information (serialized) in the database. You only
             should make sure that the custom profile field is large enough to
             store all the data and that HTML is allowed for the field, so the
@@ -70,7 +70,7 @@
             array in a profile field are:
             </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><span class="bold"><strong>Field Name:</strong></span><br>
                 Name your field <code class="literal">mod_&lt;module name&gt;</code>,
-                so you will not risk clashes with standard Phorum user fields
+                so you will not risk clashes with standard LibreForum user fields
                 or custom fields that are added for other modules. For example,
                 the "foo" module would use the field name
                 <code class="literal">mod_foo</code>.
@@ -92,7 +92,7 @@
           </h5></div></div></div><p>
             There are some hooks that send a full message structure to the
             hook functions. These can change the message structure before
-            returning it to Phorum. An example is the hook
+            returning it to LibreForum. An example is the hook
             "<a class="xref" href="ch03s10.html#hook.user_save" title="3.10.1. user_save">???</a>".
             For these kind of hooks, you can update the custom profile
             field data in the user structure and be done with it. Here's
@@ -112,7 +112,7 @@ function phorum_mod_foo_user_save ($user)
     // Put the data in the user sructure.
     $user["mod_foo"] = $data;
 
-    // Return the updated user. Phorum will take care of
+    // Return the updated user. LibreForum will take care of
     // storing the "mod_foo" array in the database.
     return $user;
 } </pre><p>

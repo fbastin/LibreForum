@@ -1,6 +1,6 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.18.2. user_session_create</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Phorum Developer Reference Manual"><link rel="up" href="ch03s18.html" title="3.18. User authentication and session handling"><link rel="prev" href="ch03s18.html" title="3.18. User authentication and session handling"><link rel="next" href="ch03s18s03.html" title="3.18.3. user_session_restore"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s18.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s18s03.html">Next</a></td></tr></table><hr></div><div class="section" title="3.18.2. user_session_create"><div class="titlepage"><div><div><h3 class="title"><a name="hook.user_session_create"></a>3.18.2. user_session_create</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.18.2. user_session_create</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03s18.html" title="3.18. User authentication and session handling"><link rel="prev" href="ch03s18.html" title="3.18. User authentication and session handling"><link rel="next" href="ch03s18s03.html" title="3.18.3. user_session_restore"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s18.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s18s03.html">Next</a></td></tr></table><hr></div><div class="section" title="3.18.2. user_session_create"><div class="titlepage"><div><div><h3 class="title"><a name="hook.user_session_create"></a>3.18.2. user_session_create</h3></div></div></div><p>
 
-Allow modules to override Phorum's session create management or
+Allow modules to override LibreForum's session create management or
 to even fully omit creating a session (for example useful
 if the hook <a class="xref" href="ch03s18s03.html" title="3.18.3. user_session_restore">???</a> is used
 to inherit an external session from some 3rd party application).
@@ -10,7 +10,7 @@ to inherit an external session from some 3rd party application).
         </strong></span>
       </p><p>
 
-Just before Phorum runs its own session initialization code
+Just before LibreForum runs its own session initialization code
 in the user API function
 <code class="literal">phorum_api_user_session_create()</code>.
       </p><p>
@@ -28,7 +28,7 @@ or <code class="literal">PHORUM_ADMIN_SESSION</code>.
         </strong></span>
       </p><p>
 
-Same as input if Phorum has to run its standard session
+Same as input if LibreForum has to run its standard session
 initialization code or NULL if that code should be fully skipped.
       </p><p>
         <span class="bold"><strong>
@@ -39,7 +39,7 @@ initialization code or NULL if that code should be fully skipped.
 </p><pre class="programlisting">
 function phorum_mod_foo_user_session_create($type)
 {
-    // Let Phorum handle admin sessions on its own.
+    // Let LibreForum handle admin sessions on its own.
     if ($type == PHORUM_ADMIN_SESSION) return $type;
 
     // Override the session handling for front end forum sessions.
@@ -50,17 +50,17 @@ function phorum_mod_foo_user_session_create($type)
 
     // ...and then storing the user_id of the current user in the
     // PHP session data. The user_id is really the only thing
-    // that needs to be remembered for a Phorum session, because
+    // that needs to be remembered for a LibreForum session, because
     // all other data for the user is stored in the database.
     $phorum_user_id = $GLOBALS["PHORUM"]["user"]["user_id"];
     $_SESSION['phorum_user_id'] = $phorum_user_id;
 
-    // Tell Phorum not to run its own session initialization code.
+    // Tell LibreForum not to run its own session initialization code.
     return NULL;
 }
 </pre><p>
 
 See the <a class="xref" href="ch03s18s03.html" title="3.18.3. user_session_restore">???</a> hook for an example
-of how to let Phorum pick up this PHP based session.
+of how to let LibreForum pick up this PHP based session.
 
       </p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s18.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03s18.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s18s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

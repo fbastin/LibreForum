@@ -25,7 +25,7 @@ if(!defined("PHORUM")) return;
 // is an array that is sorted by thread, then id.  This is critical as
 // it ensures that a child is not encountered before a parent.
 // It could be made more complicated to implement the tree graphics
-// as Phorum 3 did.  However, this is much faster and less complicated
+// as LibreForum 3 did.  However, this is much faster and less complicated
 // If someone just has to have the tree graphics, it can be done.
 //
 

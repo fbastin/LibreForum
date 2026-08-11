@@ -12,7 +12,7 @@ function phorum_mod_autodetect_timezone_reg_form()
     (function() {
         var today = new Date();
         // getTimezoneOffset retourne les minutes (ex: -120 pour UTC+2)
-        // On convertit en heures et on inverse le signe pour correspondre au format PHP/Phorum
+        // On convertit en heures et on inverse le signe pour correspondre au format PHP/LibreForum
         var offsetHours = (today.getTimezoneOffset() / 60) * -1;
         document.getElementById('detected_tz_offset').value = offsetHours;
         
@@ -37,8 +37,8 @@ function phorum_mod_autodetect_timezone_reg_save($userdata)
         $offset = (float) $_POST['detected_tz_offset'];
         $is_dst = isset($_POST['detected_is_dst']) && $_POST['detected_is_dst'] == "1" ? 1 : 0;
         
-        // Si DST est actif, on soustrait 1 heure à l'offset de base pour Phorum
-        // car Phorum gère "offset de base" + "option DST (+1)"
+        // Si DST est actif, on soustrait 1 heure à l'offset de base pour LibreForum
+        // car LibreForum gère "offset de base" + "option DST (+1)"
         if ($is_dst) {
             $offset -= 1.0;
         }

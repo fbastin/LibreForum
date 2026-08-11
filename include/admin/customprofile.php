@@ -186,7 +186,7 @@ $row = $frm->addrow("Disable HTML", $frm->checkbox("html_disabled",1,"Yes",$html
 $frm->addhelp($row, "Disable HTML", "
     If this option is enabled, then HTML code will not be usable
     in this field. When displaying the custom field's data,
-    Phorum will automatically replace special HTML characters
+    LibreForum will automatically replace special HTML characters
     with their safe HTML counter parts.<br/>
     <br/>
     There are two possible reasons for disabling it:<br/>
@@ -204,7 +204,7 @@ $frm->addhelp($row, "Disable HTML", "
     \"cross site scripting\" on the internet.");
 
 $row = $frm->addrow("Show in user admin", $frm->checkbox("show_in_admin",1,"Yes",$show_in_admin));
-$frm->addhelp($row, "Show in user admin", "If this option is enabled, then the contents of the field will be displayed on the user details page in the Phorum admin interface (section \"Edit Users\").");
+$frm->addhelp($row, "Show in user admin", "If this option is enabled, then the contents of the field will be displayed on the user details page in the LibreForum admin interface (section \"Edit Users\").");
 
 $frm->show();
 

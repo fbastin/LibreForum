@@ -81,7 +81,7 @@ class PhorumInputForm {
      */
     function _called_from_module()
     {
-        // Should be available, because Phorum requires PHP 4.3.0 or higher,
+        // Should be available, because LibreForum requires PHP 4.3.0 or higher,
         // but skip the functionality for those who are using an older
         // version of PHP.
         if (!function_exists('debug_backtrace')) return NULL;
@@ -99,7 +99,7 @@ class PhorumInputForm {
      * This method will check if a form row has been added from module code.
      * If this is the case, it will force feed an addbreak() which tells for
      * which module the form row has been added. This is done to make
-     * absolutely clear by what part of Phorum a certain setting was
+     * absolutely clear by what part of LibreForum a certain setting was
      * put in the admin page. This method is only called internally by
      * the methods which add rows to a form.
      */
@@ -173,7 +173,7 @@ class PhorumInputForm {
         // If a module is calling addbreak() from outside the
         // modsettings module, then replace the addbreak by
         // addsubbreak() to make it visually clear that the
-        // options below the break do not belong to the Phorum
+        // options below the break do not belong to the LibreForum
         // admin core.
         $type = 'break';
         if ($this->_module !== NULL &&

@@ -93,7 +93,7 @@
          enabled).<br/>
          <br/>
          This check is done by first formatting the signature in the same
-         way as Phorum does when reading messages. After that, a check is
+         way as LibreForum does when reading messages. After that, a check is
          done to see if there is HTML code in the signature. If it is, then
          the signature is denied."
     );

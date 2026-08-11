@@ -20,9 +20,9 @@
 /**
  * This script implements tools for encoding JSON data.
  *
- * Phorum uses PHP's json_encode() and json_decode() functions for working
+ * LibreForum uses PHP's json_encode() and json_decode() functions for working
  * with JSON data. This API layer is needed however, because those functions
- * are designed to only work with UTF-8 data. Since Phorum can work with
+ * are designed to only work with UTF-8 data. Since LibreForum can work with
  * other charsets as well, charset conversion is needed in some cases.
  *
  * @package    PhorumAPI
@@ -98,7 +98,7 @@ function phorum_api_json_convert_to_utf8($var)
 {
     global $PHORUM;
 
-    // Don't convert if Phorum is in UTF-8 mode already.
+    // Don't convert if LibreForum is in UTF-8 mode already.
     if (strtoupper($PHORUM['DATA']['CHARSET']) == 'UTF-8') return $var;
 
     // This character map is used to fix differences between ISO-8859-1 and

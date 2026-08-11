@@ -38,7 +38,7 @@ if(file_exists($PHORUM_DIRECTORY."/common.php")) {
     }
 } else {
     fprintf(STDERR,
-        "Unable to find Phorum file \"common.php\".\n" .
+        "Unable to find LibreForum file \"common.php\".\n" .
         "Please check the \$PHORUM_DIRECTORY in " . basename(__FILE__) ."\n");
     exit(1);
 }
@@ -49,7 +49,7 @@ if (isset($_SERVER["REMOTE_ADDR"])) {
    return;
 }
 
-// Load Phorum core code.
+// Load LibreForum core code.
 define("phorum_page", "console_upgrade");
 define("PHORUM_ADMIN", 1);
 require_once('./common.php');
@@ -72,7 +72,7 @@ function usage()
     print "       it failed when running it the first time from the\n";
     print "       standard upgrading process.\n";
     print "       The upgrade file to run should be provided relative to\n";
-    print "       the directory \"include/db/upgrade\" below the Phorum\n";
+    print "       the directory \"include/db/upgrade\" below the LibreForum\n";
     print "       directory.\n";
     print "\n";
     print "   example -f usage:\n";
@@ -120,7 +120,7 @@ while (!empty($argv))
 phorum_ob_clean();
 
 echo "\n";
-echo "Phorum console based database upgrade\n";
+echo "LibreForum console based database upgrade\n";
 echo "-------------------------------------\n";
 echo "\n";
 

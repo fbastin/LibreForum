@@ -41,7 +41,7 @@ if(file_exists($PHORUM_DIRECTORY."/common.php")) {
     }
 } else {
     fprintf(STDERR, 
-        "Unable to find Phorum file \"common.php\".\n" .
+        "Unable to find LibreForum file \"common.php\".\n" .
         "Please check the \$PHORUM_DIRECTORY in " . basename(__FILE__) ."\n");
     exit(1);
 }
@@ -54,12 +54,12 @@ include_once ("./include/thread_info.php");
 phorum_ob_clean();
 
 print "\n";
-print "Phorum stress testing tool\n";
+print "LibreForum stress testing tool\n";
 print "--------------------------\n";
 print "\n";
 print "This tool can be used for easily creating lots of users and messages.\n";
 print "It is only meant for developers to do large data volume stress tests.\n";
-print "Do not run this on a live production Phorum installation, or you\n";
+print "Do not run this on a live production LibreForum installation, or you\n";
 print "will end up with a lot of bogus data in your forums.\n";
 print "\n";
 print "Are you sure you want to continue? (type \"yes\")\n";
@@ -159,7 +159,7 @@ if ($tcount)
                 "thread"    => $thread,
                 "forum_id"  => $f,
                 "subject"   => "Message $i of stress batch thread $batch / $count",
-                "body"      => "I am just a test message, created by the Phorum\n" .
+                "body"      => "I am just a test message, created by the LibreForum\n" .
                                "stress testing software. I have no value at all.\n",
                 "user_id"   => $u,
                 "author"    => $users[$u]["username"],

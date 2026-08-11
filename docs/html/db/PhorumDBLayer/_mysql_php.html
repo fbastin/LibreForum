@@ -22,10 +22,10 @@
 			</div>
 	<div class="info-box-body">	
 		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This script implements a MySQL Phorum database layer.</p>
-<p class="description"><p>The other Phorum code does not care how data is stored.  The only requirement is that it is returned from these functions  in the right way. This means each database can use as many or as  few tables as it likes. It can store the fields anyway it wants.</p><p>The only thing to worry about is the table_prefix for the tables.  all tables for a Phorum install should be prefixed with the  table_prefix that will be entered in include/db/config.php.  This  will allow multiple Phorum installations to use the same database.</p></p>
+<p class="short-description">This script implements a MySQL LibreForum database layer.</p>
+<p class="description"><p>The other LibreForum code does not care how data is stored.  The only requirement is that it is returned from these functions  in the right way. This means each database can use as many or as  few tables as it likes. It can store the fields anyway it wants.</p><p>The only thing to worry about is the table_prefix for the tables.  all tables for a LibreForum install should be prefixed with the  table_prefix that will be entered in include/db/config.php.  This  will allow multiple LibreForum installations to use the same database.</p></p>
 	<ul class="tags">
-				<li><span class="field">license:</span> Phorum</li>
+				<li><span class="field">license:</span> LibreForum</li>
 				<li><span class="field">copyright:</span> 2007, Phorum Development Team</li>
 			</ul>
 		
@@ -1014,7 +1014,7 @@
 					<li>
 				<span class="var-type">string</span>
 				<span class="var-name">$link_type
-</span><span class="var-description">: The type of link to retrieve from the database. Normally this is one      of the Phorum built-in link types, but it can also be a custom      link type (e.g. if a module uses the file storage on its own).      This parameter can be NULL to retrieve any link type.</span>			</li>
+</span><span class="var-description">: The type of link to retrieve from the database. Normally this is one      of the LibreForum built-in link types, but it can also be a custom      link type (e.g. if a module uses the file storage on its own).      This parameter can be NULL to retrieve any link type.</span>			</li>
 					<li>
 				<span class="var-type">integer</span>
 				<span class="var-name">$user_id
@@ -1118,7 +1118,7 @@
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Retrieve a list of members for a group or for a list of groups.</p>
-<p class="description"><p>If the member list for a list of groups is requested, any member matching  the specified status in any of the groups will be included in the return  array. There will be no group info in the return array however, so this  function cannot be used to retrieve a full group to member mapping. This  specific functionality is used from the Phorum scripts to see if there are  unapproved group members in any of the forums for which the active user  can moderate the group members.</p></p>
+<p class="description"><p>If the member list for a list of groups is requested, any member matching  the specified status in any of the groups will be included in the return  array. There will be no group info in the return array however, so this  function cannot be used to retrieve a full group to member mapping. This  specific functionality is used from the LibreForum scripts to see if there are  unapproved group members in any of the forums for which the active user  can moderate the group members.</p></p>
 	<ul class="tags">
 				<li><span class="field">return:</span> An array containing members for the specified group(s). The array      contains a simple mapping from user_id to group permission. Note      that the permission is only useful in case a single group was      requested (see the function description).</li>
 			</ul>
@@ -1254,7 +1254,7 @@
 					<li>
 				<span class="var-type">boolean</span>
 				<span class="var-name">$ignore_mod_perms
-</span><span class="var-description">: If this parameter is set to a true value, then the function will      return hidden messages, even if the active Phorum user is not      a moderator.</span>			</li>
+</span><span class="var-description">: If this parameter is set to a true value, then the function will      return hidden messages, even if the active LibreForum user is not      a moderator.</span>			</li>
 					<li>
 				<span class="var-type">boolean</span>
 				<span class="var-name">$write_server
@@ -1665,7 +1665,7 @@
 <p class="short-description">Retrieve a list of stale files from the database.</p>
 <p class="description"><p>Stale files are files that are not linked to anything anymore.'  These can for example be caused by users that are writing a message  with attachments, but never post it.</p></p>
 	<ul class="tags">
-				<li><span class="field">return:</span> An array of stale Phorum files, indexed by file_id. Every item in      this array is an array on its own, containing the fields: <ul><li>file_id: the file id of the stale file</li><li>filename: the name of the stale file</li><li>filesize: the size of the file</li><li>add_datetime: the time at which the file was added</li><li>reason: the reason why it's a stale file</li></ul></li>
+				<li><span class="field">return:</span> An array of stale LibreForum files, indexed by file_id. Every item in      this array is an array on its own, containing the fields: <ul><li>file_id: the file id of the stale file</li><li>filename: the name of the stale file</li><li>filesize: the size of the file</li><li>add_datetime: the time at which the file was added</li><li>reason: the reason why it's a stale file</li></ul></li>
 			</ul>
 	
 	<div class="method-signature">
@@ -1687,7 +1687,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Load the Phorum settings in the $PHORUM array.</p>
+<p class="short-description">Load the LibreForum settings in the $PHORUM array.</p>
 <p class="description"><p>These settings are key/value pairs that are read from the settings  table. In the settings table, a data type is provided for each setting.  The supported types are:</p><p><ul><li>V = Value: the value of this field is used as is.</li><li>S = Serialized: the value of this field is a serialzed PHP variable,
        which will be unserialized before storing it in $PHORUM</li></ul></p></p>
 	
@@ -1942,7 +1942,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Mark a message as read for the active Phorum user.</p>
+<p class="short-description">Mark a message as read for the active LibreForum user.</p>
 	
 	<div class="method-signature">
 		<span class="method-result">void</span>
@@ -1972,7 +1972,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Mark all messages for a forum read for the active Phorum user.</p>
+<p class="short-description">Mark all messages for a forum read for the active LibreForum user.</p>
 	
 	<div class="method-signature">
 		<span class="method-result">void</span>
@@ -2062,7 +2062,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Remove newflags for a forum for the active Phorum user.</p>
+<p class="short-description">Remove newflags for a forum for the active LibreForum user.</p>
 	
 	<div class="method-signature">
 		<span class="method-result">void</span>
@@ -2095,7 +2095,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Retrieve the total number of newflags for a forum for the active  Phorum user.</p>
+<p class="short-description">Retrieve the total number of newflags for a forum for the active  LibreForum user.</p>
 	<ul class="tags">
 				<li><span class="field">return:</span> The total number of newflags.</li>
 			</ul>
@@ -2126,7 +2126,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Retrieve the read messages for a forum for the active Phorum user.</p>
+<p class="short-description">Retrieve the read messages for a forum for the active LibreForum user.</p>
 	<ul class="tags">
 				<li><span class="field">return:</span> An array containing the message_ids that have been read for the      forum (key and value are both the message_id). Also an element      for the key &quot;min_id&quot;, which holds the minimum read message_id. All      message_ids lower than the min_id are also considered to be read.</li>
 			</ul>
@@ -2157,7 +2157,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Retrieve the number of new threads and messages for a forum for the  active Phorum user.</p>
+<p class="short-description">Retrieve the number of new threads and messages for a forum for the  active LibreForum user.</p>
 	<ul class="tags">
 				<li><span class="field">return:</span> An array containing two elements. The first element is the number      of new messages. The second one is the number of new threads.</li>
 			</ul>
@@ -2239,7 +2239,7 @@
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The user_id the buddy has to be added for      or NULL to use the active Phorum user (default).</span>			</li>
+</span><span class="var-description">: The user_id the buddy has to be added for      or NULL to use the active LibreForum user (default).</span>			</li>
 				</ul>
 		
 	
@@ -2272,7 +2272,7 @@
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The user_id the buddy has to be delete for      or NULL to use the active Phorum user (default).</span>			</li>
+</span><span class="var-description">: The user_id the buddy has to be delete for      or NULL to use the active LibreForum user (default).</span>			</li>
 				</ul>
 		
 	
@@ -2304,7 +2304,7 @@
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The user_id for which to retrieve the buddies or NULL to user the      active Phorum user (default).</span>			</li>
+</span><span class="var-description">: The user_id for which to retrieve the buddies or NULL to user the      active LibreForum user (default).</span>			</li>
 					<li>
 				<span class="var-type">boolean</span>
 				<span class="var-name">$find_mutual
@@ -2339,7 +2339,7 @@
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The user to check for or NULL to use the active Phorum user (default).</span>			</li>
+</span><span class="var-description">: The user to check for or NULL to use the active LibreForum user (default).</span>			</li>
 				</ul>
 		
 	
@@ -2375,7 +2375,7 @@
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The id of the user to create the folder for or NULL to use the      active Phorum user (default).</span>			</li>
+</span><span class="var-description">: The id of the user to create the folder for or NULL to use the      active LibreForum user (default).</span>			</li>
 				</ul>
 		
 	
@@ -2413,7 +2413,7 @@
 					<li>
 				<span class="var-type">integer</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The id of the user to delete the message for      or NULL to use the active Phorum user (default).</span>			</li>
+</span><span class="var-description">: The id of the user to delete the message for      or NULL to use the active LibreForum user (default).</span>			</li>
 				</ul>
 		
 	
@@ -2446,7 +2446,7 @@
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The user to delete the folder for or NULL to use the active      Phorum user (default).</span>			</li>
+</span><span class="var-description">: The user to delete the folder for or NULL to use the active      LibreForum user (default).</span>			</li>
 				</ul>
 		
 	
@@ -2487,7 +2487,7 @@
 					<li>
 				<span class="var-type">integer</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The user to retrieve the message for or NULL to use the active      Phorum user (default).</span>			</li>
+</span><span class="var-description">: The user to retrieve the message for or NULL to use the active      LibreForum user (default).</span>			</li>
 				</ul>
 		
 	
@@ -2519,7 +2519,7 @@
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The user to retrieve folders for or NULL to use the active      Phorum user (default).</span>			</li>
+</span><span class="var-description">: The user to retrieve folders for or NULL to use the active      LibreForum user (default).</span>			</li>
 					<li>
 				<span class="var-type">boolean</span>
 				<span class="var-name">$count
@@ -2559,7 +2559,7 @@
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The user_id for which the buddy list must be checked      or NULL to use the active Phorum user (default).</span>			</li>
+</span><span class="var-description">: The user_id for which the buddy list must be checked      or NULL to use the active LibreForum user (default).</span>			</li>
 				</ul>
 		
 	
@@ -2596,7 +2596,7 @@
 					<li>
 				<span class="var-type">integer</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The user to retrieve messages for or NULL to use the active      Phorum user (default).</span>			</li>
+</span><span class="var-description">: The user to retrieve messages for or NULL to use the active      LibreForum user (default).</span>			</li>
 					<li>
 				<span class="var-type">boolean</span>
 				<span class="var-name">$reverse
@@ -2636,7 +2636,7 @@
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The user to retrieve messages for or NULL to use the      active Phorum user (default).</span>			</li>
+</span><span class="var-description">: The user to retrieve messages for or NULL to use the      active LibreForum user (default).</span>			</li>
 				</ul>
 		
 	
@@ -2679,7 +2679,7 @@
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The id or the user to move the message for      or NULL to use the active Phorum user (default).</span>			</li>
+</span><span class="var-description">: The id or the user to move the message for      or NULL to use the active LibreForum user (default).</span>			</li>
 				</ul>
 		
 	
@@ -2717,7 +2717,7 @@
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$user_id
-</span><span class="var-description">: The user to rename the folder for or NULL to use the active      Phorum user (default).</span>			</li>
+</span><span class="var-description">: The user to rename the folder for or NULL to use the active      LibreForum user (default).</span>			</li>
 				</ul>
 		
 	
@@ -2763,7 +2763,7 @@
 					<li>
 				<span class="var-type">mixed</span>
 				<span class="var-name">$from
-</span><span class="var-description">: The id of the sending user or NULL to use the active Phorum user      (default).</span>			</li>
+</span><span class="var-description">: The id of the sending user or NULL to use the active LibreForum user      (default).</span>			</li>
 					<li>
 				<span class="var-type">$keepcopy</span>
 				<span class="var-name">$keepcopy</span><span class="var-description">: If set to a true value, a copy of the mail will be kept in the      outbox of the user. Default value is FALSE.</span>			</li>
@@ -2807,7 +2807,7 @@
 </span><span class="var-description">: The value for the flag (either TRUE or FALSE).</span>			</li>
 					<li>
 				<span class="var-type">$user_id</span>
-				<span class="var-name">$user_id</span><span class="var-description">: The user to set a flag for or NULL to use the active Phorum      user (default).</span>			</li>
+				<span class="var-name">$user_id</span><span class="var-description">: The user to set a flag for or NULL to use the active LibreForum      user (default).</span>			</li>
 				</ul>
 		
 	
@@ -3021,7 +3021,7 @@
 <p class="short-description">This function is used by the sanity checking system to let the  database layer do sanity checks of its own. This function can  be used by every database layer to implement specific checks.</p>
 <p class="description"><p>The return value for this function should be exactly the same  as the return value expected for regular sanity checking  function (see include/admin/sanity_checks.php for information).</p><p>There's no need to load the sanity_check.php file for the needed  constants, because this function should only be called from the  sanity checking system.</p></p>
 	<ul class="tags">
-				<li><span class="field">return:</span> A return value as expected by Phorum's sanity checking system.</li>
+				<li><span class="field">return:</span> A return value as expected by LibreForum's sanity checking system.</li>
 			</ul>
 	
 	<div class="method-signature">
@@ -3310,7 +3310,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Store or update Phorum settings.</p>
+<p class="short-description">Store or update LibreForum settings.</p>
 	<ul class="tags">
 				<li><span class="field">return:</span> TRUE if all settings were stored successfully. This function will      always return TRUE, so we could do without a return value. The      return value is here for backward compatibility.</li>
 			</ul>
@@ -3413,7 +3413,7 @@
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Count the total number of users in the Phorum system.</p>
+<p class="short-description">Count the total number of users in the LibreForum system.</p>
 	<ul class="tags">
 				<li><span class="field">return:</span> The number of users.</li>
 			</ul>
@@ -3832,7 +3832,7 @@
 					<li>
 				<span class="var-type">boolean</span>
 				<span class="var-name">$ignore_active_user
-</span><span class="var-description">: If this parameter is set to FALSE (it is TRUE by default), then the      active Phorum user will be excluded from the list.</span>			</li>
+</span><span class="var-description">: If this parameter is set to FALSE (it is TRUE by default), then the      active LibreForum user will be excluded from the list.</span>			</li>
 				</ul>
 		
 	
@@ -4088,7 +4088,7 @@
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Subscribe a user to a forum or thread.</p>
-<p class="description"><p>Remark: Currently, there is no active support for subscription type  PHORUM_SUBSCRIPTION_DIGEST in the Phorum core.</p></p>
+<p class="description"><p>Remark: Currently, there is no active support for subscription type  PHORUM_SUBSCRIPTION_DIGEST in the LibreForum core.</p></p>
 	<ul class="tags">
 				<li><span class="field">return:</span> True if the subscription was stored successfully.</li>
 			</ul>

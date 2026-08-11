@@ -95,7 +95,7 @@ function phorum_email_user($addresses, $data)
      * [description]
      *     This hook is put at the very beginning of 
      *     <literal>phorum_email_user()</literal> and is therefore called for
-     *     <emphasis>every</emphasis> email that is sent from Phorum. It is put
+     *     <emphasis>every</emphasis> email that is sent from LibreForum. It is put
      *     before every replacement done in that function so that all data which
      *     is sent to that function can be replaced/changed at will.
      *
@@ -205,12 +205,12 @@ function phorum_email_user($addresses, $data)
      *
      * [description]
      *     This hook can be used for implementing an alternative mail sending
-     *     system. The hook should return true if Phorum should still send the
-     *     mails. If you do not want to have Phorum send the mails also, return
+     *     system. The hook should return true if LibreForum should still send the
+     *     mails. If you do not want to have LibreForum send the mails also, return
      *     false.<sbr/>
      *     <sbr/>
      *     The SMTP module is a good example of using this hook to replace
-     *     Phorum's default mail sending system.
+     *     LibreForum's default mail sending system.
      *
      * [category]
      *     Moderation
@@ -255,7 +255,7 @@ function phorum_email_user($addresses, $data)
 
     if($send_messages != 0 && $num_addresses > 0){
         $phorum_major_version = substr(PHORUM, 0, strpos(PHORUM, '.'));
-        $mailer = "Phorum" . $phorum_major_version;
+        $mailer = "LibreForum" . $phorum_major_version;
         $mailheader ="Content-Type: text/plain; charset={$PHORUM["DATA"]["CHARSET"]}\nContent-Transfer-Encoding: {$PHORUM["DATA"]["MAILENCODING"]}\nX-Mailer: $mailer$messageid_header\n";
         // adding custom headers if defined
         if(!empty($data['custom_headers'])) {

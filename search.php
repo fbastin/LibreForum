@@ -112,9 +112,9 @@ if(!empty($_GET["search"]) || !empty($_GET["author"])) {
      *     search_redirect
      *
      * [description]
-     *     Phorum does not jump to the search results page directly after
+     *     LibreForum does not jump to the search results page directly after
      *     posting the search form. Instead, it will first do a redirect
-     *     to a secondary URL. This system is used, so Phorum can show an
+     *     to a secondary URL. This system is used, so LibreForum can show an
      *     intermediate "Please wait while searching" page before doing the
      *     redirect. This is useful in case searching is taking a while, in
      *     which case users might otherwise repeatedly start hitting the
@@ -397,7 +397,7 @@ $PHORUM["DATA"]["DESCRIPTION"] = "";
  *     This hook can be used to override the standard output for the
  *     search page. This can be useful for search modules that implement
  *     a different search backend which does not support the same options
- *     as Phorum's standard search backend.
+ *     as LibreForum's standard search backend.
  *
  * [category]
  *     Message search

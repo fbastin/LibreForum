@@ -1,16 +1,16 @@
 <?php
 /**
  * anonymize.php — Anonymisation RGPD à la suppression de compte (Tireur.org).
- * Bibliothèque partagée par le hook Phorum `user_delete` et le script CLI rétroactif.
+ * Bibliothèque partagée par le hook LibreForum `user_delete` et le script CLI rétroactif.
  *
- * Comble les lacunes du nettoyage natif de Phorum :
- *   - Phorum met déjà user_id=0, email='', author='Utilisateur anonyme' sur les
+ * Comble les lacunes du nettoyage natif de LibreForum :
+ *   - LibreForum met déjà user_id=0, email='', author='Utilisateur anonyme' sur les
  *     messages publics ; il NE purge PAS la colonne `ip` -> on s'en charge.
  *   - DokuWiki (authphorum) garde pseudo + IP dans les fichiers .changes -> on les
  *     réécrit (pseudo -> "Utilisateur anonyme", IP -> "0.0.0.0").
  * Toutes les fonctions supportent un mode dry-run (aucune écriture).
  */
-if (!defined('PHORUM')) return;     // chargé uniquement en contexte Phorum
+if (!defined('PHORUM')) return;     // chargé uniquement en contexte LibreForum
 
 define('TIREUR_ANON_USER', 'Utilisateur anonyme');
 define('TIREUR_ANON_IP',   '0.0.0.0');
@@ -22,7 +22,7 @@ function tireur_anon_log($msg) {
 }
 
 /** IP des messages d'un utilisateur ENCORE identifié par user_id (cas hook, avant
- *  que Phorum ne mette user_id=0). Renvoie le nombre de messages concernés. */
+ *  que LibreForum ne mette user_id=0). Renvoie le nombre de messages concernés. */
 function tireur_anon_phorum_ip_by_uid($user_id, $dry_run = false) {
     global $PHORUM; $user_id = (int)$user_id; $t = $PHORUM['message_table'];
     $n = (int)phorum_db_interact(DB_RETURN_VALUE,

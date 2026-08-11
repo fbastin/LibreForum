@@ -16,7 +16,7 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
-// JavaScript code for Markdown support in the Phorum editor_tools module.
+// JavaScript code for Markdown support in the LibreForum editor_tools module.
 // This script overrides the default BBCode behavior.
 
 var editor_tools_size_picker_obj = null;

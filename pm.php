@@ -36,7 +36,7 @@ include_once("./common.php");
 phorum_require_login();
 
 // CSRF protection: we do not accept posting to this script,
-// when the browser does not include a Phorum signed token
+// when the browser does not include a LibreForum signed token
 // in the request.
 phorum_check_posting_token();
 
@@ -294,7 +294,7 @@ if (!empty($action)) {
                      *     pm_delete_folder
                      *
                      * [availability]
-                     *     Phorum 5 >= 5.2.13
+                     *     LibreForum 5 >= 5.2.13
                      *
                      * [description]
                      *     This hook can be used for working on deletion of a
@@ -305,7 +305,7 @@ if (!empty($action)) {
                      *     Private message system
                      *
                      * [when]
-                     *     Right before Phorum deletes the private message folder.
+                     *     Right before LibreForum deletes the private message folder.
                      *
                      * [input]
                      *     The id of the private message folder going to be deleted.
@@ -351,7 +351,7 @@ if (!empty($action)) {
                          *     pm_delete
                          *
                          * [availability]
-                         *     Phorum 5 >= 5.2.13
+                         *     LibreForum 5 >= 5.2.13
                          *
                          * [description]
                          *     This hook can be used for working deletion of a
@@ -361,7 +361,7 @@ if (!empty($action)) {
                          *     Private message system
                          *
                          * [when]
-                         *     Right before Phorum deletes the private message.
+                         *     Right before LibreForum deletes the private message.
                          *
                          * [input]
                          *     The id of the private message going to be deleted.
@@ -532,7 +532,7 @@ if (!empty($action)) {
                          *     pm_before_send
                          *
                          * [availability]
-                         *     Phorum 5 >= 5.2.15
+                         *     LibreForum 5 >= 5.2.15
                          *
                          * [description]
                          *     This hook can be used for doing modifications to
@@ -815,7 +815,7 @@ switch ($page) {
          *     buddy_list
          *
          * [availability]
-         *     Phorum 5 >= 5.2.7
+         *     LibreForum 5 >= 5.2.7
          *
          * [description]
          *     This hook can be used for reformatting a list of buddies.
@@ -826,7 +826,7 @@ switch ($page) {
          *     Buddies system
          *
          * [when]
-         *     Right after Phorum has formatted the buddy list. This is
+         *     Right after LibreForum has formatted the buddy list. This is
          *     primarily done when the list of buddies is shown in the
          *     private message system.
          *
@@ -894,7 +894,7 @@ switch ($page) {
              *     before_pm_list
              *
              * [availability]
-             *     Phorum 5 >= 5.2.17
+             *     LibreForum 5 >= 5.2.17
              *
              * [description]
              *     This hook can be used for retreiveing a list of messages
@@ -939,7 +939,7 @@ switch ($page) {
              *     pm_list
              *
              * [availability]
-             *     Phorum 5 >= 5.2.7
+             *     LibreForum 5 >= 5.2.7
              *
              * [description]
              *     This hook can be used for reformatting a list of
@@ -949,7 +949,7 @@ switch ($page) {
              *     Private message system
              *
              * [when]
-             *     Right after Phorum has formatted the private message list.
+             *     Right after LibreForum has formatted the private message list.
              *     This is primarily done when a list of private messages is
              *     shown in the private message system.
              *
@@ -1015,7 +1015,7 @@ switch ($page) {
              *     pm_read
              *
              * [availability]
-             *     Phorum 5 >= 5.2.7
+             *     LibreForum 5 >= 5.2.7
              *
              * [description]
              *     This hook can be used for reformatting a single private
@@ -1025,7 +1025,7 @@ switch ($page) {
              *     Private message system
              *
              * [when]
-             *     Right after Phorum has formatted the private message.
+             *     Right after LibreForum has formatted the private message.
              *     This is primarily done when a private message read page is
              *     shown in the private message system.
              *
@@ -1168,7 +1168,7 @@ switch ($page) {
          *     pm_send_init
          *
          * [availability]
-         *     Phorum 5 >= 5.2.15
+         *     LibreForum 5 >= 5.2.15
          *
          * [description]
          *     This hook can be used for doing modifications to the
@@ -1269,7 +1269,7 @@ switch ($page) {
          *     pm_before_editor
          *
          * [availability]
-         *     Phorum 5 >= 5.2.15
+         *     LibreForum 5 >= 5.2.15
          *
          * [description]
          *     This hook can be used for tweaking the template data that
@@ -1279,7 +1279,7 @@ switch ($page) {
          *     Private message system
          *
          * [when]
-         *     Right after Phorum has formatted the template data for the
+         *     Right after LibreForum has formatted the template data for the
          *     editor and just before the editor template is loaded.
          *
          * [input]

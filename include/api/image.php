@@ -20,7 +20,7 @@
 /**
  * This script implements utility functions for working with images.
  *
- * Phorum does not require this API for the core features. It is mainly
+ * LibreForum does not require this API for the core features. It is mainly
  * provided to offer module writers are stable and powerful API for
  * working with images.
  *
@@ -106,7 +106,7 @@ function phorum_api_image_thumbnail($image, $max_w = NULL, $max_h = NULL, $metho
 
     // Try to determine the image type and size using the getimagesize()
     // PHP function. Unfortunately, this function requires a file on disk
-    // to process. Therefore we create a temporary file in the Phorum cache
+    // to process. Therefore we create a temporary file in the LibreForum cache
     // for doing this.
     require_once('./include/api/write_file.php');
     $tmpdir = $GLOBALS['PHORUM']['cache'];
@@ -282,7 +282,7 @@ function phorum_api_image_thumbnail($image, $max_w = NULL, $max_h = NULL, $metho
     if ($method === NULL || $method == 'convert')
     {
         // Try to find the "convert" utility.
-        // First, check if it is configured in the Phorum settings.
+        // First, check if it is configured in the LibreForum settings.
         $convert = NULL;
         if (isset($PHORUM['imagemagick_convert_path'])) {
             $path = $PHORUM['imagemagick_convert_path'];

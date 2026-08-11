@@ -1,6 +1,6 @@
 title: Announcements
 desc:  Shows topics from one forum as announcements in a variety of ways.
-author: Phorum Dev Team
+author: LibreForum Dev Team
 url: http://www.phorum.org/
 
 hook:  after_header|phorum_show_announcements

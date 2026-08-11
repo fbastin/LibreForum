@@ -1,7 +1,7 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.6.3. javascript_register</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Phorum Developer Reference Manual"><link rel="up" href="ch03s06.html" title="3.6. Templating"><link rel="prev" href="ch03s06s02.html" title="3.6.2. css_filter"><link rel="next" href="ch03s06s04.html" title="3.6.4. javascript_filter"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s06s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s06s04.html">Next</a></td></tr></table><hr></div><div class="section" title="3.6.3. javascript_register"><div class="titlepage"><div><div><h3 class="title"><a name="hook.javascript_register"></a>3.6.3. javascript_register</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.6.3. javascript_register</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03s06.html" title="3.6. Templating"><link rel="prev" href="ch03s06s02.html" title="3.6.2. css_filter"><link rel="next" href="ch03s06s04.html" title="3.6.4. javascript_filter"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s06s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s06s04.html">Next</a></td></tr></table><hr></div><div class="section" title="3.6.3. javascript_register"><div class="titlepage"><div><div><h3 class="title"><a name="hook.javascript_register"></a>3.6.3. javascript_register</h3></div></div></div><p>
 
 Modules can provide JavaScript code that has to be added to the
-Phorum pages. Modules that make use of this facility should
+LibreForum pages. Modules that make use of this facility should
 register the JavaScript code using this hook.
       </p><p>
         <span class="bold"><strong>
@@ -25,12 +25,12 @@ The name of the module that adds the registration.
 Specifies the source of the JavaScript data. This can be one of:
 <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><span class="bold"><strong>file(&lt;path to filename&gt;)</strong></span><br>
 For including a static JavaScript file. The path should be
-absolute or relative to the Phorum install directory,
+absolute or relative to the LibreForum install directory,
 e.g. "<code class="literal">file(mods/foobar/baz.js</code>)".
 Because this file is loaded using a PHP include() call,
 it is possible to include PHP code in this file. Mind that
 this code is stored interpreted in the cache.</li><li class="listitem"><span class="bold"><strong>template(&lt;template name&gt;)</strong></span><br>
-For including a Phorum template,
+For including a LibreForum template,
 e.g. "<code class="literal">template(foobar::baz)</code>"</li><li class="listitem"><span class="bold"><strong>function(&lt;function name&gt;)</strong></span><br>
 For calling a function to retrieve the JavaScript code,
 e.g. "<code class="literal">function(mod_foobar_get_js</code>)"</li></ul></div></li><li class="listitem"><span class="bold"><strong>cache_key</strong></span><br>

@@ -9,7 +9,7 @@
 <!-- cc_panel.tpl -->
 
 <div class="attention">
-    L'ancienne galerie Phorum est désormais obsolète et en lecture seule. 
+    L'ancienne galerie LibreForum est désormais obsolète et en lecture seule. 
     Pour ajouter de nouvelles images, merci d'utiliser la nouvelle 
     <a href="/gallery.php" style="color: inherit; text-decoration: underline; font-weight: bold;">Galerie Photos</a> du site.
 </div>

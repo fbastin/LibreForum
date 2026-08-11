@@ -1,6 +1,6 @@
 <?php
 
-// Check if we are loaded from the Phorum admin code.
+// Check if we are loaded from the LibreForum admin code.
 // Direct access to this file is not allowed.
 if (! defined("PHORUM_ADMIN")) return;
 
@@ -8,7 +8,7 @@ if (! defined("PHORUM_ADMIN")) return;
 require_once("./mods/event_logging/constants.php");
 require_once("./mods/event_logging/defaults.php");
 
-print '<h1>Phorum Event Logging</h1>';
+print '<h1>LibreForum Event Logging</h1>';
 
 // This admin interface contains multiple screens. Determine which one
 // we have to load.

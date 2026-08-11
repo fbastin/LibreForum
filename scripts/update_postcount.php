@@ -3,11 +3,11 @@
 
 This is just a simple script for updating the post-count of each user, which
 is shown in the user's profile. It can be run multiple times, but should at
-least be run once after a conversion from Phorum 3 to Phorum 5.
+least be run once after a conversion from LibreForum 3 to LibreForum 5.
 
 How to use?
 
-Just copy this script to your main Phorum 5 directory and run it either
+Just copy this script to your main LibreForum 5 directory and run it either
 from your webbrowser or from the console. It will show only some summary
 in the end, nothing more.
 

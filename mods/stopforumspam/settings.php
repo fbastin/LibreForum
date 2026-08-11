@@ -114,7 +114,7 @@ $frm->addhelp(
     $row, "Log blocked form posts to the Event Logging module?",
     "When both this feature and the Event Logging module are enabled,
      then the Stopforumspam module will log information about blocked
-     registrations to the Phorum Event Log. To view this log, go to
+     registrations to the LibreForum Event Log. To view this log, go to
      <a href=\"$url\">the Event Log viewer</a>"
 );
 

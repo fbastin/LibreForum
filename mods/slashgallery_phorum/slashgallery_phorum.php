@@ -38,7 +38,7 @@ function phorum_mod_slashgallery_phorum_sync_attachments($message) {
     phorum_mod_slashgallery_phorum_load_library();
     if (!class_exists('SlashGallery')) return $message;
 
-    // Load Phorum File API if not already loaded
+    // Load LibreForum File API if not already loaded
     if (!defined('PHORUM_API_FILE')) {
         $phorum_root = realpath(__DIR__ . '/../..');
         $api_path = $phorum_root . '/include/api/file.php';
@@ -67,7 +67,7 @@ function phorum_mod_slashgallery_phorum_sync_attachments($message) {
 
     $current_attachment_filenames = [];
 
-    // 2. Add/Sync current attachments from Phorum
+    // 2. Add/Sync current attachments from LibreForum
     if (!empty($message['attachments'])) {
         foreach ($message['attachments'] as $attachment) {
             if (!preg_match('/\.(jpg|jpeg|png|webp|gif)$/i', $attachment['name'])) continue;
@@ -93,7 +93,7 @@ function phorum_mod_slashgallery_phorum_sync_attachments($message) {
         }
     }
 
-    // 3. Remove orphaned images (if attachment was removed in Phorum)
+    // 3. Remove orphaned images (if attachment was removed in LibreForum)
     foreach ($existing_filenames as $filename) {
         if (!in_array($filename, $current_attachment_filenames)) {
             $gallery->deleteImage($filename);
@@ -112,7 +112,7 @@ function phorum_mod_slashgallery_phorum_after_edit($message) {
 }
 
 function phorum_mod_slashgallery_phorum_before_delete($data) {
-    // Phorum before_delete hook passes an array: 
+    // LibreForum before_delete hook passes an array: 
     // array($handled, $msg_ids, $msgthd_id, $message, $delete_mode)
     if (!is_array($data)) return $data;
 

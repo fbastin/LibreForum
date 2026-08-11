@@ -155,7 +155,7 @@ $frm->addsubbreak("Please refer to the <a target=\"_blank\" href=\"" . $PHORUM["
 $row = $frm->addrow("Use a cronjob mail queue (Please read the help popup or the <a target=\"_blank\" href=\"" . $PHORUM["http_path"] . "/mods/forum_subscriptions/README\">README</a><br>before using this feature): ", $frm->checkbox("enable_mail_queue", "1", "", $PHORUM["phorum_mod_forum_subscriptions"]["enable_mail_queue"]));
 $frm->addhelp($row, "Using a Cronjob Mail Queue", "If you would like to use the Cronjob Mail Queue option you will need to complete two steps:<br>
 <br>
-First, you must add a cronjob to call the Phorum \"scheduled\" hook from the Phorum script.php file.  I would recommend that this cronjob run every minute. The module will handle any time-outs or errors which otherwise could cause the cronjob to run two instances of this module.  This is one example cronjob:<br>
+First, you must add a cronjob to call the LibreForum \"scheduled\" hook from the LibreForum script.php file.  I would recommend that this cronjob run every minute. The module will handle any time-outs or errors which otherwise could cause the cronjob to run two instances of this module.  This is one example cronjob:<br>
 <br>
 * * * * * cd your/phorum/root && /usr/bin/php ./script.php --scheduled<br>
 <br>

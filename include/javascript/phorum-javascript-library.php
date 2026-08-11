@@ -17,9 +17,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * A non-conflicting jQuery library for use by Phorum. This way, our jQuery
+ * A non-conflicting jQuery library for use by LibreForum. This way, our jQuery
  * library will not conflict with existing javascript libraries (e.g. when
- * Phorum is embedded in another application that uses a javascript library
+ * LibreForum is embedded in another application that uses a javascript library
  * or when a module is loaded that also loads a library of its own).
  *
  * @var jQuery

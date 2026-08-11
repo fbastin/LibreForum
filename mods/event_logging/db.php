@@ -88,7 +88,7 @@ function event_logging_db_install()
  *                               be used for providing a debug backtrace.
  *                   source      The source of the log message. This is a
  *                               free 32 char text field, which can be used
- *                               to specifiy what part of Phorum generated the
+ *                               to specifiy what part of LibreForum generated the
  *                               log message (e.g. "mod_smileys"). If no
  *                               source is provided, the "phorum_page"
  *                               constant will be used instead.
@@ -103,7 +103,7 @@ function event_logging_db_install()
  *                               Options for this field are:
  *                               EVENTLOG_LVL_DEBUG
  *                                 Messages that are used by programmers
- *                                 for tracking low level Phorum operation.
+ *                                 for tracking low level LibreForum operation.
  *                               EVENTLOG_LVL_INFO
  *                                 Messages that provide logging for events
  *                                 that occur during normal operation. These
@@ -117,7 +117,7 @@ function event_logging_db_install()
  *                                 or a duplicate message being posted).
  *                               EVENTLOG_LVL_ERROR
  *                                 Error messages indicate non urgent failures
- *                                 in Phorum operation. These should be
+ *                                 in LibreForum operation. These should be
  *                                 relayed to administrators and/or developers
  *                                 to have them solved.
  *                               EVENTLOG_LVL_ALERT
@@ -532,7 +532,7 @@ function event_logging_write_to_file($record)
 
     $date = date("Y-m-d H:i:s", isset($record["datestamp"]) ? $record["datestamp"] : time());
 
-    // Strip surrounding quotes and unescape Phorum's SQL quoting
+    // Strip surrounding quotes and unescape LibreForum's SQL quoting
     $msg = isset($record["message"]) ? stripslashes(trim($record["message"], "'")) : "";
     $details = isset($record["details"]) ? stripslashes(trim($record["details"], "'")) : "";
     $source = isset($record["source"]) ? stripslashes(trim($record["source"], "'")) : "unknown";

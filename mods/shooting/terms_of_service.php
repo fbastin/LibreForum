@@ -186,7 +186,7 @@ function mod_tos_do_sanity_checks() {
           return array(
                      PHORUM_SANITY_CRIT,
                      'The default settings for the module are missing.',
-                     "Login as administrator in Phorum's administrative "
+                     "Login as administrator in LibreForum's administrative "
                          .'interface and go to the "Modules" section. Open '
                          .'the module settings for the Terms of Service '
                          .'Module and save the default values.'

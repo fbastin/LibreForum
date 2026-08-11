@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.11. User authentication and session handling</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Phorum Developer Reference Manual"><link rel="up" href="ch03.html" title="Chapter 3. Module hooks"><link rel="prev" href="ch03s10s08.html" title="3.10.8. after_register"><link rel="next" href="ch03s11s02.html" title="3.11.2. user_session_create"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s10s08.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s11s02.html">Next</a></td></tr></table><hr></div><div class="section" title="3.11. User authentication and session handling"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="hooks.category.userauthenticationandsessionhandling"></a>3.11. User authentication and session handling</h2></div></div></div><div class="section" title="3.11.1. user_authenticate"><div class="titlepage"><div><div><h3 class="title"><a name="hook.user_authenticate"></a>3.11.1. user_authenticate</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.11. User authentication and session handling</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03.html" title="Chapter 3. Module hooks"><link rel="prev" href="ch03s10s08.html" title="3.10.8. after_register"><link rel="next" href="ch03s11s02.html" title="3.11.2. user_session_create"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s10s08.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s11s02.html">Next</a></td></tr></table><hr></div><div class="section" title="3.11. User authentication and session handling"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="hooks.category.userauthenticationandsessionhandling"></a>3.11. User authentication and session handling</h2></div></div></div><div class="section" title="3.11.1. user_authenticate"><div class="titlepage"><div><div><h3 class="title"><a name="hook.user_authenticate"></a>3.11.1. user_authenticate</h3></div></div></div><p>
 
 This hooks gives modules a chance to handle the user
 authentication (for example to authenticate against an
@@ -9,7 +9,7 @@ external source like an LDAP server).
         </strong></span>
       </p><p>
 
-Just before Phorum runs its own user authentication.
+Just before LibreForum runs its own user authentication.
       </p><p>
         <span class="bold"><strong>
           Hook input:
@@ -32,7 +32,7 @@ authentication state.</li></ul></div><p>
 The same array as the one that was used for the hook call
 argument, possibly with the user_id field updated. This field
 can be set to one of the following values by a module:
-</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">NULL: let Phorum handle the authentication</li><li class="listitem">FALSE: the authentication credentials are rejected</li><li class="listitem">1234: the numerical user_id of the authenticated user</li></ul></div><p>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">NULL: let LibreForum handle the authentication</li><li class="listitem">FALSE: the authentication credentials are rejected</li><li class="listitem">1234: the numerical user_id of the authenticated user</li></ul></div><p>
       </p><p>
         <span class="bold"><strong>
           Example code:
@@ -50,7 +50,7 @@ function phorum_mod_foo_user_authenticate($auth)
         }
     }
 
-    // Let Phorum handle autentication for all users that
+    // Let LibreForum handle autentication for all users that
     // have a username starting with "bar" (not a really
     // useful feature, but it shows the use of the NULL
     // return value ;-).

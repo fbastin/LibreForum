@@ -8,7 +8,7 @@
  * keep in mind that others could use this script to overwrite files on your webserver 
  * therefore there is the first exit(); in there, you have to remove it to use the script too
  * 
- * to have Phorum use the static CSS, you'll have to edit header.tpl, instead the include of the css
+ * to have LibreForum use the static CSS, you'll have to edit header.tpl, instead the include of the css
  * you have to use a link href ... 
  */
 

@@ -1,5 +1,5 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.4.2. get_template_file</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Phorum Developer Reference Manual"><link rel="up" href="ch03s04.html" title="3.4. Page output"><link rel="prev" href="ch03s04.html" title="3.4. Page output"><link rel="next" href="ch03s04s03.html" title="3.4.3. start_output"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s04.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s04s03.html">Next</a></td></tr></table><hr></div><div class="section" title="3.4.2. get_template_file"><div class="titlepage"><div><div><h3 class="title"><a name="hook.get_template_file"></a>3.4.2. get_template_file</h3></div></div></div><p>
-        (Phorum 5 &gt;= 5.2.11)
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.4.2. get_template_file</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03s04.html" title="3.4. Page output"><link rel="prev" href="ch03s04.html" title="3.4. Page output"><link rel="next" href="ch03s04s03.html" title="3.4.3. start_output"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s04.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s04s03.html">Next</a></td></tr></table><hr></div><div class="section" title="3.4.2. get_template_file"><div class="titlepage"><div><div><h3 class="title"><a name="hook.get_template_file"></a>3.4.2. get_template_file</h3></div></div></div><p>
+        (LibreForum 5 &gt;= 5.2.11)
       </p><p>
 
 Allow modules to have influence on the results of the
@@ -36,12 +36,12 @@ Same as input. Modules can override either or both of the array
 elements. When the "source" element is set after running the
 hook, then the file named in this element is directly used as
 the template source. It must end in either ".php" or ".tpl" to
-be accepted as a template source. Phorum does not do any additional
+be accepted as a template source. LibreForum does not do any additional
 checking on this source file name. It is the module's duty to
 provide a correct source file name.<br>
 Otherwise, the template source file is determined based on
 the value of the "page" element, following the standard
-Phorum template resolving rules.
+LibreForum template resolving rules.
       </p><p>
         <span class="bold"><strong>
           Example code:

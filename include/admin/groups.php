@@ -230,7 +230,7 @@
 
         $frm = new PhorumInputForm ("", "post");
 
-        $frm->addbreak("Phorum Group Admin");
+        $frm->addbreak("LibreForum Group Admin");
 
         $frm->hidden("module", "groups");
 

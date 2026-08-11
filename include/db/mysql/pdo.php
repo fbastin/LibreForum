@@ -3,7 +3,7 @@
 if (!defined('PHORUM')) return;
 
 /**
- * Phorum database interaction using PDO.
+ * LibreForum database interaction using PDO.
  */
 function phorum_db_interact($return, $sql = NULL, $keyfield = NULL, $flags = 0)
 {
@@ -52,7 +52,7 @@ function phorum_db_interact($return, $sql = NULL, $keyfield = NULL, $flags = 0)
     if ($return === DB_RETURN_QUOTED) {
         $quoted = $conn->quote($sql);
         if ($quoted !== false) {
-            // PDO adds single quotes around the escaped string, Phorum expects just the escaped inner string.
+            // PDO adds single quotes around the escaped string, LibreForum expects just the escaped inner string.
             return substr($quoted, 1, -1);
         }
         return addslashes($sql);

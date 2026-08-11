@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Intercepts a search GET URL and sends it to a proper Phorum URL
+ * Intercepts a search GET URL and sends it to a proper LibreForum URL
  *
  * @return  void
  *
@@ -30,7 +30,7 @@ function pm_enhanced_intercept_search_form()
  *
  * @param integer $user_id
  *     The user to retrieve messages for or NULL to use the active
- *     Phorum user (default).
+ *     LibreForum user (default).
  *
  * @param boolean $reverse
  *     If set to a true value (default), sorting of messages is done

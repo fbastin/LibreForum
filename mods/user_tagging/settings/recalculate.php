@@ -94,7 +94,7 @@ $frm->addmessage(
     "This module makes use of its own post counters.
      Using this page, you can recalculate all of these counters.
      This is especially useful after installing the module on
-     an already running Phorum system or after deleting a lot of
+     an already running LibreForum system or after deleting a lot of
      messages."
 );
 

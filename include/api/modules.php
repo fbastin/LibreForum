@@ -18,9 +18,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * This script implements the Phorum module admin API.
+ * This script implements the LibreForum module admin API.
  *
- * This API is used for managing Phorum modules. It can be used to retrieve
+ * This API is used for managing LibreForum modules. It can be used to retrieve
  * information about the available modules and takes care of activating
  * and deactivating them.
  *
@@ -48,11 +48,11 @@ $GLOBALS['PHORUM']['API']['mods_deprecated_hooks'] = array(
 
 /**
  * This array describes modules that are no longer part of the core
- * Phorum distribution. If a module from this list is found, then
+ * LibreForum distribution. If a module from this list is found, then
  * a check is done to see if its version is lower than the provided
  * theshold version. If yes, then the module is displayed as disabled
  * in the module information and the admin is told to download the
- * new version of the module from the Phorum.org website.
+ * new version of the module from the LibreForum.org website.
  */
 $GLOBALS['PHORUM']['API']['mods_no_longer_bundled'] = array(
     'html' => array(
@@ -207,7 +207,7 @@ function phorum_api_modules_list()
     closedir($dh);
 
     // Check if there are modules available, which are no longer
-    // included in the Phorum core distribution. If yes, then check
+    // included in the LibreForum core distribution. If yes, then check
     // if the version of those modules indicates an old bundled version
     // of the module. In that case, the module is disabled and the admin
     // is told where to get an up-to-date version of the module.
@@ -222,7 +222,7 @@ function phorum_api_modules_list()
                     $info['version']     // required module's version
                 ) == -1) {
                 $modules[$module]['url'] = $info['url'];
-                $problems[] = "The module \"{$modinfo['title']}\" is no longer included in the core Phorum distribution. A more recent version of this module (version {$info['version']} or higher) is available at the phorum.org website. Please download and install that version. For more information, visit <a href=\"{$info['url']}\" target=\"_new\">the module's page at phorum.org</a>.";
+                $problems[] = "The module \"{$modinfo['title']}\" is no longer included in the core LibreForum distribution. A more recent version of this module (version {$info['version']} or higher) is available at the phorum.org website. Please download and install that version. For more information, visit <a href=\"{$info['url']}\" target=\"_new\">the module's page at phorum.org</a>.";
             } 
         }
     }

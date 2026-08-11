@@ -46,7 +46,7 @@ function phorum_mod_jumpmenu_common()
 
     // Load the forum list.
     // The two different constructions are used for making this module
-    // compatible with both Phorum 5.2 and 5.3.
+    // compatible with both LibreForum 5.2 and 5.3.
     if (file_exists('./include/forum_functions.php')) {
         include "./include/forum_functions.php";
         $forums = phorum_build_forum_list();
@@ -177,7 +177,7 @@ function phorum_mod_jumpmenu_before_footer()
           "    \$PJ('div.mod_jumpmenu_menu').each(function () {\n" .
           "        \$PJ('body').append(this);\n" .
           "    });\n" .
-          "    // Initialize the Phorum jumpmenu.\n" .
+          "    // Initialize the LibreForum jumpmenu.\n" .
           "    PhorumJumpMenu.init();\n" .
           "});\n" .
           "// ]]>\n" .

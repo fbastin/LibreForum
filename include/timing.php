@@ -18,7 +18,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // This library contains some functions that can be used for
-// code benchmarking. It is not actively in use in the Phorum
+// code benchmarking. It is not actively in use in the LibreForum
 // core, but its functions are used by the developers once
 // in a while.
 

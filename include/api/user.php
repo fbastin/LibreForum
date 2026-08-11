@@ -18,15 +18,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * This script implements the Phorum user API.
+ * This script implements the LibreForum user API.
  *
  * The user API is used for managing users and user related data. The API
- * does also implement the Phorum session system, which is used for
+ * does also implement the LibreForum session system, which is used for
  * remembering authenticated users. See the documentation for the function
  * {@link phorum_api_user_session_create()} for more information on
- * Phorum user sessions.
+ * LibreForum user sessions.
  *
- * The Phorum user API supports modules which can override Phorum's
+ * The LibreForum user API supports modules which can override LibreForum's
  * authentication and session handling. And example module is provided
  * with the user API documentation.
  *
@@ -47,7 +47,7 @@ if (!defined('PHORUM')) return;
 
 // {{{ Constant and variable definitions
 /**
- * If a user API is written as a replacement for the standard Phorum user API,
+ * If a user API is written as a replacement for the standard LibreForum user API,
  * where the replacement API is incompatible with the standard API, then this
  * define should be set to FALSE. That will disable the user management
  * functions in the admin interface.
@@ -95,7 +95,7 @@ define('PHORUM_FLAG_SESSION_ST',       1);
 /**
  * Function call flag, which tells {@link phorum_api_user_save()} that the
  * password field should be stored as is.
- * This can be used to feed Phorum MD5 encrypted passwords. Normally,
+ * This can be used to feed LibreForum MD5 encrypted passwords. Normally,
  * the password field would be MD5 encrypted by the function. This will
  * keep the phorum_api_user_save() function from double encrypting the password.
  */
@@ -251,27 +251,27 @@ define('PHORUM_USER_GROUP_APPROVED', 1);
 define('PHORUM_USER_GROUP_MODERATOR', 2);
 
 /**
- * Subscription type, which tells Phorum explicitly that the user
+ * Subscription type, which tells LibreForum explicitly that the user
  * does not have a subscription of any kind for the forum or thread.
  */
 define("PHORUM_SUBSCRIPTION_NONE", -1);
 
 /**
- * Subscription type, which tells Phorum to send out a mail message for
+ * Subscription type, which tells LibreForum to send out a mail message for
  * every new forum or thread that a user is subscribed to.
  */
 define("PHORUM_SUBSCRIPTION_MESSAGE", 0);
 
 /**
- * Subscription type, which tells Phorum to periodially send a mail message,
+ * Subscription type, which tells LibreForum to periodially send a mail message,
  * containing a list of new messages in forums or threads that a user is
  * subscribed to. There is currently no support for this type of subscription
- * in the Phorum core code.
+ * in the LibreForum core code.
  */
 define("PHORUM_SUBSCRIPTION_DIGEST", 1);
 
 /**
- * Subscription type, which tells Phorum to make the forums or threads that
+ * Subscription type, which tells LibreForum to make the forums or threads that
  * a user is subscribed to accessible from the followed threads interface in
  * the control center. No mail is sent for new messages, but the user can
  * check for new messages using that interface.
@@ -284,7 +284,7 @@ define("PHORUM_SUBSCRIPTION_BOOKMARK", 2);
  */
 $GLOBALS['PHORUM']['API']['user_fields'] = array
 (
-  // Fields that are really in the Phorum users table.
+  // Fields that are really in the LibreForum users table.
   'user_id'                 => 'int',
   'username'                => 'string',
   'real_name'               => 'string',
@@ -339,15 +339,15 @@ $GLOBALS['PHORUM']['API']['user_fields'] = array
 
 // {{{ Function: phorum_api_user_save()
 /**
- * Create or update Phorum users.
+ * Create or update LibreForum users.
  *
- * This function can be used for both creating and updating Phorum users.
+ * This function can be used for both creating and updating LibreForum users.
  * If the user_id in the user data is NULL, a new user will be created.
  * If a user_id is provided, then the existing user will be updated or a
  * new user with that user_id is created.
  *
  * Often when calling this function yourself, you will be doing that for
- * synchronizing a user from some external system with the Phorum database.
+ * synchronizing a user from some external system with the LibreForum database.
  * For those cases, the most basic use of this API function can be found
  * in the examples below.
  * <code>
@@ -388,7 +388,7 @@ $GLOBALS['PHORUM']['API']['user_fields'] = array
  * @param int $flags
  *     If the flag {@link PHORUM_FLAG_RAW_PASSWORD} is set, then the
  *     password fields ("password" and "password_temp") are considered to be
- *     MD5 encrypted already. So this can be used to feed Phorum existing MD5
+ *     MD5 encrypted already. So this can be used to feed LibreForum existing MD5
  *     encrypted passwords.
  *
  * @return int
@@ -533,7 +533,7 @@ function phorum_api_user_save($user, $flags = 0)
         );
         return NULL;
     }
-    // Phorum sends out mail messages on several occasions. So we need a
+    // LibreForum sends out mail messages on several occasions. So we need a
     // mail address for the user.
     if (!isset($dbuser['email']) || $dbuser['email'] == '') {
         trigger_error(
@@ -568,7 +568,7 @@ function phorum_api_user_save($user, $flags = 0)
         // of an empty string as a safety precaution. Instead we store a
         // string which will never work as a password. This could happen in
         // case of bugs in the code or in case external user auth is used
-        // (in which case Phorum can have empty passwords, since the Phorum
+        // (in which case LibreForum can have empty passwords, since the LibreForum
         // passwords are not used at all).
         if (!isset($dbuser[$fld]) || $dbuser[$fld] === NULL ||
             $dbuser[$fld] == '' || $dbuser[$fld] == '*NO PASSWORD SET*') {
@@ -586,10 +586,10 @@ function phorum_api_user_save($user, $flags = 0)
     // Determine the display name to use for the user. If the setting
     // $PHORUM["custom_display_name"] is enabled (a "secret" setting which
     // cannot be changed through the admin settings, but only through
-    // modules that consciously set it), then Phorum expects that the display
+    // modules that consciously set it), then LibreForum expects that the display
     // name is a HTML formatted display_name field, which is provided by
     // 3rd party software. Otherwise, the username or real_name is used
-    // (depending on the $PHORUM["display_name_source"] Phorum setting).
+    // (depending on the $PHORUM["display_name_source"] LibreForum setting).
     if (empty($PHORUM['custom_display_name'])) {
         $display_name = $dbuser['username'];
         if ($PHORUM['display_name_source'] == 'real_name' &&
@@ -617,10 +617,10 @@ function phorum_api_user_save($user, $flags = 0)
      *     This hook can be used to handle the data that is going to be
      *     stored in the database for a user. Modules can do some last
      *     minute change on the data or keep some external system in sync
-     *     with the Phorum user data.<sbr/>
+     *     with the LibreForum user data.<sbr/>
      *     <sbr/>
      *     In combination with the <hook>user_get</hook> hook, this hook
-     *     could also be used to store and retrieve some of the Phorum
+     *     could also be used to store and retrieve some of the LibreForum
      *     user fields using some external system.
      *
      * [category]
@@ -687,7 +687,7 @@ function phorum_api_user_save($user, $flags = 0)
      *     function phorum_mod_foo_user_register($user)
      *     {
      *         // Log user registrations through syslog.
-     *         openlog("Phorum", LOG_PID | LOG_PERROR, LOG_LOCAL0);
+     *         openlog("LibreForum", LOG_PID | LOG_PERROR, LOG_LOCAL0);
      *         syslog(LOG_NOTICE, "New user registration: $user[username]");
      *
      *         return $user;
@@ -724,7 +724,7 @@ function phorum_api_user_save($user, $flags = 0)
     }
 
     // If the display name changed for the user, then we do need to run
-    // updates throughout the Phorum database to make references to this
+    // updates throughout the LibreForum database to make references to this
     // user to show up correctly.
     if ($existing && $existing['display_name'] != $dbuser['display_name']) {
        phorum_db_user_display_name_updates($dbuser);
@@ -735,7 +735,7 @@ function phorum_api_user_save($user, $flags = 0)
         phorum_cache_remove('user', $dbuser['user_id']);
     }
 
-    // Are we handling the active Phorum user? Then refresh the user data.
+    // Are we handling the active LibreForum user? Then refresh the user data.
     if (isset($PHORUM['user']) &&
         $PHORUM['user']['user_id'] == $dbuser['user_id']) {
         $PHORUM['user'] = phorum_api_user_get($user['user_id'], TRUE, TRUE);
@@ -747,12 +747,12 @@ function phorum_api_user_save($user, $flags = 0)
 
 // {{{ Function: phorum_api_user_save_raw()
 /**
- * This function quickly updates the Phorum users table, using all fields in
+ * This function quickly updates the LibreForum users table, using all fields in
  * the user data as real user table fields.
  *
  * This is the quickest way to update the user table. Care has to be taken
  * by the calling function though, to provide the information exactly as the
- * Phorum users table expects it. Only use this function if speed is really
+ * LibreForum users table expects it. Only use this function if speed is really
  * an issue.
  *
  * @param array $user
@@ -798,12 +798,12 @@ function phorum_api_user_save_raw($user)
 
 // {{{ Function: phorum_api_user_save_settings()
 /**
- * Create or update user settings for the active Phorum user.
+ * Create or update user settings for the active LibreForum user.
  *
  * This function can be used to store arbitrairy settings for the active
- * Phorum user in the database. The main goal for this function is to store
- * user settings which are not available as a Phorum user table field in
- * the database. These are settings which do not really belong to the Phorum
+ * LibreForum user in the database. The main goal for this function is to store
+ * user settings which are not available as a LibreForum user table field in
+ * the database. These are settings which do not really belong to the LibreForum
  * core, but which are for example used for remembering some kind of state
  * in a user interface (templates). Since each user interface might require
  * different settings, a dynamic settings storage like this is required.
@@ -856,7 +856,7 @@ function phorum_api_user_save_settings($settings)
 
 // {{{ Function: phorum_api_user_get()
 /**
- * Retrieve data for Phorum users.
+ * Retrieve data for LibreForum users.
  *
  * @param mixed $user_id
  *     Either a single user_id or an array of user_ids.
@@ -986,7 +986,7 @@ function phorum_api_user_get($user_id, $detailed = FALSE, $use_write_server = FA
      *     user data.<sbr/>
      *     <sbr/>
      *     In combination with the <hook>user_save</hook> hook, this hook
-     *     could also be used to store and retrieve some of the Phorum
+     *     could also be used to store and retrieve some of the LibreForum
      *     user fields in some external system
      *
      * [category]
@@ -1013,7 +1013,7 @@ function phorum_api_user_get($user_id, $detailed = FALSE, $use_write_server = FA
      *     {
      *         // Let's asume that our usernames are based on the
      *         // system users on a UNIX system. We could merge some
-     *         // info from the password file with the Phorum info here.
+     *         // info from the password file with the LibreForum info here.
      *
      *         // First try to lookup the password file entry.
      *         // Return if this lookup fails.
@@ -1051,7 +1051,7 @@ function phorum_api_user_get($user_id, $detailed = FALSE, $use_write_server = FA
 /**
  * This function can be used to retrieve the value for a user setting
  * that was stored by the {@link phorum_api_user_save_settings()} function
- * for the active Phorum user.
+ * for the active LibreForum user.
  *
  * @param string $name
  *     The name of the setting for which to retrieve the setting value.
@@ -1086,7 +1086,7 @@ function phorum_api_user_get_setting($name)
  *
  * @param mixed $user_id
  *     Either a single user_id, an array of user_ids or NULL to use the
- *     user_id of the active Phorum user.
+ *     user_id of the active LibreForum user.
  *
  * @param mixed $fallback
  *     The fallback display name to use in case the user is unknown or NULL
@@ -1134,7 +1134,7 @@ function phorum_api_user_get_display_name($user_id = NULL, $fallback = NULL, $fl
         if ($flags == PHORUM_FLAG_HTML)
         {
             // If the setting $PHORUM["custom_display_name"] is enabled,
-            // then Phorum expects that the display name is a HTML
+            // then LibreForum expects that the display name is a HTML
             // formatted display_name field, which is provided by
             // 3rd party software. So those do not have to be HTML escaped.
             // Other names do have to be escaped.
@@ -1157,7 +1157,7 @@ function phorum_api_user_get_display_name($user_id = NULL, $fallback = NULL, $fl
                 $display_name = trim(strip_tags($display_name));
 
                 // If the name was 100% HTML code (so empty after stripping),
-                // then fallback to the default display_name that Phorum
+                // then fallback to the default display_name that LibreForum
                 // would use without the custom display name feature.
                 if ($display_name == '') {
                     if (empty($users[$id])) {
@@ -1292,7 +1292,7 @@ function phorum_api_user_search_custom_profile_field($field_id, $value, $operato
 
 // {{{ Function: phorum_api_user_list()
 /**
- * Retrieve a list of Phorum users.
+ * Retrieve a list of LibreForum users.
  *
  * @param int $type
  *     One of:
@@ -1330,8 +1330,8 @@ function phorum_api_user_list($type = PHORUM_GET_ALL)
      *
      * [when]
      *     Each time the phorum_api_user_list() function is called. The core
-     *     Phorum code calls the function for creating user drop down lists
-     *     (if those are enabled in the Phorum general settings) for the
+     *     LibreForum code calls the function for creating user drop down lists
+     *     (if those are enabled in the LibreForum general settings) for the
      *     group moderation interface in the control center and for sending
      *     private messages.
      *
@@ -1381,7 +1381,7 @@ function phorum_api_user_list($type = PHORUM_GET_ALL)
  * @param mixed $user_id
  *     The user_id for which to increment the posts counter
  *     or NULL (the default) to increment the posts counter for the
- *     active Phorum user.
+ *     active LibreForum user.
  */
 function phorum_api_user_increment_posts($user_id = NULL)
 {
@@ -1396,7 +1396,7 @@ function phorum_api_user_increment_posts($user_id = NULL)
 
 // {{{ Function: phorum_api_user_delete()
 /**
- * Delete a Phorum user.
+ * Delete a LibreForum user.
  *
  * @param integer $user_id
  *     The user_id of the user that has to be deleted.
@@ -1411,7 +1411,7 @@ function phorum_api_user_delete($user_id)
      *
      * [description]
      *     Modules can use this hook to run some additional user cleanup
-     *     tasks or or to keep some external system in sync with the Phorum
+     *     tasks or or to keep some external system in sync with the LibreForum
      *     user data.
      *
      * [category]
@@ -1435,7 +1435,7 @@ function phorum_api_user_delete($user_id)
      *         $user = phorum_api_user_get($user_id);
      *
      *         // Log user delete through syslog.
-     *         openlog("Phorum", LOG_PID | LOG_PERROR, LOG_LOCAL0);
+     *         openlog("LibreForum", LOG_PID | LOG_PERROR, LOG_LOCAL0);
      *         syslog(LOG_NOTICE, "Delete user registration: $user[username]");
      *
      *         return $user_id;
@@ -1517,7 +1517,7 @@ function phorum_api_user_format($users)
  *     restrictions are handled in a different part of the user API.
  *
  *     See the documentation for {@link phorum_api_user_session_create()}
- *     for more information on Phorum user sessions.
+ *     for more information on LibreForum user sessions.
  *
  * @param string $username
  *     The username for the user.
@@ -1548,7 +1548,7 @@ function phorum_api_user_authenticate($type, $username, $password)
      *     User authentication and session handling
      *
      * [when]
-     *     Just before Phorum runs its own user authentication.
+     *     Just before LibreForum runs its own user authentication.
      *
      * [input]
      *     An array containing the following fields:
@@ -1570,7 +1570,7 @@ function phorum_api_user_authenticate($type, $username, $password)
      *     can be set to one of the following values by a module:
      *
      *     <ul>
-     *     <li>NULL: let Phorum handle the authentication</li>
+     *     <li>NULL: let LibreForum handle the authentication</li>
      *     <li>FALSE: the authentication credentials are rejected</li>
      *     <li>1234: the numerical user_id of the authenticated user</li>
      *     </ul>
@@ -1587,7 +1587,7 @@ function phorum_api_user_authenticate($type, $username, $password)
      *             }
      *         }
      *
-     *         // Let Phorum handle autentication for all users that
+     *         // Let LibreForum handle autentication for all users that
      *         // have a username starting with "bar" (not a really
      *         // useful feature, but it shows the use of the NULL
      *         // return value ;-).
@@ -1629,7 +1629,7 @@ function phorum_api_user_authenticate($type, $username, $password)
             trigger_error(
                 'Hook user_check_login returned a non-numerical user_id "' .
                 htmlspecialchars($authinfo['user_id']) .
-                '" for the authenticated user. Phorum only supports numerical ' .
+                '" for the authenticated user. LibreForum only supports numerical ' .
                 'user_id values.',
                 E_USER_ERROR
             );
@@ -1640,7 +1640,7 @@ function phorum_api_user_authenticate($type, $username, $password)
     }
 
     // No module handled the authentication?
-    // Then we have to run the Phorum authentication.
+    // Then we have to run the LibreForum authentication.
     if ($user_id === NULL)
     {
         // Check the password.
@@ -1677,11 +1677,11 @@ function phorum_api_user_authenticate($type, $username, $password)
 
 // {{{ Function: phorum_api_user_set_active_user()
 /**
- * Set the active Phorum user.
+ * Set the active LibreForum user.
  *
- * This function can be used to setup the Phorum data in $PHORUM['user']
+ * This function can be used to setup the LibreForum data in $PHORUM['user']
  * to indicate which user is logged in or to setup the anonymous user.
- * Calling this function is all that is needed to tell Phorum which user
+ * Calling this function is all that is needed to tell LibreForum which user
  * is logged in (or to tell that no user is logged in by setting up the
  * anonymous user in $PHORUM['user']).
  *
@@ -1709,7 +1709,7 @@ function phorum_api_user_authenticate($type, $username, $password)
  *     The type of session for which to set the active user. This must be
  *     one of {@link PHORUM_FORUM_SESSION} or {@link PHORUM_ADMIN_SESSION}.
  *     See the documentation for {@link phorum_api_user_session_create()}
- *     for more information on Phorum user sessions.
+ *     for more information on LibreForum user sessions.
  *
  * @param mixed $user
  *     The user_id or the full user data array for the user that has to be
@@ -1801,7 +1801,7 @@ function phorum_api_user_set_active_user($type, $user = NULL, $flags = 0)
 
     if (! $user)
     {
-        // Fill the Phorum user with anonymous user data.
+        // Fill the LibreForum user with anonymous user data.
         $PHORUM['user'] = array(
             'user_id'   => 0,
             'username'  => '',
@@ -1815,7 +1815,7 @@ function phorum_api_user_set_active_user($type, $user = NULL, $flags = 0)
     }
 
     // ----------------------------------------------------------------------
-    // Set the active Phorum user and handle activity tracking.
+    // Set the active LibreForum user and handle activity tracking.
     // ----------------------------------------------------------------------
 
     $PHORUM['user'] = $user;
@@ -1860,12 +1860,12 @@ function phorum_api_user_set_active_user($type, $user = NULL, $flags = 0)
 
 // {{{ Function: phorum_api_user_get_active_user()
 /**
- * Retrieve the active Phorum user. 
+ * Retrieve the active LibreForum user. 
  *
- * This function was added in Phorum 5.2.16.
+ * This function was added in LibreForum 5.2.16.
  *
  * @return NULL|array
- *   This method will return the data for the active Phorum user or 
+ *   This method will return the data for the active LibreForum user or 
  *   NULL when this user is an anonymous user (i.e. not logged in.)
  */
 function phorum_api_user_get_active_user()
@@ -1877,13 +1877,13 @@ function phorum_api_user_get_active_user()
 
 // {{{ Function: phorum_api_user_session_create()
 /**
- * Create a Phorum user session.
+ * Create a LibreForum user session.
  *
  * Before calling this function, the variable $PHORUM['use_cookies']
  * should be set to one of {@link PHORUM_NO_COOKIES},
  * {@link PHORUM_USE_COOKIES} or {@link PHORUM_REQUIRE_COOKIES}.
  *
- * Phorum does not use PHP sessions. Instead, it uses its own session
+ * LibreForum does not use PHP sessions. Instead, it uses its own session
  * management system for remembering logged in users. There are
  * multiple reasons for that, amongst which are:
  *
@@ -1894,10 +1894,10 @@ function phorum_api_user_get_active_user()
  * - file I/O problems (both performance and file system permissions can
  *   be a problem);
  * - the amount of unneeded overhead that is caused by the PHP session system;
- * - the fact that Phorum also supports URI based sessions (without cookie).
+ * - the fact that LibreForum also supports URI based sessions (without cookie).
  *
  * This function can be used to create or maintain a login session for a
- * Phorum user. A prerequisite is that an active Phorum user is set through
+ * LibreForum user. A prerequisite is that an active LibreForum user is set through
  * the {@link phorum_api_user_set_active_user()} function, before calling
  * this function.
  *
@@ -1915,7 +1915,7 @@ function phorum_api_user_get_active_user()
  * The forum sessions can be split up into long term and short term sessions:
  *
  * - Long term session:
- *   The standard Phorum user session. This session is long lasting and will
+ *   The standard LibreForum user session. This session is long lasting and will
  *   survive after closing the browser (unless the long term session timeout
  *   is set to zero). If tighter security is not enabled, then this session
  *   is all a user needs to fully use all forum options. This session is
@@ -1927,7 +1927,7 @@ function phorum_api_user_get_active_user()
  *   to use all forum functions, unless there is a short term session active
  *   (e.g. posting forum messages and reading/writing private messages are
  *   restricted). This session is tracked using a cookie. If URI authentication
- *   is in use (because of admin config or cookie-less browsers) Phorum will
+ *   is in use (because of admin config or cookie-less browsers) LibreForum will
  *   only look at the long term session (even in tighter security mode), since
  *   URI authentication can be considered to be short term by nature.
  *
@@ -1968,7 +1968,7 @@ function phorum_api_user_session_create($type, $reset = 0)
      *     user_session_create
      *
      * [description]
-     *     Allow modules to override Phorum's session create management or
+     *     Allow modules to override LibreForum's session create management or
      *     to even fully omit creating a session (for example useful
      *     if the hook <hook>user_session_restore</hook> is used
      *     to inherit an external session from some 3rd party application).
@@ -1977,7 +1977,7 @@ function phorum_api_user_session_create($type, $reset = 0)
      *     User authentication and session handling
      *
      * [when]
-     *     Just before Phorum runs its own session initialization code
+     *     Just before LibreForum runs its own session initialization code
      *     in the user API function
      *     <literal>phorum_api_user_session_create()</literal>.
      *
@@ -1987,14 +1987,14 @@ function phorum_api_user_session_create($type, $reset = 0)
      *     or <literal>PHORUM_ADMIN_SESSION</literal>.
      *
      * [output]
-     *     Same as input if Phorum has to run its standard session
+     *     Same as input if LibreForum has to run its standard session
      *     initialization code or NULL if that code should be fully skipped.
      *
      * [example]
      *     <hookcode>
      *     function phorum_mod_foo_user_session_create($type)
      *     {
-     *         // Let Phorum handle admin sessions on its own.
+     *         // Let LibreForum handle admin sessions on its own.
      *         if ($type == PHORUM_ADMIN_SESSION) return $type;
      *
      *         // Override the session handling for front end forum sessions.
@@ -2005,18 +2005,18 @@ function phorum_api_user_session_create($type, $reset = 0)
      *
      *         // ...and then storing the user_id of the current user in the
      *         // PHP session data. The user_id is really the only thing
-     *         // that needs to be remembered for a Phorum session, because
+     *         // that needs to be remembered for a LibreForum session, because
      *         // all other data for the user is stored in the database.
      *         $phorum_user_id = $GLOBALS["PHORUM"]["user"]["user_id"];
      *         $_SESSION['phorum_user_id'] = $phorum_user_id;
      *
-     *         // Tell Phorum not to run its own session initialization code.
+     *         // Tell LibreForum not to run its own session initialization code.
      *         return NULL;
      *     }
      *     </hookcode>
      *
      *     See the <hook>user_session_restore</hook> hook for an example
-     *     of how to let Phorum pick up this PHP based session.
+     *     of how to let LibreForum pick up this PHP based session.
      */
     if (isset($PHORUM['hooks']['user_session_create'])) {
         if (phorum_hook('user_session_create', $type) === NULL) {
@@ -2039,7 +2039,7 @@ function phorum_api_user_session_create($type, $reset = 0)
         return NULL;
     }
 
-    // Check if the active Phorum user was set.
+    // Check if the active LibreForum user was set.
     if (empty($PHORUM['user']) ||
         empty($PHORUM['user']['user_id'])) {
         trigger_error(
@@ -2218,7 +2218,7 @@ function phorum_api_user_session_create($type, $reset = 0)
 
 // {{{ Function: phorum_api_user_session_restore()
 /**
- * Restore a Phorum user session.
+ * Restore a LibreForum user session.
  *
  * This function will check for a valid user session for either the
  * forum or the admin interface (based on the $type parameter). If a valid
@@ -2232,7 +2232,7 @@ function phorum_api_user_session_create($type, $reset = 0)
  *     The type of session to check for. This must be one of
  *     {@link PHORUM_FORUM_SESSION} or {@link PHORUM_ADMIN_SESSION}.
  *     See the documentation for {@link phorum_api_user_session_create()}
- *     for more information on Phorum user sessions.
+ *     for more information on LibreForum user sessions.
  *
  * @return boolean
  *     TRUE in case a valid session is detected, otherwise FALSE.
@@ -2292,7 +2292,7 @@ function phorum_api_user_session_restore($type)
 
     // Now we decided what session cookie(s) we want to check, we allow
     // modules to hook into the session system to do the check for us.
-    // This can for example be used to let Phorum inherit an already
+    // This can for example be used to let LibreForum inherit an already
     // running authenticated session in some external system.
 
     /**
@@ -2300,31 +2300,31 @@ function phorum_api_user_session_restore($type)
      *     user_session_restore
      *
      * [description]
-     *     Allow modules to override Phorum's session restore management.
-     *     This hook is the designated hook if you need to let Phorum
+     *     Allow modules to override LibreForum's session restore management.
+     *     This hook is the designated hook if you need to let LibreForum
      *     inherit an authenticated session from some external system.<sbr/>
      *     <sbr/>
      *     The array that is passed to this hook,
-     *     contains a key for each of the Phorum session types:
+     *     contains a key for each of the LibreForum session types:
      *     <ul>
      *       <li>PHORUM_SESSION_LONG_TERM</li>
      *       <li>PHORUM_SESSION_SHORT_TERM</li>
      *       <li>PHORUM_SESSION_ADMIN</li>
      *     </ul>
      *     What the module has to do, is fill the values for each of these
-     *     keys with the user_id of the Phorum user for which the session that
+     *     keys with the user_id of the LibreForum user for which the session that
      *     the key represents should be considered active. Other options
      *     are FALSE to indicate that no session is active and NULL to
-     *     tell Phorum to handle session restore on its own.<sbr/>
+     *     tell LibreForum to handle session restore on its own.<sbr/>
      *     <sbr/>
      *     Note that the user for which a user_id is provided through this
-     *     hook must exist in the Phorum system before returning from this
+     *     hook must exist in the LibreForum system before returning from this
      *     hook. One option to take care of that constraint is letting
      *     this hook create the user on-the-fly if needed. A cleaner way
      *     would be to synchronize the user data from the main system at those
      *     times when the user data changes (create, update and delete user).
      *     Of course it is highly dependent on the other system whether
-     *     you can implement that kind of Phorum user management in the main
+     *     you can implement that kind of LibreForum user management in the main
      *     application.<sbr/>
      *     <sbr/>
      *     Hint: Creating users can be done using the
@@ -2334,7 +2334,7 @@ function phorum_api_user_session_restore($type)
      *     User authentication and session handling
      *
      * [when]
-     *     Just before Phorum runs its own session restore code
+     *     Just before LibreForum runs its own session restore code
      *     in the user API function
      *     <literal>phorum_api_user_session_restore()</literal>.
      *
@@ -2352,7 +2352,7 @@ function phorum_api_user_session_restore($type)
      *
      * [example]
      *     See the <hook>user_session_create</hook> hook for an example
-     *     of how to let Phorum setup the PHP session that is picked up
+     *     of how to let LibreForum setup the PHP session that is picked up
      *     in this example hook.
      *     <hookcode>
      *     function phorum_mod_foo_user_session_restore($sessions)
@@ -2365,10 +2365,10 @@ function phorum_api_user_session_restore($type)
      *
      *         // ...and then retrieving the user_id of the current user
      *         // from the PHP session data. The user_id is really the
-     *         // only thing that needs to be remembered for a Phorum
+     *         // only thing that needs to be remembered for a LibreForum
      *         // session, because all other data for the user is stored
      *         // in the database. If no user id was set in the session,
-     *         // then use FALSE to flag this to Phorum.
+     *         // then use FALSE to flag this to LibreForum.
      *         $phorum_user_id = empty($_SESSION['phorum_user_id'])
      *                         ? FALSE : $_SESSION['phorum_user_id'];
      *
@@ -2377,7 +2377,7 @@ function phorum_api_user_session_restore($type)
      *         // We keep PHORUM_SESSION_ADMIN at NULL (default value).
      *         // The other two need to be updated. If the main system does
      *         // not use the concept of one long and one short term cookie
-     *         // (named "tight security" by Phorum), then simply assign
+     *         // (named "tight security" by LibreForum), then simply assign
      *         // the user_id to both PHORUM_SESSION_LONG_TERM and
      *         // PHORUM_SESSION_SHORT_TERM.
      *         $sessions[PHORUM_SESSION_SHORT_TERM] = $phorum_user_id;
@@ -2416,7 +2416,7 @@ function phorum_api_user_session_restore($type)
             $value = $hook_sessions[$cookie] . ':dummy';
             $user_id_from_hook_session = TRUE;
 
-            // To not let Phorum fall back to URI authentication.
+            // To not let LibreForum fall back to URI authentication.
             $real_cookie = TRUE;
         }
 
@@ -2563,7 +2563,7 @@ function phorum_api_user_session_restore($type)
     // Restore a user's session.
     else
     {
-        // Setup the Phorum user.
+        // Setup the LibreForum user.
         $flags = 0;
         if ($do_restore_short_term_session) $flags |= PHORUM_FLAG_SESSION_ST;
         phorum_api_user_set_active_user($type, $session_user, $flags);
@@ -2578,16 +2578,16 @@ function phorum_api_user_session_restore($type)
 
 // {{{ Function: phorum_api_user_session_destroy()
 /**
- * Destroy a Phorum user session.
+ * Destroy a LibreForum user session.
  *
- * This will destroy a Phorum user session and set the active
- * Phorum user to the anonymous user.
+ * This will destroy a LibreForum user session and set the active
+ * LibreForum user to the anonymous user.
  *
  * @param string $type
  *     The type of session to destroy. This must be one of
  *     {@link PHORUM_FORUM_SESSION} or {@link PHORUM_ADMIN_SESSION}.
  *     See the documentation for {@link phorum_api_user_session_create()}
- *     for more information on Phorum user sessions.
+ *     for more information on LibreForum user sessions.
  */
 function phorum_api_user_session_destroy($type)
 {
@@ -2598,7 +2598,7 @@ function phorum_api_user_session_destroy($type)
      *     user_session_destroy
      *
      * [description]
-     *     Allow modules to override Phorum's session destroy management or
+     *     Allow modules to override LibreForum's session destroy management or
      *     to even fully omit destroying a session (for example useful
      *     if the hook <hook>user_session_restore</hook> is used
      *     to inherit an external session from some 3rd party application).
@@ -2607,7 +2607,7 @@ function phorum_api_user_session_destroy($type)
      *     User authentication and session handling
      *
      * [when]
-     *     Just before Phorum runs its own session destroy code
+     *     Just before LibreForum runs its own session destroy code
      *     in the user API function
      *     <literal>phorum_api_user_session_destroy()</literal>.
      *
@@ -2617,17 +2617,17 @@ function phorum_api_user_session_destroy($type)
      *     or <literal>PHORUM_ADMIN_SESSION</literal>.
      *
      * [output]
-     *     Same as input if Phorum has to run its standard session
+     *     Same as input if LibreForum has to run its standard session
      *     destroy code or NULL if that code should be fully skipped.
      *
      * [example]
      *     See the <hook>user_session_create</hook> hook for an example
-     *     of how to let Phorum setup the PHP session that is destroyed
+     *     of how to let LibreForum setup the PHP session that is destroyed
      *     in this example hook.
      *     <hookcode>
      *     function phorum_mod_foo_user_session_destroy($type)
      *     {
-     *         // Let Phorum handle destroying of admin sessions on its own.
+     *         // Let LibreForum handle destroying of admin sessions on its own.
      *         if ($type == PHORUM_ADMIN_SESSION) return $type;
      *
      *         // Override the session handling for front end forum sessions.
@@ -2637,7 +2637,7 @@ function phorum_api_user_session_destroy($type)
      *         if (!session_id()) session_start();
      *
      *         // After starting the PHP session, we can clear the session
-     *         // data for the Phorum user. In the user_session_create hook
+     *         // data for the LibreForum user. In the user_session_create hook
      *         // example code, we stored the user_id for the active user
      *         // in the session. Here we clear that data. We could also
      *         // have destroyed the full PHP session, but in that case we
@@ -2645,7 +2645,7 @@ function phorum_api_user_session_destroy($type)
      *         // other PHP scripts.
      *         unset($_SESSION['phorum_user_id']);
      *
-     *         // Tell Phorum not to run its own session destroy code.
+     *         // Tell LibreForum not to run its own session destroy code.
      *         return NULL;
      *     }
      *     </hookcode>
@@ -2696,7 +2696,7 @@ function phorum_api_user_session_destroy($type)
         // If cookies are not in use, then the long term session is reset
         // to a new value. That way we fully invalidate URI authentication
         // data, so that old URL's won't work anymore. We can only do this
-        // if we have an active Phorum user.
+        // if we have an active LibreForum user.
         if ($PHORUM['use_cookies'] == PHORUM_NO_COOKIES &&
             $type == PHORUM_FORUM_SESSION &&
             !empty($PHORUM['user']) && !empty($PHORUM['user']['user_id'])) {
@@ -2711,7 +2711,7 @@ function phorum_api_user_session_destroy($type)
         }
     }
 
-    // Force Phorum to see the anonymous user from here on.
+    // Force LibreForum to see the anonymous user from here on.
     phorum_api_user_set_active_user(PHORUM_FORUM_SESSION, NULL);
 }
 // }}}
@@ -2794,7 +2794,7 @@ function phorum_api_user_save_groups($user_id, $groups)
      *     This hook can be used to handle the groups data that is going to be
      *     stored in the database for a user. Modules can do some last
      *     minute change on the data or keep some external system in sync
-     *     with the Phorum user data.
+     *     with the LibreForum user data.
      *
      * [category]
      *     User data handling
@@ -2858,7 +2858,7 @@ function phorum_api_user_save_groups($user_id, $groups)
  *
  * @param mixed $user
  *     Specifies the user to look at. Available options are:
- *     - 0 (zero, the default) to look at the active Phorum user.
+ *     - 0 (zero, the default) to look at the active LibreForum user.
  *     - A full user data array.
  *     - A single user_id.
  *
@@ -3015,7 +3015,7 @@ function phorum_api_user_check_access($permission, $forum_id = 0, $user = 0)
  *
  * @param mixed $user
  *     Specifies the user to look at. Available options are:
- *     - 0 (zero, the default) to look at the active Phorum user.
+ *     - 0 (zero, the default) to look at the active LibreForum user.
  *     - A full user data array.
  *     - A single user_id.
  *
@@ -3170,7 +3170,7 @@ function phorum_api_user_list_moderators($forum_id = 0, $exclude_admin = FALSE, 
  * Subscribe a user to a thread.
  *
  * Remark: Currently, there is no active support for subscribing to forums
- * using subscription type PHORUM_SUBSCRIPTION_DIGEST in the Phorum core.
+ * using subscription type PHORUM_SUBSCRIPTION_DIGEST in the LibreForum core.
  *
  * @param integer $user_id
  *     The id of the user to create the subscription for.
@@ -3296,7 +3296,7 @@ function phorum_api_user_list_subscriptions($user_id, $days=0, $forum_ids=NULL)
  *
  * @param boolean $ignore_active_user
  *     If this parameter is set to FALSE (it is TRUE by default), then the
- *     active Phorum user will be excluded from the list.
+ *     active LibreForum user will be excluded from the list.
  *
  * @return array $addresses
  *     An array containing the subscriber email addresses. The keys in the

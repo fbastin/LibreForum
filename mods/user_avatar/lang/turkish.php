@@ -1,6 +1,6 @@
 <?php
 // Çeviri:Baþkan
-// www.phorumtr.net Phorum Türkçe Destek
+// www.phorumtr.net LibreForum Türkçe Destek
 $PHORUM["DATA"]["LANG"]["mod_user_avatar"] = array(
     "BlockAvatars" => "Avatar gösterme.",
     "FileTypeLimits" => "Avatar için geçerli dosya türleri: %file_type_list%.",

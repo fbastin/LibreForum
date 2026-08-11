@@ -4,25 +4,25 @@
   <section>
     <title>Introduction</title>
 
-    <para> This section describes the Phorum upgrading process. We differentiate between three types
+    <para> This section describes the LibreForum upgrading process. We differentiate between three types
       of upgrades: <itemizedlist>
         <listitem>
           <xref linkend="upgrade.minorbugfix"/><sbr/> These are upgrades where only the last number
-          in the Phorum version is raised (e.g. 5.2.1 to 5.2.2). These upgrades are mostly for
+          in the LibreForum version is raised (e.g. 5.2.1 to 5.2.2). These upgrades are mostly for
           implementing (security) bugfixes and minor enhancements that do not require any template
           and/or database changes.<sbr/>
           <sbr/>
         </listitem>
         <listitem>
           <xref linkend="upgrade.minorbugfix"/><sbr/> These are upgrades where the second number in
-          the Phorum version is raised (e.g. 5.1.10 to 5.2.2). These are upgrades where large new
+          the LibreForum version is raised (e.g. 5.1.10 to 5.2.2). These are upgrades where large new
           features are implemented. These upgrades will always require database and template changes.<sbr/>
           <sbr/>
         </listitem>
         <listitem>
           <xref linkend="upgrade.major"/><sbr/> These are upgrades where also the first number in
-          the Phorum version is raised (e.g. 3.4.8 to 5.2.2). Now and then, the Phorum team starts
-          with a version of Phorum that is built from the ground up, to implement all the new
+          the LibreForum version is raised (e.g. 3.4.8 to 5.2.2). Now and then, the LibreForum team starts
+          with a version of LibreForum that is built from the ground up, to implement all the new
           insights and ideas that are gathered while building the previous version. Since completely
           new code is generated, the version number is raised in full. These upgrades will always
           require a full database and site layout conversion, which might implicate a lot of manual
@@ -42,8 +42,8 @@
           dir}/templates/default). Other templates will be kept intact.</para>
         <para> Here are the steps for upgrading: <itemizedlist>
             <listitem>Backup your existing Phorum5 installation. Before doing an upgrade, it is
-              always wise to make a good backup of your running system. Make a backup your Phorum
-              install directory and the database in which your Phorum tables are stored</listitem>
+              always wise to make a good backup of your running system. Make a backup your LibreForum
+              install directory and the database in which your LibreForum tables are stored</listitem>
             <listitem>Download a newer Phorum5 package</listitem>
             <listitem>Delete the folder include/db/upgrade for making sure that you have the correct db-upgrade-scripts.</listitem>
             <listitem> Extract the files and put them on top of the current installation</listitem>
@@ -63,30 +63,30 @@
       <section id="upgrade.minorbugfix.database.console">
         <title>From a system console</title>
 
-        <para> In the scripts directory of your Phorum installation, you will find the script
+        <para> In the scripts directory of your LibreForum installation, you will find the script
           "console_upgrade.php". Go to the scripts directory and execute the script from there. On
           most systems, you can do this using the following command:
           <screen>
           shell&gt; <literal> php console_upgrade.php</literal></screen> If
           you want to run this script from a different locations, then edit the script and update
-          the $PHORUM_DIRECTORY variable to match the location of your Phorum installation.</para>
+          the $PHORUM_DIRECTORY variable to match the location of your LibreForum installation.</para>
       </section>
     </section>
     <section id="upgrade.minorbugfix.templateshacks">
       <title>Upgrading templates and hacks</title>
-      <para> For minor upgrades, the Phorum team has the policy that templates should not change.
+      <para> For minor upgrades, the LibreForum team has the policy that templates should not change.
         For example, if you are upgrading version 5.1.1 to 5.1.2, you can simply keep the old
         templates. </para>
 
-      <para> Template functionality might change between major Phorum releases. For example,
-        templates that were made for Phorum 5.0.x are not compatible with the templates for Phorum
+      <para> Template functionality might change between major LibreForum releases. For example,
+        templates that were made for LibreForum 5.0.x are not compatible with the templates for LibreForum
         5.1.x. So to upgrade these, you'll have to build new templates, based on the new default
         template that is included in the distribution. Simply copying the old template will most
         probably result in errors and missing functionality. </para>
       <para> If you are doing a minor upgrade and you have to preserve changes that were made to the
-        default template (which is not the recommended way of customizing Phorum, see
+        default template (which is not the recommended way of customizing LibreForum, see
         creating_templates.txt), you can follow one of the following options: <itemizedlist>
-          <listitem>Extract the new Phorum distribution to its own directory and reapply your
+          <listitem>Extract the new LibreForum distribution to its own directory and reapply your
             changes before putting it over the existing installation</listitem>
 
           <listitem>Create a backup of your existing installation. Install the new distribution on
@@ -117,26 +117,26 @@
         convert your old forum to Phorum5. Everything, but permission levels, is converted. </para>
       <para>
         <emphasis role="bold">Instructions from phorum3to5convert.php</emphasis>
-        <sbr/> This script will convert the data from a Phorum 3 database to a Phorum 5 database.
+        <sbr/> This script will convert the data from a LibreForum 3 database to a LibreForum 5 database.
           <emphasis role="bold">It does not change any of the old phorum3 tables. The data is only
-          copied over to the new Phorum 5 tables. </emphasis></para>
+          copied over to the new LibreForum 5 tables. </emphasis></para>
       <para> Instructions: <itemizedlist>
 
-          <listitem>Be sure your Phorum 3 is running a 3.4.x version. If you are running an older
-            version of Phorum 3, first upgrade to 3.4.x.</listitem>
+          <listitem>Be sure your LibreForum 3 is running a 3.4.x version. If you are running an older
+            version of LibreForum 3, first upgrade to 3.4.x.</listitem>
 
-          <listitem>Copy or move this script one directory up, to the main Phorum 5 directory.</listitem>
+          <listitem>Copy or move this script one directory up, to the main LibreForum 5 directory.</listitem>
 
           <listitem>Edit the $CONVERT variables in the beginning of phorum3to5convert.php to match
             the settings of your phorum3 installation (set there in the admin).</listitem>
 
-          <listitem>Install Phorum 5 as usual. For speed and reliability, preferably use the same
-            database as the database where Phorum 3 lives. Because Phorum 5 uses a table prefix
-            (typically "phorum_"), the tables for Phorum 3 and Phorum 5 can safely live next to each
+          <listitem>Install LibreForum 5 as usual. For speed and reliability, preferably use the same
+            database as the database where LibreForum 3 lives. Because LibreForum 5 uses a table prefix
+            (typically "phorum_"), the tables for LibreForum 3 and LibreForum 5 can safely live next to each
             other in the same database.</listitem>
 
-          <listitem>Empty the phorum_messages and phorum_forums tables of the Phorum 5 installation.
-            You can do this either by dropping all forums from the Phorum 5 admin interface or by
+          <listitem>Empty the phorum_messages and phorum_forums tables of the LibreForum 5 installation.
+            You can do this either by dropping all forums from the LibreForum 5 admin interface or by
             issuing the appropriate SQL queries from the MySQL prompt or from a database tool like
             "phpmyadmin". The queries to execute are (replace "phorum" with your own table_prefix if
             you changed this during install):
@@ -156,7 +156,7 @@
           <listitem>If you do not have shell access, call the upgrade script from your browser: <screen><literal>{phorum url}/phorum3to5convert.php</literal></screen>
             <emphasis role="bold"> *** THIS STEP MAY TAKE A WHILE ***</emphasis>
           </listitem>
-          <listitem>Take a look at the Phorum 5 forums to see if everything was converted correctly.</listitem>
+          <listitem>Take a look at the LibreForum 5 forums to see if everything was converted correctly.</listitem>
 
           <listitem>Delete the upgrade script phorum3to5convert.php. </listitem>
         </itemizedlist>
@@ -176,7 +176,7 @@
   <section>
     <title>Support</title>
     <para>
-      <remark>TODO: Link to FAQ</remark> If you have questions about installing or upgrading Phorum
+      <remark>TODO: Link to FAQ</remark> If you have questions about installing or upgrading LibreForum
       which are not answered by this manual, then please visit the website &www.phorum.org; and
       ask the development team for help in the support forum. </para>
   </section>

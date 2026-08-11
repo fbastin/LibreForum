@@ -22,14 +22,14 @@
 if (!defined("PHORUM")) return;
 
 /**
- * The other Phorum code does not care how the messages are stored.
+ * The other LibreForum code does not care how the messages are stored.
  *    The only requirement is that they are returned from these functions
  *    in the right way.  This means each database can use as many or as
  *    few tables as it likes.  It can store the fields anyway it wants.
  *    The only thing to worry about is the table_prefix for the tables.
- *    all tables for a Phorum install should be prefixed with the
+ *    all tables for a LibreForum install should be prefixed with the
  *    table_prefix that will be entered in include/db/config.php.  This
- *    will allow multiple Phorum installations to use the same database.
+ *    will allow multiple LibreForum installations to use the same database.
  */
 
 /**
@@ -68,7 +68,7 @@ define('PHORUM_SQL_MOVEDMESSAGES', '(parent_id = 0 and thread != message_id)');
 
 /**
  * This function executes a query to select the visible messages from
- * the database for a given page offset. The main Phorum code handles
+ * the database for a given page offset. The main LibreForum code handles
  * actually sorting the threads into a threaded list if needed.
  *
  * By default, the message body is not included in the fetch queries.
@@ -233,7 +233,7 @@ function phorum_db_get_thread_list($offset)
  * all forums the user can read, a particular forum, or a particular
  * thread, and and returns an array of the messages order by message_id.
  *
- * In reality, this function is not used in the Phorum core as of the time
+ * In reality, this function is not used in the LibreForum core as of the time
  * of its creationg.  However, several modules have been written that created
  * a function like this.  Therefore, it has been added to aid in module development
  *
@@ -322,7 +322,7 @@ function phorum_db_get_recent_messages($count, $forum_id = 0, $thread = 0, $thre
 
 /**
  * This function executes a query to select messages from the database
- * and returns an array.  The main Phorum code handles actually sorting
+ * and returns an array.  The main LibreForum code handles actually sorting
  * the threads into a threaded list if needed.
  *
  * NOTE: ALL dates should be returned as Unix timestamps
@@ -4240,7 +4240,7 @@ function phorum_db_mysqli_error($err){
             include_once("./include/email_functions.php");
 
             $data=array('mailmessage'=>"An SQL-error occured in your phorum-installation.\n\nThe error-message was:\n$err\n\n",
-                        'mailsubject'=>'Phorum: an SQL-error occured');
+                        'mailsubject'=>'LibreForum: an SQL-error occured');
             phorum_email_user(array($adminemail),$data);
 
         } elseif($logsetting == 'file') {
@@ -4305,7 +4305,7 @@ function phorum_db_sanitychecks()
          server, which does not support \"SELECT @@global.version\"
          as an SQL command. If you are not running a MySQL server
          with version 4.0.18 or higher, then please upgrade your
-         MySQL server. Else, contact the Phorum developers to see
+         MySQL server. Else, contact the LibreForum developers to see
          where this warning is coming from"
     );
 
@@ -4320,7 +4320,7 @@ function phorum_db_sanitychecks()
             "The database layer was unable to recognize the MySQL server's
              version number \"" . htmlspecialchars($row[0]) . "\". Therefore,
              checking if the right version of MySQL is used is not possible.",
-            "Contact the Phorum developers and report this specific
+            "Contact the LibreForum developers and report this specific
              version number, so the checking scripts can be updated."
         );
 
@@ -4344,7 +4344,7 @@ function phorum_db_sanitychecks()
             $ver[0] == 4 && $ver[1] == 0 && $ver[2] < 18) return array(
             PHORUM_SANITY_WARN,
             "The MySQL database server that is used does not
-             support all Phorum features. The running version is
+             support all LibreForum features. The running version is
              \"" . htmlspecialchars($row[0]) . "\", while MySQL version
              4.0.18 or higher is recommended.",
             "Upgrade your MySQL server to a newer version. If your
@@ -4360,7 +4360,7 @@ function phorum_db_sanitychecks()
         PHORUM_SANITY_CRIT,
         "An unexpected problem was found in running the sanity
          check function phorum_db_sanitychecks().",
-        "Contact the Phorum developers to find out what the problem is."
+        "Contact the LibreForum developers to find out what the problem is."
     );
 }
 

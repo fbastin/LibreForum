@@ -57,7 +57,7 @@
     $loadmore.find('.loadmore_busy').show();
     $loadmore.find('.loadmore_link').hide();
 
-    Phorum.Ajax.call({
+    LibreForum.Ajax.call({
         call         : 'mod_recent_messages',
         show_amount  : {SHOW_AMOUNT},
         page         : $loadmore.phorum.page,

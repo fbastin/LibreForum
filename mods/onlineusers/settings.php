@@ -30,7 +30,7 @@ if (empty($PHORUM['track_user_activity']) || $PHORUM['track_user_activity'] > (i
          : (round($PHORUM['track_user_activity']/6) / 10) . ' minute(s)';
     phorum_admin_error(
         "<strong>Notice:</strong>
-         This module uses the Phorum user tracking feature to determine
+         This module uses the LibreForum user tracking feature to determine
          which registered users are online. Therefore user tracking must be
          enabled and set to a value below the configured idle time.
          Currently, the user tracking is set to \"$cur\", which will

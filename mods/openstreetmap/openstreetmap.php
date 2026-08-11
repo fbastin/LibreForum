@@ -66,7 +66,7 @@ function phorum_mod_openstreetmap_cc_panel($data)
         $data['okmsg'] = $PHORUM["DATA"]["LANG"]["ProfileUpdatedOk"];
     }
 
-    // Retrieve the data for the active Phorum user.
+    // Retrieve the data for the active LibreForum user.
     $mapstate = empty($PHORUM["user"]["mod_openstreetmap"])
               ? array() : $PHORUM["user"]["mod_openstreetmap"];
 
@@ -97,7 +97,7 @@ function phorum_mod_openstreetmap_profile($profile)
 
     $PHORUM['DATA']['MOD_OPENSTREETMAP'] = '';
 
-    // Retrieve the data for the active Phorum user.
+    // Retrieve the data for the active LibreForum user.
     $mapstate = empty($profile['mod_openstreetmap'])
               ? array() : $profile['mod_openstreetmap'];
 

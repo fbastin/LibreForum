@@ -18,9 +18,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // This script can be used for implementing addon scripts, using the
-// Phorum module system. This allows for full featured scripts, that
-// run on their own (outside the hooks in the Phorum code), but which
-// do not need to be copied to the Phorum main directory to be run.
+// LibreForum module system. This allows for full featured scripts, that
+// run on their own (outside the hooks in the LibreForum code), but which
+// do not need to be copied to the LibreForum main directory to be run.
 // By containing addon scripts in the modules this way, installation and
 // maintaining them is easier for the users.
 //
@@ -103,7 +103,7 @@ if (! isset($PHORUM["hooks"]["addon"])) trigger_error(
     E_USER_ERROR
 );
 
-// Find the module argument. This one can be in the Phorum args,
+// Find the module argument. This one can be in the LibreForum args,
 // $_POST or $_GET (in that order).
 $module = NULL;
 if (isset($PHORUM['args']['module'])) {

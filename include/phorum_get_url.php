@@ -1,20 +1,20 @@
 <?php
 /**
- * This function is used for generating all the Phorum related URL's.
+ * This function is used for generating all the LibreForum related URL's.
  *
  * Important note for the developers:
  * ----------------------------------
- * If anything changes in this file, then beware that the Phorum
+ * If anything changes in this file, then beware that the LibreForum
  * PHP Extension code needs to be updated as well. Add a TODO marker
  * to the updated pieces of code if this update is not done immediately.
  * ----------------------------------
  */
 
 /**
- * Descriptions of standard Phorum page URL types and their options.
- * The keys in this array describe the type of Phorum URL.
+ * Descriptions of standard LibreForum page URL types and their options.
+ * The keys in this array describe the type of LibreForum URL.
  * The values are arrays, containing the following three elements:
- * - The name of the Phorum page to link to;
+ * - The name of the LibreForum page to link to;
  * - A constan, telling whether the forum_id has to be added to the URL;
  * - A boolean, telling whether the GET vars have to be added to the URL.
  */
@@ -228,7 +228,7 @@ function phorum_get_url()
 }
 
 /**
- * Generate a Phorum URL, without any URI authentication information in it.
+ * Generate a LibreForum URL, without any URI authentication information in it.
  */
 function phorum_get_url_no_uri_auth()
 {

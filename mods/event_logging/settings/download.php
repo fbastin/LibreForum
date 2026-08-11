@@ -96,7 +96,7 @@ if ($content_type == "text/html") {
 ?>
 <html>
 <head>
-<title>Phorum Event Logs</title>
+<title>LibreForum Event Logs</title>
 <?php
 
 // meta data with the charset from the default language

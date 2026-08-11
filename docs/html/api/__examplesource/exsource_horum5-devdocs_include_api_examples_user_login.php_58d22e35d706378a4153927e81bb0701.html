@@ -26,8 +26,8 @@
 <li><span class="src-sym">)</span><span class="src-sym">;</span></li>
 <li><span class="src-key">if </span><span class="src-sym">(</span><span class="src-sym">!</span><span class="src-var">$user_id</span><span class="src-sym">) </span><span class="src-key">die</span><span class="src-sym">(</span><span class="src-str">&quot;Username or password incorrect!\n&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
 <li>&nbsp;</li>
-<li><span class="src-comm">// Make the authenticated user the active user for Phorum. This is all</span></li>
-<li><span class="src-comm">// that is needed to tell Phorum that this user is logged in.</span></li>
+<li><span class="src-comm">// Make the authenticated user the active user for LibreForum. This is all</span></li>
+<li><span class="src-comm">// that is needed to tell LibreForum that this user is logged in.</span></li>
 <li><span class="src-var">$set_active </span>= <a href="../PhorumAPI/UserAPI/_user_php.html#functionphorum_api_user_set_active_user">phorum_api_user_set_active_user</a><span class="src-sym">(</span></li>
 <li>    <span class="src-id"><a href="../PhorumAPI/UserAPI/_user_php.html#definePHORUM_FORUM_SESSION">PHORUM_FORUM_SESSION</a></span><span class="src-sym">,     </span><span class="src-comm">// for a standard front end forum session</span></li>
 <li>        <span class="src-var">$user_id</span><span class="src-sym">,                 </span><span class="src-comm">// the user_id that has to be the active user</span></li>

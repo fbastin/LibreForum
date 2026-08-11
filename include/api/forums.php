@@ -18,9 +18,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * This script implements the Phorum forum admin API.
+ * This script implements the LibreForum forum admin API.
  *
- * This API is used for managing Phorum forums and folders. It can be used to
+ * This API is used for managing LibreForum forums and folders. It can be used to
  * retrieve information about the available forums and folders and takes care
  * of creating and editing them.
  *

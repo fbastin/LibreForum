@@ -33,9 +33,9 @@ function phorum_mod_admin_security_suite_common_pre () {
 		
 					$subject = "$true_title has been changed.";
 					$body = "The title of your forum, \"$true_title\", has been changed.  This may be a hacker or you may have simply forgotten to change the title in the Admin Update module.";
-					$body .= " If you did not change the title of your forum, please make sure you are using the latest version of Phorum and change the title in the General Settings page of the Admin area.";
+					$body .= " If you did not change the title of your forum, please make sure you are using the latest version of LibreForum and change the title in the General Settings page of the Admin area.";
 					$phorum_major_version = substr(PHORUM, 0, strpos(PHORUM, '.'));
-					$mailer = "Phorum" . $phorum_major_version;
+					$mailer = "LibreForum" . $phorum_major_version;
 					$mailheader = "Content-Type: text/plain; ";
 					if (!empty($PHORUM["DATA"]["CHARSET"])) $mailheader .= " charset={$PHORUM["DATA"]["CHARSET"]}";
 					if (!empty($PHORUM["DATA"]["MAILENCODING"])) $mailheader .= "\nContent-Transfer-Encoding: {$PHORUM["DATA"]["MAILENCODING"]}";
@@ -74,7 +74,7 @@ function phorum_mod_admin_security_suite_admin_pre ($module) {
 			$body = "The admin schedule override code for ".$_SERVER["REMOTE_ADDR"]." is: ".$generated_code["override_code"].".";
 			$body .= "\n\nEntering this override code will allow the above IP address to login for one hour.";
 			$phorum_major_version = substr(PHORUM, 0, strpos(PHORUM, '.'));
-			$mailer = "Phorum" . $phorum_major_version;
+			$mailer = "LibreForum" . $phorum_major_version;
 			$mailheader ="Content-Type: text/plain; charset={$PHORUM["DATA"]["CHARSET"]}\nContent-Transfer-Encoding: {$PHORUM["DATA"]["MAILENCODING"]}\nX-Mailer: $mailer$msgid\n";
 
 			if ($PHORUM["phorum_mod_admin_security_suite"]["enable_admin_schedule_override"] == "1") {
@@ -183,7 +183,7 @@ function phorum_mod_admin_security_suite_admin_pre ($module) {
 			$body = "The IP restriction override code for ".$_SERVER["REMOTE_ADDR"]." is: $generated_code";
 			$body .= "\n\nEntering this override code will add the above IP address to your list of allowed IP addresses.";
 			$phorum_major_version = substr(PHORUM, 0, strpos(PHORUM, '.'));
-			$mailer = "Phorum" . $phorum_major_version;
+			$mailer = "LibreForum" . $phorum_major_version;
 			$mailheader ="Content-Type: text/plain; charset={$PHORUM["DATA"]["CHARSET"]}\nContent-Transfer-Encoding: {$PHORUM["DATA"]["MAILENCODING"]}\nX-Mailer: $mailer$msgid\n";
 			
 			if ($PHORUM["phorum_mod_admin_security_suite"]["enable_IP_restriction_override_for_user"] == "1") {		
@@ -285,7 +285,7 @@ function phorum_mod_admin_security_suite_admin_pre ($module) {
 							phorum_mod_admin_security_suite_log_event(array("message" => $subject, "details" => $body));
 							$body .= "\nThe override code for that user to login is ".$lockout_time.$randnum.".";
 							$phorum_major_version = substr(PHORUM, 0, strpos(PHORUM, '.'));
-							$mailer = "Phorum" . $phorum_major_version;
+							$mailer = "LibreForum" . $phorum_major_version;
 							$mailheader ="Content-Type: text/plain; charset={$PHORUM["DATA"]["CHARSET"]}\nContent-Transfer-Encoding: {$PHORUM["DATA"]["MAILENCODING"]}\nX-Mailer: $mailer$msgid\n";
 
 							if ($PHORUM["phorum_mod_admin_security_suite"]["allow_lockout_override"] == "1") {

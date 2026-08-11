@@ -1,16 +1,16 @@
-Phorum 5 FAQ
+LibreForum 5 FAQ
 ============
 
 Table of contents:
 
 1. Why did you switch from number of replies to number of posts in the list?
-2. Does Phorum have avatars or user rankings like (insert UBB clone)?
+2. Does LibreForum have avatars or user rankings like (insert UBB clone)?
 3. How do I install a module?
 4. Why don't non-registered users have new indicators or any options?
 5. Why doesn't the default template use {insert latest greatest W3C concept}?
 6. You should do (insert your idea here) in the default template.
-7. Can I install Phorum once and deploy it on multiple domains?
-8. I need to embed Phorum in my page/application.
+7. Can I install LibreForum once and deploy it on multiple domains?
+8. I need to embed LibreForum in my page/application.
 9. Why do you not use the 'global' keyword in your functions?
 10. What are Sticky posts?
 11. Can I post announcements?
@@ -29,7 +29,7 @@ Table of contents:
        {MESSAGES->thread_count}
 
 		
-2. Does Phorum have avatars or user rankings like (insert UBB clone)?
+2. Does LibreForum have avatars or user rankings like (insert UBB clone)?
 -------------------------------------------------------------------------------
 
     Not by default. There are modules available to add this functionality.
@@ -61,20 +61,20 @@ Table of contents:
 4. Why don't non-registered users have new indicators or any options?
 -------------------------------------------------------------------------------
 
-    Because of many cookie problems that plagued Phorum 3, we have decided
-    to store all user settings in the database for Phorum 5.  The down side
+    Because of many cookie problems that plagued LibreForum 3, we have decided
+    to store all user settings in the database for LibreForum 5.  The down side
     of this is that users must be registered to use these features.  The up
-    side is that the new indicator really works like it should in Phorum 5.
+    side is that the new indicator really works like it should in LibreForum 5.
 
 
 5. Why doesn't the default template use {insert latest greatest W3C concept}?
 -------------------------------------------------------------------------------
 
     While we do try and use standards, things like XHTML and CSS are not
-    always compatible with old browsers.  Phorum strives to work with
+    always compatible with old browsers.  LibreForum strives to work with
     browsers that are commonly used.  We do not ignore new things. However,
     we try and be aware of the affect of things we do on all user's machines.
-    Phorum will remain usable and decent on as many different platforms and
+    LibreForum will remain usable and decent on as many different platforms and
     browsers as we can make it out of the box.
 
     You might want to check the other templates available and see if there
@@ -109,14 +109,14 @@ Table of contents:
     have no idea what part of the output that is referencing.  Yes, we could
     put comments in the CSS with a long name, but that would not make the
     HTML clear.  Also, output compression will remove the multiple instances
-    of the class name.  Perhaps most importantly, by having 'Phorum' in all
+    of the class name.  Perhaps most importantly, by having 'LibreForum' in all
     our class names, we won't step on another applications classes.
 
 
-7. Can I install Phorum once and deploy it on multiple domains?
+7. Can I install LibreForum once and deploy it on multiple domains?
 -------------------------------------------------------------------------------
 
-    Yes!  Once you install the Phorum code somewhere, you can copy the
+    Yes!  Once you install the LibreForum code somewhere, you can copy the
     contents of the portable directory to another location.  Edit
     phorum_settings.php in the new location and point your browser to that
     copy of phorum_admin.php.  You will be taken through the install process.
@@ -125,16 +125,16 @@ Table of contents:
     forum is a little slower because of the function overhead.
 
 
-8. I need to embed Phorum in my page/application.
+8. I need to embed LibreForum in my page/application.
 -------------------------------------------------------------------------------
 
-    Well, using the portable code mentioned above, one can safely run Phorum
-    inside other applications.  This is because the portable code runs Phorum
+    Well, using the portable code mentioned above, one can safely run LibreForum
+    inside other applications.  This is because the portable code runs LibreForum
     inside a function, protecting the namespace of your variables and
-    Phorum's variables.  Depending on your particular application, you may
+    LibreForum's variables.  Depending on your particular application, you may
     need to edit the function phorum_custom_get_url in include/wrapper.php to
-    have the urls of your site be created by Phorum correctly.  Also, you
-    will need to create a var called $PHORUM_CUSTOM_QUERY_STRING for Phorum
+    have the urls of your site be created by LibreForum correctly.  Also, you
+    will need to create a var called $PHORUM_CUSTOM_QUERY_STRING for LibreForum
     to parse instead of the server's query string.  It will need to be
     formatted in the same way that the standard phorum_get_url would do it.
 

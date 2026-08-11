@@ -124,7 +124,7 @@ if (count($modules))
  *
  * [description]
  *     The external hook functions are never called from any of the standard
- *     Phorum pages. These functions are called by invoking 
+ *     LibreForum pages. These functions are called by invoking 
  *     <filename>script.php</filename> on the command line with the 
  *     <literal>--module</literal> parameter. This can be used to pipe output
  *     from some arbitrary command to a specific module, which can do something
@@ -137,7 +137,7 @@ if (count($modules))
  *     <hook>external</hook> hook is not running, the containing module might be
  *     disabled.<sbr/>
  *     <sbr/>
- *     To run this hook from the command line, you have to be in the Phorum
+ *     To run this hook from the command line, you have to be in the LibreForum
  *     installation directory. So running the <hook>external</hook> hook of
  *     a module named <literal>external_foo</literal> would be done like this on
  *     a UNIX system prompt:
@@ -211,8 +211,8 @@ if ($callhook == 'external')
  *     the containing module might be disabled.<sbr/>
  *     <sbr/>
  *     To run this hook from the command line or from a scheduling service, you
- *     have to be in the Phorum installation directory. So running this hook for
- *     your Phorum installation would be done like this on a UNIX system prompt:
+ *     have to be in the LibreForum installation directory. So running this hook for
+ *     your LibreForum installation would be done like this on a UNIX system prompt:
  *     <hookcode>
  *     # cd /your/phorum/dir
  *     # php ./script.php --scheduled

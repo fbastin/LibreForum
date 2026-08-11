@@ -45,7 +45,7 @@ if (! $PHORUM["DATA"]["LOGGEDIN"] &&
  * [description]
  *     This hook can be used for modifying the message data and for running
  *     additional checks on the data. If an error is put in
- *     <literal>$error</literal>, Phorum will stop posting the message and show
+ *     <literal>$error</literal>, LibreForum will stop posting the message and show
  *     the error to the user in the post-form.<sbr/>
  *     <sbr/>
  *     Beware that <literal>$error</literal> can already contain an error on

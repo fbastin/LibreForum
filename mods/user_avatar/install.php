@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------------
 // This install file will be included by the module automatically
 // at the first time that it is run. This file will take care of
-// adding the custom user field "mod_user_avatar" to Phorum.
+// adding the custom user field "mod_user_avatar" to LibreForum.
 // This way, the administrator won't have to create the custom field
 // manually.
 // ----------------------------------------------------------------------

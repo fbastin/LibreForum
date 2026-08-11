@@ -2,10 +2,10 @@
 // needed to really load the alternate db-config in common.php
 define("PHORUM_WRAPPER",1);
 
-// set the Phorum install dir
+// set the LibreForum install dir
 $PHORUM_DIR="/www/dev.phorum/phorum5";
 
-// set the databse settings for this Phorum Install
+// set the databse settings for this LibreForum Install
 $PHORUM_ALT_DBCONFIG=array(
 
    "type"          =>  "mysql",

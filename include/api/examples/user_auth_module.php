@@ -7,7 +7,7 @@ hook:  user_session_restore|test_user_session_restore
 hook:  user_session_destroy|test_user_session_destroy
 title: User API hook demo
 desc:  This module is a demo for demonstrating the user API hooks, which can be used for implementing external user authentication and session.
-author: Phorum Dev Team
+author: LibreForum Dev Team
 url: http://www.phorum.org/
 */
 
@@ -16,7 +16,7 @@ session_start();
 
 // We can authenticate the user against our own user database.
 // This demo hook will authenticate the user with username "foo"
-// and password "bar" as the Phorum user with user_id = 1.
+// and password "bar" as the LibreForum user with user_id = 1.
 function test_user_authenticate($data)
 {
     // Only do this for the forum session. We do not touch the admin session.
@@ -31,8 +31,8 @@ function test_user_authenticate($data)
     return $data;
 }
 
-// This hook overrides creating a Phorum user session. Instead of running
-// a Phorum session, we use the PHP session system to track the logged
+// This hook overrides creating a LibreForum user session. Instead of running
+// a LibreForum session, we use the PHP session system to track the logged
 // in user. We do this by storing the active user_id in the $_SESSION
 // variable.
 function test_user_session_create($type)
@@ -46,9 +46,9 @@ function test_user_session_create($type)
     }
 }
 
-// This hook overrides the Phorum user session restore process. We use
+// This hook overrides the LibreForum user session restore process. We use
 // the user id that we stored in the PHP $_SESSION variable as the
-// active Phorum user.
+// active LibreForum user.
 function test_user_session_restore($data)
 {
     if ($_SESSION['loggedin_user']) {
@@ -63,8 +63,8 @@ function test_user_session_restore($data)
     return $data;
 }
 
-// This hook overrides destroying a Phorum user session. Instead of destroying
-// a Phorum session, we clear the user_id that is stored in the $_SESSION
+// This hook overrides destroying a LibreForum user session. Instead of destroying
+// a LibreForum session, we clear the user_id that is stored in the $_SESSION
 // variable.
 function test_user_session_destroy($type)
 {

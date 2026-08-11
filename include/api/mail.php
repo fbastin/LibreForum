@@ -18,10 +18,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * This script implements the Phorum mail API.
+ * This script implements the LibreForum mail API.
  *
  * The mail API is used for sending mail messages. It is currently under
- * development. Functions from Phorum's include/email_functions.php file
+ * development. Functions from LibreForum's include/email_functions.php file
  * will be tranferred to this API layer.
  *
  * @package    PhorumAPI

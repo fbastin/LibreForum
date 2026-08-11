@@ -29,7 +29,7 @@ if(!phorum_check_read_common()) {
 }
 
 // CSRF protection: we do not accept posting to this script,
-// when the browser does not include a Phorum signed token
+// when the browser does not include a LibreForum signed token
 // in the request.
 phorum_check_posting_token();
 
@@ -119,7 +119,7 @@ $is_admin_user=$PHORUM["user"]["admin"];
  *     When checking the moderation step id for a certain step, always use
  *     the contstants that are defined for this in
  *     <filename>include/constants.php</filename>. The numerical value of this
- *     id can change between Phorum releases.
+ *     id can change between LibreForum releases.
  *
  * [category]
  *     Moderation

@@ -1,10 +1,10 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.2.2. database_error</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Phorum Developer Reference Manual"><link rel="up" href="ch03s02.html" title="3.2. Miscellaneous"><link rel="prev" href="ch03s02.html" title="3.2. Miscellaneous"><link rel="next" href="ch03s02s03.html" title="3.2.3. external"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s02s03.html">Next</a></td></tr></table><hr></div><div class="section" title="3.2.2. database_error"><div class="titlepage"><div><div><h3 class="title"><a name="hook.database_error"></a>3.2.2. database_error</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.2.2. database_error</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03s02.html" title="3.2. Miscellaneous"><link rel="prev" href="ch03s02.html" title="3.2. Miscellaneous"><link rel="next" href="ch03s02s03.html" title="3.2.3. external"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s02s03.html">Next</a></td></tr></table><hr></div><div class="section" title="3.2.2. database_error"><div class="titlepage"><div><div><h3 class="title"><a name="hook.database_error"></a>3.2.2. database_error</h3></div></div></div><p>
 
 Give modules a chance to handle or process database errors.
 This can be useful to implement addional logging backends and/or
-alerting mechanisms. Another option is to fully override Phorum's
+alerting mechanisms. Another option is to fully override LibreForum's
 default database error handling by handling the error and then
-calling exit() from the hook to prevent the default Phorum code
+calling exit() from the hook to prevent the default LibreForum code
 from running.<br>
 <br>
 Note: If you decide to use the full override scenario, then
@@ -51,7 +51,7 @@ Same as input.
 function phorum_mod_foo_database_error($error)
 {
     // Log database errors to syslog facility "LOCAL0".
-    openlog("Phorum", LOG_PID | LOG_PERROR, LOG_LOCAL0);
+    openlog("LibreForum", LOG_PID | LOG_PERROR, LOG_LOCAL0);
     syslog(LOG_ERR, $error);
 
     return $error;

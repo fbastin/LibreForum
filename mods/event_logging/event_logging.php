@@ -4,7 +4,7 @@
 // Initialization code.
 // ----------------------------------------------------------------------
 
-// Check if we are loaded from the Phorum code.
+// Check if we are loaded from the LibreForum code.
 // Direct access to this file is not allowed.
 if (! defined("PHORUM")) return;
 
@@ -90,7 +90,7 @@ function event_logging_find_source($level = 0, $file = NULL)
     }
 
     // No module found? Then the logging is probably done by a regular
-    // Phorum page. We can use the phorum_page constant as the source here.
+    // LibreForum page. We can use the phorum_page constant as the source here.
     if ($source === NULL) {
         if (defined("phorum_page")) {
             $source = phorum_page;
@@ -267,7 +267,7 @@ function phorum_mod_event_logging_error_handler($errno, $errstr, $file, $line)
 
         // Notify the user and exit.
         print "An error occurred in the application.<br/>" .
-              "The error was logged to the Phorum event log.<br/>";
+              "The error was logged to the LibreForum event log.<br/>";
         exit(1);
     }
 
@@ -279,7 +279,7 @@ function phorum_mod_event_logging_error_handler($errno, $errstr, $file, $line)
 
 
 // ----------------------------------------------------------------------
-// Hooks for logging of Phorum events.
+// Hooks for logging of LibreForum events.
 // ----------------------------------------------------------------------
 
 function phorum_mod_event_logging_after_register($data)
@@ -610,7 +610,7 @@ function phorum_mod_event_logging_report($data)
 
     list ($source, $from_module) = event_logging_find_source(1);
 
-    // The "message" field isn't available in Phorum versions prior to 5.1.22.
+    // The "message" field isn't available in LibreForum versions prior to 5.1.22.
     $message_id = NULL;
     $forum_id   = NULL;
     $thread_id  = NULL;

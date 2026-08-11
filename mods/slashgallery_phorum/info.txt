@@ -1,5 +1,5 @@
 title: SlashGallery Integration
-description: Integrates the site-wide SlashGallery with Phorum. Adds a gallery selector to the editor and auto-syncs attachments.
+description: Integrates the site-wide SlashGallery with LibreForum. Adds a gallery selector to the editor and auto-syncs attachments.
 version: 1.0.1
 author: Gemini CLI
 url: https://www.tireur.org

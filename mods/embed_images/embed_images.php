@@ -634,7 +634,7 @@ function mod_embed_images_cache_get($key, $requested_size)
         }
     }
 
-    // No file cached item found? Then check the Phorum cache.
+    // No file cached item found? Then check the LibreForum cache.
     if ($cache === NULL)
     {
         $key = $key . "_" . $requested_size;
@@ -663,7 +663,7 @@ function mod_embed_images_cache_put($key, $requested_size, $val)
 {
     // Use our own permanent file cache if a cache_dir is set. Do
     // not cache errors using this system. We cache those using the
-    // standard Phorum cache, so we can assign a TTL to them.
+    // standard LibreForum cache, so we can assign a TTL to them.
     if ($GLOBALS['PHORUM']['mod_embed_images']['cache_dir'] && is_array($val))
     {
         require_once('./include/api/write_file.php');
@@ -695,7 +695,7 @@ function mod_embed_images_cache_put($key, $requested_size, $val)
             die("mod_embed_images_cache_put(): " . phorum_api_strerror());
         }
     }
-    // Use the standard Phorum cache.
+    // Use the standard LibreForum cache.
     else
     {
         $key = $key . '_' . $requested_size;

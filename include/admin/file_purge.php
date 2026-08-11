@@ -38,7 +38,7 @@
 
     $frm->addbreak("Purging stale files...");
     $frm->addmessage(
-        "It's possible that there are files stored in the Phorum system,
+        "It's possible that there are files stored in the LibreForum system,
          which no longer are linked to anything. For example, if users
          write messages with attachments, but do not post them in the end,
          the attachment files will be left behind in the database.

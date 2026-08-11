@@ -17,7 +17,7 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
-// This script is used for handling Ajax calls to the Phorum system.
+// This script is used for handling Ajax calls to the LibreForum system.
 // Ajax calls can either be implemented as scripts files in
 // "./include/ajax/call.<callname>.php" or through modules that implement
 // the "ajax_call" hook.
@@ -76,7 +76,7 @@ elseif (isset($_GET['call']))
     // Set the Ajax arguments.
     $PHORUM['ajax_args'] = $_GET;
 }
-// Phorum argument based request.
+// LibreForum argument based request.
 elseif (isset($PHORUM['args']['call']))
 {
     // Set the Ajax arguments.
@@ -109,11 +109,11 @@ if(empty($PHORUM['user']['user_id'])) {
  *     ajax_<call>
  *
  * [availability]
- *     Phorum 5 >= 5.2.8
+ *     LibreForum 5 >= 5.2.8
  *
  * [description]
  *     This hook allows module writers to implement calls for the
- *     Phorum Ajax layer.<sbr/>
+ *     LibreForum Ajax layer.<sbr/>
  *     <sbr/>
  *     The "call" argument from the Ajax argument array is used to
  *     construct the name of the hook that will be called. For example
@@ -193,8 +193,8 @@ function phorum_ajax_error($message)
 {
     $message = phorum_api_json_convert_to_utf8($message);
 
-    header("HTTP/1.1 500 Phorum Ajax error");
-    header("Status: 500 Phorum Ajax error");
+    header("HTTP/1.1 500 LibreForum Ajax error");
+    header("Status: 500 LibreForum Ajax error");
     header("Content-Type: text/plain; charset=UTF-8");
     print $message;
     exit(1);

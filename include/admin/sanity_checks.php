@@ -120,7 +120,7 @@ include_once "./include/admin/PhorumInputForm.php";
 $frm = new PhorumInputForm ("", "post", "Restart sanity checks");
 
 $frm->hidden("module", "sanity_checks");
-$frm->addbreak("Phorum System Sanity Checks");
+$frm->addbreak("LibreForum System Sanity Checks");
 $frm->addmessage(
     "Below you will find the results for a number of sanity checks
      that have been performed on your system. If you see any

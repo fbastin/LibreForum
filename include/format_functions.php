@@ -87,7 +87,7 @@ function phorum_format_messages ($data, $author_specs = NULL)
     // prepare url-templates used later on
     $profile_url_template = phorum_get_url(PHORUM_PROFILE_URL, '%spec_data%');
 
-    // Apply Phorum's formatting rules to all messages.
+    // Apply LibreForum's formatting rules to all messages.
     foreach( $data as $key => $message )
     {
         // Normally, the message_id must be set, since we should be handling
@@ -125,7 +125,7 @@ function phorum_format_messages ($data, $author_specs = NULL)
             $body = $escaped_body;
 
             // Replace newlines with $phorum_br temporarily.
-            // This way the mods know what Phorum did vs the user.
+            // This way the mods know what LibreForum did vs the user.
             $body = str_replace("\n", "$phorum_br\n", $body);
 
             // Run bad word replacement code.
@@ -219,7 +219,7 @@ function phorum_format_messages ($data, $author_specs = NULL)
                 "$1", $message["body"]
             );
 
-            // Normalize the Phorum line breaks that are left.
+            // Normalize the LibreForum line breaks that are left.
             $data[$key]["body"] = str_replace($phorum_br, "<br />", $message["body"]);
         }
     }

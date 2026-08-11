@@ -286,7 +286,7 @@ function phorum_mod_editor_tools_before_footer()
  *
  * @param mixed $icon
  *     The path to the icon image that has to be used for the button.
- *     This path is relative to the Phorum web directory. NULL is allowed
+ *     This path is relative to the LibreForum web directory. NULL is allowed
  *     as the value. In that case, the icon will be
  *     <module icon path>/<$tool_id>.gif.
  *
@@ -330,7 +330,7 @@ function editor_tools_register_tool($tool_id, $description, $icon=NULL, $jsactio
  *
  * @param mixed $jslib
  *     The path to the javascript library to load. This path is relative
- *     to the Phorum web directory. This argument can also be an array
+ *     to the LibreForum web directory. This argument can also be an array
  *     of paths.
  */
 function editor_tools_register_jslib($jslib)

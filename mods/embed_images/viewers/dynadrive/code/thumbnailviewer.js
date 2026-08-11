@@ -38,7 +38,7 @@ var objwidth=divobj.offsetWidth //width of div element
 var objheight=divobj.offsetHeight //height of div element
 var topposition=(docheight>objheight)? scroll_top+docheight/2-objheight/2+"px" : scroll_top+10+"px" //Vertical position of div element: Either centered, or if element height larger than viewpoint height, 10px from top of viewpoint
 
-// Phorum fixed:
+// LibreForum fixed:
 //Center div element horizontally
 if (objwidth > docwidth) {
     divobj.style.left=0;

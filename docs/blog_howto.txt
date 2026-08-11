@@ -1,4 +1,4 @@
-Phorum Blog How-To
+LibreForum Blog How-To
 ==================
 
 This document describes how to create a forum which can be used as a blog.

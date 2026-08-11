@@ -17,7 +17,7 @@
 //   along with this program.                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 
-    // Check if the Phorum file uploading settings match the
+    // Check if the LibreForum file uploading settings match the
     // limits that are imposed by the system.
 
     // TODO (document in faq / documentation)

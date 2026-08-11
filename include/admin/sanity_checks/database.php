@@ -38,7 +38,7 @@
             PHORUM_SANITY_CRIT,
             "No database configuration was found in your environment.",
             "You probably have not copied include/db/config.php.sample
-             to include/db/config.php. Read Phorum's install.txt for
+             to include/db/config.php. Read LibreForum's install.txt for
              installation instructions."
         );
 
@@ -60,7 +60,7 @@
             PHORUM_SANITY_WARN,
             "Database configuration parameter \"charset\" empty.",
             "The option \"charset\" is empty in your database configuration.
-             Although you can install Phorum without setting an explicit
+             Although you can install LibreForum without setting an explicit
              charset here, we strongly advice against this. Without a
              specific charset here, you might run into problems with
              special characters later on."

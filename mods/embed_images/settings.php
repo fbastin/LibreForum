@@ -122,7 +122,7 @@ $frm->addhelp($row,
      are placed in the body using an HTML &lt;img&gt; tag.<br />
      <br />
      <strong>Note:</strong> This option will only work if the HTML mod is
-     enabled as well. The Phorum team does not recommend using the HTML mod,
+     enabled as well. The LibreForum team does not recommend using the HTML mod,
      because wrong HTML can cause havoc on your page layout."
 );
 
@@ -183,7 +183,7 @@ $frm->addhelp($row,
      <br />
      The preferred fancy displaying method is \"jQuery FancyBox\", because
      it makes use of the jQuery javascript library that is bundled with
-     Phorum and because the viewer provides some good features (like
+     LibreForum and because the viewer provides some good features (like
      automatically scaling to fit the browser window).<br />
      <br />
      You might want to run \"Lightbox\" if you are already using lightbox,
@@ -219,12 +219,12 @@ $frm->addmessage($viewer_settings);
 $frm->addbreak("Advanced caching options. See help info for security notices.");
 
 $row = $frm->addrow(
-    "Cache directory for scaled images (empty = use standard Phorum cache)",
+    "Cache directory for scaled images (empty = use standard LibreForum cache)",
     $frm->text_box('cache_dir', $PHORUM['mod_embed_images']['cache_dir'], 30)
 );
 $frm->addhelp($row,
     "Cache directory",
-    "By default, this module will use the Phorum cache for caching scaled down
+    "By default, this module will use the LibreForum cache for caching scaled down
      images and their data. This cache won't be permanent, but for scaled down
      images, it makes perfect sense to have a somewhat permanent cache (since
      scaling is pretty expensive server operation).<br />
@@ -232,7 +232,7 @@ $frm->addhelp($row,
      Using this option, you can specify a directory that this module can use
      for storing scaled images. Note that this directory should be writable
      for the webserver. It can be provided as an absolute path or a path
-     relative to the Phorum install dir.<br />
+     relative to the LibreForum install dir.<br />
      <br />
      <strong>Security notice</strong>: If your installation contains a closed
      forum for which the image attachments should be kept private, you should
@@ -251,7 +251,7 @@ $frm->addhelp($row,
      already scaled images will be served from that cache. This is done
      through a PHP script. If the cache directory can be accessed at a
      certain URL, then you can enter that URL here. If a URL is
-     configured, Phorum can load the scaled images directly through the
+     configured, LibreForum can load the scaled images directly through the
      direct URL, which improves the performance by saving on PHP scripts
      that have to run.<br />
      <br />
@@ -331,7 +331,7 @@ $frm->addhelp($row,
     "Enable debugging for this module",
     "When this module fails to embed images in messages, then this option
      can be enabled to gather debugging information. This debug information
-     will be shown directly in the Phorum front end when reading messages."
+     will be shown directly in the LibreForum front end when reading messages."
 );
 
 $frm->addmessage("");

@@ -31,7 +31,7 @@ function phorum_mod_forum_subscriptions_scheduled() {
     
 }
 
-// please note that Phorum's after_post hook only provides the $data, the 
+// please note that LibreForum's after_post hook only provides the $data, the 
 // $queue_data is provided by the scheduled hook of this module if enabled  
 function phorum_mod_forum_subscriptions_after_post ($data = NULL, $queue_data = NULL) {
     // if the message is not approved and this is not a mail queue, we are done

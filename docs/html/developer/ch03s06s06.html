@@ -1,14 +1,14 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.6.6. page_&lt;phorum_page&gt;</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.1"><link rel="start" href="index.html" title="Phorum Developer Reference Manual"><link rel="up" href="ch03s06.html" title="3.6. Request initialization"><link rel="prev" href="ch03s06s05.html" title="3.6.5. common"><link rel="next" href="ch03s07.html" title="3.7. Page output"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s06s05.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s07.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="hook.page_&lt;phorum_page&gt;"></a>3.6.6. page_&lt;phorum_page&gt;</h3></div></div></div><p>
-        (Phorum 5 &gt;= 5.2.7)
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.6.6. page_&lt;phorum_page&gt;</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.1"><link rel="start" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03s06.html" title="3.6. Request initialization"><link rel="prev" href="ch03s06s05.html" title="3.6.5. common"><link rel="next" href="ch03s07.html" title="3.7. Page output"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s06s05.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s07.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="hook.page_&lt;phorum_page&gt;"></a>3.6.6. page_&lt;phorum_page&gt;</h3></div></div></div><p>
+        (LibreForum 5 &gt;= 5.2.7)
       </p><p>
 
 This hook gives modules a chance to run hook code for a specific
-Phorum page near the end of the the <code class="filename">common.php</code>
+LibreForum page near the end of the the <code class="filename">common.php</code>
 script.<br>
 <br>
-It gives modules a chance to override Phorum variables
+It gives modules a chance to override LibreForum variables
 and settings near the end of the <code class="filename">common.php</code>
-script. This can be used to override the Phorum (settings)
+script. This can be used to override the LibreForum (settings)
 variables that are setup during this script.
 <br>
 The <code class="literal">phorum_page</code> definition that is set
@@ -27,7 +27,7 @@ At the end of <code class="filename">common.php</code>, right after the
 <br>
 You can look at this as if the hook is called at the start of the
 called script, since including <code class="filename">common.php</code>
-is about the first thing that a Phorum script does.
+is about the first thing that a LibreForum script does.
       </p><p>
         <span class="bold"><strong>
           Hook input:

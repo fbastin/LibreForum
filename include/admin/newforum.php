@@ -603,7 +603,7 @@ $frm->addrow("Count views", $frm->select_tag("count_views", array(0 => "No", 1 =
 
 $row = $frm->addrow("Count views per thread for non-threaded list views", $frm->select_tag("count_views_per_thread", array(0 => "No", 1 => "Yes"), $count_views_per_thread, $disabled_form_input));
 $frm->addhelp($row, "Count views per thread for non-threaded list",
-    "By default, Phorum only counts views per message. While this is okay
+    "By default, LibreForum only counts views per message. While this is okay
      for a forum that runs in threaded view (since there you will always
      show only one message at a time), it might not work well for forums
      that run in a non-threaded view (there only one message will get

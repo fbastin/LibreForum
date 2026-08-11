@@ -50,7 +50,7 @@ Table of contents:
        3.7.2 Data stored in $PHORUM
        3.7.3 Language strings stored in $PHORUM
        3.7.4 Data stored in messages, users and settings
-4. Overview of available Phorum hooks
+4. Overview of available LibreForum hooks
    4.1 Code hooks
    4.2 Template hooks
 5. Support
@@ -64,8 +64,8 @@ Table of contents:
  -----------
 
    Modules are self contained pieces of software, that can be added to
-   Phorum to change or extend its functionality. Modules can do this
-   without having to change anything in the standard Phorum distribution
+   LibreForum to change or extend its functionality. Modules can do this
+   without having to change anything in the standard LibreForum distribution
    files or database structure. So installing a module means: drop in
    the code, go to the admin "Modules" page, enable the module and it
    works.
@@ -74,14 +74,14 @@ Table of contents:
  1.2 Hacks
  ---------
 
-   The moment it is necessary to make changes to the standard Phorum
+   The moment it is necessary to make changes to the standard LibreForum
    distribution files or database structure to implement some kind of
    functionality, we're talking about a hack (even if the changes
    that have to be made are accompanied by a drop in module).
 
-   Although there is nothing wrong with writing hacks, the Phorum team
+   Although there is nothing wrong with writing hacks, the LibreForum team
    wants to urge you to try if you can write a module before resorting
-   to a hack. Modules are the preferred way of modifying Phorum
+   to a hack. Modules are the preferred way of modifying LibreForum
    functionality, because that will make both upgrading your distribution
    and having your modification adopted by others easier.
 
@@ -89,31 +89,31 @@ Table of contents:
  1.3 Hooks
  ---------
 
-   Phorum uses hooks to run its modules. Hooks are points in the
-   application where Phorum stops and runs its data through the modules
+   LibreForum uses hooks to run its modules. Hooks are points in the
+   application where LibreForum stops and runs its data through the modules
    that are configured to handle the hook. The modules can act upon and
    change this data.
 
-   The following image visualizes what happens when Phorum reaches
+   The following image visualizes what happens when LibreForum reaches
    a hook point in the application, for which two modules ("foo" and
    "bar") have been configured.
 
 
-     Phorum
+     LibreForum
    Application
-       (1)                                (1) Phorum is running.
-        |                                 (2) Phorum reaches the
+       (1)                                (1) LibreForum is running.
+        |                                 (2) LibreForum reaches the
         |                                     hook named "some_hook".
-        v           Phorum                (3) Phorum sends data to
+        v           LibreForum                (3) LibreForum sends data to
     some_hook >----- data ------+             the module system.
        (2)            (3)       |         (4) The module "foo" is run.
                                 v         (5) The module "bar" is run.
-                       (4) module "foo"   (6) The Phorum data (which
+                       (4) module "foo"   (6) The LibreForum data (which
                                 |             might be modified by the
                                 v             modules) is sent back
-                       (5) module "bar"       to Phorum.
-                                |         (7) Phorum continues running
-     Phorum        Modified     |             with the modified data.
+                       (5) module "bar"       to LibreForum.
+                                |         (7) LibreForum continues running
+     LibreForum        Modified     |             with the modified data.
    Application <---- data ------+
        (7)            (6)
         |
@@ -134,8 +134,8 @@ Table of contents:
 
    A module contains one or more PHP functions that act as hook
    functions. Hook functions will receive some data in a variable
-   from Phorum and have to return the (possibly modified) data, which
-   will then go either back to Phorum or to the input of another module
+   from LibreForum and have to return the (possibly modified) data, which
+   will then go either back to LibreForum or to the input of another module
    which also handles the same hook (see 1.3). So the most basic (and
    useless :-) hook function you could write would look somewhat like this
    (see 3.7 for an explanation of the naming of the function):
@@ -157,7 +157,7 @@ Table of contents:
    to point the module system to the function in your module that will
    handle the hook. Together with some other information, used for
    describing the module, this is stored in the module information.
-   The module information acts as the glue between Phorum and your
+   The module information acts as the glue between LibreForum and your
    module.
 
    Module information is formatted using lines of plain text. Each line
@@ -180,7 +180,7 @@ Table of contents:
    |          | part is allowed.                                          |
    +----------+-----------------------------------------------------------+
    | hook     | This describes which hook functions are called for which  |
-   |          | Phorum hooks. The data consists of two fields, separated  |
+   |          | LibreForum hooks. The data consists of two fields, separated  |
    |          | by a pipe "|" symbol. The first field contains the name   |
    |          | of the hook that this module is hooking into. The second  |
    |          | field contains the name of the hook function that will be |
@@ -242,14 +242,14 @@ Table of contents:
    module "foo" might look like:
 
       title: Foo example module
-      desc: This is the Foo module for Phorum. Nothing exciting...
+      desc: This is the Foo module for LibreForum. Nothing exciting...
       hook: some_hook|phorum_mod_foo_some_hook
       hook: some_other_hook|phorum_mod_foo_some_other_hook
       hook: yet_another_hook|phorum_mod_foo_some_other_hook
       priority: run some_hook before some_other_module
       required_version: 5.2.0
 
-   So what this module info for example does, is telling Phorum that
+   So what this module info for example does, is telling LibreForum that
    when it gets to "some_other_hook", it will have to call the function
    phorum_mod_foo_some_other_hook() in your module. It also tells
    that for "yet_another_hook" the same function has to be called.
@@ -303,7 +303,7 @@ Table of contents:
 
       /* phorum module info
       title: Foo example module
-      desc: This is the Foo module for Phorum. Nothing exciting...
+      desc: This is the Foo module for LibreForum. Nothing exciting...
       hook: some_hook|phorum_mod_foo_some_hook
       hook: some_other_hook|phorum_mod_foo_some_other_hook
       hook: yet_another_hook|phorum_mod_foo_some_other_hook
@@ -354,7 +354,7 @@ Table of contents:
    info.txt:
 
       title: Foo example module
-      desc: This is the Foo module for Phorum. Nothing exciting...
+      desc: This is the Foo module for LibreForum. Nothing exciting...
       hook: some_hook|phorum_mod_foo_some_hook
       hook: some_other_hook|phorum_mod_foo_some_other_hook
       hook: yet_another_hook|phorum_mod_foo_some_other_hook
@@ -393,7 +393,7 @@ Table of contents:
 
    If your module includes text that will be displayed to end users,
    you should strongly consider making it support multiple languages.
-   This will allow Phorum installations using another language to display
+   This will allow LibreForum installations using another language to display
    output of your module in the same language, instead of the language
    you have written the module in.
 
@@ -403,16 +403,16 @@ Table of contents:
       hook: lang|
 
    There is no hook function configured here, because the "lang" hook
-   is only used as a marker for Phorum. This only tells Phorum that your
+   is only used as a marker for LibreForum. This only tells LibreForum that your
    module supports multiple languages.
 
    Next, you must provide at least one language file with your module.
    Language files are stored in a subdirectory name "lang" inside your
    module directory. So in our sample module, the full directory would be
    {phorum dir}/foo/lang/. The language files must be named identical
-   to the main language files that Phorum uses. So, to include both
+   to the main language files that LibreForum uses. So, to include both
    English and French, your module would have the following file
-   structure below the Phorum's mods directory:
+   structure below the LibreForum's mods directory:
 
       foo/info.txt
       foo/foo.php
@@ -420,9 +420,9 @@ Table of contents:
       foo/lang/french.php
 
    The structure of your language files will be almost identical to that
-   of the main Phorum language files. However, for your own language files
+   of the main LibreForum language files. However, for your own language files
    it is advisable to add an extra level in the language variables, to
-   avoid conflicts with other modules or Phorum itself. Here is an
+   avoid conflicts with other modules or LibreForum itself. Here is an
    example of how you would do that:
 
       <?php
@@ -439,28 +439,28 @@ Table of contents:
 
       {LANG->mod_foo->Hello}
 
-   In case a Phorum installation is using a language that your module
-   does not support, Phorum will automatically attempt to fallback to
+   In case a LibreForum installation is using a language that your module
+   does not support, LibreForum will automatically attempt to fallback to
    English. So it is highly recommend that you include an english.php
    language file in all your modules. If both the current language and
-   english.php are not found, Phorum will be unable to load a language
+   english.php are not found, LibreForum will be unable to load a language
    for your module and will display empty space instead of language
    strings.
 
-   Try to reuse strings that are already in the main Phorum language
+   Try to reuse strings that are already in the main LibreForum language
    files itself. Only create custom strings when there is no alternative
    available. Having more text to translate is more work for everybody,
-   especially the Phorum translators.
+   especially the LibreForum translators.
 
 
  2.4 Storing message data
  ------------------------
 
-   If your module needs to store data along with a Phorum message,
+   If your module needs to store data along with a LibreForum message,
    you can make use of the meta information array that is attached
    to each message ($message["meta"]). This array is a regular PHP
    array, which is stored in the database as serialized data
-   (see http://www.php.net/serialize). Because Phorum and other modules
+   (see http://www.php.net/serialize). Because LibreForum and other modules
    make use of this meta data as well, you should not squash it,
    neither access the meta data in the database directly. Instead
    use the methods described in this section.
@@ -490,7 +490,7 @@ Table of contents:
           return $message;
       }
 
-   Phorum will take care of storing the updated meta data in the database.
+   LibreForum will take care of storing the updated meta data in the database.
 
 
   2.4.2 From other hooks
@@ -530,7 +530,7 @@ Table of contents:
  2.5 Storing user data
  ---------------------
 
-   If your module needs to store data along with a Phorum user,
+   If your module needs to store data along with a LibreForum user,
    you can make use of custom profile fields. In the admin interface,
    under "Custom Profiles", you can add your own profile fields
    (see also docs/creating_custom_userfields.txt).
@@ -542,7 +542,7 @@ Table of contents:
    When using a custom profile field for storing module information,
    you can use a separate field for each piece of data you want to
    store. But instead, you can also create a single field for storing
-   a complete array of information. Phorum will automatically take care
+   a complete array of information. LibreForum will automatically take care
    of storing this information (serialized) in the database. You only
    should make sure that the custom profile field is large enough to
    store all the data. When your module needs to store multiple fields,
@@ -578,8 +578,8 @@ Table of contents:
  2.6 Creating custom URLs
  -------------------------
 
-   Phorum uses the function phorum_get_url() to consistenly build URLs
-   that point to parts of Phorum. It is recommended that you use this
+   LibreForum uses the function phorum_get_url() to consistenly build URLs
+   that point to parts of LibreForum. It is recommended that you use this
    function as well when creating links yourself, so special features
    and future changes will automatically be incorporated in the links
    you use.
@@ -590,7 +590,7 @@ Table of contents:
       $url = phorum_get_url(PHORUM_PROFILE_URL, 17);
 
    The argument list that this function takes, depends on the first
-   argument which tells Phorum what kind of URL has to be built.
+   argument which tells LibreForum what kind of URL has to be built.
    So when building other URLs, other arguments will probably
    be used.
 
@@ -629,12 +629,12 @@ Table of contents:
 
    Although you can do anything you want from your settings.php script,
    it is recommended that you use the tools that are handed to you
-   by Phorum for building pages and storing settings.
+   by LibreForum for building pages and storing settings.
 
    One of those tools is a PHP object "PhorumInputForm" which
    can be used to create standard input forms and table displays in
    the admin interface. The best example here is to look at one of the
-   modules that come with Phorum like "bbcode" or "replace".
+   modules that come with LibreForum like "bbcode" or "replace".
 
    Another tool is the function phorum_db_update_settings() which can
    be used for storing settings in the database. To store settings using
@@ -726,11 +726,11 @@ Table of contents:
  -------------------
 
    The best way of learning how to write modules is probably looking
-   at existing module code. In your Phorum distribution's docs directory,
+   at existing module code. In your LibreForum distribution's docs directory,
    you will find the directory example_mods. This directory contains a
    couple of example modules, demonstrating the features described in this
    document. The modules have no real functional purpose, but they might
-   be easier to read than the real Phorum modules.
+   be easier to read than the real LibreForum modules.
 
 
 3. **CAUTIONS AND SECURITY ISSUES**
@@ -750,8 +750,8 @@ Table of contents:
  -----------------------------------------------------------
 
    If you are changing the module info for a module that is already
-   activated in your Phorum installation, you must deactivate and
-   reactivate it to have Phorum reload the changed information. For
+   activated in your LibreForum installation, you must deactivate and
+   reactivate it to have LibreForum reload the changed information. For
    performance reasons the module information is only read when the
    module is activated.
 
@@ -764,7 +764,7 @@ Table of contents:
 
    The $PHORUM array is in the global scope. From inside a function,
    you can not directly access this array. So you will have to import
-   the $PHORUM array into your function scope. The Phorum team
+   the $PHORUM array into your function scope. The LibreForum team
    recommends the following method for doing this (check out the
    faq.txt to see why we do not use the "global" keyword):
 
@@ -780,7 +780,7 @@ Table of contents:
  3.4 How to access additional files in your multi file module
  ------------------------------------------------------------
 
-   All standard Phorum pages are run from the Phorum installation
+   All standard LibreForum pages are run from the LibreForum installation
    directory. The hook functions that you write also work from
    the same directory. So if you want to access files in your module
    directory, you will have to specify the relative path to those
@@ -810,14 +810,14 @@ Table of contents:
       if(!defined("PHORUM")) return;
 
    This will make sure that the file will only work when loaded from
-   the Phorum application. If you are writing pages that are loaded
+   the LibreForum application. If you are writing pages that are loaded
    from the admin interface (like a settings screen for your module),
    then use the following line instead:
 
       if(!defined("PHORUM_ADMIN")) return;
 
    This will make sure that the file will only work when loaded from
-   the Phorum admin interface.
+   the LibreForum admin interface.
 
 
  3.6 Secure your pages from XSS
@@ -859,7 +859,7 @@ Table of contents:
  --------------------------------
 
    When creating modules, you must always be aware that you are
-   working in the same namespace as other modules and Phorum itself.
+   working in the same namespace as other modules and LibreForum itself.
    This means that there is a risk of duplicate use of function
    and variable names. By following a couple of simple rules, you
    can greatly reduce this risk.
@@ -908,7 +908,7 @@ Table of contents:
   ----------------------------------------
 
    When storing your custom language strings, do not put them directly
-   in $PHORUM["DATA"]["LANG"] like Phorum does, because that might
+   in $PHORUM["DATA"]["LANG"] like LibreForum does, because that might
    result in conflicting language strings. Instead add an extra data level,
    which makes sure that your module keeps all language strings to itself.
 
@@ -922,7 +922,7 @@ Table of contents:
   3.7.4 Data stored in messages, users and settings
   -------------------------------------------------
 
-   When using the Phorum provided ways of storing data in messages,
+   When using the LibreForum provided ways of storing data in messages,
    users and settings, always prepend the data key with
    mod_<module name>. SO if your module is named "foo", do not use
    things like:
@@ -940,10 +940,10 @@ Table of contents:
    See also sections 2.4 (message data), 2.5 (user data) and 2.7 (settings).
 
 
-4. Overview of available Phorum hooks
+4. Overview of available LibreForum hooks
 -------------------------------------------------------------------------------
 
-   In this chapter you will find an overview of all available Phorum
+   In this chapter you will find an overview of all available LibreForum
    hooks and a description of what they do.
 
    Remarks:
@@ -967,15 +967,15 @@ Table of contents:
      currently no hook available. If that is the case, let the dev
      team know by posting a message in the development forum
      on phorum.org, explaining where and why you need an extra hook.
-     Hooks will be added as necessary, especially while Phorum 5
+     Hooks will be added as necessary, especially while LibreForum 5
      is young.
 
 
  4.1 Code hooks
  --------------
 
-   Code hooks are hooks that are called from within the Phorum core
-   code. These hooks are typically used for modifying Phorum's internal
+   Code hooks are hooks that are called from within the LibreForum core
+   code. These hooks are typically used for modifying LibreForum's internal
    datastructures.
 
 
@@ -1059,7 +1059,7 @@ Table of contents:
 
    Where  : login.php
    When   : After a successful login, just before redirecting the
-            user to a Phorum page.
+            user to a LibreForum page.
    Input  : The redirection URL.
    Return : Same as Input
 
@@ -1074,7 +1074,7 @@ Table of contents:
 
    Where  : login.php
    When   : After a logout, just before redirecting the user to
-            a Phorum page.
+            a LibreForum page.
    Input  : The redirection URL.
    Return : Same as Input
 
@@ -1314,7 +1314,7 @@ Table of contents:
 
    This hook can be used for modifying the message data and for
    running additional checks on the data. If an error is put in $error,
-   Phorum will stop posting the message and show the error to the user
+   LibreForum will stop posting the message and show the error to the user
    in the post-form.
 
    Beware that $error can already contain an error on input, in case
@@ -1357,7 +1357,7 @@ Table of contents:
    Return : none
 
    This hook can be used for applying custom settings or altering
-   Phorum settings based on external parameters.
+   LibreForum settings based on external parameters.
 
    ----------------------------------------------------------------------------
    common_no_forum
@@ -1380,7 +1380,7 @@ Table of contents:
    Return : none
 
    This hook can be used for applying custom settings or altering
-   Phorum settings based on external parameters.
+   LibreForum settings based on external parameters.
 
    ----------------------------------------------------------------------------
    common_pre
@@ -1392,7 +1392,7 @@ Table of contents:
    Return : none
 
    This hook can be used for applying custom settings or altering
-   Phorum settings based on external parameters.
+   LibreForum settings based on external parameters.
 
    ----------------------------------------------------------------------------
    database_error
@@ -1448,7 +1448,7 @@ Table of contents:
    external
 
    The external hook functions are never called from any of the standard
-   Phorum pages. These functions are called by invoking script.php on the
+   LibreForum pages. These functions are called by invoking script.php on the
    command line with the --module parameter. This can be used to pipe
    output from some arbitrary command to a specific module, which can do
    something with that input. If your module does not need any command
@@ -1540,7 +1540,7 @@ Table of contents:
    ----------------------------------------------------------------------------
    lang
 
-   The lang hook is a only a 'marker'. It flags Phorum that your module
+   The lang hook is a only a 'marker'. It flags LibreForum that your module
    supports multiple languages. It does not take a hook function in
    your module information. If you do define a hook function, it will
    never be called.
@@ -1576,7 +1576,7 @@ Table of contents:
 
    When checking the moderation step id for a certain step, always use
    the contstants that are defined for this in include/constants.php.
-   The numerical value of this id can change between Phorum releases.
+   The numerical value of this id can change between LibreForum releases.
 
    ----------------------------------------------------------------------------
    move_thread
@@ -1598,7 +1598,7 @@ Table of contents:
    Return : none
 
    This hook can be used for performing actions after sending a PM. Before
-   PM notification by email was put in the Phorum core, this hook was
+   PM notification by email was put in the LibreForum core, this hook was
    used to send those notifications.
 
    ----------------------------------------------------------------------------
@@ -1633,7 +1633,7 @@ Table of contents:
    posting_permissions
 
    Where  : posting.php
-   When   : Right after Phorum has determined all abilities that apply
+   When   : Right after LibreForum has determined all abilities that apply
             to the logged in user.
    Input  : none
    Ouput  : none
@@ -1647,8 +1647,8 @@ Table of contents:
    what fields can be used.
 
    Beware: Only use this hook if you know what you are doing and understand
-   Phorum's editor permission code. If used wrong, you can open up security
-   holes in your Phorum installation!
+   LibreForum's editor permission code. If used wrong, you can open up security
+   holes in your LibreForum installation!
 
    ----------------------------------------------------------------------------
    before_edit
@@ -1696,7 +1696,7 @@ Table of contents:
    Return : The quoted body to use in the post form or the input array
             in case the hook does not handle the quoting.
 
-   When quoting a message for reply, by default Phorum formats quoted
+   When quoting a message for reply, by default LibreForum formats quoted
    messages using an old school email style of quoting. By using the quote
    hook, you can implement a different quoting mechanism.
 
@@ -1706,7 +1706,7 @@ Table of contents:
    be pre-filled into the reply form or the original array in case the
    hook function does not handle the quoting.
 
-   The BBCode module that is distributed with Phorum has a quote hook
+   The BBCode module that is distributed with LibreForum has a quote hook
    function. Because it does not make sense to have more than one quote
    hook active, the BBCode module has an option to disable its quote hook
    function. You need to make sure that its quote hook function is disabled
@@ -1836,7 +1836,7 @@ Table of contents:
 
    To run the scheduled hook from the command line or from a scheduling
    service, you have to be in the phorum installation directory. So
-   running the scheduled hooks for your Phorum installation would
+   running the scheduled hooks for your LibreForum installation would
    be done like this on a UNIX system prompt:
 
       # cd /your/phorum/dir
@@ -1904,14 +1904,14 @@ Table of contents:
 
    This hook can be used for implementing an alternative mail sending
    system (e.g. like the SMTP module does). The hook should return true if
-   Phorum should still send the mails himself. If you do not want to have
-   Phorum send the mails also, return false.
+   LibreForum should still send the mails himself. If you do not want to have
+   LibreForum send the mails also, return false.
 
    ----------------------------------------------------------------------------
    shutdown
 
    Where  : include/common.php
-   When   : The very last thing that happens in any Phorum page
+   When   : The very last thing that happens in any LibreForum page
    Input  : none
    Return : none
 
@@ -1945,7 +1945,7 @@ Table of contents:
    source. If the hook decides that the username and password are okay,
    then it can set the user_id field to the user_id of the authenticated
    user. If the authentication is rejected, it can set user_id to FALSE.
-   If the hook wants to let Phorum use its own standard authentication
+   If the hook wants to let LibreForum use its own standard authentication
    mechanism, then it can set user_id to NULL.
 
    Here is an example (not too useful) hook function:
@@ -1960,7 +1960,7 @@ Table of contents:
           if ($login["username"] == "john" && $login["password"] == "doe") {
               $login["user_id"] = 1234;
           }
-          // For all other users, we let Phorum do the authentication.
+          // For all other users, we let LibreForum do the authentication.
           else
           {
               $login["user_id"] = NULL;
@@ -1970,26 +1970,26 @@ Table of contents:
       }
 
    Mind that when returning a user_id using this hook, the user data for
-   the user must be available in Phorum's users table. This hook only
+   the user must be available in LibreForum's users table. This hook only
    handles the authentication step. So if this hook is used for
    authenticating against an external source, somehow the user data
-   has to be put in Phorum's users table. There are multiple ways of
+   has to be put in LibreForum's users table. There are multiple ways of
    handling this. Here's two of them:
 
    1) Synchronize the data from the external system when it has changed
       there. So if a user is created, changed or deleted on the
-      external system, that system has to update the Phorum users
+      external system, that system has to update the LibreForum users
       table with the new information. The advantage of this method, is
       that the users table only is updated when changes occur and that
       the users table is always up-to-date with the latest information.
 
    2) Synchronize the data on-the-fly from the user_check_login hook.
       As long as the user data is available before that hook has
-      ended, it will be okay for Phorum. The advantage of this method
+      ended, it will be okay for LibreForum. The advantage of this method
       is that updating the user data is done in an easy way at the
-      moment a user logs into Phorum. Disadvantages are that the user
+      moment a user logs into LibreForum. Disadvantages are that the user
       data is only updated at the moment the user logs in and that a
-      user in only known to Phorum after the first time logging in.
+      user in only known to LibreForum after the first time logging in.
 
       Here's an example of how a hook function that uses on-the-fly
       updates could look:
@@ -2003,12 +2003,12 @@ Table of contents:
               return $login;
           }
 
-          // Synchronize the external system with Phorum's users table.
+          // Synchronize the external system with LibreForum's users table.
           $externaluser =  externalsystem_getuser($username);
-          ...code to put $externaluser in Phorum's user table ...
-          ...and determine the Phorum $user_id to return ...
+          ...code to put $externaluser in LibreForum's user table ...
+          ...and determine the LibreForum $user_id to return ...
 
-          // Set the user_id to tell Phorum which user logged in.
+          // Set the user_id to tell LibreForum which user logged in.
           $login["user_id"] = $user_id;
 
           return $login;
@@ -2035,7 +2035,7 @@ Table of contents:
  4.2 Template hooks
  ------------------
 
-   Template hooks are called from within Phorum's template files.
+   Template hooks are called from within LibreForum's template files.
    These hooks can be used to extend the user interface with custom
    elements. From a hook function for one of these template hooks, the
    module writer can print the HTML code that has to be added to the
@@ -2109,7 +2109,7 @@ Table of contents:
    This hook can be used to add extra buttons to each attachment in the
    editor, so you can do custom actions for attachments.
 
-   To make your buttons look the same as Phorum's buttons, use the
+   To make your buttons look the same as LibreForum's buttons, use the
    CSS class "PhorumSubmit".
 
    Here's an example hook function that will add a button to the attachments,
@@ -2145,7 +2145,7 @@ Table of contents:
 
    This hook can be used to add extra buttons to the editor buttons.
 
-   To make your buttons look the same as Phorum's buttons, use the
+   To make your buttons look the same as LibreForum's buttons, use the
    CSS class "PhorumSubmit".
 
    Here's an example hook function that will add a button to the editor,
@@ -2162,7 +2162,7 @@ Table of contents:
 6. Support
 -------------------------------------------------------------------------------
 
-   If you have questions about creating modules for Phorum, please visit
+   If you have questions about creating modules for LibreForum, please visit
    the website http://phorum.org/ and ask the development team for help in
    the Development forum.
 

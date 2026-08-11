@@ -45,7 +45,7 @@
         /**
          * Adds a custom link to the menu.
          *
-         * A custom links URL can link anywhere, not just into Phorum modules
+         * A custom links URL can link anywhere, not just into LibreForum modules
          * 
          * @param mixed  $title       Name of link
          * @param mixed  $url         Destination URL

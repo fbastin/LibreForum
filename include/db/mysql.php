@@ -19,17 +19,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * This script implements a MySQL Phorum database layer.
+ * This script implements a MySQL LibreForum database layer.
  *
- * The other Phorum code does not care how data is stored.
+ * The other LibreForum code does not care how data is stored.
  * The only requirement is that it is returned from these functions
  * in the right way. This means each database can use as many or as
  * few tables as it likes. It can store the fields anyway it wants.
  *
  * The only thing to worry about is the table_prefix for the tables.
- * all tables for a Phorum install should be prefixed with the
+ * all tables for a LibreForum install should be prefixed with the
  * table_prefix that will be entered in include/db/config.php.  This
- * will allow multiple Phorum installations to use the same database.
+ * will allow multiple LibreForum installations to use the same database.
  *
  * @todo
  *     phorum_api_user_check_access() is used in this layer, but the
@@ -42,7 +42,7 @@
  * @license    Phorum License, http://www.phorum.org/license.txt
  */
 
-// Bail out if we're not loaded from the Phorum code.
+// Bail out if we're not loaded from the LibreForum code.
 if (!defined('PHORUM')) return;
 
 // ----------------------------------------------------------------------
@@ -51,7 +51,7 @@ if (!defined('PHORUM')) return;
 
 // {{{ Constant and variable definitions
 
-// The table prefix, which allows for storing multiple Phorum data sets
+// The table prefix, which allows for storing multiple LibreForum data sets
 // in one single database.
 $prefix = $PHORUM['DBCONFIG']['table_prefix'];
 
@@ -199,7 +199,7 @@ define('LIST_UPDATED_THREADS',   2);
 // }}}
 
 // ----------------------------------------------------------------------
-// Utility functions (not directly part of the Phorum db API)
+// Utility functions (not directly part of the LibreForum db API)
 // ----------------------------------------------------------------------
 
 // {{{ Function: phorum_db_mysql_connect()
@@ -349,7 +349,7 @@ function phorum_db_run_queries($queries)
 
 // {{{ Function: phorum_db_load_settings()
 /**
- * Load the Phorum settings in the $PHORUM array.
+ * Load the LibreForum settings in the $PHORUM array.
  *
  * These settings are key/value pairs that are read from the settings
  * table. In the settings table, a data type is provided for each setting.
@@ -389,7 +389,7 @@ function phorum_db_load_settings()
 
 // {{{ Function: phorum_db_update_settings()
 /**
- * Store or update Phorum settings.
+ * Store or update LibreForum settings.
  *
  * @param array $settings
  *     An array containing key/value pairs that have to be stored in the
@@ -666,7 +666,7 @@ function phorum_db_get_recent_messages($length, $offset = 0, $forum_id = 0, $thr
         E_USER_ERROR
     );
 
-    // We have to check what forums the active Phorum user can read first.
+    // We have to check what forums the active LibreForum user can read first.
     // Even if a $thread is passed, we have to make sure that the user
     // can read the containing forum. Here we convert the $forum_id argument
     // into an argument that is usable for phorum_api_user_check_access(),
@@ -1377,7 +1377,7 @@ function phorum_db_get_message($value, $field='message_id', $ignore_forum_id=FAL
  *
  * @param boolean $ignore_mod_perms
  *     If this parameter is set to a true value, then the function will
- *     return hidden messages, even if the active Phorum user is not
+ *     return hidden messages, even if the active LibreForum user is not
  *     a moderator.
  *
  * @param boolean $write_server
@@ -1606,7 +1606,7 @@ function phorum_db_search($search, $author, $return_threads, $offset, $length, $
     // Return immediately if the search queries are empty.
     if ($search == '' && $author == '') return $return;
 
-    // Check what forums the active Phorum user can read.
+    // Check what forums the active LibreForum user can read.
     $allowed_forums = phorum_api_user_check_access(
         PHORUM_USER_ALLOW_READ, PHORUM_ACCESS_LIST
     );
@@ -1949,7 +1949,7 @@ function phorum_db_get_neighbour_thread($key, $direction)
             );
     }
 
-    // If the active Phorum user is not a moderator for the forum, then
+    // If the active LibreForum user is not a moderator for the forum, then
     // the neighbour message should be approved.
     $approvedval = '';
     if (!phorum_api_user_check_access(PHORUM_USER_ALLOW_MODERATE_MESSAGES)) {
@@ -2390,7 +2390,7 @@ function phorum_db_add_forum($forum)
              * @todo Wouldn't it be better to have this one set to a real
              *       NULL value from the script that calls this function?
              *       If for some reason somebody wants to use the string
-             *       'NULL' for a value (a geek setting up a Phorum
+             *       'NULL' for a value (a geek setting up a LibreForum
              *       probably ;-), then strange things will happen.
              */
             } elseif ($value == 'NULL') {
@@ -2789,7 +2789,7 @@ function phorum_db_sort_groups($a,$b) {
  * the specified status in any of the groups will be included in the return
  * array. There will be no group info in the return array however, so this
  * function cannot be used to retrieve a full group to member mapping. This
- * specific functionality is used from the Phorum scripts to see if there are
+ * specific functionality is used from the LibreForum scripts to see if there are
  * unapproved group members in any of the forums for which the active user
  * can moderate the group members.
  *
@@ -3108,7 +3108,7 @@ function phorum_db_user_get_moderators($forum_id, $exclude_admin=FALSE, $for_ema
 
 // {{{ Function: phorum_db_user_count()
 /**
- * Count the total number of users in the Phorum system.
+ * Count the total number of users in the LibreForum system.
  *
  * @return integer
  *     The number of users.
@@ -3330,7 +3330,7 @@ function phorum_db_user_get($user_id, $detailed = FALSE, $write_server = FALSE, 
 
         // Other fields can either contain raw values or serialized
         // arrays. For serialized arrays, the field data is prefixed with
-        // a magic "P_SER:" (Phorum serialized) marker.
+        // a magic "P_SER:" (LibreForum serialized) marker.
         if (substr($fld['data'],0,6) == 'P_SER:') {
             $users[$fld['user_id']][$name]=unserialize(substr($fld['data'],6));
             continue;
@@ -4037,7 +4037,7 @@ function phorum_db_user_save_groups($user_id, $groups)
  * Subscribe a user to a forum or thread.
  *
  * Remark: Currently, there is no active support for subscription type
- * PHORUM_SUBSCRIPTION_DIGEST in the Phorum core.
+ * PHORUM_SUBSCRIPTION_DIGEST in the LibreForum core.
  *
  * @param integer $user_id
  *     The id of the user to create the subscription for.
@@ -4339,7 +4339,7 @@ function phorum_db_user_delete($user_id)
  *
  * @param string $link_type
  *     The type of link to retrieve from the database. Normally this is one
- *     of the Phorum built-in link types, but it can also be a custom
+ *     of the LibreForum built-in link types, but it can also be a custom
  *     link type (e.g. if a module uses the file storage on its own).
  *     This parameter can be NULL to retrieve any link type.
  *
@@ -4695,7 +4695,7 @@ function phorum_db_get_user_filesize_total($user_id)
  * with attachments, but never post it.
  *
  * @return array
- *     An array of stale Phorum files, indexed by file_id. Every item in
+ *     An array of stale LibreForum files, indexed by file_id. Every item in
  *     this array is an array on its own, containing the fields:
  *     - file_id: the file id of the stale file
  *     - filename: the name of the stale file
@@ -4731,7 +4731,7 @@ function phorum_db_list_stale_files()
 
 // {{{ Function: phorum_db_newflag_allread()
 /**
- * Mark all messages for a forum read for the active Phorum user.
+ * Mark all messages for a forum read for the active LibreForum user.
  *
  * @param integer $forum_id
  *     The forum to mark read or 0 (zero) to mark the current forum read.
@@ -4768,7 +4768,7 @@ function phorum_db_newflag_allread($forum_id=0)
 
 // {{{ Function: phorum_db_newflag_get_flags()
 /**
- * Retrieve the read messages for a forum for the active Phorum user.
+ * Retrieve the read messages for a forum for the active LibreForum user.
  *
  * @param integer $forum_id
  *     The forum to retrieve the read messages for or 0 (zero) to
@@ -4982,7 +4982,7 @@ function phorum_db_newflag_count($forum_ids)
 // {{{ Function: phorum_db_newflag_get_unread_count()
 /**
  * Retrieve the number of new threads and messages for a forum for the
- * active Phorum user.
+ * active LibreForum user.
  *
  * @param integer $forum_id
  *     The forum to retrieve the new counts for or
@@ -5055,7 +5055,7 @@ function phorum_db_newflag_get_unread_count($forum_id=NULL)
 
 // {{{ Function: phorum_db_newflag_add_read()
 /**
- * Mark a message as read for the active Phorum user.
+ * Mark a message as read for the active LibreForum user.
  *
  * @param mixed $message_ids
  *     The message_id of the message to mark read in the active forum or an
@@ -5140,7 +5140,7 @@ function phorum_db_newflag_add_read($message_ids)
 // {{{ Function: phorum_db_newflag_get_count()
 /**
  * Retrieve the total number of newflags for a forum for the active
- * Phorum user.
+ * LibreForum user.
  *
  * @param integer $forum_id
  *     The forum to retrieve the count for or 0 (zero) to retrieve it
@@ -5170,7 +5170,7 @@ function phorum_db_newflag_get_count($forum_id=0)
 
 // {{{ Function: phorum_db_newflag_delete()
 /**
-* Remove newflags for a forum for the active Phorum user.
+* Remove newflags for a forum for the active LibreForum user.
 *
 * @param integer $numdelete
 *     The number of newflags to delete or 0 (zero) to delete them all.
@@ -5246,7 +5246,7 @@ function phorum_db_newflag_update_forum($message_ids)
  *
  * @param boolean $ignore_active_user
  *     If this parameter is set to FALSE (it is TRUE by default), then the
- *     active Phorum user will be excluded from the list.
+ *     active LibreForum user will be excluded from the list.
  *
  * @return array $addresses
  *     An array containing the subscriber email addresses. The keys in the
@@ -5643,7 +5643,7 @@ function phorum_db_mod_banlists($type, $pcre, $string, $forum_id, $comments, $ba
  *
  * @param integer $user_id
  *     The user to retrieve messages for or NULL to use the active
- *     Phorum user (default).
+ *     LibreForum user (default).
  *
  * @param boolean $reverse
  *     If set to a true value (default), sorting of messages is done
@@ -5711,7 +5711,7 @@ function phorum_db_pm_list($folder, $user_id = NULL, $reverse = TRUE)
  *
  * @param integer $user_id
  *     The user to retrieve the message for or NULL to use the active
- *     Phorum user (default).
+ *     LibreForum user (default).
  *
  * @return array
  *     Return the private message on success or NULL if the message
@@ -5785,7 +5785,7 @@ function phorum_db_pm_get($pm_id, $folder = NULL, $user_id = NULL)
  *
  * @param mixed $user_id
  *     The id of the user to create the folder for or NULL to use the
- *     active Phorum user (default).
+ *     active LibreForum user (default).
  *
  * @return integer $pm_folder_id
  *     The id that was assigned to the new folder.
@@ -5823,7 +5823,7 @@ function phorum_db_pm_create_folder($foldername, $user_id = NULL)
  *
  * @param mixed $user_id
  *     The user to rename the folder for or NULL to use the active
- *     Phorum user (default).
+ *     LibreForum user (default).
  */
 function phorum_db_pm_rename_folder($folder_id, $newname, $user_id = NULL)
 {
@@ -5856,7 +5856,7 @@ function phorum_db_pm_rename_folder($folder_id, $newname, $user_id = NULL)
  *
  * @param mixed $user_id
  *     The user to delete the folder for or NULL to use the active
- *     Phorum user (default).
+ *     LibreForum user (default).
  */
 function phorum_db_pm_delete_folder($folder_id, $user_id = NULL)
 {
@@ -5890,7 +5890,7 @@ function phorum_db_pm_delete_folder($folder_id, $user_id = NULL)
  *
  * @param mixed $user_id
  *     The user to retrieve folders for or NULL to use the active
- *     Phorum user (default).
+ *     LibreForum user (default).
  *
  * @param boolean $count
  *     If this parameter is set to a true value, the number of messages
@@ -5997,7 +5997,7 @@ function phorum_db_pm_getfolders($user_id = NULL, $count = FALSE)
  *
  * @param mixed $user_id
  *     The user to retrieve messages for or NULL to use the
- *     active Phorum user (default).
+ *     active LibreForum user (default).
  *
  * @return array
  *     An array containing the elements "total" and "new".
@@ -6046,7 +6046,7 @@ function phorum_db_pm_messagecount($folder, $user_id = NULL)
  * you are not interested in the exact amount of new messages.
  *
  * @param mixed $user_id
- *     The user to check for or NULL to use the active Phorum user (default).
+ *     The user to check for or NULL to use the active LibreForum user (default).
  *
  * @return boolean
  *     TRUE in case there are new messages, FALSE otherwise.
@@ -6085,7 +6085,7 @@ function phorum_db_pm_checknew($user_id = NULL)
  *     recipient(s).
  *
  * @param mixed $from
- *     The id of the sending user or NULL to use the active Phorum user
+ *     The id of the sending user or NULL to use the active LibreForum user
  *     (default).
  *
  * @param $keepcopy
@@ -6199,7 +6199,7 @@ function phorum_db_pm_send($subject, $message, $to, $from=NULL, $keepcopy=FALSE)
  *     The value for the flag (either TRUE or FALSE).
  *
  * @param $user_id
- *     The user to set a flag for or NULL to use the active Phorum
+ *     The user to set a flag for or NULL to use the active LibreForum
  *     user (default).
  */
 function phorum_db_pm_setflag($pm_id, $flag, $value, $user_id = NULL)
@@ -6250,7 +6250,7 @@ function phorum_db_pm_setflag($pm_id, $flag, $value, $user_id = NULL)
  *
  * @param integer $user_id
  *     The id of the user to delete the message for
- *     or NULL to use the active Phorum user (default).
+ *     or NULL to use the active LibreForum user (default).
  */
 function phorum_db_pm_delete($pm_id, $folder, $user_id = NULL)
 {
@@ -6301,7 +6301,7 @@ function phorum_db_pm_delete($pm_id, $folder, $user_id = NULL)
  *
  * @param mixed $user_id
  *     The id or the user to move the message for
- *     or NULL to use the active Phorum user (default).
+ *     or NULL to use the active LibreForum user (default).
  */
 function phorum_db_pm_move($pm_id, $from, $to, $user_id = NULL)
 {
@@ -6435,7 +6435,7 @@ function phorum_db_pm_update_message_info($pm_id)
  *
  * @param mixed $user_id
  *     The user_id for which the buddy list must be checked
- *     or NULL to use the active Phorum user (default).
+ *     or NULL to use the active LibreForum user (default).
  *
  * @return mixed
  *     If the user is a buddy, then the pm_buddy_id for the buddy will be
@@ -6471,7 +6471,7 @@ function phorum_db_pm_is_buddy($buddy_user_id, $user_id = NULL)
  *
  * @param mixed $user_id
  *     The user_id the buddy has to be added for
- *     or NULL to use the active Phorum user (default).
+ *     or NULL to use the active LibreForum user (default).
  *
  * @return mixed
  *     The id that was assigned to the new buddy or the existing id if
@@ -6519,7 +6519,7 @@ function phorum_db_pm_buddy_add($buddy_user_id, $user_id = NULL)
  *
  * @param mixed $user_id
  *     The user_id the buddy has to be delete for
- *     or NULL to use the active Phorum user (default).
+ *     or NULL to use the active LibreForum user (default).
  */
 function phorum_db_pm_buddy_delete($buddy_user_id, $user_id = NULL)
 {
@@ -6547,7 +6547,7 @@ function phorum_db_pm_buddy_delete($buddy_user_id, $user_id = NULL)
  *
  * @param mixed $user_id
  *     The user_id for which to retrieve the buddies or NULL to user the
- *     active Phorum user (default).
+ *     active LibreForum user (default).
  *
  * @param boolean $find_mutual
  *     Whether to find mutual buddies or not (default FALSE).
@@ -7572,23 +7572,23 @@ function phorum_db_maxpacketsize()
  * sanity checking system.
  *
  * @return array
- *     A return value as expected by Phorum's sanity checking system.
+ *     A return value as expected by LibreForum's sanity checking system.
  */
 function phorum_db_sanitychecks()
 {
     global $PHORUM;
 
-    // For Phorum 5.2+, we need the "charset" option to be set
+    // For LibreForum 5.2+, we need the "charset" option to be set
     // in the config.php.
     if (!isset($PHORUM['DBCONFIG']['charset'])) return array(
         PHORUM_SANITY_CRIT,
         "Database configuration parameter \"charset\" missing.",
         "The option \"charset\" is missing in your database configuration.
          This might indicate that you are using a config.php from an
-         older Phorum version, which does not yet contain this option.
+         older LibreForum version, which does not yet contain this option.
          Please, copy include/db/config.php.sample to
          include/db/config.php and edit this new config.php. Read
-         Phorum's install.txt for installation instructions."
+         LibreForum's install.txt for installation instructions."
     );
 
     // Retrieve the MySQL server version.
@@ -7606,7 +7606,7 @@ function phorum_db_sanitychecks()
          server, which does not support \"SELECT @@global.version\"
          as a SQL command. If you are not running a MySQL server
          with version 4.0.18 or higher, then please upgrade your
-         MySQL server. Else, contact the Phorum developers to see
+         MySQL server. Else, contact the LibreForum developers to see
          where this warning is coming from"
     );
 
@@ -7616,7 +7616,7 @@ function phorum_db_sanitychecks()
         "The database layer was unable to recognize the MySQL server's
          version number \"" . htmlspecialchars($version) . "\". Therefore,
          checking if the right version of MySQL is used is not possible.",
-        "Contact the Phorum developers and report this specific
+        "Contact the LibreForum developers and report this specific
          version number, so the checking scripts can be updated."
     );
 
@@ -7641,7 +7641,7 @@ function phorum_db_sanitychecks()
         $ver[2] == 4 && $ver[2] == 0 && $ver[3] < 18) return array(
         PHORUM_SANITY_WARN,
         "The MySQL database server that is used does not
-         support all Phorum features. The running version is
+         support all LibreForum features. The running version is
          \"" . htmlspecialchars($version) . "\", while MySQL version
          4.0.18 or higher is recommended.",
         "Upgrade your MySQL server to a newer version. If your
@@ -7653,14 +7653,14 @@ function phorum_db_sanitychecks()
     if ($ver[1] < 5) return array(
         PHORUM_SANITY_WARN,
         "The MySQL database server that is used does not
-         support all Phorum features. The running version is
+         support all LibreForum features. The running version is
          \"" . htmlspecialchars($version) . "\", while MySQL version
          5.0 or higher is recommended. MySQL has discontinued active development
-         for all versions below 5.0. The Phorum teams uses 5.0 for all
-         development. Phorum has been known to work with MySQL 4.1 and some
+         for all versions below 5.0. The LibreForum teams uses 5.0 for all
+         development. LibreForum has been known to work with MySQL 4.1 and some
          later 4.0 versions. However, there is no testing with these versions.
          It is recommended that all users upgrade to 5.0 as soon as possible
-         to get the most out of MySQL and Phorum.",
+         to get the most out of MySQL and LibreForum.",
         "Upgrade your MySQL server to a newer version. If your
          website is hosted with a service provider, please contact
          the service provider to upgrade your MySQL database."
@@ -7682,7 +7682,7 @@ function phorum_db_sanitychecks()
 // we try to auto-detect which one is available.
 
 $ext = NULL;
-// could be unset in Phorum < 5.2.7
+// could be unset in LibreForum < 5.2.7
 if(!isset($PHORUM['DBCONFIG']['socket'])) {
     $PHORUM['DBCONFIG']['socket']=NULL;
 }
@@ -7723,7 +7723,7 @@ if (isset($PHORUM['DBCONFIG']['mysql_php_extension'])) {
 
 // If we have no extension by now, we are very much out of luck.
 if ($ext === NULL) trigger_error(
-   "The Phorum MySQL database layer is unable to determine the PHP " .
+   "The LibreForum MySQL database layer is unable to determine the PHP " .
    "MySQL extension to use. This might indicate that there is no " .
    "extension loaded from the php.ini.",
    E_USER_ERROR
@@ -7732,8 +7732,8 @@ if ($ext === NULL) trigger_error(
 // Load the specific code for the PHP extension that we use.
 $extfile = "./include/db/mysql/{$ext}.php";
 if (!file_exists($extfile)) trigger_error(
-   "The Phorum MySQL database layer is unable to find the extension " .
-   "file $extfile on the system. Check if all Phorum files are uploaded " .
+   "The LibreForum MySQL database layer is unable to find the extension " .
+   "file $extfile on the system. Check if all LibreForum files are uploaded " .
    "and if you did specify the correct \"mysql_php_extension\" in the file " .
    "include/db/config.php (valid options are \"mysql\" and \"mysqli\").",
    E_USER_ERROR

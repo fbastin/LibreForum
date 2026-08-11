@@ -1,6 +1,6 @@
 title: Enhanced Private Messages
 desc: Adds the ability to page through private messages and search them
-author: Phorum Dev Team
+author: LibreForum Dev Team
 url: http://www.phorum.org/
 version: 1.0
 

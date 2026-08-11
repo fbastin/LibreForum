@@ -32,7 +32,7 @@ else:
 // Get everything there is to know about this image
 $image = mod_user_image_gallery_get_image_info ($image_id);
 
-// This needs to be set to tell Phorum which template to use
+// This needs to be set to tell LibreForum which template to use
 $data['template'] = 'user_image_gallery::image';
 
 // give template access to everything we know, that is...

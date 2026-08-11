@@ -51,7 +51,7 @@
             }
         }
         require_once("./include/format_functions.php");
-        print "Finished purging compiled Phorum templates<br/>\n" .
+        print "Finished purging compiled LibreForum templates<br/>\n" .
               "Purged " . phorum_filesize($purged) . "<br/>";
 
         print "<br/>";
@@ -62,8 +62,8 @@
     $frm = new PhorumInputForm ("", "post", "Purge cache");
     $frm->hidden("module", "cache_purge");
 
-    $frm->addbreak("Purging the Phorum cache");
-    $frm->addmessage("For improving performance, Phorum uses caching techniques for taking some load of the database and webserver. After running Phorum for some time, the amount of cached data will grow though. Using this maintenance tool, you can purge stale data from the Phorum cache to bring it back in size. Purging the cache will also cleanup all compiled template files.");
+    $frm->addbreak("Purging the LibreForum cache");
+    $frm->addmessage("For improving performance, LibreForum uses caching techniques for taking some load of the database and webserver. After running LibreForum for some time, the amount of cached data will grow though. Using this maintenance tool, you can purge stale data from the LibreForum cache to bring it back in size. Purging the cache will also cleanup all compiled template files.");
 
     $frm->addrow("Cleanup all cache items, not only the expired ones", $frm->select_tag("purge_all", array("No", "Yes"), 0));
 

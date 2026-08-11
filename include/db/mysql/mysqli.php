@@ -111,7 +111,7 @@ function phorum_db_interact($return, $sql = NULL, $keyfield = NULL, $flags = 0)
         }
 
         // putting this here for testing mainly
-        // All of Phorum should work in strict mode
+        // All of LibreForum should work in strict mode
         if(!empty($PHORUM["DBCONFIG"]["strict_mode"])){
             mysqli_query($conn, "SET SESSION sql_mode='STRICT_ALL_TABLES'");
         }

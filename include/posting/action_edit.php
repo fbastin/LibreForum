@@ -158,7 +158,7 @@ if (!count($dbmessage["meta"]["attachments"])) {
  *
  * [input]
  *     An array containing message data and an optional parameter which holds the
- *     original message data (added in Phorum 5.2.15)
+ *     original message data (added in LibreForum 5.2.15)
  *
  * [output]
  *     Same as input.
@@ -199,7 +199,7 @@ phorum_db_update_message($message["message_id"], $dbmessage);
  *
  * [input]
  *     An array containing message data (read-only)  and an optional parameter 
- *     which holds the original message data (added in Phorum 5.2.15)
+ *     which holds the original message data (added in LibreForum 5.2.15)
  *
  * [output]
  *     Same as input.

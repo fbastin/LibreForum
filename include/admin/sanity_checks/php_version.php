@@ -18,7 +18,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // Check if the PHP version is 5 or higher.
-// Phorum will not run on PHP4 anymore.
+// LibreForum will not run on PHP4 anymore.
 
 $phorum_check = "PHP version";
 
@@ -28,7 +28,7 @@ function phorum_check_php_version()
         return array(
             PHORUM_SANITY_CRIT,
             "You server is running PHP version ".PHP_VERSION.", however
-             PHP version 5 or higher is required for running Phorum.",
+             PHP version 5 or higher is required for running LibreForum.",
             "Upgrade PHP to version 5. If you are hosting with a 
              company, please contact them to do this for you. Sometimes,
              PHP5 can be enabled by placing an .htaccess file with some

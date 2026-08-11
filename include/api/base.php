@@ -34,7 +34,7 @@ if (!defined("PHORUM")) return;
 
 // {{{ Constant and variable definitions
 
-// Initialize the Phorum API space.
+// Initialize the LibreForum API space.
 $GLOBALS["PHORUM"]["API"] = array(
     "errno" => NULL,
     "error" => NULL
@@ -66,7 +66,7 @@ define("PHORUM_ERRNO_INTEGRITY",       4);
  */
 define("PHORUM_ERRNO_INVALIDINPUT",    5);
 
-// A mapping of Phorum errno values to a human readable counter part.
+// A mapping of LibreForum errno values to a human readable counter part.
 $GLOBALS["PHORUM"]["API"]["errormessages"] = array(
     PHORUM_ERRNO_ERROR        => "An error occurred.",
     PHORUM_ERRNO_NOACCESS     => "Permisison denied.",
@@ -79,7 +79,7 @@ $GLOBALS["PHORUM"]["API"]["errormessages"] = array(
 
 // {{{ Function: phorum_api_error_set
 /**
- * Set a Phorum API error.
+ * Set a LibreForum API error.
  *
  * @param integer $errno
  *     The errno value for the error that occurred. There are several
@@ -116,7 +116,7 @@ function phorum_api_error_set($errno, $error = NULL)
 
 // {{{ Function: phorum_api_errno
 /**
- * Retrieve the error code for the last Phorum API function that was called.
+ * Retrieve the error code for the last LibreForum API function that was called.
  *
  * @return mixed
  *     The error code or NULL if no error was set.
@@ -133,7 +133,7 @@ function phorum_api_errno()
 
 // {{{ Function: phorum_api_strerror
 /**
- * Retrieve the error message for the last Phorum API function that was called.
+ * Retrieve the error message for the last LibreForum API function that was called.
  *
  * @return mixed
  *     The error message or NULL if no error was set.

@@ -59,11 +59,11 @@ include_once("./common.php");
 include_once("include/format_functions.php");
 
 // CSRF protection: we do not accept posting to this script,
-// when the browser does not include a Phorum signed token
+// when the browser does not include a LibreForum signed token
 // in the request.
 $posting_token = phorum_check_posting_token('post');
 
-// Check if the Phorum is in read-only mode.
+// Check if the LibreForum is in read-only mode.
 if(isset($PHORUM["status"]) && $PHORUM["status"]==PHORUM_MASTER_STATUS_READ_ONLY
    && empty($PHORUM['user']['admin']) ) {
     if(!(isset($PHORUM["postingargs"]["as_include"]) && $PHORUM["postingargs"]["as_include"])){
@@ -121,11 +121,11 @@ $valid_modes = array(
 //     become writable).
 //     Put otherwise: client side read-only, server side read-only.
 // [3] Whether to sign the field data. If this field is set to a true
-//     value, then the data that is sent to the user is signed by Phorum.
-//     When the data is sent back to Phorum, the signature is checked, to
+//     value, then the data that is sent to the user is signed by LibreForum.
+//     When the data is sent back to LibreForum, the signature is checked, to
 //     see if the data did not change. This can be used for preventing
 //     tampering with form data for fields that cannot be edited by the
-//     user, but which can be edited by the Phorum software and modules.
+//     user, but which can be edited by the LibreForum software and modules.
 //     Put otherwise: client side read-only, server side writable.
 // [4] A default value to initialize the form field with.
 //
@@ -150,7 +150,7 @@ $valid_modes = array(
 //                       tampering with the data by the user. An example
 //                       field for this setup is the "meta" field, which
 //                       carries the message's meta data. The user cannot
-//                       directly change this field's data, but Phorum and
+//                       directly change this field's data, but LibreForum and
 //                       modules can.
 //
 $PHORUM["post_fields"] = array(
@@ -432,14 +432,14 @@ if (!$PHORUM["post_fields"]["author"][pf_READONLY]) {
  *     called to find out what fields can be used.<sbr/>
  *     <sbr/>
  *     Beware: Only use this hook if you know what you are doing and understand
- *     Phorum's editor permission code. If used wrong, you can open up security
- *     holes in your Phorum installation!
+ *     LibreForum's editor permission code. If used wrong, you can open up security
+ *     holes in your LibreForum installation!
  *
  * [category]
  *     Message handling
  *
  * [when]
- *     In <filename>posting.php</filename> right after Phorum has determined all
+ *     In <filename>posting.php</filename> right after LibreForum has determined all
  *     abilities that apply to the logged in user.
  *
  * [input]

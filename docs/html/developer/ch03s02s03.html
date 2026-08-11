@@ -1,7 +1,7 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.2.3. external</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="Phorum Developer Reference Manual"><link rel="up" href="ch03s02.html" title="3.2. Miscellaneous"><link rel="prev" href="ch03s02s02.html" title="3.2.2. database_error"><link rel="next" href="ch03s02s04.html" title="3.2.4. scheduled"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s02s04.html">Next</a></td></tr></table><hr></div><div class="section" title="3.2.3. external"><div class="titlepage"><div><div><h3 class="title"><a name="hook.external"></a>3.2.3. external</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>3.2.3. external</title><link rel="stylesheet" href="../phorum_docbook.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"><link rel="home" href="index.html" title="LibreForum Developer Reference Manual"><link rel="up" href="ch03s02.html" title="3.2. Miscellaneous"><link rel="prev" href="ch03s02s02.html" title="3.2.2. database_error"><link rel="next" href="ch03s02s04.html" title="3.2.4. scheduled"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02s02.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch03s02s04.html">Next</a></td></tr></table><hr></div><div class="section" title="3.2.3. external"><div class="titlepage"><div><div><h3 class="title"><a name="hook.external"></a>3.2.3. external</h3></div></div></div><p>
 
 The external hook functions are never called from any of the standard
-Phorum pages. These functions are called by invoking 
+LibreForum pages. These functions are called by invoking 
 <code class="filename">script.php</code> on the command line with the 
 <code class="literal">--module</code> parameter. This can be used to pipe output
 from some arbitrary command to a specific module, which can do something
@@ -14,7 +14,7 @@ is handled must be enabled in your admin interface. So if an
 <a class="xref" href="ch03s02s03.html" title="3.2.3. external">???</a> hook is not running, the containing module might be
 disabled.<br>
 <br>
-To run this hook from the command line, you have to be in the Phorum
+To run this hook from the command line, you have to be in the LibreForum
 installation directory. So running the <a class="xref" href="ch03s02s03.html" title="3.2.3. external">???</a> hook of
 a module named <code class="literal">external_foo</code> would be done like this on
 a UNIX system prompt:

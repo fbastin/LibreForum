@@ -32,7 +32,7 @@ define("PHORUM_TEMPLATES_MAX_INCLUDE_DEPTH", 50);
 define("PHORUM_DEPRECATED", "[Template statement \"%\" has been deprecated; Please read docs/upgrade_templates.txt]");
 
 /**
- * Converts a Phorum template into PHP code and writes the resulting code
+ * Converts a LibreForum template into PHP code and writes the resulting code
  * to disk. This is the only call from templates.php that is called from
  * outside this file. All other functions are used internally for the
  * template compiling process.
@@ -98,7 +98,7 @@ function phorum_import_template($page, $infile, $outfile)
 }
 
 /**
- * Runs the first stage of the Phorum template processing. In this stage,
+ * Runs the first stage of the LibreForum template processing. In this stage,
  * all (static) {include <template>} statements are recursively resolved.
  * After resolving all includes, a complete single template is constructed.
  * During this process, the function will keep track of all file
@@ -171,7 +171,7 @@ function phorum_import_template_pass1($infile, $include_depth = 0, $deps = array
 }
 
 /**
- * Runs the second stage of Phorum template processing. In this stage,
+ * Runs the second stage of LibreForum template processing. In this stage,
  * all template statements are translated into PHP code.
  *
  * @param $template - The template data to process.
@@ -313,12 +313,12 @@ function phorum_import_template_pass2($template)
             // Syntax:
             //    {define <variable> <value>}
             // Function:
-            //    Set definitions that are used by the Phorum core.
+            //    Set definitions that are used by the LibreForum core.
             //
             // This will set $PHORUM["TMP"][<variable>] = <value>
             // This data is not accessible through templating statements (and
             // it's not supposed to be). The data should only be accessed
-            // from Phorum core and module code.
+            // from LibreForum core and module code.
             //
             case "var":
             case "define":
@@ -498,7 +498,7 @@ function phorum_import_template_pass2($template)
             // Syntax:
             //     {hook <hook name> [<param 1> <param 2> .. <param n>]}
             // Function:
-            //     Run a Phorum hook. The first parameter is the name of the
+            //     Run a LibreForum hook. The first parameter is the name of the
             //     hook. Other parameters will be passed on as arguments for
             //     the hook function. One argument will be passed directly to
             //     the hook. Multiple arguments will be passed in an array.
@@ -782,7 +782,7 @@ function phorum_write_file($file, $data)
     if (! $fp = fopen($file, "w")) trigger_error(
         "phorum_write_file: failed to write to file " .
         "\"" . htmlspecialchars($file) . "\". This is probably caused by " .
-        "the file permissions on your Phorum cache directory",
+        "the file permissions on your LibreForum cache directory",
         E_USER_ERROR
     );
     fputs($fp, $data);

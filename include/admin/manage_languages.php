@@ -17,7 +17,7 @@
 //   along with this program.                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 
-// TODO have a better way to differentiate between Phorum distribution
+// TODO have a better way to differentiate between LibreForum distribution
 // TODO and addon files, so we won't index text strings from addon
 // TODO files in here.
 
@@ -70,7 +70,7 @@ if ($action == 'generate_lang') {
             "The basename contains illegal characters. Please, keep the " .
             "filename simple by using only letters, numbers, underscores and " .
             "dots. You can't use hyphens, because those are used for " .
-            "separating the basename from the Phorum version for which the " .
+            "separating the basename from the LibreForum version for which the " .
             "language file is used."
         );
     } elseif ($displayname == '') {
@@ -94,12 +94,12 @@ $frm->addmessage(<<<INTRO
 
   <h2>Manage language files</h2>
   This is a tool which can be used for easy maintenance of
-  language files for Phorum. It will collect all actual used
-  language strings from the Phorum software and generate an
+  language files for LibreForum. It will collect all actual used
+  language strings from the LibreForum software and generate an
   updated langage file for your language of choice based on
   those strings. In the generated language file, missing and
   deprecated strings will be clearly marked, so you can
-  update the language file to match the running Phorum distribution.
+  update the language file to match the running LibreForum distribution.
 INTRO
 );
 
@@ -172,7 +172,7 @@ function phorum_generate_language_file($lang, $displayname, $generate_new)
           "bottom of the page you will find a download button to download " .
           "the updated language file. This language file has to be placed " .
           "in <b>include/lang/" . htmlspecialchars($lang) . ".php</b> to make it " .
-          "available to Phorum (backup your old file first of course!). " .
+          "available to LibreForum (backup your old file first of course!). " .
           "If new language strings have been added, " .
           "they will be marked with '***' in the language file, so it's " .
           "easy for you to find them."
@@ -187,7 +187,7 @@ function phorum_generate_language_file($lang, $displayname, $generate_new)
           "\"" . htmlspecialchars($displayname) . "\". After updating the new " .
           "file, you will have to place it in " .
           "<b>include/lang/" . htmlspecialchars($basename) . ".php</b>, " .
-          "so Phorum can use it (backup your old file first of course!)."
+          "so LibreForum can use it (backup your old file first of course!)."
         );
     }
 
@@ -385,7 +385,7 @@ function phorum_write_language_file($lang, $CURRENT)
             "    // DEPRECATED:\n" .
             "    // These are all language strings which are not used anymore.\n" .
             "    // You might want to keep them to make this language file work\n" .
-            "    // for versions of Phorum prior to version " . PHORUM . "\n" .
+            "    // for versions of LibreForum prior to version " . PHORUM . "\n" .
             "    // ============================================================\n" .
             "\n";
 

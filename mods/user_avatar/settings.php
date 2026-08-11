@@ -64,8 +64,8 @@ $frm->addbreak('Permissions for the avatar module');
 
 $choices = array(
     AVATAR_PERM_ALL       => 'All registered users',
-    AVATAR_PERM_MODERATOR => 'Moderators and Phorum administrators',
-    AVATAR_PERM_ADMIN     => 'Phorum administrators',
+    AVATAR_PERM_MODERATOR => 'Moderators and LibreForum administrators',
+    AVATAR_PERM_ADMIN     => 'LibreForum administrators',
 );
 
 $frm->addrow('Who are allowed to use the avatar feature?', $frm->select_tag('permission_create', $choices, $PHORUM['mod_user_avatar']['permission_create'], 'id="moderator_perm" onchange="toggleModeratorPermission()"') . '<div id="moderator_perm_div" style="display:none">'.$frm->checkbox('moderator_only_in_mod_forums', 1, '', $PHORUM['mod_user_avatar']['moderator_only_in_mod_forums']) . 'Only show an avatar for moderators in<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the forums which they moderate</div>');

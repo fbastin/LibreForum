@@ -16,25 +16,25 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
-// Javascript code for the Phorum editor_tools module.
+// Javascript code for the LibreForum editor_tools module.
 
 // Valid object ids for textarea objects to handle. The first object
 // that can be matched will be use as the object to work with.
 // This is done to arrange for backward compatibility between
-// Phorum versions.
+// LibreForum versions.
 var editor_tools_textarea_ids = new Array(
-    'phorum_textarea',  // Phorum 5.1
-    'body',             // Phorum 5.2
+    'phorum_textarea',  // LibreForum 5.1
+    'body',             // LibreForum 5.2
     'message'           // PM interface
 );
 
 // Valid object ids for subject text field objects to handle.
 var editor_tools_subject_ids = new Array(
-    'phorum_subject',   // Phorum 5.1
-    'subject'           // Phorum 5.2
+    'phorum_subject',   // LibreForum 5.1
+    'subject'           // LibreForum 5.2
 );
 
-// Storage for language translation strings from the Phorum language system.
+// Storage for language translation strings from the LibreForum language system.
 var editor_tools_lang = new Array();
 
 // Some variables for storing objects that we need globally.
@@ -67,7 +67,7 @@ var editor_tools = new Array();
 // help button. The array value contains the following fields:
 //
 // 1) a description that will be used as the clickable link text.
-// 2) the url for the help page (absolute or relative to the Phorum dir).
+// 2) the url for the help page (absolute or relative to the LibreForum dir).
 //
 // This array will be filled from PHP-generated javascript.
 var editor_tools_help_chapters = new Array();
@@ -90,7 +90,7 @@ var OLD_MSIE =
 // Uitilty functions
 // ----------------------------------------------------------------------
 
-// Find the Phorum textarea object and return it. In case of
+// Find the LibreForum textarea object and return it. In case of
 // problems, null will be returned.
 function editor_tools_get_textarea()
 {
@@ -113,7 +113,7 @@ function editor_tools_get_textarea()
     return editor_tools_textarea_obj;
 }
 
-// Find the Phorum subject field object and return it. In case of
+// Find the LibreForum subject field object and return it. In case of
 // problems, null will be returned.
 function editor_tools_get_subjectfield()
 {
@@ -134,7 +134,7 @@ function editor_tools_get_subjectfield()
     return editor_tools_subject_obj;
 }
 
-// Return a translated string, based on the Phorum language system.
+// Return a translated string, based on the LibreForum language system.
 function editor_tools_translate(str)
 {
     if (editor_tools_lang[str]) {

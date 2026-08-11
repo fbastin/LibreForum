@@ -26,8 +26,8 @@
 
     define("PHORUM_FILE_EXTENSION", "php");
 
-    // The maximum number of messages that Phorum will remember as being
-    // read, per forum per user. Phorum will trim off older read flags
+    // The maximum number of messages that LibreForum will remember as being
+    // read, per forum per user. LibreForum will trim off older read flags
     // if this limit is hit.
     define("PHORUM_MAX_READ_COUNT_PER_FORUM", 1000);
 
@@ -173,7 +173,7 @@
     define("PHORUM_CC_GROUP_MODERATION", "groupmod");
     define("PHORUM_CC_GROUP_MEMBERSHIP", "groups");
 
-    // Phorum up/down status
+    // LibreForum up/down status
     define("PHORUM_MASTER_STATUS_NORMAL", "normal");
     define("PHORUM_MASTER_STATUS_READ_ONLY", "read-only");
     define("PHORUM_MASTER_STATUS_ADMIN_ONLY", "admin-only");

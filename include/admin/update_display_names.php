@@ -41,7 +41,7 @@ if ($step == 0)
         $frm->addbreak("Display name update");
         $frm->addmessage(
             "A change was made to the display name configuration of 
-             Phorum. This requires some updates in the database.
+             LibreForum. This requires some updates in the database.
              Click \"Continue\" to start the updates."
         );
     }

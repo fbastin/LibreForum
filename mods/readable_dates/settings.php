@@ -116,7 +116,7 @@ $row = $frm->addrow(
 $frm->addhelp($row, "Time limit to use for formatting",
     "If you set a time limit, then dates that are older than
      this time limit will not be formatted by this module.
-     For those, the default formatting that is applied by Phorum
+     For those, the default formatting that is applied by LibreForum
      will be used."
 );
 
@@ -143,12 +143,12 @@ $frm->addrow("Format dates on the read page", $frm->checkbox("read", "1", "Yes",
 $frm->addrow("Format registration date (Registered: ... ago) for users on the read page", $frm->checkbox("read_userregdate", "1", "Yes", $PHORUM["mod_readable_dates"]["read_userregdate"]));
 $frm->addrow("Format dates on the user profile page", $frm->checkbox("profile", "1", "Yes", $PHORUM["mod_readable_dates"]["profile"]));
 
-// Check if the Phorum version is high enough for the upcoming three
-// options to work. In Phorum 5.2.7, some hooks were added to support these.
+// Check if the LibreForum version is high enough for the upcoming three
+// options to work. In LibreForum 5.2.7, some hooks were added to support these.
 require_once('./include/version_functions.php');
 $warn = '';
 if (phorum_compare_version(PHORUM, '5.2.7') == -1) {
-    $warn = '<div style="color:red">This option will only work for Phorum 5.2.7 or higher</div>';
+    $warn = '<div style="color:red">This option will only work for LibreForum 5.2.7 or higher</div>';
 }
 $frm->addrow("Format dates on the private messages list page (list of messages)$warn", $frm->checkbox("pm_list", "1", "Yes", $PHORUM["mod_readable_dates"]["pm_list"]));
 $frm->addrow("Format dates on the private messages read page$warn", $frm->checkbox("pm_read", "1", "Yes", $PHORUM["mod_readable_dates"]["pm_read"]));

@@ -31,7 +31,7 @@ Home URL: http://www.scriptmonkeys.us
 
 Based on an idea by Ryan
 
-tested on Phorum v 5.2.13 only
+tested on LibreForum v 5.2.13 only
 
 Official Specs:
   * Each registered user would have an image gallery.
@@ -50,7 +50,7 @@ Official Specs:
       * "Keywords" field
       * "Reupload Photo" field
       * option to submit, reset, or delete
-    * image items organized by paging like Phorum's: Page 1 of 7 Pages: 1 2 3 4 5 > >>
+    * image items organized by paging like LibreForum's: Page 1 of 7 Pages: 1 2 3 4 5 > >>
     * mention of the maximum size for a user gallery, and how much space has been used so far
   * Posting page: ability to include an uploaded item into a post
     * Part of Maurice's mod?
@@ -63,7 +63,7 @@ Official Specs:
         *datestamp of upload,
         *and option for the viewer to report the image with the reason why (vulgar, copyrighted, etc).
         ** Just sends email alert to admin -- doesn't alter db, and doesn't allow user to specify why they're flagging a certain image
-    * image items organized by paging like Phorum's: Page 1 of 7 Pages: 1 2 3 4 5 > >>
+    * image items organized by paging like LibreForum's: Page 1 of 7 Pages: 1 2 3 4 5 > >>
     * a search box for searching by keywords
   * Admin settings:
     * Option of creating a user gallery when the user registers, or when they first access their account (or maybe give them an option asking if the user wants the user gallery)
@@ -221,7 +221,7 @@ function mod_user_image_gallery_read($messages)
 // return all known information for a given image
 function mod_user_image_gallery_get_image_info ($image_id) {        
   global $PHORUM;
-  // Some of the information is attached to the file itself, and is stored and retrieved with the Phorum file storage API
+  // Some of the information is attached to the file itself, and is stored and retrieved with the LibreForum file storage API
   // Some of the information is stored in this module's area of the giant $PHORUM array
   // This routine gathers all of it and returns it in a single array.
   $info1 = phorum_api_file_check_read_access ($image_id);               // doesn't just "check read access" - this actually returns (nearly) all info phorum_api has about a file
@@ -256,7 +256,7 @@ function mod_user_image_gallery_profile($profile)
     return $profile;
 }
 
-// Add image_gallery images to the active Phorum user.
+// Add image_gallery images to the active LibreForum user.
 function mod_user_image_gallery_common_post_user()
 {
     global $PHORUM;
@@ -366,7 +366,7 @@ function mod_user_image_gallery_addon () {
 // -------------------------------------------------
 define("PHORUM_CONTROL_CENTER", 1);
 // CSRF protection: we do not accept posting to this script,
-// when the browser does not include a Phorum signed token
+// when the browser does not include a LibreForum signed token
 // in the request.
 if ( function_exists('phorum_check_posting_token') ):
   phorum_check_posting_token('control');

@@ -2,14 +2,14 @@
 // ----------------------------------------------------------------------
 // This install file will be included by the module automatically
 // at the first time that it is run. This file will take care of
-// adding the custom user field "mod_topic_poll" to Phorum.
+// adding the custom user field "mod_topic_poll" to LibreForum.
 // This way, the administrator won't have to create the custom field
 // manually.
 // ----------------------------------------------------------------------
 
 if(!defined("PHORUM")) return;
 
-// Inlude for Phorum 5.2. This API layer is replaced with the custom field
+// Inlude for LibreForum 5.2. This API layer is replaced with the custom field
 // API which handles custom fields for forums and messages too. The
 // backward compatibility code in 5.3 will catch the old style API calls.
 if (file_exists('./include/api/custom_profile_fields.php')) {

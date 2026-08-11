@@ -1,5 +1,5 @@
 title: User Tagging
-desc: This module allows you to setup rules for creating custom template variables, based on a user's state / properties. This can for example be used to add some custom user status (e.g. "rookie", "regular", "veteran") to the users, based on their post count and/or registration date. Assignments can be done to authors on the read pages, to the user on the profile pages and to the logged in Phorum user on every page.
+desc: This module allows you to setup rules for creating custom template variables, based on a user's state / properties. This can for example be used to add some custom user status (e.g. "rookie", "regular", "veteran") to the users, based on their post count and/or registration date. Assignments can be done to authors on the read pages, to the user on the profile pages and to the logged in LibreForum user on every page.
 version: 1.0.7
 require_version: 5.2.13
 link: http://www.phorum-support.de

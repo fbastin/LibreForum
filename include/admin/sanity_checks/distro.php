@@ -19,10 +19,10 @@
 
     // Check if a minimal distro is installed.
 
-    $phorum_check = "Check if all required Phorum files are available";
+    $phorum_check = "Check if all required LibreForum files are available";
 
     // A list of files which we consider to be the minimal set of
-    // Phorum files to get a working Phorum. Some files are checked
+    // LibreForum files to get a working LibreForum. Some files are checked
     // through code later on, because the rules are somewhat more
     // complex than only checking for availability of a file (e.g.
     // the database layers, where at least one layer should be
@@ -135,20 +135,20 @@
         'versioncheck.php',
     );
 
-    // A list of database layer files that ship with Phorum.
+    // A list of database layer files that ship with LibreForum.
     $GLOBALS["PHORUM"]["distro_dblayers"] = array(
         "mysql.php",
-        # "postgresql.php", needs Porting to Phorum 5.2
+        # "postgresql.php", needs Porting to LibreForum 5.2
     );
 
-    // A list of templates that ship with Phorum.
+    // A list of templates that ship with LibreForum.
     $GLOBALS["PHORUM"]["distro_templates"] = array(
         "emerald",
         "classic",
         "lightweight"
     );
 
-    // A list of language files that ship with Phorum.
+    // A list of language files that ship with LibreForum.
     $GLOBALS["PHORUM"]["distro_languages"] = array(
         "english.php",
     );
@@ -185,7 +185,7 @@
 
         if (count($errors)) return array(
             PHORUM_SANITY_CRIT,
-            "Not all files that are required for running Phorum seem to
+            "Not all files that are required for running LibreForum seem to
              be installed correctly on your server. Below is a list of
              problems:<br/><ul><li>" .
              implode("</li>\n<li>", $errors) .
@@ -199,7 +199,7 @@
              the webserver has permission for reading the file, by
              using chmod to mode \"644\" (readable and writable for the
              user, readable for the group and others). Never use
-             mod \"777\" for Phorum!"
+             mod \"777\" for LibreForum!"
         );
 
         // ------------------------------------------------------------------
@@ -209,14 +209,14 @@
         $dir = @opendir("include/db");
         if (! $dir) return array(
             PHORUM_SANITY_CRIT,
-            "Phorum is unable to open the directory \"include/db/\". This
+            "LibreForum is unable to open the directory \"include/db/\". This
              directory contains the database layers for connecting
-             Phorum to a database.",
+             LibreForum to a database.",
             "Check that you have uploaded the directory \"include/db/\"
              and that it is readable for the webserver by using chmod
              to mode \"755\" (all permissions for the user, readable
              and executable for the group and others). Never use mod
-             \"777\" for Phorum!"
+             \"777\" for LibreForum!"
         );
         $ok = false;
         while ($entry = readdir($dir)) {
@@ -228,12 +228,12 @@
         closedir($dir);
         if (! $ok) return array(
             PHORUM_SANITY_CRIT,
-            "Phorum is unable to find a database layer file in the
+            "LibreForum is unable to find a database layer file in the
              directory \"include/db/\". A database layer is necessary to
-             connect Phorum to a database.",
+             connect LibreForum to a database.",
             "Upload at least one database layer file to this directory.
              Which database layer to upload, depends on the database that
-             you want to connect to. Phorum is distributed with the
+             you want to connect to. LibreForum is distributed with the
              database layer(s): " . implode(", ", $PHORUM["distro_dblayers"])
         );
 
@@ -244,13 +244,13 @@
         $dir = @opendir("templates/");
         if (! $dir) return array(
             PHORUM_SANITY_CRIT,
-            "Phorum is unable to open the directory \"templates/\". This
-             directory contains the Phorum templates.",
+            "LibreForum is unable to open the directory \"templates/\". This
+             directory contains the LibreForum templates.",
             "Check that you have uploaded the directory \"templates/\"
              and that it is readable for the webserver by using chmod
              to mode \"755\" (all permissions for the user, readable
              and executable for the group and others). Never use mod
-             \"777\" for Phorum!"
+             \"777\" for LibreForum!"
         );
         $ok = false;
         while ($entry = readdir($dir)) {
@@ -261,11 +261,11 @@
         }
         if (! $ok) return array(
             PHORUM_SANITY_CRIT,
-            "Phorum is unable to find a Phorum template in the
+            "LibreForum is unable to find a LibreForum template in the
              directory \"templates/\".",
             "Upload at least one template directory to this directory.
              Which template(s) to upload, depends on the template(s) that
-             you want to use. Phorum is distributed with the
+             you want to use. LibreForum is distributed with the
              template(s): " . implode(", ", $PHORUM["distro_templates"])
         );
 
@@ -276,13 +276,13 @@
         $dir = @opendir("include/lang/");
         if (! $dir) return array(
             PHORUM_SANITY_CRIT,
-            "Phorum is unable to open the directory \"include/lang/\". This
-             directory contains the language files for Phorum.",
+            "LibreForum is unable to open the directory \"include/lang/\". This
+             directory contains the language files for LibreForum.",
             "Check that you have uploaded the directory \"include/lang/\"
              and that it is readable for the webserver by using chmod
              to mode \"755\" (all permissions for the user, readable
              and executable for the group and others). Never use mod
-             \"777\" for Phorum!"
+             \"777\" for LibreForum!"
         );
         $ok = false;
         while ($entry = readdir($dir)) {
@@ -293,11 +293,11 @@
         }
         if (! $ok) return array(
             PHORUM_SANITY_CRIT,
-            "Phorum is unable to find a Phorum language file in the
+            "LibreForum is unable to find a LibreForum language file in the
              directory \"include/lang/\".",
             "Upload at least one language file to this directory.
              Which language file(s) to upload, depends on the language(s) that
-             you want to use. Phorum is distributed with the
+             you want to use. LibreForum is distributed with the
              language file(s): " . implode(", ", $PHORUM["distro_languages"])
         );
 

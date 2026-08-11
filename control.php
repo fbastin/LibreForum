@@ -31,7 +31,7 @@ include_once("./include/api/user.php");
 define("PHORUM_CONTROL_CENTER", 1);
 
 // CSRF protection: we do not accept posting to this script,
-// when the browser does not include a Phorum signed token
+// when the browser does not include a LibreForum signed token
 // in the request.
 phorum_check_posting_token();
 
@@ -190,7 +190,7 @@ if ($PHORUM['forum_id'] > 0 && $PHORUM['folder_flag'] == 0) {
  *         template.</li>
  *     <li>handled:
  *         if a module does handle the panel, then it can set this field
- *         to a true value, to prevent Phorum from running the standard
+ *         to a true value, to prevent LibreForum from running the standard
  *         panel code.</li>
  *     <li>error:
  *         modules can fill this field with an error message to show.</li>

@@ -10,7 +10,7 @@
     <title>Introduction</title>
     <para>
       To satisfy the webmaster that needs every bell and whistle,
-      or those that want to make their web site unique, the Phorum
+      or those that want to make their web site unique, the LibreForum
       team created a very flexible hook &amp; module system.
       The hooks allow a webmaster to create modules for doing things
       like using external authentication, altering message data before
@@ -20,7 +20,7 @@
     </para>
     <para>
       This chapter describes all the hooks that are available within
-      the Phorum code. It is mainly targeted at developers that want
+      the LibreForum code. It is mainly targeted at developers that want
       to write modules.
     </para>
   </section>

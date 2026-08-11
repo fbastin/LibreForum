@@ -123,7 +123,7 @@
              automatically be replaced by that string. If you want to use
              a different string (e.g. \"CENSORED\" or \"*****\"), then you
              can change the definition of the constant
-             \"PHORUM_BADWORD_REPLACE\" in the Phorum file
+             \"PHORUM_BADWORD_REPLACE\" in the LibreForum file
              include/constants.php."
         );
 

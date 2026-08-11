@@ -177,7 +177,7 @@ function mod_user_avatar_profile($profile, $from_post_user = FALSE)
     return $profile;
 }
 
-// Add avatar images to the active Phorum user.
+// Add avatar images to the active LibreForum user.
 function mod_user_avatar_common_post_user()
 {
     global $PHORUM;

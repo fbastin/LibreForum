@@ -20,7 +20,7 @@ window.addEventListener('message', function(event) {
         const url = event.data.url;
         const bbcode = `[img]${url}[/img]`;
         
-        // Phorum editor_tools integration
+        // LibreForum editor_tools integration
         if (typeof editor_tools_handle_btn_bbcode === 'function') {
             editor_tools_handle_btn_bbcode(bbcode, '');
         } else {

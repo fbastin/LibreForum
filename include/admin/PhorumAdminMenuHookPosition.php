@@ -21,7 +21,7 @@
 
     /**
      * Allow module authors to have a custom HTML injected anywhere in the
-     * current Phorum admin menu.
+     * current LibreForum admin menu.
      *
      * Module authors can show e.g. a custom menu block right after the top
      * "Main Menu" if they want so.
@@ -39,7 +39,7 @@
      *
      * <code><pre>
      * $menu = new PhorumAdminMenu("My menu");
-     * $menu->addCustom('Phorum rulez', 'http://phorum.org/', 'Rocks', '_blank');
+     * $menu->addCustom('LibreForum rulez', 'http://phorum.org/', 'Rocks', '_blank');
      *
      * $pos->appendAt(1, $menu->getHtml());
      * </pre></code>
@@ -91,7 +91,7 @@
         /**
          * Append the HTML for the last position.
          *
-         * The last position is always after the last hardcoded Phorum admin
+         * The last position is always after the last hardcoded LibreForum admin
          * menus.
          *
          * @param string $sHtml 
@@ -123,7 +123,7 @@
         /**
          * Fetches the HTML from any remaining position.
          *
-         * In case a position has not been yet processed (e.g. the Phorum Admin
+         * In case a position has not been yet processed (e.g. the LibreForum Admin
          * menu structure has changed and there are now less menus), don't
          * forget those and fetch them.
          *

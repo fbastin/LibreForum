@@ -32,7 +32,7 @@ if ( count( $_POST ) )
             case "title":
 
                 if ( empty( $value ) ) {
-                    $_POST[$field] = "Phorum 5";
+                    $_POST[$field] = "LibreForum 5";
                 }
 
                 break;
@@ -158,13 +158,13 @@ include_once "./include/admin/PhorumInputForm.php";
 
 $frm = new PhorumInputForm ( "", "post" );
 
-$frm->addbreak( "Phorum General Settings" );
+$frm->addbreak( "LibreForum General Settings" );
 
 $frm->hidden( "module", "settings" );
 
-$row=$frm->addrow( "Phorum Title", $frm->text_box( "title", $PHORUM["title"], 50 ) );
+$row=$frm->addrow( "LibreForum Title", $frm->text_box( "title", $PHORUM["title"], 50 ) );
 
-$row=$frm->addrow( "Phorum Description", $frm->textarea( "description", $PHORUM["description"], 30, 5, "style='width: 100%'" ) );
+$row=$frm->addrow( "LibreForum Description", $frm->textarea( "description", $PHORUM["description"], 30, 5, "style='width: 100%'" ) );
 
 $row=$frm->addrow( "DNS Lookups", $frm->select_tag( "dns_lookup", array( "No", "Yes" ), $PHORUM["dns_lookup"] ) );
 $frm->addhelp($row, "DNS Lookups",
@@ -177,7 +177,7 @@ $frm->addhelp($row, "DNS Lookups",
      <li>being able to create IP ban items based on host and domain names;</li>
      <li>checking the email address that is for user registrations.</li>
      </ul>
-     If Phorum keeps reporting illegal email addresses during signup or
+     If LibreForum keeps reporting illegal email addresses during signup or
      if you are suffering from massive delays during posting messages,
      then there might be DNS problems on your server. In that case, disable
      DNS lookups as a work around.");
@@ -222,7 +222,7 @@ $frm->addhelp($row, "How to Display Forums and Folders on the Index Page",
 );
 
 $row=$frm->addrow( "Enable Moderator Notifications", $frm->select_tag( "enable_moderator_notifications", array( "No", "Yes" ), $PHORUM["enable_moderator_notifications"] ) );
-$frm->addhelp($row, "Enable Moderator Notifications", "By setting this to Yes, Phorum will display notice to the various kinds of moderators when they have a new item that requires their attention. For example, message moderators will see a notice whenever there is an unapproved message." );
+$frm->addhelp($row, "Enable Moderator Notifications", "By setting this to Yes, LibreForum will display notice to the various kinds of moderators when they have a new item that requires their attention. For example, message moderators will see a notice whenever there is an unapproved message." );
 
 $row=$frm->addrow( "User Post Edit Time Limit (minutes)", $frm->text_box( "user_edit_timelimit", $PHORUM["user_edit_timelimit"], 10) );
 $frm->addhelp($row, "User Post Edit Time Limit (minutes)", "If set to a value larger then 0, this acts as a time limit for post editing. Users will only be able to edit their own posts within this time limit. This only applies if a user has the necessary permissions to edit their post, and does not affect moderators." );
@@ -240,13 +240,13 @@ $frm->addhelp($row, "After search action", "On large forums or slow servers, sea
 $row=$frm->addrow( "Database error handling", $frm->select_tag( "error_logging", array( "screen"=>"Errors will be shown on the screen", "file"=>"Errors will go to a logfile (".$PHORUM['cache']."/phorum-sql-errors.log)", "mail"=> "Errors will be emailed to the system email address"), $PHORUM["error_logging"] ) );
 
 $row=$frm->addrow( "Secret private key for signing data", $frm->text_box("private_key", $PHORUM["private_key"], 50) );
-$frm->addhelp($row, "Secret key for signing data", "On several occasions, data is transferred from the Phorum system to the user's system and back again. To be sure that there was no tampering with this data on the way, it is signed by Phorum using this secret key. If you do not understand what this is for, then it is safe to simply keep the pre-configured value.<br/><br/><b>Warning:</b> if you change this key, users who are active right now might experience problems.");
+$frm->addhelp($row, "Secret key for signing data", "On several occasions, data is transferred from the LibreForum system to the user's system and back again. To be sure that there was no tampering with this data on the way, it is signed by LibreForum using this secret key. If you do not understand what this is for, then it is safe to simply keep the pre-configured value.<br/><br/><b>Warning:</b> if you change this key, users who are active right now might experience problems.");
 
 $row=$frm->addrow( "Allow Linking To Uploaded Files", $frm->select_tag( "file_offsite", array( PHORUM_OFFSITE_FORUMONLY => "Only from the forum", PHORUM_OFFSITE_THISSITE => "From this web site", PHORUM_OFFSITE_ANYSITE => "From any web site" ), $PHORUM["file_offsite"] ) );
 $frm->addhelp($row, "Allow Off Site Links", "You may not want to allow other web sites to link to files that users have uploaded to your forums. If not, then set this option to \"Only from the forum\". If you want to use links on other parts of your web site, then use \"From this web site\". If you want to allow other websites to link to your forum file uploads, then select \"From any web site\".<br/><br/>If your needs are more specific than this (e.g. if you want to allow access from a specific group of web sites), you will need to use your web server's security features to accomplish this. Apache users can reference <i>Prevent \"Image Theft\"</i> at http://httpd.apache.org/docs/env.html#examples." );
 
 $row=$frm->addrow( "Put file name in pathinfo for file download URLs", $frm->select_tag("file_url_uses_pathinfo", array( "No", "Yes"), $PHORUM["file_url_uses_pathinfo"]) );
-$frm->addhelp($row, "Use pathinfo for file URLs", "All Phorum file downloads (for user files and forum message attachments) run through the file.php script. As a result, users who right-click a file URL and choose \"Save link as ..\" will end up in their browser with file.php as the default file name. With this option enabled however, Phorum will try to give the browser a real file name instead. This is done by putting the file name in the URL as pathinfo (which makes the download link look like /file.php/downloadfile.ext?1,2,file=3).<br/><br/>The webserver needs to support the use of pathinfo for this feature to work. So if you are unable to download files after enabling this option, your webserver probably lacks pathinfo support and you cannot use this feature.");
+$frm->addhelp($row, "Use pathinfo for file URLs", "All LibreForum file downloads (for user files and forum message attachments) run through the file.php script. As a result, users who right-click a file URL and choose \"Save link as ..\" will end up in their browser with file.php as the default file name. With this option enabled however, LibreForum will try to give the browser a real file name instead. This is done by putting the file name in the URL as pathinfo (which makes the download link look like /file.php/downloadfile.ext?1,2,file=3).<br/><br/>The webserver needs to support the use of pathinfo for this feature to work. So if you are unable to download files after enabling this option, your webserver probably lacks pathinfo support and you cannot use this feature.");
 
 $row=$frm->addrow( "Use the PHP fileinfo extension for mime-type detection", $frm->select_tag("file_fileinfo_ext", array( "No", "Yes"), (isset($PHORUM["file_fileinfo_ext"]))?$PHORUM["file_fileinfo_ext"]:1 ) );
 $frm->addhelp($row, "Use the PHP fileinfo extension for mime-type detection", "Fileinfo is a php-extension which was added by default in PHP-5.3.0 and is a <a href=\"http://pecl.php.net/package/Fileinfo\">PECL extension</a> for manual install in previous php-versions. If this setting is enabled, the fileinfo extension will be used to return the mime-type of uploaded files to make sure that the mime-type matches the file contents and isn't done purely based on the data on upload or the file extension.");
@@ -255,14 +255,14 @@ $row=$frm->addrow( "Mime Magic file for the PHP fileinfo extension", $frm->text_
 $frm->addhelp($row, "Mime Magic file for the PHP fileinfo extension", 'If no system-wide mime magic file is installed, the fileinfo extension can use a manually defined one. You could download one (it actually consists of 4 files) manually and put the path to the mime magic file to use in this field, including the file itself without the extension.<br /><br />For example, if you installed the mime magic files in <pre>C:\Programme\xampp\share\mime</pre> you will have to enter <pre>C:\Programme\xampp\share\mime\magic</pre> in this field.');
 
 $row=$frm->addrow( "Allow Login-Redirection to the following URLs", $frm->text_box("login_redir_urls", $PHORUM["login_redir_urls"], 75 ));
-$frm->addhelp($row, "Allow Login-Redirection to the following URLs", "The login.php script can be called with a \"redir=&lt;url&gt;\" parameter, to let it redirect to an URL of choice after logging in. For security reasons, only redirects to localhost and to the Phorum URL are allowed. I you want to allow Phorum to redirect to a different URL, then enter that URL here. Multiple URLs can be provided as a comma separated list. Redirects to URLs not starting with the URLs listed here, besides the Phorum URL and localhost, are ignored.<br /><br />A full URL should be like http://www.domainname.com/path or http://www.domain.com ... ");
+$frm->addhelp($row, "Allow Login-Redirection to the following URLs", "The login.php script can be called with a \"redir=&lt;url&gt;\" parameter, to let it redirect to an URL of choice after logging in. For security reasons, only redirects to localhost and to the LibreForum URL are allowed. I you want to allow LibreForum to redirect to a different URL, then enter that URL here. Multiple URLs can be provided as a comma separated list. Redirects to URLs not starting with the URLs listed here, besides the LibreForum URL and localhost, are ignored.<br /><br />A full URL should be like http://www.domainname.com/path or http://www.domain.com ... ");
 
 $frm->addbreak( "HTML Settings" );
 
-$row=$frm->addrow( "Phorum HTML Title", $frm->text_box( "html_title", $PHORUM["html_title"], 50 ) );
+$row=$frm->addrow( "LibreForum HTML Title", $frm->text_box( "html_title", $PHORUM["html_title"], 50 ) );
 
-$row=$frm->addrow( "Phorum Head Tags", $frm->textarea( "head_tags", $PHORUM["head_tags"], 30, 5, "style='width: 100%'" ) );
-$frm->addhelp($row, "Phorum Head Tags", "This option can be used to provide additional HTML code that will be added to the &lt;head&gt; section of the pages. This could for example be used for adding meta keywords:<br/>
+$row=$frm->addrow( "LibreForum Head Tags", $frm->textarea( "head_tags", $PHORUM["head_tags"], 30, 5, "style='width: 100%'" ) );
+$frm->addhelp($row, "LibreForum Head Tags", "This option can be used to provide additional HTML code that will be added to the &lt;head&gt; section of the pages. This could for example be used for adding meta keywords:<br/>
 <pre style=\"font-size: x-small\">&lt;meta name=\"KEYWORDS\" content=\"...\"\ /&gt;</pre>");
 
 $row=$frm->addrow( "Show and allow feed links", $frm->select_tag( "use_rss", array( "No", "Yes" ), $PHORUM["use_rss"] ) );
@@ -278,13 +278,13 @@ $frm->addhelp($row, "Show and allow feed links",
      Note that feed readers will automatically poll for feed updates using
      a client side defined time interval, so with a lot of active feed
      subscriptions, the number of requests to your web server will rise.
-     Phorum uses server side caching of the feed data to keep the
+     LibreForum uses server side caching of the feed data to keep the
      server load that is required for supporting feeds to a minimum.");
 
 $row=$frm->addrow( "Default feed type", $frm->select_tag( "default_feed", array( "rss"=>"RSS", "atom"=>"Atom" ), $PHORUM["default_feed"] ) );
 $frm->addhelp($row, "Default feed type",
     "There are multiple standards for providing content feeds.
-     Phorum supports RSS and ATOM, which are the most widely spread XML
+     LibreForum supports RSS and ATOM, which are the most widely spread XML
      based feed formats.<br />
      <br />
      If you are unsure what to use, then select \"RSS\".");
@@ -292,10 +292,10 @@ $frm->addhelp($row, "Default feed type",
 $frm->addbreak( "File/Path Settings" );
 
 $row=$frm->addrow( "HTTP Path", $frm->text_box( "http_path", $PHORUM["http_path"], 30 ) );
-$frm->addhelp($row, "HTTP Path", "This is the base url of your Phorum." );
+$frm->addhelp($row, "HTTP Path", "This is the base url of your LibreForum." );
 
 $row=$frm->addrow( "Disabled URL", $frm->text_box( "disabled_url", $PHORUM["disabled_url"], 50 ) );
-$frm->addhelp($row, "Disabled URL", "This url will be redirected to when the Phorum status is disabled.  If no URL is given, a message in English will be displayed." );
+$frm->addhelp($row, "Disabled URL", "This url will be redirected to when the LibreForum status is disabled.  If no URL is given, a message in English will be displayed." );
 
 $frm->addbreak( "Date Options" );
 
@@ -305,27 +305,27 @@ $frm->addhelp($row, "Time Zone Offset", "If you and/or your users are in a diffe
 $frm->addbreak( "Cookie/Session Settings" );
 
 $row=$frm->addrow( "Use Cookies", $frm->select_tag( "use_cookies", array( "Use no cookies", "Allow cookies", "Require cookies" ), $PHORUM["use_cookies"] ) );
-$frm->addhelp($row, "Use Cookies", "Phorum can track logged in users by using cookies or session information on URLs.<br/><br/><b>Use no cookies</b>: The session information will always be included on the URL.<br/><br/><b>Allow cookies</b>: The session information will be stored in cookies, if the user's browser supports it. Otherwise the information is included on the URL.<br/><br/><b>Require cookies</b>: Session information is only stored in cookies. If the user's browser does not support cookies, the user will not be able to login.");
+$frm->addhelp($row, "Use Cookies", "LibreForum can track logged in users by using cookies or session information on URLs.<br/><br/><b>Use no cookies</b>: The session information will always be included on the URL.<br/><br/><b>Allow cookies</b>: The session information will be stored in cookies, if the user's browser supports it. Otherwise the information is included on the URL.<br/><br/><b>Require cookies</b>: Session information is only stored in cookies. If the user's browser does not support cookies, the user will not be able to login.");
 
 $row=$frm->addrow( "Main Session Timeout (days)", $frm->text_box( "session_timeout", $PHORUM["session_timeout"], 10 ) );
-$frm->addhelp($row, "Session Timeout", "When users log in to your Phorum, they are issued a cookie.  You can set this timeout to the number of days that you want the cookie to stay on the users computer.  If you set it to 0, the cookie will only last as long as the user has the browser open." );
+$frm->addhelp($row, "Session Timeout", "When users log in to your LibreForum, they are issued a cookie.  You can set this timeout to the number of days that you want the cookie to stay on the users computer.  If you set it to 0, the cookie will only last as long as the user has the browser open." );
 
 $row=$frm->addrow( "Session Path (start with /)", $frm->text_box( "session_path", $PHORUM["session_path"], 30 ) );
-$frm->addhelp($row, "Session Path", "When cookies are sent to client's browser, part of the cookie determines the path (url) for which the cookies are valid.  For example, if the url is http://example.com/phorum, you could set the path to /phorum.  Then, the users browser would only send the cookie information when the user accessed the Phorum.  You could also use simply / and the cookie info will be sent for any page on your site.  This could be useful if you want to use Phorum's login system for other parts of your site." );
+$frm->addhelp($row, "Session Path", "When cookies are sent to client's browser, part of the cookie determines the path (url) for which the cookies are valid.  For example, if the url is http://example.com/phorum, you could set the path to /phorum.  Then, the users browser would only send the cookie information when the user accessed the LibreForum.  You could also use simply / and the cookie info will be sent for any page on your site.  This could be useful if you want to use LibreForum's login system for other parts of your site." );
 
 $row=$frm->addrow( "Session Domain", $frm->text_box( "session_domain", $PHORUM["session_domain"], 30 ) );
 $frm->addhelp($row, "Session Domain", "Most likely, you can leave this blank.  If you know you need to use a different domain (like you use forums.example.com, you may want to just use example.com as the domain), you may enter it here." );
 
 $row=$frm->addrow( "Track User Usage", $frm->select_tag( "track_user_activity", array( 0=>"Never", 86400=>"Once per day", 3600=>"Once per hour", 1800=>"Once per half hour", 900=>"Once per 15 minutes", 600=>"Once per 10 minutes", 300=>"Once per 5 minutes", 60=>"Once per minute", 1=>"Constantly" ), $PHORUM["track_user_activity"] ) );
-$frm->addhelp($row, "Track User Usage", "When set, the last time a user accessed the Phorum will be recorded as often as you have decided upon.  This will require constant updates to your database.  If you have a busy forum on weak equipment, it may be bad to use a short update interval." );
+$frm->addhelp($row, "Track User Usage", "When set, the last time a user accessed the LibreForum will be recorded as often as you have decided upon.  This will require constant updates to your database.  If you have a busy forum on weak equipment, it may be bad to use a short update interval." );
 
 $frm->addbreak( "Tighter Security" );
 
 $row=$frm->addrow( "Enable Tighter Security", $frm->select_tag( "tight_security", array( "No", "Yes" ), $PHORUM["tight_security"] ) );
-$frm->addhelp($row, "Enable Tighter Security", "Tight security in Phorum will require that users confirm their login information from time to time before posting messages, accessing private messages or using their Control Center.  The length of time is determined by Short Session Timeout." );
+$frm->addhelp($row, "Enable Tighter Security", "Tight security in LibreForum will require that users confirm their login information from time to time before posting messages, accessing private messages or using their Control Center.  The length of time is determined by Short Session Timeout." );
 
 $row=$frm->addrow( "Short Session Timeout (minutes)", $frm->text_box( "short_session_timeout", $PHORUM["short_session_timeout"], 10 ) );
-$frm->addhelp($row, "Short Session Timeout", "When tight security is enabled, the users will be issued a second cookie when the type in their login information.  If the user does not use the site for the period of time you set here, they will have to re-enter their login information before posting messages, accessing private messages or using their Control Center.  They will still be allowed to read the Phorum as long as their Main Session is still good.  The time is minutes.  The minimum is 5 minutes.  Otherwise, your users will be very angry at you.<br /><br />P.S. 1 day = 1440 minutes" );
+$frm->addhelp($row, "Short Session Timeout", "When tight security is enabled, the users will be issued a second cookie when the type in their login information.  If the user does not use the site for the period of time you set here, they will have to re-enter their login information before posting messages, accessing private messages or using their Control Center.  They will still be allowed to read the LibreForum as long as their Main Session is still good.  The time is minutes.  The minimum is 5 minutes.  Otherwise, your users will be very angry at you.<br /><br />P.S. 1 day = 1440 minutes" );
 
 $frm->addbreak( "User Settings" );
 
@@ -356,10 +356,10 @@ $row=$frm->addrow( "Registration Verification", $frm->select_tag( "registration_
 
 $row=$frm->addrow( "Enable Drop-down User List", $frm->select_tag( "enable_dropdown_userlist", array( "No", "Yes" ), $PHORUM["enable_dropdown_userlist"] ) );
 
-$frm->addhelp($row, "Enable Drop-down User List", "By setting this to Yes, Phorum will display a drop-down list of users instead of an empty text box on pages where you can select a user. Two examples of such pages are when sending a private message, and when adding users to a group in the group moderation page. This option should be disabled if you have a large number of users, as a list of thousands of users will slow performance dramatically." );
+$frm->addhelp($row, "Enable Drop-down User List", "By setting this to Yes, LibreForum will display a drop-down list of users instead of an empty text box on pages where you can select a user. Two examples of such pages are when sending a private message, and when adding users to a group in the group moderation page. This option should be disabled if you have a large number of users, as a list of thousands of users will slow performance dramatically." );
 
 $row = $frm->addrow( "What to use as the display name", $frm->select_tag("display_name_source", array("username" => "User's username", "real_name" => "User's real name"), isset($PHORUM["display_name_source"]) ? $PHORUM["display_name_source"] : "username") );
-$frm->addhelp($row, "What to use as the display name", "You can choose to use either the user's username or the real name (which can be edited by the user from the control center) as the name by which the user is referenced throughout all Phorum pages.<br/><br/>This is not an option that you normally would want to change on a live system that has been running for a while. One reason is that all stored names will have to be updated in the database (e.g. the posting authors), which can take quite a while on a big forum (it <i>will</i> work though). More impor tant is that you might confuse your users by changing the display names.");
+$frm->addhelp($row, "What to use as the display name", "You can choose to use either the user's username or the real name (which can be edited by the user from the control center) as the name by which the user is referenced throughout all LibreForum pages.<br/><br/>This is not an option that you normally would want to change on a live system that has been running for a while. One reason is that all stored names will have to be updated in the database (e.g. the posting authors), which can take quite a while on a big forum (it <i>will</i> work though). More impor tant is that you might confuse your users by changing the display names.");
 
 $row=$frm->addrow( "Force hiding of email addresses", $frm->select_tag( "hide_email_addr", array( "No", "Yes" ), $PHORUM["hide_email_addr"] ) );
 $frm->addhelp($row, "Force hiding of email addresses", "If set to \"No\", then registered users can choose themselves whether they want their email addresses displayed to other users or not. If set to \"Yes\", then all email addresses will be hidden, including those of anonymous users. Also, the option \"Allow other users to see my email address\" will be removed from the user control center.");
@@ -384,14 +384,14 @@ $row=$frm->addrow( "&nbsp;&nbsp;&nbsp;File Space Quota (KB)", $frm->text_box( "f
 $row=$frm->addrow( "Private Messaging (PM):", $frm->select_tag( "enable_pm", array( "Off", "On" ), $PHORUM["enable_pm"] ) );
 
 $row=$frm->addrow( "&nbsp;&nbsp;&nbsp;Check For New PM", $frm->select_tag( "enable_new_pm_count", array( "No", "Yes" ), $PHORUM["enable_new_pm_count"] ) );
-$frm->addhelp($row, "Check For Private Messages", "By setting this to Yes, Phorum will check if a user has new private messages, and display an indicator. On a Phorum with a lot of users and private messages, this may hurt performance. This option has no effect if Private Messaging is disabled." );
+$frm->addhelp($row, "Check For Private Messages", "By setting this to Yes, LibreForum will check if a user has new private messages, and display an indicator. On a LibreForum with a lot of users and private messages, this may hurt performance. This option has no effect if Private Messaging is disabled." );
 
 $row=$frm->addrow( "&nbsp;&nbsp;&nbsp;Max number of stored messages", $frm->text_box( "max_pm_messagecount", $PHORUM["max_pm_messagecount"], 30 ) );
 $frm->addhelp($row, "Max number of stored messages", "This is the maximum number of private messages that a user may store on the server. The number of private messages is the total of all messages in all PM folders together. Setting this value to zero will allow for unlimited messages.");
 
 $row=$frm->addrow( "&nbsp;&nbsp;&nbsp;Allow notification of new PM by email", $frm->select_tag("allow_pm_email_notify", array("No", "Yes"), $PHORUM["allow_pm_email_notify"]) );
 $frm->addhelp($row, "Allow notification of new PM by email",
-    "If this option is enabled, Phorum will send a notification email to
+    "If this option is enabled, LibreForum will send a notification email to
      users that receive a new private message. The user will find an option
      in their control center which can be used to disable the notification
      email.");

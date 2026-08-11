@@ -1,8 +1,8 @@
-Customizing your Phorum mail messages
+Customizing your LibreForum mail messages
 =====================================
 
 This document describes the way you can customize the mail messages
-that are sent out by Phorum.
+that are sent out by LibreForum.
 
 Table of contents:
 

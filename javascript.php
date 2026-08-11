@@ -60,13 +60,13 @@ $module_registrations[] = array(
     'cache_key' => '2.1.2.min'
 );
 
-// Add the Phorum JavaScript library.
+// Add the LibreForum JavaScript library.
 $module_registrations[] = array(
     'module'    => 'core',
     'source'    => 'file(include/javascript/phorum-javascript-library.php)'
 );
 
-// Add core Phorum posting form object manipulation client JavaScript code.
+// Add core LibreForum posting form object manipulation client JavaScript code.
 $module_registrations[] = array(
     'module'    => 'core',
     'source'    => 'file(include/posting/form_objects.js.php)',
@@ -74,7 +74,7 @@ $module_registrations[] = array(
 );
 
 
-// Add core Phorum Ajax layer client JavaScript code.
+// Add core LibreForum Ajax layer client JavaScript code.
 $module_registrations[] = array(
     'module'    => 'core',
     'source'    => 'file(include/ajax/client.js.php)',
@@ -101,7 +101,7 @@ if (!$for_admin) {
  *
  * [description]
  *     Modules can provide JavaScript code that has to be added to the
- *     Phorum pages. Modules that make use of this facility should
+ *     LibreForum pages. Modules that make use of this facility should
  *     register the JavaScript code using this hook.
  *
  * [category]
@@ -123,13 +123,13 @@ if (!$for_admin) {
  *         <ul>
  *         <li><b>file(&lt;path to filename&gt;)</b><br>
  *             For including a static JavaScript file. The path should be
- *             absolute or relative to the Phorum install directory,
+ *             absolute or relative to the LibreForum install directory,
  *             e.g. "<literal>file(mods/foobar/baz.js</literal>)".
  *             Because this file is loaded using a PHP include() call,
  *             it is possible to include PHP code in this file. Mind that
  *             this code is stored interpreted in the cache.</li>
  *         <li><b>template(&lt;template name&gt;)</b><br>
- *             For including a Phorum template,
+ *             For including a LibreForum template,
  *             e.g. "<literal>template(foobar::baz)</literal>"</li>
  *         <li><b>function(&lt;function name&gt;)</b><br>
  *             For calling a function to retrieve the JavaScript code,
@@ -272,10 +272,10 @@ if (isset($PHORUM['args']['refresh']) ||
     $content === null)
 {
     $content =
-        "// Phorum object. Other JavaScript code for Phorum can extend\n" .
+        "// LibreForum object. Other JavaScript code for LibreForum can extend\n" .
         "// this one to implement functionality without risking\n" .
         "// name space collissions.\n" .
-        "Phorum = {};\n\n";
+        "LibreForum = {};\n\n";
 
     foreach ($module_registrations as $id => $r)
     {
@@ -312,7 +312,7 @@ if (isset($PHORUM['args']['refresh']) ||
      *     javascript_filter
      *
      * [description]
-     *     This hook can be used to apply a filter to the Phorum JavaScript
+     *     This hook can be used to apply a filter to the LibreForum JavaScript
      *     code. This can for example be used for compressing or cleaning
      *     up the JavaScript.
      *
@@ -347,7 +347,7 @@ if (isset($PHORUM['args']['refresh']) ||
     print $content;
 
     // Exit here explicitly for not giving back control to portable and
-    // embedded Phorum setups.
+    // embedded LibreForum setups.
     exit(0);
 }
 
@@ -376,7 +376,7 @@ header("Last-Modified: " . gmdate('D, d M Y H:i:s \G\M\T', $last_modified));
 echo $content;
 
 // Exit here explicitly for not giving back control to portable and
-// embedded Phorum setups.
+// embedded LibreForum setups.
 exit(0);
 
 ?>

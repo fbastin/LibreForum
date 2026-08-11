@@ -19,7 +19,7 @@
 
     if(!defined("PHORUM_ADMIN")) return;
 
-    // load the default Phorum language
+    // load the default LibreForum language
     if(isset($PHORUM["default_forum_options"]["language"])){
         $lang = basename($PHORUM["default_forum_options"]["language"]);
         if (!file_exists("./include/lang/${lang}.php")) {
@@ -218,13 +218,13 @@ LibreForum Status:
          *     admin_menu
          *
          * [availability]
-         *     Phorum 5.2.16
+         *     LibreForum 5.2.16
          *
          * [description]
-         *     This hook allows to inject custom HTML into the Phorum admin
+         *     This hook allows to inject custom HTML into the LibreForum admin
          *     menu. The hook will receive an instance of
          *     PhorumAdminMenuHookPosition which is required to determine at
-         *     which position in the Phorum admin menu the module author wishes
+         *     which position in the LibreForum admin menu the module author wishes
          *     to place his custom menu. Although any HTML can be injected, it
          *     is advised to use the PhorumAdminMenu class.
          *
@@ -271,7 +271,7 @@ LibreForum Status:
          *         $menu->addCustom(
          *             "Guess!",
          *             "http://phorum.org/",
-         *             "Phorum rocks!",
+         *             "LibreForum rocks!",
          *             "_blank"
          *         );
          *
@@ -305,7 +305,7 @@ LibreForum Status:
         $menu->add("Cache Settings", "cache", "Edit the cache settings, like which cache layer to use and what to cache.");
         $menu->add("Ban Lists", "banlist", "Edits the list of banned names, email addresses and IP addresses.");
         $menu->add("Censor List", "badwords", "Edit the list of words that are censored in posts.");
-        $menu->add("Modules", "mods", "Administer the Phorum Modules that are installed.");
+        $menu->add("Modules", "mods", "Administer the LibreForum Modules that are installed.");
 
         $menu->show();
 
@@ -326,7 +326,7 @@ LibreForum Status:
 
         $menu->add("Edit Users", "users", "Allows administrator to edit users including deactivating them.");
         $menu->add("Edit Groups", "groups", "Allows administrator to edit groups and their forum permissions.");
-        $menu->add("Custom Profiles", "customprofile", "Allows administrator to add fields to Phorum profile.");
+        $menu->add("Custom Profiles", "customprofile", "Allows administrator to add fields to LibreForum profile.");
 
         $menu->show();
 
@@ -338,7 +338,7 @@ LibreForum Status:
         $menu->add("Database Integrity", "rebuild", "Database Integrity Actions");
         $menu->add("Prune Messages", "message_prune", "Pruning old messages.");
         $menu->add("Purge Stale Files", "file_purge", "Purging stale files from the database.");
-        $menu->add("Purge cache", "cache_purge", "Purging the Phorum cache.");
+        $menu->add("Purge cache", "cache_purge", "Purging the LibreForum cache.");
         $menu->add("System Sanity Checks", "sanity_checks", "Perform a number of sanity checks on the system to identify possible problems.");
         $menu->add("Manage Language Files", "manage_languages", "Allows administrator to create new or updated versions of language files.");
 

@@ -1,16 +1,16 @@
 <?php
 
-// Phorum 5.2
+// LibreForum 5.2
 if (file_exists('./include/profile_functions.php')) {
     include_once './include/profile_functions.php';
     $GLOBALS['PHORUM']['ban_check_func'] = 'phorum_check_ban_lists';
 }
-// Phorum 5.3
+// LibreForum 5.3
 elseif (file_exists('./include/api/ban.php')) {
     include_once './include/api/ban.php';
     $GLOBALS['PHORUM']['ban_check_func'] = 'phorum_api_ban_check';
 }
-// Phorum ???
+// LibreForum ???
 else {
   trigger_error(
     'user_tagging: Cannot find a banlist checking library.',
@@ -216,7 +216,7 @@ function user_tagging_process_rule($rule, $user)
             break;
 
         case 'GLOBAL':
-            // Use the standard Phorum post count if available,
+            // Use the standard LibreForum post count if available,
             // otherwise fall back to the module's counter.
             if (isset($user['posts'])) {
                 $count = (int)$user['posts'];

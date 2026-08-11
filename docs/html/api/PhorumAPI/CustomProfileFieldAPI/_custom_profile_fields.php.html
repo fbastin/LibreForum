@@ -21,11 +21,11 @@
 			</div>
 	<div class="info-box-body">	
 		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This script implements the Phorum custom profile fields API.</p>
-<p class="description"><p>Custom profile fields are a way of dynamically extending the available  data fields for a user, without having to extend the user database table  with additional fields.</p><p>This API can be used for handling the configuration of these custom  profile fields. The actual use of the fields is fully integrated in the  Phorum user API.</p></p>
+<p class="short-description">This script implements the LibreForum custom profile fields API.</p>
+<p class="description"><p>Custom profile fields are a way of dynamically extending the available  data fields for a user, without having to extend the user database table  with additional fields.</p><p>This API can be used for handling the configuration of these custom  profile fields. The actual use of the fields is fully integrated in the  LibreForum user API.</p></p>
 	<ul class="tags">
 				<li><span class="field">copyright:</span> 2010, Phorum Development Team</li>
-				<li><span class="field">license:</span> Phorum</li>
+				<li><span class="field">license:</span> LibreForum</li>
 			</ul>
 		
 			</div>
@@ -108,7 +108,7 @@
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Check and fix the custom profile field configuration.</p>
-<p class="description"><p>This function has mainly been implemented for fixing problems that  are introduced by modules that create custom profile fields on their  own. Besides that, it was also written to upgrade the profile field  configuration, because Phorum 5.2 introduced some new fields in  the config.</p></p>
+<p class="description"><p>This function has mainly been implemented for fixing problems that  are introduced by modules that create custom profile fields on their  own. Besides that, it was also written to upgrade the profile field  configuration, because LibreForum 5.2 introduced some new fields in  the config.</p></p>
 	
 	<div class="method-signature">
 		<span class="method-result">void</span>
@@ -155,7 +155,7 @@
            custom profile field length. If this field is missing or set
            to NULL, then the default length 255 will be used.</li></ul> <ul><li>html_disabled: If this field is set to a true value, then
            special HTML characters are not usable in this field. When
-           displaying the custom field's data, Phorum will automatically
+           displaying the custom field's data, LibreForum will automatically
            escape these characters. Only use a false value for this
            field if the data that will be saved in the field is really safe
            for direct use in a web page (to learn about the security risks

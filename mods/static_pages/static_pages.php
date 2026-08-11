@@ -77,7 +77,7 @@ function phorum_mod_static_pages_display () {
 
 } // end function phorum_mod_static_pages_display
 
-// The pages are stored as template files, meaning they will be able to contain PHP code, and have access to Phorum variables and Phorum template syntax.
+// The pages are stored as template files, meaning they will be able to contain PHP code, and have access to LibreForum variables and LibreForum template syntax.
 
 // require_version: 5.?.?
 

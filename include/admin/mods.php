@@ -75,10 +75,10 @@ if(defined("PHORUM_INSTALL")){
     $frm->hidden("sanity_checks_done", "1");
     $frm->hidden("step", "modules");
     $frm->hidden("do_modules_update", "1");
-    $frm->addmessage("Phorum has a very robust module system.  The following modules are included with the distribution.  You can find more modules at the Phorum web site.  Some modules may have additional configuration options, which are not available during install.  To configure the modules, click the Modules menu item after installation is done.");
+    $frm->addmessage("LibreForum has a very robust module system.  The following modules are included with the distribution.  You can find more modules at the LibreForum web site.  Some modules may have additional configuration options, which are not available during install.  To configure the modules, click the Modules menu item after installation is done.");
 } else {
     $frm = new PhorumInputForm ("", "post");
-    $frm->addbreak("Phorum Module Settings");
+    $frm->addbreak("LibreForum Module Settings");
     $frm->hidden("module", "mods");
 }
 
@@ -124,17 +124,17 @@ foreach ($list['modules'] as $name => $info)
         $frm->addrow($text, $frm->select_tag(base64_encode("mods_$name"), array("Off"),0,'disabled="disabled"').$settings_link);
 
         // Disable a module if it's enabled, but should be disabled based
-        // on the Phorum version.
+        // on the LibreForum version.
         if ($info['enabled'])
         {
             phorum_admin_error(
-                "Minimum Phorum-Version requirement not met for " .
+                "Minimum LibreForum-Version requirement not met for " .
                 "module \"" . htmlspecialchars($name) . "\"<br/>" .
                 "It requires at least version " .
                 "\"" . htmlspecialchars($info['required_version']) . "\", " .
                 "but the current version is \"" . PHORUM . "\".<br />".
                 "The module was disabled to avoid malfunction of " .
-                "your Phorum because of that requirement.<br/>"
+                "your LibreForum because of that requirement.<br/>"
             );
 
             phorum_api_modules_disable($name);

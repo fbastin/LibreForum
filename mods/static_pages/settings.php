@@ -46,7 +46,7 @@ while ( false !== ( $entry = $d->read() ) ) {
 }
 sort($a_files);
 
-// if we're just coming here from the Phorum Module Admin screen, don't load-in file to edit ( but do default to it in list )
+// if we're just coming here from the LibreForum Module Admin screen, don't load-in file to edit ( but do default to it in list )
 if(count($_POST) == 0) {
     $edit_this_file = 'no';
 } // end if
@@ -203,7 +203,7 @@ $frm->addbreak('Static Pages');
 // $frm->addmessage( '$new_file_flag = ' . nl2br(var_export($new_file_flag, true)) ); // debugg //
 // $frm->addmessage( '$edit_this_file = ' . nl2br(var_export($edit_this_file, true)) ); // debugg //
 
-// Phorum version 5.2.10 and earlier, this function did not exist
+// LibreForum version 5.2.10 and earlier, this function did not exist
 if ( function_exists('phorum_admin_build_url')):
     // $mods_url = phorum_admin_build_url(array('module=mods'));
     $mods_url = call_user_func('phorum_admin_build_url', array('module=mods'));

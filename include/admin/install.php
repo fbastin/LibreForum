@@ -39,9 +39,9 @@ if(empty($_POST["step"])){
 // because the sanity checks need them).
 $default_cache_dir = (substr(__FILE__, 0, 1)=="/") ? "/tmp" : "C:\\Windows\\Temp";
 
-// Run sanity checks prior to installing Phorum. Here we do some
+// Run sanity checks prior to installing LibreForum. Here we do some
 // checks to see if the environment is setup correctly for running
-// Phorum.
+// LibreForum.
 if ($step == 'start' && !isset($_POST["sanity_checks_done"]))
 {
     // Setup some fake environment data for the checks.
@@ -55,12 +55,12 @@ if ($step == 'start' && !isset($_POST["sanity_checks_done"]))
     ?>
     <h1>Checking your system</h1>
 
-    Prior to installing Phorum, your system will be checked to see
-    if there are any problems that might prevent Phorum from running
+    Prior to installing LibreForum, your system will be checked to see
+    if there are any problems that might prevent LibreForum from running
     correctly. Below you will find the results of the checks. Warnings
     indicate that some problem needs attention, but that the problem
-    will not keep Phorum from running. Errors indicate critical
-    problems, which need to be fixed before running Phorum.
+    will not keep LibreForum from running. Errors indicate critical
+    problems, which need to be fixed before running LibreForum.
     <br/><br/>
 
     <script type="text/javascript">
@@ -129,7 +129,7 @@ if ($step == 'start' && !isset($_POST["sanity_checks_done"]))
         One or more warnings were encountered while checking
         your system. To see what is causing these warnings and what you
         can do about them, click the "show problem info" links.
-        Phorum probably will run without fixing the warnings, but
+        LibreForum probably will run without fixing the warnings, but
         it's a good idea to fix them anyway for ensuring optimal
         performance.
         <br/><br/>
@@ -140,7 +140,7 @@ if ($step == 'start' && !isset($_POST["sanity_checks_done"]))
         ?>
         <br/>
         No problems were encountered while checking your system.
-        You can now continue with the Phorum installation.
+        You can now continue with the LibreForum installation.
         <br/><br/>
         <input type="submit" name="sanity_checks_done" value="Continue -&gt;" />
         <?php
@@ -227,8 +227,8 @@ switch ($step){
     case "start":
 
         $frm = new PhorumInputForm ("", "post", "Continue ->");
-        $frm->addbreak("Welcome to Phorum");
-        $frm->addmessage("This wizard will setup Phorum on your server. First, the database will be prepared.  Phorum has already confirmed that it can connect to your database.  Press continue when you are ready.");
+        $frm->addbreak("Welcome to LibreForum");
+        $frm->addmessage("This wizard will setup LibreForum on your server. First, the database will be prepared.  LibreForum has already confirmed that it can connect to your database.  Press continue when you are ready.");
         $frm->hidden("module", "install");
         $frm->hidden("sanity_checks_done", "1");
         $frm->hidden("step", "start");
@@ -464,7 +464,7 @@ switch ($step){
             "forum_id" => $GLOBALS['PHORUM']["forum_id"],
             "thread" => 0,
             "parent_id" => 0,
-            "author" => 'Phorum Installer',
+            "author" => 'LibreForum Installer',
             "subject" => 'Test Message',
             "email" => '',
             "ip" => '127.0.0.1',
@@ -519,7 +519,7 @@ switch ($step){
 
     	$cont_url = phorum_admin_build_url('');
         phorum_db_update_settings( array("installed"=>1) );
-        echo "The setup is complete.  You can now go to <a href=\"$cont_url\">the admin</a> and start making Phorum all your own.<br /><br /><strong>Here are some things you will want to look at:</strong><br /><br /><a href=\"$_SERVER[PHP_SELF]?module=settings\">The General Settings page</a><br /><br /><a href=\"$_SERVER[PHP_SELF]?module=mods\">Pre-installed modules</a><br /><br /><a href=\"docs/faq.txt\">The FAQ</a><br /><br /><a href=\"docs/performance.txt\">How to get peak performance from Phorum</a><br /><br /><strong>For developers:</strong><br /><br /><a href=\"docs/creating_mods.txt\">Module Creation</a><br /><br /><a href=\"docs/permissions.txt\">How Phorum permisssions work</a><br /><br /><a href=\"docs/CODING-STANDARDS\">The Phorum Team's codings standards</a>";
+        echo "The setup is complete.  You can now go to <a href=\"$cont_url\">the admin</a> and start making LibreForum all your own.<br /><br /><strong>Here are some things you will want to look at:</strong><br /><br /><a href=\"$_SERVER[PHP_SELF]?module=settings\">The General Settings page</a><br /><br /><a href=\"$_SERVER[PHP_SELF]?module=mods\">Pre-installed modules</a><br /><br /><a href=\"docs/faq.txt\">The FAQ</a><br /><br /><a href=\"docs/performance.txt\">How to get peak performance from LibreForum</a><br /><br /><strong>For developers:</strong><br /><br /><a href=\"docs/creating_mods.txt\">Module Creation</a><br /><br /><a href=\"docs/permissions.txt\">How LibreForum permisssions work</a><br /><br /><a href=\"docs/CODING-STANDARDS\">The LibreForum Team's codings standards</a>";
 
         break;
 
@@ -550,7 +550,7 @@ switch ($step){
         error_reporting(E_WARN);
         if ($message == "") {
             if($err){
-                $message.="Your cache directory is not writable. Please change the permissions on '/cache' inside the Phorum directory to allow writing. In Unix, you may have to use this command: chmod 777 cache<br /><br />If you want to continue anyway and set a cache directory manually, press continue. Note that you must do this, Phorum will not work without a valid cache.";
+                $message.="Your cache directory is not writable. Please change the permissions on '/cache' inside the LibreForum directory to allow writing. In Unix, you may have to use this command: chmod 777 cache<br /><br />If you want to continue anyway and set a cache directory manually, press continue. Note that you must do this, LibreForum will not work without a valid cache.";
             } else {
                 $message.="Cache directory set.  Next we will create a user with administrator privileges.  Press continue when ready.";
             }

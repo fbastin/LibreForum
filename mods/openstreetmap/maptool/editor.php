@@ -1,6 +1,6 @@
 <?php
 // This file can be included for showing a editable map on a
-// Phorum page. It's not strictly neccessary to use this script
+// LibreForum page. It's not strictly neccessary to use this script
 // if an editor is needed, but it's probably the easiest way to
 // arrange for one.
 //

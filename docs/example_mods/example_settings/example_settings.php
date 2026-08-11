@@ -1,6 +1,6 @@
 <?php
 
-// This module demonstrates the use of settings for a Phorum module.
+// This module demonstrates the use of settings for a LibreForum module.
 // This module will display a configurable string for a configurable
 // number of times, right after the page header (how useful is that? :-).
 
