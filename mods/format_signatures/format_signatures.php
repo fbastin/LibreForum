@@ -8,7 +8,7 @@ define("SIGNATURE_MARKER_POST", "###format_signatures_post###");
 if (!isset($GLOBALS['PHORUM']['mod_format_signatures']['prefix']) &&
     !isset($GLOBALS['PHORUM']['mod_format_signatures']['postfix'])) {
     $GLOBALS['PHORUM']['mod_format_signatures']['prefix'] =
-      "<br/>\n<hr/>\n";
+      "<br/>\n<hr/>\n\n";
     $GLOBALS['PHORUM']['mod_format_signatures']['postfix'] = "";
 }
 

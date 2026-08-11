@@ -8,6 +8,7 @@ hook: format|phorum_mod_markdown_format
 hook: javascript_register|phorum_mod_markdown_javascript_register
 hook: editor_tool_plugin|phorum_mod_markdown_editor_tool_plugin
 hook: quote|phorum_mod_markdown_quote
+hook: addon|phorum_mod_markdown_addon
 
 # Run after BBCode if both are active.
 priority: run module after *

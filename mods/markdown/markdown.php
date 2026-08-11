@@ -24,6 +24,45 @@ function phorum_mod_markdown_format($data)
 
         $body = $message['body'];
 
+        // Phorum injects <phorum break> before running hooks. Parsedown considers this an unknown block HTML tag
+        // and refuses to parse Markdown inside it. We remove it and let Parsedown handle the newlines.
+        $body = str_replace('<phorum break>', '', $body);
+
+        // Protect math blocks from Parsedown
+        $math_blocks = array();
+        
+        // 3. Convert legacy BBCode [img]...[/img] to Markdown ![image](...)
+        // This is done before Parsedown so it gets properly rendered.
+        $body = preg_replace('#\[url=([^\]]+)\]\[img\](.*?)\[/img\]\[/url\]#is', '[![image]($2)]($1)', $body);
+        $body = preg_replace('#\[img\](.*?)\[/img\]#is', '![image]($1)', $body);
+
+        // 4. Force HTTPS for all Markdown images to avoid Mixed Content blocking in Firefox
+        $body = preg_replace_callback('/!\[([^\]]*)\]\s*\(\s*http:\/\/([^\)]+)\s*\)/i', function($matches) {
+            return '![' . $matches[1] . '](https://' . $matches[2] . ')';
+        }, $body);
+
+        // 1. Extract block math $$...$$
+        $body = preg_replace_callback(
+            '/(?<!\\\\)\$\$(.+?)\$\$/s',
+            function($matches) use (&$math_blocks) {
+                $idx = count($math_blocks);
+                $math_blocks['%%MATH_BLOCK_' . $idx . '%%'] = '$$' . $matches[1] . '$$';
+                return '%%MATH_BLOCK_' . $idx . '%%';
+            },
+            $body
+        );
+
+        // 2. Extract inline math $...$
+        $body = preg_replace_callback(
+            '/(?<!\\\\)\$([^\$\n]+?)\$/',
+            function($matches) use (&$math_blocks) {
+                $idx = count($math_blocks);
+                $math_blocks['%%MATH_INLINE_' . $idx . '%%'] = '$' . $matches[1] . '$';
+                return '%%MATH_INLINE_' . $idx . '%%';
+            },
+            $body
+        );
+
         // Phorum adds '<phorum break>' before newlines in phorum_format_messages.
         // We remove them to let Markdown handle the layout correctly.
         $body = str_replace('<phorum break>', '', $body);
@@ -108,7 +147,14 @@ function phorum_mod_markdown_format($data)
         );
         // --- Video embedding end ---
 
-        $data[$message_id]['body'] = $parsedown->text($body);
+        $body_parsed = $parsedown->text($body);
+
+        // Restore protected math blocks
+        if (!empty($math_blocks)) {
+            $body_parsed = strtr($body_parsed, $math_blocks);
+        }
+
+        $data[$message_id]['body'] = $body_parsed;
     }
 
     return $data;
@@ -129,12 +175,101 @@ function phorum_mod_markdown_editor_tool_plugin()
 {
     global $PHORUM;
 
+    // Load language strings or fallback to French
+    if (isset($PHORUM["DATA"]["LANG"]["mod_markdown"])) {
+        $l = $PHORUM["DATA"]["LANG"]["mod_markdown"];
+    } else {
+        @include("./mods/markdown/lang/french.php");
+        $l = $PHORUM["DATA"]["LANG"]["mod_markdown"];
+    }
+
+    // Inject JS strings into editor_tools translations
+    if (isset($PHORUM["DATA"]["LANG"]["mod_editor_tools"])) {
+        $PHORUM["DATA"]["LANG"]["mod_editor_tools"]["markdown_prompt_color"] = $l["prompt_color"];
+        $PHORUM["DATA"]["LANG"]["mod_editor_tools"]["markdown_prompt_video"] = $l["prompt_video"];
+    }
+
+    editor_tools_register_tool('b', 'Gras', './mods/markdown/icons/b.gif', 'editor_tools_handle_b()');
+    editor_tools_register_tool('i', 'Italique', './mods/markdown/icons/i.gif', 'editor_tools_handle_i()');
+    editor_tools_register_tool('u', 'Souligné', './mods/markdown/icons/u.gif', 'editor_tools_handle_u()');
+    editor_tools_register_tool('s', 'Barré', './mods/markdown/icons/s.gif', 'editor_tools_handle_s()');
+    editor_tools_register_tool('sub', 'Indice', './mods/markdown/icons/sub.gif', 'editor_tools_handle_sub()');
+    editor_tools_register_tool('sup', 'Exposant', './mods/markdown/icons/sup.gif', 'editor_tools_handle_sup()');
+    editor_tools_register_tool('center', 'Centrer', './mods/markdown/icons/center.gif', 'editor_tools_handle_center()');
+    editor_tools_register_tool('color', 'Couleur', './mods/markdown/icons/color.gif', 'editor_tools_handle_color()');
+    editor_tools_register_tool('size', 'Taille du texte', './mods/markdown/icons/size.gif', 'editor_tools_handle_size()');
+    editor_tools_register_tool('quote', 'Citation', './mods/markdown/icons/quote.gif', 'editor_tools_handle_quote()');
+    editor_tools_register_tool('code', 'Code', './mods/markdown/icons/code.gif', 'editor_tools_handle_code()');
+    editor_tools_register_tool('url', 'Lien', './mods/markdown/icons/url.gif', 'editor_tools_handle_url()');
+    editor_tools_register_tool('img', 'Image', './mods/markdown/icons/img.gif', 'editor_tools_handle_img()');
+    editor_tools_register_tool('hr', 'Ligne horizontale', './mods/markdown/icons/hr.gif', 'editor_tools_handle_hr()');
+    editor_tools_register_tool('list', 'Liste', './mods/markdown/icons/list.gif', 'editor_tools_handle_list()');
+
     editor_tools_register_tool(
         'markdown_video',                  // Tool id
         'Vidéo',                           // Tool description
         './mods/markdown/video_icon.gif',  // Tool button icon
         'markdown_video_editor_tool()'     // Javascript action on button click
     );
+
+    // Register the Markdown Help chapter
+    global $PHORUM;
+    $help_url = phorum_get_url(PHORUM_ADDON_URL, 'module=markdown', 'action=help');
+    editor_tools_register_help('Aide Markdown', $help_url);
+}
+
+function phorum_mod_markdown_addon()
+{
+    global $PHORUM;
+    
+    if (isset($PHORUM["args"]["action"]) && $PHORUM["args"]["action"] == 'help') {
+        // Load language strings or fallback to French
+        if (isset($PHORUM["DATA"]["LANG"]["mod_markdown"])) {
+            $l = $PHORUM["DATA"]["LANG"]["mod_markdown"];
+        } else {
+            @include("./mods/markdown/lang/french.php");
+            $l = $PHORUM["DATA"]["LANG"]["mod_markdown"];
+        }
+
+        echo '<html><head><title>' . htmlspecialchars($l['title']) . '</title>';
+        echo '<style>body { font-family: sans-serif; font-size: 14px; padding: 20px; line-height: 1.6; } h1, h2 { color: #333; } code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: monospace; }</style>';
+        echo '</head><body>';
+        echo '<h1>' . $l['header'] . '</h1>';
+        echo '<p>' . $l['intro'] . '</p>';
+        echo '<h2>' . $l['basic'] . '</h2>';
+        echo '<ul>';
+        echo '<li><strong>' . $l['bold'] . '</strong> : <code>**' . mb_strtolower($l['bold']) . '**</code></li>';
+        echo '<li><em>' . $l['italic'] . '</em> : <code>*' . mb_strtolower($l['italic']) . '*</code></li>';
+        echo '<li><del>' . $l['strike'] . '</del> : <code>~~' . mb_strtolower($l['strike']) . '~~</code></li>';
+        echo '</ul>';
+        echo '<h2>' . $l['html_advanced'] . '</h2>';
+        echo '<ul>';
+        echo '<li><u>' . $l['underline'] . '</u> : <code>&lt;u&gt;' . mb_strtolower($l['underline']) . '&lt;/u&gt;</code></li>';
+        echo '<li>' . $l['superscript'] . ' : <code>x&lt;sup&gt;2&lt;/sup&gt;</code></li>';
+        echo '<li>' . $l['subscript'] . ' : <code>H&lt;sub&gt;2&lt;/sub&gt;O</code></li>';
+        echo '<li>' . $l['color'] . ' : <code>&lt;span style="color:red"&gt;' . mb_strtolower($l['color']) . '&lt;/span&gt;</code></li>';
+        echo '<li>' . $l['centered'] . ' : <code>&lt;center&gt;' . mb_strtolower($l['centered']) . '&lt;/center&gt;</code></li>';
+        echo '</ul>';
+        echo '<h2>' . $l['links_images'] . '</h2>';
+        echo '<ul>';
+        echo '<li>' . $l['link'] . ' : <code>[Tireur.org](https://www.tireur.org)</code></li>';
+        echo '<li>' . $l['image'] . ' : <code>![Tireur](https://www.tireur.org/images/logo.png)</code></li>';
+        echo '</ul>';
+        echo '<h2>' . $l['quotes_code'] . '</h2>';
+        echo '<ul>';
+        echo '<li>' . $l['quote'] . ' : <code>&gt; ' . mb_strtolower($l['quote']) . '</code> (en début de ligne)</li>';
+        echo '<li>' . $l['code_block'] . ' : <code>```code ici```</code> (encadrer avec trois accents graves)</li>';
+        echo '<li>' . $l['inline_code'] . ' : <code>`code`</code> (un seul accent grave)</li>';
+        echo '</ul>';
+        echo '<h2>' . $l['lists'] . '</h2>';
+        echo '<ul>';
+        echo '<li>' . $l['bullet_list'] . ' : <code>- </code> ou <code>* </code> en début de ligne.</li>';
+        echo '<li>' . $l['numbered_list'] . ' : <code>1. </code>, <code>2. </code>, etc.</li>';
+        echo '</ul>';
+        echo '<p><br><a href="https://www.tireur.org/help/markdown.php" target="_blank">' . $l['consult_full'] . '</a> | <a href="javascript:window.close();">' . $l['close_window'] . '</a></p>';
+        echo '</body></html>';
+        exit;
+    }
 }
 
 // Quote hook, to override the default quoting format with clean Markdown quotes.
