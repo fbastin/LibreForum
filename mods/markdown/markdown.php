@@ -175,6 +175,20 @@ function phorum_mod_markdown_editor_tool_plugin()
 {
     global $PHORUM;
 
+    // Load language strings or fallback to French
+    if (isset($PHORUM["DATA"]["LANG"]["mod_markdown"])) {
+        $l = $PHORUM["DATA"]["LANG"]["mod_markdown"];
+    } else {
+        @include("./mods/markdown/lang/french.php");
+        $l = $PHORUM["DATA"]["LANG"]["mod_markdown"];
+    }
+
+    // Inject JS strings into editor_tools translations
+    if (isset($PHORUM["DATA"]["LANG"]["mod_editor_tools"])) {
+        $PHORUM["DATA"]["LANG"]["mod_editor_tools"]["markdown_prompt_color"] = $l["prompt_color"];
+        $PHORUM["DATA"]["LANG"]["mod_editor_tools"]["markdown_prompt_video"] = $l["prompt_video"];
+    }
+
     editor_tools_register_tool('b', 'Gras', './mods/markdown/icons/b.gif', 'editor_tools_handle_b()');
     editor_tools_register_tool('i', 'Italique', './mods/markdown/icons/i.gif', 'editor_tools_handle_i()');
     editor_tools_register_tool('u', 'Souligné', './mods/markdown/icons/u.gif', 'editor_tools_handle_u()');
@@ -209,42 +223,50 @@ function phorum_mod_markdown_addon()
     global $PHORUM;
     
     if (isset($PHORUM["args"]["action"]) && $PHORUM["args"]["action"] == 'help') {
-        echo '<html><head><title>Aide Markdown</title>';
+        // Load language strings or fallback to French
+        if (isset($PHORUM["DATA"]["LANG"]["mod_markdown"])) {
+            $l = $PHORUM["DATA"]["LANG"]["mod_markdown"];
+        } else {
+            @include("./mods/markdown/lang/french.php");
+            $l = $PHORUM["DATA"]["LANG"]["mod_markdown"];
+        }
+
+        echo '<html><head><title>' . htmlspecialchars($l['title']) . '</title>';
         echo '<style>body { font-family: sans-serif; font-size: 14px; padding: 20px; line-height: 1.6; } h1, h2 { color: #333; } code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: monospace; }</style>';
         echo '</head><body>';
-        echo '<h1>Guide Rapide Markdown</h1>';
-        echo '<p>Ce forum utilise la syntaxe <strong>Markdown</strong> pour le formatage des messages. C\'est un langage simple et lisible.</p>';
-        echo '<h2>Mise en forme basique</h2>';
+        echo '<h1>' . $l['header'] . '</h1>';
+        echo '<p>' . $l['intro'] . '</p>';
+        echo '<h2>' . $l['basic'] . '</h2>';
         echo '<ul>';
-        echo '<li><strong>Gras</strong> : <code>**texte en gras**</code></li>';
-        echo '<li><em>Italique</em> : <code>*texte en italique*</code></li>';
-        echo '<li><del>Barré</del> : <code>~~texte barré~~</code></li>';
+        echo '<li><strong>' . $l['bold'] . '</strong> : <code>**' . mb_strtolower($l['bold']) . '**</code></li>';
+        echo '<li><em>' . $l['italic'] . '</em> : <code>*' . mb_strtolower($l['italic']) . '*</code></li>';
+        echo '<li><del>' . $l['strike'] . '</del> : <code>~~' . mb_strtolower($l['strike']) . '~~</code></li>';
         echo '</ul>';
-        echo '<h2>Fonctions HTML (Avancé)</h2>';
+        echo '<h2>' . $l['html_advanced'] . '</h2>';
         echo '<ul>';
-        echo '<li><u>Souligné</u> : <code>&lt;u&gt;texte&lt;/u&gt;</code></li>';
-        echo '<li>Exposant : <code>x&lt;sup&gt;2&lt;/sup&gt;</code></li>';
-        echo '<li>Indice : <code>H&lt;sub&gt;2&lt;/sub&gt;O</code></li>';
-        echo '<li>Couleur : <code>&lt;span style="color:red"&gt;texte&lt;/span&gt;</code></li>';
-        echo '<li>Centré : <code>&lt;center&gt;texte&lt;/center&gt;</code></li>';
+        echo '<li><u>' . $l['underline'] . '</u> : <code>&lt;u&gt;' . mb_strtolower($l['underline']) . '&lt;/u&gt;</code></li>';
+        echo '<li>' . $l['superscript'] . ' : <code>x&lt;sup&gt;2&lt;/sup&gt;</code></li>';
+        echo '<li>' . $l['subscript'] . ' : <code>H&lt;sub&gt;2&lt;/sub&gt;O</code></li>';
+        echo '<li>' . $l['color'] . ' : <code>&lt;span style="color:red"&gt;' . mb_strtolower($l['color']) . '&lt;/span&gt;</code></li>';
+        echo '<li>' . $l['centered'] . ' : <code>&lt;center&gt;' . mb_strtolower($l['centered']) . '&lt;/center&gt;</code></li>';
         echo '</ul>';
-        echo '<h2>Liens et Images</h2>';
+        echo '<h2>' . $l['links_images'] . '</h2>';
         echo '<ul>';
-        echo '<li>Lien cliquable : <code>[texte du lien](http://exemple.com)</code></li>';
-        echo '<li>Image : <code>![description de l\'image](http://exemple.com/image.png)</code></li>';
+        echo '<li>' . $l['link'] . ' : <code>[Tireur.org](https://www.tireur.org)</code></li>';
+        echo '<li>' . $l['image'] . ' : <code>![Tireur](https://www.tireur.org/images/logo.png)</code></li>';
         echo '</ul>';
-        echo '<h2>Citations et Code</h2>';
+        echo '<h2>' . $l['quotes_code'] . '</h2>';
         echo '<ul>';
-        echo '<li>Citation : <code>&gt; texte cité</code> (en début de ligne)</li>';
-        echo '<li>Code source : <code>```code ici```</code> (encadrer avec trois accents graves)</li>';
-        echo '<li>Code en ligne : <code>`code`</code> (un seul accent grave)</li>';
+        echo '<li>' . $l['quote'] . ' : <code>&gt; ' . mb_strtolower($l['quote']) . '</code> (en début de ligne)</li>';
+        echo '<li>' . $l['code_block'] . ' : <code>```code ici```</code> (encadrer avec trois accents graves)</li>';
+        echo '<li>' . $l['inline_code'] . ' : <code>`code`</code> (un seul accent grave)</li>';
         echo '</ul>';
-        echo '<h2>Listes</h2>';
+        echo '<h2>' . $l['lists'] . '</h2>';
         echo '<ul>';
-        echo '<li>Liste à puces : Utilisez <code>- </code> ou <code>* </code> en début de ligne.</li>';
-        echo '<li>Liste numérotée : Utilisez <code>1. </code>, <code>2. </code>, etc.</li>';
+        echo '<li>' . $l['bullet_list'] . ' : <code>- </code> ou <code>* </code> en début de ligne.</li>';
+        echo '<li>' . $l['numbered_list'] . ' : <code>1. </code>, <code>2. </code>, etc.</li>';
         echo '</ul>';
-        echo '<p><br><a href="https://www.tireur.org/help/markdown.php" target="_blank">Consulter le guide complet</a> | <a href="javascript:window.close();">Fermer cette fenêtre</a></p>';
+        echo '<p><br><a href="https://www.tireur.org/help/markdown.php" target="_blank">' . $l['consult_full'] . '</a> | <a href="javascript:window.close();">' . $l['close_window'] . '</a></p>';
         echo '</body></html>';
         exit;
     }

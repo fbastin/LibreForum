@@ -135,7 +135,7 @@ function editor_tools_handle_url()
 
 function editor_tools_handle_color()
 {
-    var color = prompt("Entrez la couleur (nom en anglais ou code hexa, ex: red, #FF0000) :", "red");
+    var color = prompt(editor_tools_translate("markdown_prompt_color"), "red");
     if (color == null || color == "") return;
     editor_tools_add_tags('<span style="color:' + color + '">', '</span>');
     editor_tools_focus_textarea();
@@ -284,7 +284,7 @@ function editor_tools_handle_list_select(type)
 
 function markdown_video_editor_tool()
 {
-    var url = prompt("Veuillez saisir l'URL de la vidéo YouTube ou Vimeo :", "https://");
+    var url = prompt(editor_tools_translate("markdown_prompt_video"), "https://");
     if (url == null || url == "" || url == "https://") return;
     editor_tools_add_tags("\n" + url + "\n", "");
     editor_tools_focus_textarea();
