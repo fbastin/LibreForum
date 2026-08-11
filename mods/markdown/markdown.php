@@ -24,9 +24,23 @@ function phorum_mod_markdown_format($data)
 
         $body = $message['body'];
 
+        // Phorum injects <phorum break> before running hooks. Parsedown considers this an unknown block HTML tag
+        // and refuses to parse Markdown inside it. We remove it and let Parsedown handle the newlines.
+        $body = str_replace('<phorum break>', '', $body);
+
         // Protect math blocks from Parsedown
         $math_blocks = array();
         
+        // 3. Convert legacy BBCode [img]...[/img] to Markdown ![image](...)
+        // This is done before Parsedown so it gets properly rendered.
+        $body = preg_replace('#\[url=([^\]]+)\]\[img\](.*?)\[/img\]\[/url\]#is', '[![image]($2)]($1)', $body);
+        $body = preg_replace('#\[img\](.*?)\[/img\]#is', '![image]($1)', $body);
+
+        // 4. Force HTTPS for all Markdown images to avoid Mixed Content blocking in Firefox
+        $body = preg_replace_callback('/!\[([^\]]*)\]\s*\(\s*http:\/\/([^\)]+)\s*\)/i', function($matches) {
+            return '![' . $matches[1] . '](https://' . $matches[2] . ')';
+        }, $body);
+
         // 1. Extract block math $$...$$
         $body = preg_replace_callback(
             '/(?<!\\\\)\$\$(.+?)\$\$/s',
@@ -161,12 +175,79 @@ function phorum_mod_markdown_editor_tool_plugin()
 {
     global $PHORUM;
 
+    editor_tools_register_tool('b', 'Gras', './mods/markdown/icons/b.gif', 'editor_tools_handle_b()');
+    editor_tools_register_tool('i', 'Italique', './mods/markdown/icons/i.gif', 'editor_tools_handle_i()');
+    editor_tools_register_tool('u', 'Souligné', './mods/markdown/icons/u.gif', 'editor_tools_handle_u()');
+    editor_tools_register_tool('s', 'Barré', './mods/markdown/icons/s.gif', 'editor_tools_handle_s()');
+    editor_tools_register_tool('sub', 'Indice', './mods/markdown/icons/sub.gif', 'editor_tools_handle_sub()');
+    editor_tools_register_tool('sup', 'Exposant', './mods/markdown/icons/sup.gif', 'editor_tools_handle_sup()');
+    editor_tools_register_tool('center', 'Centrer', './mods/markdown/icons/center.gif', 'editor_tools_handle_center()');
+    editor_tools_register_tool('color', 'Couleur', './mods/markdown/icons/color.gif', 'editor_tools_handle_color()');
+    editor_tools_register_tool('size', 'Taille du texte', './mods/markdown/icons/size.gif', 'editor_tools_handle_size()');
+    editor_tools_register_tool('quote', 'Citation', './mods/markdown/icons/quote.gif', 'editor_tools_handle_quote()');
+    editor_tools_register_tool('code', 'Code', './mods/markdown/icons/code.gif', 'editor_tools_handle_code()');
+    editor_tools_register_tool('url', 'Lien', './mods/markdown/icons/url.gif', 'editor_tools_handle_url()');
+    editor_tools_register_tool('img', 'Image', './mods/markdown/icons/img.gif', 'editor_tools_handle_img()');
+    editor_tools_register_tool('hr', 'Ligne horizontale', './mods/markdown/icons/hr.gif', 'editor_tools_handle_hr()');
+    editor_tools_register_tool('list', 'Liste', './mods/markdown/icons/list.gif', 'editor_tools_handle_list()');
+
     editor_tools_register_tool(
         'markdown_video',                  // Tool id
         'Vidéo',                           // Tool description
         './mods/markdown/video_icon.gif',  // Tool button icon
         'markdown_video_editor_tool()'     // Javascript action on button click
     );
+
+    // Register the Markdown Help chapter
+    global $PHORUM;
+    $help_url = phorum_get_url(PHORUM_ADDON_URL, 'module=markdown', 'action=help');
+    editor_tools_register_help('Aide Markdown', $help_url);
+}
+
+function phorum_mod_markdown_addon()
+{
+    global $PHORUM;
+    
+    if (isset($PHORUM["args"]["action"]) && $PHORUM["args"]["action"] == 'help') {
+        echo '<html><head><title>Aide Markdown</title>';
+        echo '<style>body { font-family: sans-serif; font-size: 14px; padding: 20px; line-height: 1.6; } h1, h2 { color: #333; } code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: monospace; }</style>';
+        echo '</head><body>';
+        echo '<h1>Guide Rapide Markdown</h1>';
+        echo '<p>Ce forum utilise la syntaxe <strong>Markdown</strong> pour le formatage des messages. C\'est un langage simple et lisible.</p>';
+        echo '<h2>Mise en forme basique</h2>';
+        echo '<ul>';
+        echo '<li><strong>Gras</strong> : <code>**texte en gras**</code></li>';
+        echo '<li><em>Italique</em> : <code>*texte en italique*</code></li>';
+        echo '<li><del>Barré</del> : <code>~~texte barré~~</code></li>';
+        echo '</ul>';
+        echo '<h2>Fonctions HTML (Avancé)</h2>';
+        echo '<ul>';
+        echo '<li><u>Souligné</u> : <code>&lt;u&gt;texte&lt;/u&gt;</code></li>';
+        echo '<li>Exposant : <code>x&lt;sup&gt;2&lt;/sup&gt;</code></li>';
+        echo '<li>Indice : <code>H&lt;sub&gt;2&lt;/sub&gt;O</code></li>';
+        echo '<li>Couleur : <code>&lt;span style="color:red"&gt;texte&lt;/span&gt;</code></li>';
+        echo '<li>Centré : <code>&lt;center&gt;texte&lt;/center&gt;</code></li>';
+        echo '</ul>';
+        echo '<h2>Liens et Images</h2>';
+        echo '<ul>';
+        echo '<li>Lien cliquable : <code>[texte du lien](http://exemple.com)</code></li>';
+        echo '<li>Image : <code>![description de l\'image](http://exemple.com/image.png)</code></li>';
+        echo '</ul>';
+        echo '<h2>Citations et Code</h2>';
+        echo '<ul>';
+        echo '<li>Citation : <code>&gt; texte cité</code> (en début de ligne)</li>';
+        echo '<li>Code source : <code>```code ici```</code> (encadrer avec trois accents graves)</li>';
+        echo '<li>Code en ligne : <code>`code`</code> (un seul accent grave)</li>';
+        echo '</ul>';
+        echo '<h2>Listes</h2>';
+        echo '<ul>';
+        echo '<li>Liste à puces : Utilisez <code>- </code> ou <code>* </code> en début de ligne.</li>';
+        echo '<li>Liste numérotée : Utilisez <code>1. </code>, <code>2. </code>, etc.</li>';
+        echo '</ul>';
+        echo '<p><br><a href="https://www.tireur.org/help/markdown.php" target="_blank">Consulter le guide complet</a> | <a href="javascript:window.close();">Fermer cette fenêtre</a></p>';
+        echo '</body></html>';
+        exit;
+    }
 }
 
 // Quote hook, to override the default quoting format with clean Markdown quotes.

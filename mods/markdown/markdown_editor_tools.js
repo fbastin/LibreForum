@@ -135,10 +135,10 @@ function editor_tools_handle_url()
 
 function editor_tools_handle_color()
 {
-    editor_tools_store_range();
-    var img_obj = document.getElementById('editor-tools-img-color');
-    showColorPicker(img_obj);
-    return;
+    var color = prompt("Entrez la couleur (nom en anglais ou code hexa, ex: red, #FF0000) :", "red");
+    if (color == null || color == "") return;
+    editor_tools_add_tags('<span style="color:' + color + '">', '</span>');
+    editor_tools_focus_textarea();
 }
 
 function editor_tools_handle_color_select(color)

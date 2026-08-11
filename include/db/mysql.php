@@ -7680,11 +7680,16 @@ function phorum_db_sanitychecks()
 // ----------------------------------------------------------------------
 
 // PHP has support for MySQL connections through multiple extensions.
-// If the config.php specifies a PHP database extension, then this one is
-// used for loading the specific PHP database extension code. Otherwise,
-// we try to auto-detect which one is available.
+// We support "mysqli" and the new "pdo" adapter, and have purged the dead "mysql" extension code.
 
-$ext = NULL;
+$ext = "mysqli"; // Default
+if (isset($PHORUM['DBCONFIG']['mysql_php_extension'])) {
+    $requested_ext = basename($PHORUM['DBCONFIG']['mysql_php_extension']);
+    if (in_array($requested_ext, array('mysqli', 'pdo', 'mysqli_replication'))) {
+        $ext = $requested_ext;
+    }
+}
+
 // could be unset in Phorum < 5.2.7
 if(!isset($PHORUM['DBCONFIG']['socket'])) {
     $PHORUM['DBCONFIG']['socket']=NULL;
@@ -7692,45 +7697,6 @@ if(!isset($PHORUM['DBCONFIG']['socket'])) {
 if(!isset($PHORUM['DBCONFIG']['port'])) {
     $PHORUM['DBCONFIG']['port']=NULL;
 }
-
-if (isset($PHORUM['DBCONFIG']['mysql_php_extension'])) {
-   $ext = basename($PHORUM['DBCONFIG']['mysql_php_extension']);
-} elseif (function_exists('mysqli_connect')) {
-   $ext = "mysqli";
-} elseif (function_exists('mysql_connect')) {
-   $ext = "mysql";
-
-   // build the right hostname for the mysql extension
-   // not having separate args for port and socket
-   if(!empty($PHORUM['DBCONFIG']['socket'])) {
-       $PHORUM['DBCONFIG']['server'].=":".$PHORUM['DBCONFIG']['socket'];
-   } elseif(!empty($PHORUM['DBCONFIG']['port'])) {
-       $PHORUM['DBCONFIG']['server'].=":".$PHORUM['DBCONFIG']['port'];
-   }
-} else {
-   // Up to here, no PHP extension was found. This probably means that no
-   // MySQL extension is loaded. Here we'll try to dynamically load an
-   // extension ourselves.
-   if(function_exists('dl')) {
-	   @dl("mysqli.so");
-	   if (function_exists('mysqli_connect')) {
-	       $ext = "mysqli";
-	   } else {
-	       @dl("mysql.so");
-	       if (function_exists('mysql_connect')) {
-	           $ext = "mysql";
-	       }
-	   }
-   }
-}
-
-// If we have no extension by now, we are very much out of luck.
-if ($ext === NULL) trigger_error(
-   "The Phorum MySQL database layer is unable to determine the PHP " .
-   "MySQL extension to use. This might indicate that there is no " .
-   "extension loaded from the php.ini.",
-   E_USER_ERROR
-);
 
 // Load the specific code for the PHP extension that we use.
 $extfile = "./include/db/mysql/{$ext}.php";

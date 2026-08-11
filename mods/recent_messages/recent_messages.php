@@ -88,7 +88,7 @@ function mod_recent_messages_setup_templatedata()
 
     // Retrieve displaying options.
     $show_amount  = recent_messages_getparam('show_amount', 10);
-    $view_type    = recent_messages_getparam('view_type', 0);
+    $view_type    = recent_messages_getparam('view_type', LIST_UPDATED_THREADS);
     $show_forum   = recent_messages_getparam('show_forum', 0);
     $group_by     = recent_messages_getparam('group_by', GROUP_BY_DATE);
     $page         = recent_messages_getparam('page', 1);

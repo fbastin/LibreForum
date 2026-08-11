@@ -1,0 +1,7 @@
+title: Registration Enhancer
+desc: Blocks invalid emails (MX check/Disposable), notifies users about moderation status, and sends IP/Country to admins on registration.
+author: Assistant
+version: 1.0.0
+hook: before_register|phorum_mod_registration_enhancer_before
+hook: after_register|phorum_mod_registration_enhancer_after
+hook: user_save|phorum_mod_registration_enhancer_user_save

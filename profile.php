@@ -95,7 +95,8 @@ if( $PHORUM["track_user_activity"] &&
     unset($PHORUM["DATA"]["PROFILE"]["date_last_active"]);
 }
 
-$PHORUM["DATA"]["PROFILE"]["posts"] = number_format($PHORUM["DATA"]["PROFILE"]["posts"], 0, "", $PHORUM["thous_sep"]);
+$real_posts = (int)phorum_db_interact(DB_RETURN_VALUE, "SELECT COUNT(*) FROM {$PHORUM['message_table']} WHERE user_id = " . (int)$PHORUM["DATA"]["PROFILE"]["user_id"] . " AND status = " . PHORUM_STATUS_APPROVED);
+$PHORUM["DATA"]["PROFILE"]["posts"] = number_format($real_posts, 0, "", $PHORUM["thous_sep"]);
 
 $PHORUM["DATA"]["PROFILE"]["URL"]["PM"] = phorum_get_url(PHORUM_PM_URL, "page=send", "to_id=".urlencode($user["user_id"]));
 $PHORUM["DATA"]["PROFILE"]["URL"]["ADD_BUDDY"] = phorum_get_url(PHORUM_PM_URL, "page=buddies", "action=addbuddy", "addbuddy_id=".urlencode($user["user_id"]));

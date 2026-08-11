@@ -150,7 +150,8 @@ function phorum_mod_user_list_load_one_person ($user_id) {
     $PHORUM['DATA']['USERS'][$user_id]["raw_date_last_active"]=$PHORUM['DATA']['USERS'][$user_id]["date_last_active"];
     $PHORUM['DATA']['USERS'][$user_id]["date_last_active"]=phorum_date( $PHORUM['short_date'], $PHORUM['DATA']['USERS'][$user_id]["date_last_active"]);
 
-    $PHORUM['DATA']['USERS'][$user_id]["posts"] = number_format($PHORUM['DATA']['USERS'][$user_id]["posts"], 0, "", $PHORUM["thous_sep"]);
+    $real_posts = (int)phorum_db_interact(DB_RETURN_VALUE, "SELECT COUNT(*) FROM {$PHORUM['message_table']} WHERE user_id = " . (int)$user_id . " AND status = " . PHORUM_STATUS_APPROVED);
+    $PHORUM['DATA']['USERS'][$user_id]["posts"] = number_format($real_posts, 0, "", $PHORUM["thous_sep"]);
 
     $PHORUM['DATA']['USERS'][$user_id]["URL"]["PM"] = phorum_get_url(PHORUM_PM_URL, "page=send", "to_id=".urlencode($user["user_id"]));
     $PHORUM['DATA']['USERS'][$user_id]["URL"]["ADD_BUDDY"] = phorum_get_url(PHORUM_PM_URL, "page=buddies", "action=addbuddy", "addbuddy_id=".urlencode($user["user_id"]));
