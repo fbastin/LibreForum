@@ -80,7 +80,7 @@
 ?>
 <html>
 <head>
-<title>Phorum Admin</title>
+<title>LibreForum Admin</title>
 <?php
 
 // meta data with the charset from the default language
@@ -144,7 +144,7 @@ function hide_help()
 <body>
 <div id="helpdiv">
 <div id="helpdiv-hide"><a href="javascript:hide_help();"><img border="0" src="<?php print $PHORUM['http_path'] ?>/images/close.gif" height="16" width="16" /></a></div>
-<div id="helpdiv-title">&nbsp;Phorum Admin Help</div>
+<div id="helpdiv-title">&nbsp;LibreForum Admin Help</div>
 <div id="helpdiv-content">
 <div id="help-title"></div>
 <div id="help-text"></div>
@@ -153,7 +153,7 @@ function hide_help()
 
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 <tr>
-    <td class="statusbar_edge">Phorum Admin<small><br />version <?php echo PHORUM; ?></small></td>
+    <td class="statusbar_edge">LibreForum Admin<small><br />version <?php echo PHORUM; ?></small></td>
 <?php if(empty($module)){ // only show the versioncheck if you are on the front page of the admin ?>
     <td class="statusbar_edge" align="center" valign="middle">
       <iframe scrolling="no" frameborder="0" align="top" width="400" height="35" src="versioncheck.php"></iframe>
