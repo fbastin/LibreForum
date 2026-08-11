@@ -179,7 +179,7 @@ function phorum_get_url()
 
         $query_string = "";
 
-        $url = $PHORUM["http_path"]."/";
+        $url = (isset($PHORUM["http_path"]) ? $PHORUM["http_path"] : "")."/";
 
         if($name){
             $url.= $name.".".PHORUM_FILE_EXTENSION;

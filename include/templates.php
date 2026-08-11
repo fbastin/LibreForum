@@ -778,7 +778,6 @@ function phorum_read_file($file)
  */
 function phorum_write_file($file, $data)
 {
-    file_put_contents("/var/www/example.com/forum/cache/tpl_log.txt", "Writing template: $file\n", FILE_APPEND);
     // Write the data to the file.
     if (! $fp = fopen($file, "w")) trigger_error(
         "phorum_write_file: failed to write to file " .

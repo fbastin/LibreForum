@@ -19,7 +19,7 @@
 
 if(!defined("PHORUM")) return;
 
-define('MOD_EDITOR_TOOLS_BASE', $PHORUM["http_path"] . '/mods/editor_tools');
+define('MOD_EDITOR_TOOLS_BASE', (isset($PHORUM["http_path"]) ? $PHORUM["http_path"] : "") . '/mods/editor_tools');
 define('MOD_EDITOR_TOOLS_ICONS', MOD_EDITOR_TOOLS_BASE . '/icons');
 
 // Default icon size to use.

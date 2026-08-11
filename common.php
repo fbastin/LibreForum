@@ -264,7 +264,7 @@ require_once("./include/phorum_get_url.php");
 // For switching, the function phorum_switch_template() can be used.
 $PHORUM['template_path'] = './templates';
 $PHORUM['cache'] = './cache';
-$PHORUM['template_http_path'] = $PHORUM['http_path'].'/templates';
+$PHORUM['template_http_path'] = (isset($PHORUM['http_path']) ? $PHORUM['http_path'] : '').'/templates';
 
 // ----------------------------------------------------------------------
 // Parse and handle request data
