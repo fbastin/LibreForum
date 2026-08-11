@@ -63,7 +63,7 @@ if ($PHORUM['DATA']['CHARSET']) {
 
 <div id="logo">
 
-<a href="{URL->BASE}"><img src="{URL->TEMPLATE}/images/logo.png" width="111" height="25" alt="Phorum" border="0" /></a>
+<a href="{URL->BASE}" style="text-decoration: none;"><h1 style="color: #4a4a4a; margin: 10px 0; font-family: sans-serif;">LibreForum</h1></a>
 </div>
 
 <div id="breadcrumb">

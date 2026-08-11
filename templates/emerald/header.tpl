@@ -140,10 +140,8 @@ Some Icons courtesy of:
     {! images/logo.png, then change logo_width and logo_height in the }
     {! settings.tpl file to match the size of your logo image. }
     <div id="logo">
-      <a href="{URL->BASE}">
-        <img src="{URL->TEMPLATE}/images/logo.png"
-             width="{logo_width}" height="{logo_height}"
-             alt="Phorum" border="0" />
+      <a href="{URL->BASE}" style="text-decoration: none;">
+        <h1 style="color: #4a4a4a; margin: 10px 0; font-family: sans-serif;">LibreForum</h1>
       </a>
     </div> <!-- end of div id=logo -->
 

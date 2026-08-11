@@ -61,6 +61,6 @@ if ($PHORUM['DATA']['CHARSET']) {
           {IF NAME}<a href="{URL->LIST}">{NAME}</a>&nbsp;:&nbsp;{/IF}
           {TITLE}
         </span>
-        {IF URL->INDEX}<a href="{URL->INDEX}">{/IF}<img src="templates/classic/images/logo.png" alt="The fastest message board... ever. " title="The fastest message board... ever. " width="170" height="42" border="0" />{IF URL->INDEX}</a>{/IF}
+        {IF URL->INDEX}<a href="{URL->INDEX}" style="text-decoration: none;">{/IF}<h1 style="color: #4a4a4a; margin: 10px 0; font-family: sans-serif;">LibreForum</h1>{IF URL->INDEX}</a>{/IF}
         <div class="PhorumFloatingText">{HTML_DESCRIPTION}&nbsp;</div>
         {/IF}

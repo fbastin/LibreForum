@@ -1,4 +1,4 @@
-<div id="footer-plug">This <a href="http://www.phorum.org/">forum</a> is powered by <a href="http://www.phorum.org/">Phorum</a>.</div>
+<div id="footer-plug">This <a href="https://github.com/fbastin/LibreForum">forum</a> is powered by <a href="https://github.com/fbastin/LibreForum">LibreForum</a>.</div>
 </div>
 </body>
 </html>
