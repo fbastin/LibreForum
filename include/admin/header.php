@@ -185,7 +185,7 @@ function hide_help()
 <form id="status-form" action="<?php echo phorum_admin_build_url('base'); ?>" method="post">
 <input type="hidden" name="phorum_admin_token" value="<?php echo $PHORUM['admin_token'];?>" />
 <input type="hidden" name="module" value="status" />
-Phorum Status:
+LibreForum Status:
 <select name="status" onChange="this.form.submit();">
 <option value="normal" <?php if($PHORUM["status"]=="normal") echo "selected"; ?>>Normal</option>
 <option value="read-only"<?php if($PHORUM["status"]=="read-only") echo "selected"; ?>>Read Only</option>
@@ -292,7 +292,7 @@ Phorum Status:
         $menu = new PhorumAdminMenu("Main Menu");
 
         $menu->add("Admin Home", "", "Takes you to the default Admin page.");
-        $menu->add("Phorum Index", "index", "Takes you to the front page of the Phorum.");
+        $menu->add("LibreForum Index", "index", "Takes you to the front page of LibreForum.");
         $menu->add("Log Out", "logout", "Logs you out of the admin.");
 
         $menu->show();
