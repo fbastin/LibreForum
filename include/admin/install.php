@@ -327,8 +327,8 @@ switch ($step){
 
             // set initial settings
             $settings=array(
-            "title" => "Phorum 5",
-            "description" => "Congratulations!  You have installed Phorum 5!  To change this text, go to your admin, choose General Settings and change the description",
+            "title" => "LibreForum",
+            "description" => "Congratulations!  You have installed LibreForum!  To change this text, go to your admin, choose General Settings and change the description",
             "cache" => $default_cache_dir,
             "session_timeout" => "30",
             "short_session_timeout" => "60",
@@ -356,7 +356,7 @@ switch ($step){
             "enable_dropdown_userlist" => "1",
             "enable_moderator_notifications" => "1",
             "show_new_on_index" => "1",
-            "dns_lookup" => "1",
+            "dns_lookup" => "0",
             "tz_offset" => "0",
             "user_time_zone" => "1",
             "user_template" => "0",
@@ -423,7 +423,7 @@ switch ($step){
             "reg_perms" =>  $default_forum_options['reg_perms'],
             "template_settings" => "",
             "inherit_id"=>0,            
-            "forum_path" => 'a:2:{i:0;s:8:"Phorum 5";i:1;s:13:"Announcements";}'
+            "forum_path" => 'a:2:{i:0;s:10:"LibreForum";i:1;s:13:"Announcements";}'
             );
 
             phorum_db_add_forum($forum);
@@ -453,7 +453,7 @@ switch ($step){
             "reg_perms" =>  $default_forum_options['reg_perms'],
             "template_settings" => "",
             "inherit_id"=>0,
-            "forum_path" => 'a:2:{i:0;s:8:"Phorum 5";i:2;s:10:"Test Forum";}'
+            "forum_path" => 'a:2:{i:0;s:10:"LibreForum";i:2;s:10:"Test Forum";}'
             );
 
             $GLOBALS["PHORUM"]['forum_id']=phorum_db_add_forum($forum);
@@ -474,7 +474,7 @@ switch ($step){
             "status" => PHORUM_STATUS_APPROVED,
             "sort" => PHORUM_SORT_DEFAULT,
             "msgid" => '',
-            "body" => "This is a test message. You can delete it after installation using the moderation tools. These tools will be visible in this screen if you log in as the administrator user that you created during install.\n\nPhorum 5 Team"
+            "body" => "This is a test message. You can delete it after installation using the moderation tools. These tools will be visible in this screen if you log in as the administrator user that you created during install.\n\nLibreForum Team"
             );
 
             phorum_db_post_message($test_message);
