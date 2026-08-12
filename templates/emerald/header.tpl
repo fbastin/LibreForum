@@ -153,17 +153,6 @@ Some Icons courtesy of:
 <body onload="{IF FOCUS_TO_ID}var focuselt=document.getElementById('{FOCUS_TO_ID}'); if (focuselt) focuselt.focus();{/IF}">
 
 <div id="wrapper">
-
-<header id="header">
-    <a href="/index.php"><img src="/images/logo-site.webp" alt="Tireur.org" class="site-logo" /></a>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/nav_search.php'; ?>
-</header>
-
-<?php include $_SERVER['DOCUMENT_ROOT'] . '/menu.php'; ?>
-
-<?php include $_SERVER['DOCUMENT_ROOT'] . '/partner_sidebar.php'; ?>
-<?php include $_SERVER['DOCUMENT_ROOT'] . '/forum_sidebar.php'; ?>
-
 <div id="phorum">
   {IF NOT PRINTVIEW}
   {/IF}

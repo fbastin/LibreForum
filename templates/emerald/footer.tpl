@@ -6,11 +6,7 @@
 </main><!-- end content -->
 </div><!-- end phorum -->
 
-<?php
-   $path = $_SERVER['DOCUMENT_ROOT'];
-   $path .= "/footer_main.php";
-   include_once($path);
-?>
+
 
 </div><!-- end wrapper -->
 
