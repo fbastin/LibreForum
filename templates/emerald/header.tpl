@@ -71,7 +71,7 @@ display: inline;
 {ELSE}
   <link rel="stylesheet" type="text/css" href="{URL->CSS}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{URL->CSS_PRINT}" media="print" />
-  <link rel="stylesheet" type="text/css" href="{URL->HTTP_PATH}/css/tireur.min.css?v=<?php echo filemtime(dirname(__FILE__).'/../../css/tireur.min.css'); ?>" media="all"/>
+  <link rel="stylesheet" type="text/css" href="{URL->HTTP_PATH}/css/tireur.min.css?v=<?php echo filemtime(dirname(__FILE__).'/../css/tireur.min.css'); ?>" media="all"/>
   <link rel="stylesheet" type="text/css" href="{URL->HTTP_PATH}/css/lucide.css?v=1" media="all"/>
 {/IF}
 
@@ -153,6 +153,12 @@ Some Icons courtesy of:
 <body onload="{IF FOCUS_TO_ID}var focuselt=document.getElementById('{FOCUS_TO_ID}'); if (focuselt) focuselt.focus();{/IF}">
 
 <div id="wrapper">
+<header id="header">
+    <a href="/libreforum/index.php" style="text-decoration: none; display: flex; align-items: center; padding: 15px 20px;">
+        <i class="li-message-circle" style="font-size: 2rem; color: var(--color-accent); margin-right: 10px;"></i>
+        <h1 style="color: var(--color-accent); font-family: Outfit\, sans-serif; font-size: 2rem; margin: 0;">LibreForum</h1>
+    </a>
+</header>
 <div id="phorum">
   {IF NOT PRINTVIEW}
   {/IF}
