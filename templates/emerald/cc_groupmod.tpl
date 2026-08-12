@@ -3,9 +3,9 @@
 {IF OKMSG}<div class="information">{OKMSG}</div>{/IF}
 
 {IF GROUP->name}
-    <h2>{LANG->Moderating} {GROUP->name}</h2>
+    <span class="h2">{LANG->Moderating} {GROUP->name}</span class="h2">
     <div class="generic">
-        <h4>{LANG->AddToGroup}</h4>
+        <span class="h4">{LANG->AddToGroup}</span class="h4">
         <form method="post" action="{URL->ACTION}">
             {POST_VARS}
             {IF NEWMEMBERS}
@@ -23,7 +23,7 @@
     </div>
 
     <div class="generic">
-        <h4>{LANG->GroupMemberList}</h4>
+        <span class="h4">{LANG->GroupMemberList}</span class="h4">
 
         <form action="{URL->ACTION}" method="post">
             {POST_VARS}
@@ -79,7 +79,7 @@
 
 {ELSE}
     <div class="generic">
-        <h4>{LANG->SelectGroupMod}</h4>
+        <span class="h4">{LANG->SelectGroupMod}</span class="h4">
         <br />
         <dl>
             {LOOP GROUPS}

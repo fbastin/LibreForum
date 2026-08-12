@@ -16,7 +16,7 @@
 body {
   background-color: #ffffff;
 /*    background-color: #222222;   */ /* {body_background_color}; */
-/*    background: black url("templates/{TEMPLATE}/images/bg2.png") repeat scroll 0 0; */
+/*    background: black url("templates/{TEMPLATE}/images/bg2.gif") repeat scroll 0 0; */
   color: {default_font_color};
   margin: 5px;
   padding: 0;

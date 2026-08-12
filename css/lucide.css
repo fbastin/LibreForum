@@ -1,0 +1,61 @@
+@font-face {
+  font-family: "lucide";
+  src: url("../fonts/lucide.woff2") format("woff2");
+  font-display: swap;
+}
+
+[class^="li-"] {
+  font-family: "lucide" !important;
+  font-style: normal;
+  font-size: inherit;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.li-user:before { content: "\e19e"; }
+.li-user-plus:before { content: "\e1a1"; }
+.li-settings:before { content: "\e244"; }
+.li-mail:before { content: "\e112"; }
+.li-log-in:before { content: "\e110"; }
+.li-log-out:before { content: "\e111"; }
+.li-clock:before { content: "\e08b"; }
+.li-image:before { content: "\e0f9"; }
+.li-file-check:before { content: "\e0c5"; }
+.li-users:before { content: "\e1a3"; }
+.li-folder:before { content: "\e0dc"; }
+.li-msg-add:before { content: "\e410"; }
+.li-pencil:before { content: "\e1f8"; }
+.li-msg:before { content: "\e11a"; }
+.li-trash:before { content: "\e18d"; }
+.li-printer:before { content: "\e144"; }
+.li-rss:before { content: "\e14d"; }
+.li-tag:before { content: "\e182"; }
+.li-search:before { content: "\e154"; }
+.li-alert:before { content: "\e07b"; }
+.li-info:before { content: "\e0fe"; }
+.li-flag:before { content: "\e0d6"; }
+.li-bell:before { content: "\e05d"; }
+.li-lock:before { content: "\e10e"; }
+.li-unlock:before { content: "\e10f"; }
+.li-sun:before { content: "\e17b"; }
+.li-moon:before { content: "\e121"; }
+.li-plus:before { content: "\e140"; }
+.li-x:before { content: "\e1b1"; }
+.li-arrow-left:before { content: "\e04c"; }
+.li-arrow-right:before { content: "\e04d"; }
+.li-eye:before { content: "\e0be"; }
+.li-file-text:before { content: "\e0d0"; }
+.li-book:before { content: "\e063"; }
+.li-shield:before { content: "\e15b"; }
+.li-external:before { content: "\e0bd"; }
+.li-chevron-down:before { content: "\e071"; }
+.li-comment:before { content: "\e119"; }
+.li-move:before { content: "\e124"; }
+.li-merge:before { content: "\e0e7"; }
+.li-split:before { content: "\e444"; }
+.li-check:before { content: "\e070"; }
+.li-ban:before { content: "\e055"; }
+.li-target:before { content: "\e183"; }
+.li-crosshair:before { content: "\e0b0"; }

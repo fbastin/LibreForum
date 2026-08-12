@@ -17,7 +17,7 @@
         <tr>
             <td width="50%" valign="top">
 
-                <h4>{LANG->LoginTitle}</h4>
+                <span class="h4">{LANG->LoginTitle}</span class="h4">
                 <form action="{URL->ACTION}" method="post">
                     {POST_VARS}
                     {LANG->Username}:<br />
@@ -31,7 +31,7 @@
 
             </td>
             <td width="50%" valign="top">
-                <h4>{LANG->LostPassword}</h4>
+                <span class="h4">{LANG->LostPassword}</span class="h4">
                 <form action="{URL->ACTION}" method="post">
                     {POST_VARS}
                     {LANG->LostPassInfo}<br />

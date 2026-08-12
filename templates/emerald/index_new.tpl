@@ -1,17 +1,20 @@
 <!-- BEGIN TEMPLATE index_new.tpl -->
-<table cellspacing="0" class="list">
+
+<table cellspacing="0" class="forumlist fullwidth">
+{! Hack for "New Messages Icon" mod }
+<?php if(isset($PHORUM['hooks']['scriptmonkeys_custom_hook_1'])) { phorum_hook('scriptmonkeys_custom_hook_1','sm2'); } else { ?>
     {LOOP FORUMS}
         {IF FORUMS->level 0}
             <tr>
                 {IF FORUMS->forum_id FORUMS->vroot}
                     <th align="left">
-                        <img src="{URL->TEMPLATE}/images/folder.png" class="icon1616" alt="&bull;" />
+                        <i class="li-folder"></i>
                         {LANG->Forums}
                     </th>
                 {ELSE}
                     <th align="left">
-                        <img src="{URL->TEMPLATE}/images/folder.png" class="icon1616" alt="&bull;" />
-                        <a href="{FORUMS->URL->LIST}">{FORUMS->name}</a>
+                        <i class="li-folder"></i>
+                        <b><a href="{FORUMS->URL->LIST}">{FORUMS->name}</a></b>
                     </th>
                 {/IF}
                 <th>{LANG->Threads}</th>
@@ -22,15 +25,14 @@
             <tr>
                 {IF FORUMS->folder_flag}
                     <td colspan="4">
-                        <img src="{URL->TEMPLATE}/images/folder.png" class="icon1616" alt="&bull;" />
-                        <a href="{FORUMS->URL->INDEX}">{FORUMS->name}</a><p>{FORUMS->description}</p>
+                        <i class="li-folder"></i>
+                        <a href="{FORUMS->URL->INDEX}">{FORUMS->name}</a>{IF FORUMS->description}<p>{FORUMS->description}</p>{/IF}
                     </td>
                 {ELSE}
                     <td width="55%">
-                        <h3><a href="{FORUMS->URL->LIST}">{FORUMS->name}</a>{IF FORUMS->new_message_check}&nbsp;&nbsp;<span class="new-indicator">({LANG->NewMessages})</span>{/IF}</h3>
-                        <p>{FORUMS->description}</p>
-                        {IF FORUMS->URL->MARK_READ}<a class="icon icon-tag-green" href="{FORUMS->URL->MARK_READ}">{LANG->MarkForumRead}</a>&nbsp;&nbsp;&nbsp;{/IF}
-                        {IF FORUMS->URL->FEED}<a class="icon icon-feed" href="{FORUMS->URL->FEED}">{FEED}</a>{/IF}
+                        <span class="h3"><b>{IF FORUMS->URL->FEED}<a href="{FORUMS->URL->FEED}" title="{FEED}" style="margin-right: 5px; color: var(--color-accent); text-decoration: none;"><i class="li-rss"></i></a>{/IF}<a href="{FORUMS->URL->LIST}">{FORUMS->name}</a></b>{IF FORUMS->new_message_check}&nbsp;&nbsp;<span class="new-indicator">({LANG->NewMessages})</span>{/IF}</span>
+                        {IF FORUMS->description}<p>{FORUMS->description}</p>{/IF}
+                        {IF FORUMS->URL->MARK_READ}<a class="icon" href="{FORUMS->URL->MARK_READ}"><i class="li-tag"></i> {LANG->MarkForumRead}</a>{/IF}
                     </td>
                     <td align="center" width="12%" nowrap="nowrap">
                         {FORUMS->thread_count}
@@ -51,5 +53,6 @@
             </tr>
         {/IF}
     {/LOOP FORUMS}
+<?php } ?> {! Hack for "New Messages Icon" mod }
 </table>
 <!-- END TEMPLATE index_new.tpl -->

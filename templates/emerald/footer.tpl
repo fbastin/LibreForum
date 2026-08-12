@@ -1,11 +1,19 @@
-<!-- BEGIN TEMPLATE footer.tpl -->
-    <div id="footer-plug">
-      This <a href="http://www.phorum.org/">forum</a>
-      is powered by <a href="https://github.com/fbastin/LibreForum">LibreForum</a>.
-    </div>
+<!-- BEGIN TEMPLATE {TEMPLATE}/footer.tpl -->
 
-  </div> <!-- end of div id="phorum" -->
+</div><!-- end forum-content -->
+
+
+</main><!-- end content -->
+</div><!-- end phorum -->
+
+<?php
+   $path = $_SERVER['DOCUMENT_ROOT'];
+   $path .= "/footer_main.php";
+   include_once($path);
+?>
+
+</div><!-- end wrapper -->
 
 </body>
 </html>
-<!-- END TEMPLATE footer.tpl -->
+<!-- END TEMPLATE {TEMPLATE}/footer.tpl -->

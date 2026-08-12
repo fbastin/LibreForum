@@ -1,9 +1,16 @@
 <!-- BEGIN TEMPLATE read.tpl -->
-<div class="nav">
-    {IF URL->INDEX}<a class="icon icon-folder" href="{URL->INDEX}">{LANG->ForumList}</a>{/IF}
-    <a class="icon icon-list" href="{URL->LIST}">{LANG->MessageList}</a>
-    <a class="icon icon-comment-add" href="{URL->POST}">{LANG->NewTopic}</a>
+<a name="top">
+<div class="nav" style="display:flow-root">
+    {INCLUDE "paging"}
+    {IF URL->INDEX}<a class="icon" href="{URL->INDEX}"><i class="li-folder"></i> {LANG->ForumList}</a>{/IF}
+    <a class="icon" href="{URL->LIST}"><i class="li-clock"></i> {LANG->MessageList}</a>
+    <a class="icon" href="{URL->POST}"><i class="li-msg-add"></i> {LANG->NewTopic}</a>
+    <span class="print-button-container" style="float:right;display:inline-flex;margin:0">
+        <a class="btn-print" href="{URL->PRINTVIEW}" target="_blank"><i class="li-file-text"></i> Exporter en PDF</a>
+        <button type="button" class="btn-print" onclick="window.print()"><i class="li-printer"></i> Imprimer</button>
+    </span>
 </div>
+
 
 {LOOP MESSAGES}
 
@@ -15,36 +22,51 @@
 
         <div class="generic">
 
-            <table border="0" cellspacing="0">
+            <table border="0" cellspacing="10">
                 <tr>
-                    <td width="100%">
+                    <td width="200" valign="top">
                         <div class="message-author icon-user">
                             {IF MESSAGES->URL->PROFILE}<a href="{MESSAGES->URL->PROFILE}">{/IF}{MESSAGES->author}{IF MESSAGES->URL->PROFILE}</a>{/IF}
-                            {IF MESSAGES->URL->PM}<small>[ <a href="{MESSAGES->URL->PM}">{LANG->PrivateReply}</a> ]</small>{/IF}
                         </div>
-                        <small>
-                        <strong><a href="{MESSAGES->URL->READ}" rel="nofollow">{MESSAGES->subject}</a> {IF MESSAGES->new}<span class="new-flag">{MESSAGES->new}</span>{/IF}</strong><br />
-                        {MESSAGES->datestamp}
-                        </small>
-                    </td>
-                    <td class="message-user-info" nowrap="nowrap">
+                            {IF MESSAGES->URL->PM}<small>[ <a href="{MESSAGES->URL->PM}">{LANG->PrivateReply}</a> ]</small>
+                        {/IF}
+                       {IF MESSAGES->user_avatar}
+                           <img src="{MESSAGES->user_avatar}" alt="avatar"
+                             {IF MESSAGES->user_avatar_w}
+                               style="width:{MESSAGES->user_avatar_w}px;
+                                     height:{MESSAGES->user_avatar_h}px"
+                             {/IF} /><br/>
+                       {/IF}
                         {IF MESSAGES->user->admin}
                             <strong>{LANG->Admin}</strong><br />
-                        {ELSEIF MESSAGES->moderator_post}
-                            <strong>{LANG->Moderator}</strong><br />
-                        {/IF}
-                        {IF MESSAGES->ip}
-                            {LANG->IP}: {MESSAGES->ip}<br />
                         {/IF}
                         {IF MESSAGES->user}
-                            {LANG->DateReg}: {MESSAGES->user->date_added}<br />
-                            {LANG->Posts}: {MESSAGES->user->posts}
+                            <div class="message-user-details">
+                                {LANG->DateReg}: {MESSAGES->user->date_added}<br />
+                                {LANG->Posts}: {MESSAGES->user->posts}<br/>
+                                {IF MESSAGES->user->city}
+                                  {MESSAGES->user->city}, {MESSAGES->user->country}<br/>
+                                {/IF}
+                                {IF MESSAGES->user_image_gallery}
+                                  <a href="{MESSAGES->user_image_gallery}">Galerie personnelle</a><br />
+                                {/IF}
+                                {IF MESSAGES->user->DONATOR}
+                                    {MESSAGES->user->DONATOR}
+                                {/IF}
+                                {IF MESSAGES->user->MODERATOR}
+                                    <br/>{MESSAGES->user->MODERATOR}
+                                {/IF}
+                            </div>
                         {/IF}
-                    </td>
-                </tr>
-            </table>
-        </div>
-
+    </td>
+    <td valign="top">
+    <small>
+    <strong><a href="{MESSAGES->URL->READ}">{MESSAGES->subject}</a> {IF MESSAGES->new}<span class="new-flag">{MESSAGES->new}</span>{/IF}</strong>
+    {MESSAGES->datestamp}
+    {IF MESSAGES->ip}
+    {LANG->IP}: {MESSAGES->ip}
+    {/IF}
+                        </small><hr/>
         <div class="message-body">
             {IF MESSAGES->is_unapproved}
                 <div class="warning">
@@ -56,16 +78,6 @@
             {IF MESSAGES->URL->CHANGES}
                 (<a href="{MESSAGES->URL->CHANGES}">{LANG->ViewChanges}</a>)
             {/IF}
-            <div class="message-options">
-                {IF MESSAGES->edit 1}
-                    {IF MODERATOR false}
-                        <a class="icon icon-comment-edit" href="{MESSAGES->URL->EDIT}">{LANG->EditPost}</a>
-                    {/IF}
-                {/IF}
-                <a class="icon icon-comment-add" href="{MESSAGES->URL->REPLY}" rel="nofollow">{LANG->Reply}</a>
-                <a class="icon icon-comment-add" href="{MESSAGES->URL->QUOTE}" rel="nofollow">{LANG->QuoteMessage}</a>
-                {IF MESSAGES->URL->REPORT}<a class="icon icon-exclamation" href="{MESSAGES->URL->REPORT}">{LANG->Report}</a>{/IF}
-            </div>
 
             {IF MESSAGES->attachments}
                 <div class="attachments">
@@ -78,61 +90,81 @@
                 </div>
             {/IF}
 
+        </div>
+</td>
+                </tr>
+            </table>
+            <div class="message-options">
+                {IF MESSAGES->edit 1}
+                    {IF MODERATOR false}
+                        <a class="icon" href="{MESSAGES->URL->EDIT}"><i class="li-pencil"></i> {LANG->EditPost}</a>
+                    {/IF}
+                {/IF}
+                <a class="icon" href="{MESSAGES->URL->REPLY}"><i class="li-msg-add"></i> {LANG->Reply}</a>
+                <a class="icon" href="{MESSAGES->URL->QUOTE}"><i class="li-msg-add"></i> {LANG->QuoteMessage}</a>
+                {IF MESSAGES->URL->REPORT}<a class="icon" href="{MESSAGES->URL->REPORT}"><i class="li-alert"></i> {LANG->Report}</a>{/IF}
+{HOOK "social_share" MESSAGES}
+            </div>
             {IF MODERATOR true}
                 <div class="message-moderation">
                     {IF MESSAGES->threadstart true}
-                        <a class="icon icon-delete" href="{MESSAGES->URL->DELETE_THREAD}">{LANG->DelMessReplies}</a>
-
+                        <a class="icon" href="javascript:if(window.confirm('{LANG->ConfirmDeleteMessage}')) window.location='{MESSAGES->URL->DELETE_THREAD}';"><i class="li-trash"></i> {LANG->DelMessReplies}</a>
                     {ELSE}
-                        <a class="icon icon-delete" href="{MESSAGES->URL->DELETE_MESSAGE}">{LANG->DeleteMessage}</a>
-                        <a class="icon icon-delete" href="{MESSAGES->URL->DELETE_THREAD}">{LANG->DelMessReplies}</a>
-                        <a class="icon icon-split" href="{MESSAGES->URL->SPLIT}">{LANG->SplitThread}</a>
+                        <a class="icon" href="javascript:if(window.confirm('{LANG->ConfirmDeleteMessage}')) window.location='{MESSAGES->URL->DELETE_MESSAGE}';"><i class="li-trash"></i> {LANG->DeleteMessage}</a>
+                        <a class="icon" href="javascript:if(window.confirm('{LANG->ConfirmDeleteMessage}')) window.location='{MESSAGES->URL->DELETE_THREAD}';"><i class="li-trash"></i> {LANG->DelMessReplies}</a>
+                        <a class="icon" href="{MESSAGES->URL->SPLIT}"><i class="li-split"></i> {LANG->SplitThread}</a>
                     {/IF}
                     {IF MESSAGES->is_unapproved}
-                        <a class="icon icon-accept" href="{MESSAGES->URL->APPROVE}">{LANG->ApproveMessage}</a>
+                        <a class="icon" href="{MESSAGES->URL->APPROVE}"><i class="li-check"></i> {LANG->ApproveMessage}</a>
                     {ELSE}
-                        <a class="icon icon-comment-delete" href="{MESSAGES->URL->HIDE}">{LANG->HideMessage}</a>
+                        <a class="icon" href="{MESSAGES->URL->HIDE}"><i class="li-trash"></i> {LANG->HideMessage}</a>
                     {/IF}
-                    <a class="icon icon-comment-edit" href="{MESSAGES->URL->EDIT}">{LANG->EditPost}</a>
+                    <a class="icon" href="{MESSAGES->URL->EDIT}"><i class="li-pencil"></i> {LANG->EditPost}</a>
                 </div>
             {/IF}
-
         </div>
+
     </div>
 {/LOOP MESSAGES}
 
-<div class="nav">
-    {INCLUDE "paging"}
-    <!-- CONTINUE TEMPLATE read.tpl -->
-    <a class="icon icon-prev" href="{URL->NEWERTHREAD}">{LANG->NewerThread}</a>
-    <a class="icon icon-next" href="{URL->OLDERTHREAD}">{LANG->OlderThread}</a>
-</div>
-
 <div id="thread-options" class="nav">
-    <a class="icon icon-printer" href="{URL->PRINTVIEW}" target="_blank">{LANG->PrintView}</a>
+    <a class="icon" href="{URL->PRINTVIEW}" target="_blank"><i class="li-file-text"></i> Exporter en PDF</a>
     {IF URL->MARKTHREADREAD}
-        <a class="icon icon-tag-green" href="{URL->MARKTHREADREAD}">{LANG->MarkThreadRead}</a>
+        <a class="icon" href="{URL->MARKTHREADREAD}"><i class="li-tag"></i> {LANG->MarkThreadRead}</a>
     {/IF}
     {IF TOPIC->URL->FOLLOW}
-        <a class="icon icon-note-add" href="{TOPIC->URL->FOLLOW}">{LANG->FollowThread}</a>
+        {IF TOPIC->subscribed}
+            <a class="icon" href="{TOPIC->URL->UNFOLLOW}"><i class="li-msg-delete"></i> {LANG->UnfollowThread}</a>
+        {ELSE}
+            <a class="icon" href="{TOPIC->URL->FOLLOW}"><i class="li-msg-add"></i> {LANG->FollowThread}</a>
+        {/IF}
     {/IF}
     {IF URL->FEED}
-        <a class="icon icon-feed" href="{URL->FEED}">{FEED}</a>
+        <a class="icon" href="{URL->FEED}"><i class="li-rss"></i> {FEED}</a>
     {/IF}
     {IF MODERATOR true}
-        <a class="icon icon-merge" href="{TOPIC->URL->MERGE}">{LANG->MergeThread}</a>
+        <a class="icon" href="{TOPIC->URL->MERGE}"><i class="li-merge"></i> {LANG->MergeThread}</a>
         {IF TOPIC->closed false}
-            <a class="icon icon-close" href="{TOPIC->URL->CLOSE}">{LANG->CloseThread}</a>
+            <a class="icon" href="{TOPIC->URL->CLOSE}"><i class="li-ban"></i> {LANG->CloseThread}</a>
         {ELSE}
-            <a class="icon icon-open" href="{TOPIC->URL->REOPEN}">{LANG->ReopenThread}</a>
+            <a class="icon" href="{TOPIC->URL->REOPEN}"><i class="li-eye"></i> {LANG->ReopenThread}</a>
         {/IF}
-        <a class="icon icon-delete" href="{TOPIC->URL->DELETE_THREAD}">{LANG->DeleteThread}</a>
-        {IF TOPIC->URL->MOVE}<a class="icon icon-move" href="{TOPIC->URL->MOVE}">{LANG->MoveThread}</a>{/IF}
+        <a class="icon" href="javascript:if(window.confirm('{LANG->ConfirmDeleteThread}')) window.location='{TOPIC->URL->DELETE_THREAD}';"><i class="li-trash"></i> {LANG->DeleteThread}</a>
+        {IF TOPIC->URL->MOVE}<a class="icon" href="{TOPIC->URL->MOVE}"><i class="li-move"></i> {LANG->MoveThread}</a>{/IF}
+{HOOK "social_share" TOPIC}
     {/IF}
 </div>
 
-{IF REPLY_ON_READ}
-  <a name="REPLY"></a>
-{/IF}
+<div class="nav">
+    {INCLUDE "paging"}
+    <a href="#top">Top</a>
+    <a class="icon" href="{URL->NEWERTHREAD}"><i class="li-arrow-left"></i> {LANG->NewerThread}</a>
+    <a class="icon" href="{URL->OLDERTHREAD}"><i class="li-arrow-right"></i> {LANG->OlderThread}</a>
+</div>
 
+<div class="nav">
+    {IF URL->INDEX}<a class="icon" href="{URL->INDEX}"><i class="li-folder"></i> {LANG->ForumList}</a>{/IF}
+    <a class="icon" href="{URL->LIST}"><i class="li-clock"></i> {LANG->MessageList}</a>
+    <a class="icon" href="{URL->POST}"><i class="li-msg-add"></i> {LANG->NewTopic}</a>
+</div>
 <!-- END TEMPLATE read.tpl -->

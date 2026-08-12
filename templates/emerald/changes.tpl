@@ -2,8 +2,8 @@
 <p>{LANG->Message}: <a href="{MESSAGE->URL->READ}">{MESSAGE->subject}</a></p>
 
 <div class="nav">
-    {IF URL->INDEX}<a class="icon icon-folder" href="{URL->INDEX}">{LANG->ForumList}</a>{/IF}
-    <a class="icon icon-list" href="{URL->LIST}">{LANG->MessageList}</a>
+    {IF URL->INDEX}<a class="icon" href="{URL->INDEX}"><i class="li-folder"></i> {LANG->ForumList}</a>{/IF}
+    <a class="icon" href="{URL->LIST}"><i class="li-clock"></i> {LANG->MessageList}</a>
 </div>
 
 {LOOP CHANGES}
@@ -12,7 +12,7 @@
 
         <div class="generic">
             {IF CHANGES->original}
-                <h4>{LANG->OriginalMessage}</h4>
+                <span class="h4">{LANG->OriginalMessage}</span class="h4">
                 {LANG->Author}: {CHANGES->username}<br />
                 {LANG->Date}: {CHANGES->date}<br />
             {ELSE}

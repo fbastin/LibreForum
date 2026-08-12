@@ -1,4 +1,7 @@
 <!-- BEGIN TEMPLATE posting.tpl -->
+{IF REPLY_ON_READ}
+<a name="REPLY"></a>
+{/IF}
 
 {IF ERROR}<div class="attention">{ERROR}</div>{/IF}
 {IF OKMSG}<div class="information">{OKMSG}</div>{/IF}
@@ -15,6 +18,19 @@
 
             <table border="0" cellspacing="0">
                 <tr>
+
+                   <?php /* USER->user_avatar is used because PREVIEW->user_avatar doesn't work */ ?>
+                   <?php /* but we assume you're previewing your own message, so it doesn't matter */ ?>
+                   {IF USER->user_avatar}
+                     <td style="padding-right:10px">
+                         <img src="{USER->user_avatar}" alt="avatar"
+                          {IF USER->user_avatar_w}
+                            style="width:{USER->user_avatar_w}px;
+                                   height:{USER->user_avatar_h}px"
+                          {/IF} />
+                     </td>
+                   {/IF}
+
                     <td width="100%">
                         <div class="message-author icon-user">
                             {PREVIEW->author}
@@ -128,7 +144,7 @@
 
                         {IF OPTION_ALLOWED->subscribe_mail}
                           <div id="subscription-mail-div">
-                            <img src="{URL->TEMPLATE}/images/tree-L.png" border="0" alt="tree-L" />
+                            <img src="{URL->TEMPLATE}/images/tree-L.gif" border="0" alt="tree-L" />
                             <input type="checkbox" id="subscription-mail" name="subscription_mail" value="1" {IF POSTING->subscription "message"}checked="checked"{/IF} /> <label for="subscription-mail"><small>{LANG->EmailReplies}</small></label>
                           </div>
 
@@ -237,11 +253,6 @@
 </div>
 
 {IF MODERATED}
-  <div class="notice">{LANG->ModeratedForum}</div>
+    <div class="notice">{LANG->ModeratedForum}</div>
 {/IF}
-
-{IF REPLY_ON_READ}
-  <a name="REPLY"></a>
-{/IF}
-
 <!-- END TEMPLATE posting.tpl -->

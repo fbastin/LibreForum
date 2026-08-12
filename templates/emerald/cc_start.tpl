@@ -1,12 +1,19 @@
 <!-- BEGIN TEMPLATE cc_start.tpl -->
 <div class="generic">
+
+    {IF PROFILE->user_avatar}
+      <img src="{PROFILE->user_avatar}" alt="avatar"
+       {IF PROFILE->user_avatar_w}
+         style="width:{PROFILE->user_avatar_w}px;
+                height:{PROFILE->user_avatar_h}px"
+       {/IF} align="right" />
+    {/IF}
+
     <dl>
         <dt>{LANG->Username}:</dt>
         <dd>{PROFILE->username}</dd>
-        {IF PROFILE->real_name}
-            <dt>{LANG->RealName}:</dt>
-            <dd>{PROFILE->real_name}</dd>
-        {/IF}
+        <dt>{LANG->RealName}:</dt>
+        <dd>{PROFILE->real_name}</dd>
         <dt>{LANG->Email}:</dt>
         <dd>{PROFILE->email}</dd>
         <dt>{LANG->DateReg}:</dt>
@@ -19,12 +26,11 @@
         <dd>{PROFILE->posts}</dd>
         <dt>{LANG->Signature}:</dt>
         <dd>{PROFILE->signature_formatted}</dd>
-        {HOOK "tpl_cc_start" PROFILE}   
     </dl>
 </div>
 {IF PROFILE->admin OR UserPerms}
     <div class="generic">
-    <h4>{LANG->UserPermissions}</h4>
+    <span class="h4">{LANG->UserPermissions}</span class="h4">
     <table cellspacing="0" border="0">
       {IF PROFILE->admin}
         <tr>

@@ -1,6 +1,6 @@
 <!-- BEGIN TEMPLATE split_form.tpl -->
 <div class="generic">
-    <h4>{LANG->SplitThread}</h4>
+    <span class="h4">{LANG->SplitThread}</span class="h4">
     <form method="POST" action="{URL->ACTION}">
         {POST_VARS}
         <input type="hidden" name="thread" value="{FORM->thread_id}" />

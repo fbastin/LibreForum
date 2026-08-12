@@ -5,7 +5,7 @@
 <form action="{URL->ACTION}" method="post" enctype="multipart/form-data">
     {POST_VARS}
     <div class="generic">
-        <h4>{LANG->UploadFile}</h4>
+        <span class="h4">{LANG->UploadFile}</span class="h4">
         {IF FILE_SIZE_LIMIT}<div>{FILE_SIZE_LIMIT}</div>{/IF}
         {IF FILE_TYPE_LIMIT}<div>{FILE_TYPE_LIMIT}</div>{/IF}
         {IF FILE_QUOTA_LIMIT}<div>{FILE_QUOTA_LIMIT}</div>{/IF}

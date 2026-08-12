@@ -6,6 +6,13 @@
     display: none;
 }
 
+#phorum td.leftsidebar {
+  display: none;
+}
+#phorum th.leftsidebar {
+  display: none;
+}
+
 #phorum div.generic {
     background-color: #ffffff;
     border: 1px solid #000000;

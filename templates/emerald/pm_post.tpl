@@ -42,9 +42,12 @@
             {! Show user selection}
             {IF SHOW_USERSELECTION}
                 <div class="phorum-pmuserselection">
+<!-- Add autocompletion -->
+<input type="text" id="userselection" name="to_name" value="<?php if (isset($_POST['to_name'])) echo htmlspecialchars($_POST['to_name'])?>" />
                     {IF USERS}
                         <select id="userselection" name="to_id" size="1" align="middle">
                             <option value=""> {LANG->PMSelectARecipient}</option>
+<!-- how to sort the list? We should first create the list and then sort; this could require a second loop, but this list could also be used with the autocomplete function in Sandbox -->
                             {LOOP USERS}
                                 <option value="{USERS->user_id}" <?php if (isset($_POST['to_id']) && $_POST['to_id'] == $PHORUM['TMP']['USERS']['user_id']) echo 'selected="selected"'?>>{USERS->display_name}</option>
                             {/LOOP USERS}
@@ -72,7 +75,8 @@
             <br />
 
             {LANG->Options}:<br />
-            <input type="checkbox" id="keep" name="keep" value="1"{IF MESSAGE->keep} checked="checked" {/IF} /><label for="keep"> {LANG->KeepCopy}</label><br />
+            <input type="checkbox" id="keep" name="keep" value="1" checked="checked" /><label for="keep"> {LANG->KeepCopy}</label><br />
+<!--            <input type="checkbox" id="keep" name="keep" value="1"{IF MESSAGE->keep} checked="checked" {/IF} /><label for="keep"> {LANG->KeepCopy}</label><br /> -->
             <br />
 
             {HOOK "tpl_pm_editor_before_textarea"}

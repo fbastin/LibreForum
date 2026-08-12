@@ -1,33 +1,34 @@
 <!-- BEGIN TEMPLATE pm_read.tpl -->
-<div class="pm">
 
-    <h4>{MESSAGE->subject}</h4>
+<br/>
 
-    <div class="message-author icon-user">
-        {LANG->From}: <a href="{MESSAGE->URL->PROFILE}">{MESSAGE->author}</a>
-    </div>
-    <div class="message-author icon-user">
-        {LANG->To}:
-        {IF MESSAGE->show_recipient_list}
-            {LOOP MESSAGE->recipients}
-                <a href="{MESSAGE->recipients->URL->PROFILE}">{MESSAGE->recipients->display_name}</a>
-                {IF USER->user_id MESSAGE->user_id}
-                    {IF NOT MESSAGE->recipients->read_flag}({LANG->PMUnread}){/IF}
-                {/IF}
-            {/LOOP MESSAGE->recipients}
-        {ELSE}
-            {MESSAGE->recipient_count} {LANG->TotalRecipients}
-        {/IF}
-    </div>
-    <div class="message-date">{MESSAGE->date}</div>
+<div class="PhorumStdBlockHeader">
+<span class="h3">{MESSAGE->subject}</span class="h3">
 </div>
 
-<div class="message-body">
-
-    {MESSAGE->message}
-
+<div class="PhorumStdBlock">
+<div class="message-author icon-user">
+  {LANG->From}: <a href="{MESSAGE->URL->PROFILE}">{MESSAGE->author}</a>
 </div>
 
+<div class="message-author icon-user">
+  {LANG->To}:
+  {IF MESSAGE->show_recipient_list}
+    {LOOP MESSAGE->recipients}
+      <a href="{MESSAGE->recipients->URL->PROFILE}">{MESSAGE->recipients->display_name}</a>
+      {IF USER->user_id MESSAGE->user_id}
+        {IF NOT MESSAGE->recipients->read_flag}({LANG->PMUnread}){/IF}
+      {/IF}
+    {/LOOP MESSAGE->recipients}
+  {ELSE}
+    {MESSAGE->recipient_count} {LANG->TotalRecipients}
+  {/IF}
+</div>
+<div class="message-date">{MESSAGE->date}</div>
+
+<div class="pmmessage-body">
+{MESSAGE->message}
+</div>
 
 <form action="{URL->ACTION}" method="post">
     {POST_VARS}
@@ -61,4 +62,6 @@
     <input type="submit" name="delete_message" value="{LANG->Delete}" onclick="return confirm('<?php echo addslashes($PHORUM['DATA']['LANG']['AreYouSure'])?>')" />
   </div>
 </form>
+
+</div>
 <!-- END TEMPLATE pm_read.tpl -->

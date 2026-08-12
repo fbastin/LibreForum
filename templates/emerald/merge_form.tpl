@@ -2,14 +2,14 @@
 <div class="generic">
 
     {IF FORM->merge_none}
-        <h4>{LANG->MergeThread}</h4>
+        <span class="h4">{LANG->MergeThread}</span class="h4">
         <p>{LANG->MergeThreadInfo1}</p>
         <strong>{FORM->merge_subject1}</strong>
         <p>{LANG->MergeThreadInfo2}</p>
     {/IF}
 
     {IF FORM->merge_t1}
-        <h4>{LANG->MergeThread}</h4>
+        <span class="h4">{LANG->MergeThread}</span class="h4">
         <form method="POST" action="{URL->ACTION}">
             {POST_VARS}
             <input type="hidden" name="thread" value="{FORM->thread_id}" />

@@ -9,7 +9,18 @@
         <dl>
             {IF PROFILE->USERPROFILE}
                 <dt>{LANG->RealName}:&nbsp;</dt>
-                <dd><input type="text" name="real_name" size="30" value="{PROFILE->real_name}" /></dd>
+                <dd>
+                    <input type="text" name="real_name" size="30" value="{PROFILE->real_name}" />
+                    &nbsp;&nbsp;
+                    <input type="checkbox" name="real_name_privacy" value="1" {IF NOT PROFILE->real_name_privacy 0}checked="checked"{/IF} /> Garder priv&eacute;
+                    <br /><small>Coch&eacute; par d&eacute;faut : seul votre pseudo est utilis&eacute;. D&eacute;cochez pour autoriser l'usage de votre vrai nom comme cr&eacute;dit sur vos photos sous licence libre (Creative Commons / domaine public).</small>
+                </dd>
+                <dt>Date de naissance (AAAA-MM-JJ):&nbsp;</dt>
+                <dd>
+                    <input type="text" name="user_birthday" size="10" maxlength="10" value="{PROFILE->user_birthday}" />
+                    &nbsp;&nbsp;
+                    <input type="checkbox" name="user_birthday_privacy" value="1" {IF PROFILE->user_birthday_privacy 1}checked="checked"{/IF} /> Garder priv&eacute;e
+                </dd>
             {/IF}
 
             {IF PROFILE->SIGSETTINGS}

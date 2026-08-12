@@ -2,31 +2,32 @@
 <div class="nav">
     {INCLUDE "paging"}
     <!-- CONTINUE TEMPLATE list.tpl -->
-    {IF URL->INDEX}<a class="icon icon-folder" href="{URL->INDEX}">{LANG->ForumList}</a>{/IF}
-    <a class="icon icon-comment-add" href="{URL->POST}">{LANG->NewTopic}</a>
+    {IF URL->INDEX}<a class="icon" href="{URL->INDEX}"><i class="li-folder"></i> {LANG->ForumList}</a>{/IF}
+    <a class="icon" href="{URL->POST}"><i class="li-msg-add"></i> {LANG->NewTopic}</a>
     {IF URL->MARK_READ}
-        <a class="icon icon-tag-green" href="{URL->MARK_READ}">{LANG->MarkForumRead}</a>
+        <a class="icon" href="{URL->MARK_READ}"><i class="li-tag"></i> {LANG->MarkForumRead}</a>
     {/IF}
     {IF URL->FEED}
-        <a class="icon icon-feed" href="{URL->FEED}">{FEED}</a>
+        <a class="icon" href="{URL->FEED}"><i class="li-rss"></i> {FEED}</a>
     {/IF}
 </div>
 
 <table cellspacing="0" class="list">
     <colgroup>
-        <col width="30" />
-        <col />
+        <col class="col-icon" />
+        <col class="col-subject" />
         {IF VIEWCOUNT_COLUMN}
-            <col width="7%" />
+            <col class="col-views" />
         {/IF}
-        <col width="7%" />
-        <col width="30%" />
+        <col class="col-posts" />
+        <col class="col-last" />
         {IF MODERATOR true}
-            <col width="80" />
+            <col class="col-mod" />
         {/IF}
     </colgroup>
     <tr>
-        <th align="left">&nbsp;</th><th align="left">
+        <th align="left">&nbsp;</th>
+        <th align="left">
             {LANG->Subject}
         </th>
         {IF VIEWCOUNT_COLUMN}
@@ -48,23 +49,23 @@
 
     {IF MESSAGES->sort PHORUM_SORT_STICKY}
         {IF MESSAGES->new}
-            {VAR icon "flag_red"}
+            {VAR icon "bell"}
             {VAR alt LANG->NewMessage}
         {ELSE}
-            {VAR icon "bell"}
+            {VAR icon "flag"}
             {VAR alt LANG->Sticky}
         {/IF}
         {VAR title LANG->Sticky}
     {ELSEIF MESSAGES->moved}
-        {VAR icon "page_go"}
+        {VAR icon "arrow-right"}
         {VAR title LANG->MovedSubject}
         {VAR alt LANG->MovedSubject}
     {ELSEIF MESSAGES->new}
-        {VAR icon "flag_red"}
+        {VAR icon "bell"}
         {VAR title LANG->NewMessage}
         {VAR alt LANG->NewMessage}
     {ELSE}
-        {VAR icon "comment"}
+        {VAR icon "msg"}
         {VAR title ""}
         {VAR alt ""}
     {/IF}
@@ -77,13 +78,13 @@
 
     <tr>
 
-        <td class="{altclass}"><a href="{IF MESSAGES->new}{MESSAGES->URL->NEWPOST}{ELSE}{MESSAGES->URL->READ}{/IF}" title="{title}"><img src="{URL->TEMPLATE}/images/{icon}.png" class="icon1616" alt="{alt}" /></a></td>
+        <td class="{altclass}"><a href="{IF MESSAGES->new}{MESSAGES->URL->NEWPOST}{ELSE}{MESSAGES->URL->READ}{/IF}" title="{title}"><i class="li-{icon}"></i></a></td>
         <td class="{altclass}">
-            <h4>
+            <span class="h4">
                 <a href="{MESSAGES->URL->READ}" class="{newclass}" title="{title}">{MESSAGES->subject}</a>
-                {IF MESSAGES->meta->attachments}<img src="{URL->TEMPLATE}/images/attach.png" class="icon1616" title="{LANG->Attachments}"  alt="{LANG->Attachments}" /> {/IF}
+                {IF MESSAGES->meta->attachments}<i class="li-file-text" title="{LANG->Attachments}"></i> {/IF}
                 {IF MESSAGES->pages}&nbsp;<small>&nbsp;({LANG->Pages}:&nbsp;{MESSAGES->pages})</small>{/IF}
-            </h4>
+            </span>
             {LANG->by} {IF MESSAGES->URL->PROFILE}<a href="{MESSAGES->URL->PROFILE}">{/IF}{MESSAGES->author}{IF MESSAGES->URL->PROFILE}</a>{/IF}
         </td>
 
@@ -110,13 +111,13 @@
         {IF MODERATOR true}
             <td align="right" class="{altclass}" nowrap="nowrap">
                 {IF MESSAGES->moved}
-                    <a title="{LANG->DeleteMessage}" href="{MESSAGES->URL->DELETE_THREAD}"><img src="{URL->TEMPLATE}/images/delete.png" class="icon1616" alt="{LANG->DeleteMessage}" /></a>
+                    <a title="{LANG->DeleteMessage}" href="javascript:if(window.confirm('{LANG->ConfirmDeleteMessage}')) window.location='{MESSAGES->URL->DELETE_THREAD}';"><i class="li-trash"></i></a>
                 {ELSE}
                     {IF MESSAGES->URL->MOVE}
-                        <a title="{LANG->MoveThread}" href="{MESSAGES->URL->MOVE}"><img src="{URL->TEMPLATE}/images/page_go.png" class="icon1616" alt="{LANG->MoveThread}" /></a>
+                        <a title="{LANG->MoveThread}" href="{MESSAGES->URL->MOVE}"><i class="li-arrow-right"></i></a>
                     {/IF}
-                    <a title="{LANG->MergeThread}" href="{MESSAGES->URL->MERGE}"><img src="{URL->TEMPLATE}/images/arrow_join.png" alt="{LANG->MergeThread}" /></a>
-                    <a title="{LANG->DeleteThread}" href="{MESSAGES->URL->DELETE_THREAD}"><img src="{URL->TEMPLATE}/images/delete.png" class="icon1616" alt="{LANG->DeleteThread}" /></a>
+                    <a title="{LANG->MergeThread}" href="{MESSAGES->URL->MERGE}"><i class="li-link"></i></a>
+                    <a title="{LANG->DeleteThread}" href="javascript:if(window.confirm('{LANG->ConfirmDeleteThread}')) window.location='{MESSAGES->URL->DELETE_THREAD}';"><i class="li-trash"></i></a>
                 {/IF}
             </td>
         {/IF}

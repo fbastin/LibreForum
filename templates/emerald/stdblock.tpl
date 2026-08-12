@@ -1,7 +1,7 @@
 <!-- BEGIN TEMPLATE stdblock.tpl -->
 <div class="generic">
   {IF BLOCK_TITLE}
-    <h4>{BLOCK_TITLE}</h4>
+    <span class="h4">{BLOCK_TITLE}</span class="h4">
   {/IF}
   <p>{BLOCK_CONTENT}</p>
 </div>

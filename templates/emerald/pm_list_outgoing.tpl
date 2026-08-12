@@ -23,6 +23,11 @@
             <th align="left" nowrap="nowrap">{LANG->PMRead}&nbsp;</th>
             <th align="left" nowrap="nowrap">{LANG->Date}&nbsp;</th>
         </tr>
+<tr>
+<td align="left" colspan="2">
+    <input type="submit" name="delete" value="{LANG->Delete}" onclick="return confirm('<?php echo addslashes($PHORUM['DATA']['LANG']['AreYouSure'])?>')" />
+</td>
+</tr>
         {LOOP MESSAGES}
             <tr>
                 <td width="5%"><input type="checkbox" name="checked[]" value="{MESSAGES->pm_message_id}" /></td>
@@ -57,7 +62,6 @@
             </tr>
         {/LOOP MESSAGES}
     </table>
-    <input type="submit" name="delete" value="{LANG->Delete}" onclick="return confirm('<?php echo addslashes($PHORUM['DATA']['LANG']['AreYouSure'])?>')" />
 {ELSE}
     <div class="generic">{LANG->PMFolderIsEmpty}</div>
 {/IF}

@@ -1,7 +1,7 @@
 <!-- BEGIN TEMPLATE search.tpl -->
 {IF SEARCH->noresults}
     <div class="information">
-        <h4>{LANG->NoResults}</h4>
+        <span class="h4">{LANG->NoResults}</span class="h4">
         <p>{LANG->NoResultsHelp}</p>
     </div>
 {/IF}
@@ -22,7 +22,7 @@
 
             <div class="search-result">
 
-                <h4><a href="{MATCHES->URL->READ}">{MATCHES->subject}</a><small> - {MATCHES->datestamp}</small></h4>
+                <span class="h4"><a href="{MATCHES->URL->READ}">{MATCHES->subject}</a><small> - {MATCHES->datestamp}</small></span class="h4">
 
                 <blockquote>{MATCHES->short_body}</blockquote>
 
@@ -48,9 +48,9 @@
 
 {IF NOT SEARCH->match_type "USER_ID"}
     <div class="nav">
-        {IF URL->INDEX}<a class="icon icon-folder" href="{URL->INDEX}">{LANG->ForumList}</a>{/IF}
+        {IF URL->INDEX}<a class="icon" href="{URL->INDEX}"><i class="li-folder"></i> {LANG->ForumList}</a>{/IF}
         {IF URL->POST}
-            <a class="icon icon-comment-add" href="{URL->POST}">{LANG->NewTopic}</a>
+            <a class="icon" href="{URL->POST}"><i class="li-msg-add"></i> {LANG->NewTopic}</a>
         {/IF}
     </div>
 

@@ -1,14 +1,15 @@
 <!-- BEGIN TEMPLATE profile.tpl -->
-<div class="nav">
-    {IF URL->INDEX}<a class="icon icon-folder" href="{URL->INDEX}">{LANG->ForumList}</a>{/IF}
-    {IF FORUM_ID}
-        <a class="icon icon-list" href="{URL->LIST}">{LANG->MessageList}</a>
-    {/IF}
-</div>
-
 <div id="profile">
 
     <div class="generic">
+
+        {IF PROFILE->user_avatar}
+          <img src="{PROFILE->user_avatar}" alt="avatar"
+           {IF PROFILE->user_avatar_w}
+             style="width:{PROFILE->user_avatar_w}px;
+                    height:{PROFILE->user_avatar_h}px"
+           {/IF} align="right" />
+        {/IF}
 
         <div class="icon-user">
             {PROFILE->display_name}
@@ -25,6 +26,8 @@
               [ <a href="{PROFILE->URL->SEARCH}">{LANG->ShowPosts}</a> ]
             </small>
         </div>
+
+	    {IF PROFILE->NEWBIE}(nouveau membre){/IF}
 
         <dl>
 
@@ -48,8 +51,18 @@
                 <dt>{LANG->DateActive}:&nbsp;</dt>
                 <dd>{PROFILE->date_last_active}</dd>
             {/IF}
-            {HOOK "tpl_profile" PROFILE} 
 
+	    {IF PROFILE->URL->user_image_gallery}
+	        <dt><a href="{PROFILE->URL->user_image_gallery}">Galerie personnelle</a></dt><dd></dd>
+            {/IF}
+
+
+  {IF PROFILE->mod_openstreetmap->city}
+                <dt>{LANG->mod_openstreetmap->Location}:&nbsp;</dt>
+                <dd>
+    {PROFILE->mod_openstreetmap->country},
+    {PROFILE->mod_openstreetmap->city}</dd>
+  {/IF}
         </dl>
 
     </div>
