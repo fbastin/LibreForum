@@ -72,7 +72,7 @@ display: inline;
   <link rel="stylesheet" type="text/css" href="{URL->CSS}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{URL->CSS_PRINT}" media="print" />
   <link rel="stylesheet" type="text/css" href="{URL->HTTP_PATH}/css/tireur.min.css?v=<?php echo filemtime(dirname(__FILE__).'/../css/tireur.min.css'); ?>" media="all"/>
-  <link rel="stylesheet" type="text/css" href="{URL->HTTP_PATH}/css/lucide.css?v=1" media="all"/>
+  <link rel="stylesheet" type="text/css" href="{URL->HTTP_PATH}/css/lucide.css?v=<?php echo filemtime(dirname(__FILE__).'/../css/lucide.css'); ?>" media="all"/>
 {/IF}
 
 {! Load Javascript code. This code origins from core LibreForum javascript }
