@@ -17,14 +17,7 @@ Le comportement des feuilles de style pour l'impression (`@media print`) diffèr
 - **Action :** Tester le rendu PDF généré pour s'assurer d'une homogénéité inter-navigateurs.
 - **Livrable :** Des impressions ou exports PDF propres et identiques, quel que soit le navigateur.
 
-## 3. Curation du forum (21 sujets de référence pour tireur.org)
-Il s'agit d'un travail de fond sur le contenu, visant à extraire les discussions les plus pertinentes de LibreForum pour les intégrer et les valoriser sous forme d'articles de référence directement sur **tireur.org**.
-- **Action :** Identifier et consolider le contenu des 21 sujets majeurs.
-- **Action :** Nettoyer et formater ce contenu pour une publication éditoriale.
-- **Action :** Intégrer ces articles de référence sur le site principal `tireur.org` (ex: section articles ou wiki).
-- **Livrable :** Une base de connaissances claire et accessible pour les utilisateurs de tireur.org, tirant parti des archives du forum.
-
-## 4. Modernisation des URLs (Clean URLs)
+## 3. Modernisation des URLs (Clean URLs)
 Actuellement, LibreForum utilise un routage classique basé sur des paramètres de requête (ex: `read.php?1,234`). Pour le SEO et la lisibilité, il faut passer à des URLs propres.
 - **Action :** Activer / configurer un module Phorum de réécriture d'URLs (comme `sef_urls` ou similaire).
 - **Action :** Mettre en place les règles `.htaccess` (ou configuration Nginx) adéquates pour rediriger silencieusement les URLs du type `/forum/sujet-titre-id` vers `read.php`.
