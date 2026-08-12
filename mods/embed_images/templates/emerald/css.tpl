@@ -36,7 +36,7 @@
     height: 16px;
     background-position: 3px 3px;
     background-repeat: no-repeat;
-    background-image: url({URL->HTTP_PATH}/mods/embed_images/templates/ajax_loading.gif);
+    background-image: url({URL->HTTP_PATH}/mods/embed_images/templates/ajax_loading.png);
 }
 
 #phorum div.mod_embed_images_info {
@@ -47,7 +47,7 @@
     overflow: hidden;
     background-position: 3px 5px;
     background-repeat: no-repeat;
-    background-image: url({URL->HTTP_PATH}/mods/embed_images/templates/magnify_icon.gif);
+    background-image: url({URL->HTTP_PATH}/mods/embed_images/templates/magnify_icon.png);
 
     /* Will be made visible if extended viewing is triggered */
     display: none;
@@ -64,7 +64,7 @@
     color: #a00000;
     border: 1px solid #a00000;
     padding: 5px 5px 5px 43px;
-    background-image: url({URL->HTTP_PATH}/mods/embed_images/templates/broken_image.gif);
+    background-image: url({URL->HTTP_PATH}/mods/embed_images/templates/broken_image.png);
     background-position: 5px 5px;
     background-repeat: no-repeat;
 }

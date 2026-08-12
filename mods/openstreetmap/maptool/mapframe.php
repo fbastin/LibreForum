@@ -551,7 +551,7 @@ $lang = $PHORUM["DATA"]["LANG"]["mod_openstreetmap"];
                 z-index: 1000;
                 opacity: 0.20;
                 filter: progid:DXImageTransform.Microsoft.Alpha(opacity=20);
-                background: #000 url(<?php print $PHORUM["http_path"] ?>/mods/openstreetmap/maptool/loader.gif) center center no-repeat"></div>
+                background: #000 url(<?php print $PHORUM["http_path"] ?>/mods/openstreetmap/maptool/loader.png) center center no-repeat"></div>
   </body>
 
 </html>

@@ -789,10 +789,10 @@ Table of contents:
       ./mods/<module>/<filename>
 
    So let's say that our module "foo" has a subdirectory "images"
-   which contains "bar.gif", then we could display that image
+   which contains "bar.png", then we could display that image
    using the HTML code:
 
-      <img src="./mods/foo/images/bar.gif" />
+      <img src="./mods/foo/images/bar.png" />
 
    Another example: let's say that there is a function library
    named "my_module_functions.php" in the module, which must be

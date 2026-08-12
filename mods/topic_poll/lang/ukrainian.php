@@ -83,9 +83,9 @@ $PHORUM["DATA"]["LANG"]["mod_topic_poll"] = array(
 
 "NoVotingInPreview"   => "Неможливо використовувати опитування у попередньому перегляді.",
 
-"OldPollSubjectTag"   => "&nbsp;<img align=\"bottom\" border=\"0\" src=\"{$PHORUM["http_path"]}/mods/topic_poll/images/oldpoll.gif\" alt=\"Опитування\" title=\"Опитування\"/>",
+"OldPollSubjectTag"   => "&nbsp;<img align=\"bottom\" border=\"0\" src=\"{$PHORUM["http_path"]}/mods/topic_poll/images/oldpoll.png\" alt=\"Опитування\" title=\"Опитування\"/>",
 
-"NewPollSubjectTag"   => "&nbsp;<img align=\"bottom\" border=\"0\" src=\"{$PHORUM["http_path"]}/mods/topic_poll/images/newpoll.gif\" alt=\"Опитування\" title=\"Опитування\"/>",
+"NewPollSubjectTag"   => "&nbsp;<img align=\"bottom\" border=\"0\" src=\"{$PHORUM["http_path"]}/mods/topic_poll/images/newpoll.png\" alt=\"Опитування\" title=\"Опитування\"/>",
 
 "NoEditAfterVotes"    => "Редагування опитування неможливе, тому що голосування вже почалося.<br/>Тільки модератор може редагувати опитування.",
 

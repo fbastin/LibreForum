@@ -83,9 +83,9 @@ $PHORUM["DATA"]["LANG"]["mod_topic_poll"] = array(
 
 "NoVotingInPreview"   => "Невозможно использовать опрос в предварительном просмотре.",
 
-"OldPollSubjectTag"   => "&nbsp;<img align=\"bottom\" border=\"0\" src=\"{$PHORUM["http_path"]}/mods/topic_poll/images/oldpoll.gif\" alt=\"Опрос\" title=\"Опрос\"/>",
+"OldPollSubjectTag"   => "&nbsp;<img align=\"bottom\" border=\"0\" src=\"{$PHORUM["http_path"]}/mods/topic_poll/images/oldpoll.png\" alt=\"Опрос\" title=\"Опрос\"/>",
 
-"NewPollSubjectTag"   => "&nbsp;<img align=\"bottom\" border=\"0\" src=\"{$PHORUM["http_path"]}/mods/topic_poll/images/newpoll.gif\" alt=\"Опрос\" title=\"Опрос\"/>",
+"NewPollSubjectTag"   => "&nbsp;<img align=\"bottom\" border=\"0\" src=\"{$PHORUM["http_path"]}/mods/topic_poll/images/newpoll.png\" alt=\"Опрос\" title=\"Опрос\"/>",
 
 "NoEditAfterVotes"    => "Редактирование опроса невоможно, потому что голосование уже началось.<br/>Только модератор может редактировать опрос.",
 

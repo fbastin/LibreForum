@@ -16,7 +16,7 @@
     <span style="position: absolute; white-space: nowrap;"><strong>{LANG->forum_subscriptions->ForumSubscriptionsSettings}</strong></span>&nbsp;
     </td>
     <td class="middle-column" style="background-color: {headerbackcolor};"><div class="empty-thin-position" style="top: 20px;">{INCLUDE "left_tabs_lower_top_middle_row"}</div></td>
-    <td class="right-column" style="background-color: {headerbackcolor};"><img src="./images/trans.gif" /></td>
+    <td class="right-column" style="background-color: {headerbackcolor};"><img src="./images/trans.png" /></td>
     <td class="side-column">
         <div class="empty-position">
             {INCLUDE "right_tabs_upper_header"}
@@ -27,21 +27,21 @@
     </td>
   </tr>
   <tr>
-    <td class="side-column"><img src="./images/trans.gif" /></td>
+    <td class="side-column"><img src="./images/trans.png" /></td>
     <td class="left-column" style="white-space: normal; width: 220px;">{LANG->forum_subscriptions->EnableSelfEmails}:</td>
-    <td class="middle-column"><img src="./images/trans.gif" /></td>
+    <td class="middle-column"><img src="./images/trans.png" /></td>
     <td class="right-column">
       <select name="phorum_mod_forum_subscriptions_user_unsubscribe_setting_self">
         <option value="yes" {IF PROFILE->phorum_mod_forum_subscriptions_user_unsubscribe_setting_self "yes"}selected="selected"{/IF}>{LANG->Yes}</option>
         <option value="no" {IF PROFILE->phorum_mod_forum_subscriptions_user_unsubscribe_setting_self "no"}selected="selected"{/IF}>{LANG->No}</option>
       </select>
     </td>
-    <td class="side-column"><img src="./images/trans.gif" /></td>
+    <td class="side-column"><img src="./images/trans.png" /></td>
   </tr>
   <tr>
-    <td class="side-column"><img src="./images/trans.gif" /></td>
+    <td class="side-column"><img src="./images/trans.png" /></td>
     <td class="left-column" style="width: 220px;">&nbsp;</td>
-    <td class="middle-column"><img src="./images/trans.gif" /></td>
+    <td class="middle-column"><img src="./images/trans.png" /></td>
     <td class="right-column">
     <div style="margin-bottom: 4px;">
       <table class="sr-buttons" cellspacing="2px">
@@ -65,17 +65,17 @@
       </table>
     </div>
     </td>
-    <td class="side-column"><img src="./images/trans.gif" /></td>
+    <td class="side-column"><img src="./images/trans.png" /></td>
   </tr>
   <tr>
     <td class="bottom-side-column">
         <div class="empty-thin-position">{INCLUDE "left_tabs_lower_bottom_row"}</div>
     </td>
-    <td class="bottom-row"><img src="./images/trans.gif" /></td>
+    <td class="bottom-row"><img src="./images/trans.png" /></td>
     <td class="bottom-row">
         <div class="empty-thin-position">{INCLUDE "left_tabs_lower_middle_row"}</div>
     </td>
-    <td class="bottom-row"><img src="./images/trans.gif" /></td>
+    <td class="bottom-row"><img src="./images/trans.png" /></td>
     <td class="bottom-side-column"><div class="empty-thin-position">{INCLUDE "right_tabs_lower_posting_buttons_row"}{INCLUDE "right_tabs_lower_bottom_row"}</div></td>
   </tr>
 </table>

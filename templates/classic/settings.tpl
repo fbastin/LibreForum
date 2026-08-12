@@ -13,13 +13,13 @@
 {DEFINE search_pages_shown 5}
 
 {! --- This is the marker for messages in the thread list --- }
-{VAR marker '<img src="templates/classic/images/carat.gif" border="0" width="8" height="8" alt="" />'}
+{VAR marker '<img src="templates/classic/images/carat.png" border="0" width="8" height="8" alt="" />'}
 
 {! -- This is the image to use as a delete button for recipients in PM --- }
-{VAR delete_image "templates/classic/images/delete.gif"}
+{VAR delete_image "templates/classic/images/delete.png"}
 
 {! -- This is the image for the gauge bar to show how full the PM box is -- }
-{VAR gauge_image "templates/classic/images/gauge.gif"}
+{VAR gauge_image "templates/classic/images/gauge.png"}
 
 {! --- these are the colors used in the style sheet --- }
 {! --- you can use them or replace them in the style sheet --- }

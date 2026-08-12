@@ -6,7 +6,7 @@
           to build these. This setting relates to the "HTTP Path"
           option under "General Settings" in the admin interface.
         </p><p>
-          Let's asume you have a file named <code class="filename">foobar.gif</code>
+          Let's asume you have a file named <code class="filename">foobar.png</code>
           in your "foo" module tree, then you could generate the URL for
           that file like this:
           </p><div class="example"><a name="id2513041"></a><p class="title"><b>Example 2.9. 
@@ -16,8 +16,8 @@
 // the global $PHORUM variable needs to be imported.
 global $PHORUM;
 
-// Build the URL for the foobar.gif.
-$url = $PHORUM['http_path'] . "/mods/foo/foobar.gif";
+// Build the URL for the foobar.png.
+$url = $PHORUM['http_path'] . "/mods/foo/foobar.png";
 
 // After this, you could store the URL in the template data, so you
 // can use it from the templates. Here an example for filling the

@@ -166,7 +166,7 @@ $template_hide = 1;
          |
          +-- images
               |
-              +-- *.gif, *.jpg, *.png
+              +-- *.png, *.jpg, *.png
       </literal></literallayout>
     </para>
   </section>

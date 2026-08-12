@@ -53,7 +53,7 @@ function image_viewer_common()
         " * This notice must stay intact for legal use.\n" .
         " * Visit http://www.dynamicdrive.com/ for full source code\n" .
         " ***********************************************************/\n" .
-        "thumbnailviewer['defineLoading'] = '<img src=\"{$PHORUM["http_path"]}/mods/embed_images/viewers/dynadrive/code/loading.gif\" alt=\"{$PHORUM['DATA']['LANG']['mod_embed_images']['LoadingImage']}\" />&nbsp;&nbsp;{$PHORUM["DATA"]["LANG"]["mod_embed_images"]["LoadingImage"]}';\n" .
+        "thumbnailviewer['defineLoading'] = '<img src=\"{$PHORUM["http_path"]}/mods/embed_images/viewers/dynadrive/code/loading.png\" alt=\"{$PHORUM['DATA']['LANG']['mod_embed_images']['LoadingImage']}\" />&nbsp;&nbsp;{$PHORUM["DATA"]["LANG"]["mod_embed_images"]["LoadingImage"]}';\n" .
         "thumbnailviewer['definefooter'] = '<div class=\"footerbar\">{$PHORUM["DATA"]["LANG"]["mod_embed_images"]["Close"]} X<\/div>';\n" .
         "thumbnailviewer['enableAnimation'] = " . (empty($PHORUM["mod_embed_images"]["dynadrive_animate"]) ? 'false' : 'true') . ";\n" .
         (empty($PHORUM["mod_embed_images"]["dynadrive_animate"]) ? "thumbnailviewer.opacitystring='';\n" : '') .

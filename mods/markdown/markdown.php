@@ -189,26 +189,26 @@ function phorum_mod_markdown_editor_tool_plugin()
         $PHORUM["DATA"]["LANG"]["mod_editor_tools"]["markdown_prompt_video"] = $l["prompt_video"];
     }
 
-    editor_tools_register_tool('b', 'Gras', './mods/markdown/icons/b.gif', 'editor_tools_handle_b()');
-    editor_tools_register_tool('i', 'Italique', './mods/markdown/icons/i.gif', 'editor_tools_handle_i()');
-    editor_tools_register_tool('u', 'Souligné', './mods/markdown/icons/u.gif', 'editor_tools_handle_u()');
-    editor_tools_register_tool('s', 'Barré', './mods/markdown/icons/s.gif', 'editor_tools_handle_s()');
-    editor_tools_register_tool('sub', 'Indice', './mods/markdown/icons/sub.gif', 'editor_tools_handle_sub()');
-    editor_tools_register_tool('sup', 'Exposant', './mods/markdown/icons/sup.gif', 'editor_tools_handle_sup()');
-    editor_tools_register_tool('center', 'Centrer', './mods/markdown/icons/center.gif', 'editor_tools_handle_center()');
-    editor_tools_register_tool('color', 'Couleur', './mods/markdown/icons/color.gif', 'editor_tools_handle_color()');
-    editor_tools_register_tool('size', 'Taille du texte', './mods/markdown/icons/size.gif', 'editor_tools_handle_size()');
-    editor_tools_register_tool('quote', 'Citation', './mods/markdown/icons/quote.gif', 'editor_tools_handle_quote()');
-    editor_tools_register_tool('code', 'Code', './mods/markdown/icons/code.gif', 'editor_tools_handle_code()');
-    editor_tools_register_tool('url', 'Lien', './mods/markdown/icons/url.gif', 'editor_tools_handle_url()');
-    editor_tools_register_tool('img', 'Image', './mods/markdown/icons/img.gif', 'editor_tools_handle_img()');
-    editor_tools_register_tool('hr', 'Ligne horizontale', './mods/markdown/icons/hr.gif', 'editor_tools_handle_hr()');
-    editor_tools_register_tool('list', 'Liste', './mods/markdown/icons/list.gif', 'editor_tools_handle_list()');
+    editor_tools_register_tool('b', 'Gras', './mods/markdown/icons/b.png', 'editor_tools_handle_b()');
+    editor_tools_register_tool('i', 'Italique', './mods/markdown/icons/i.png', 'editor_tools_handle_i()');
+    editor_tools_register_tool('u', 'Souligné', './mods/markdown/icons/u.png', 'editor_tools_handle_u()');
+    editor_tools_register_tool('s', 'Barré', './mods/markdown/icons/s.png', 'editor_tools_handle_s()');
+    editor_tools_register_tool('sub', 'Indice', './mods/markdown/icons/sub.png', 'editor_tools_handle_sub()');
+    editor_tools_register_tool('sup', 'Exposant', './mods/markdown/icons/sup.png', 'editor_tools_handle_sup()');
+    editor_tools_register_tool('center', 'Centrer', './mods/markdown/icons/center.png', 'editor_tools_handle_center()');
+    editor_tools_register_tool('color', 'Couleur', './mods/markdown/icons/color.png', 'editor_tools_handle_color()');
+    editor_tools_register_tool('size', 'Taille du texte', './mods/markdown/icons/size.png', 'editor_tools_handle_size()');
+    editor_tools_register_tool('quote', 'Citation', './mods/markdown/icons/quote.png', 'editor_tools_handle_quote()');
+    editor_tools_register_tool('code', 'Code', './mods/markdown/icons/code.png', 'editor_tools_handle_code()');
+    editor_tools_register_tool('url', 'Lien', './mods/markdown/icons/url.png', 'editor_tools_handle_url()');
+    editor_tools_register_tool('img', 'Image', './mods/markdown/icons/img.png', 'editor_tools_handle_img()');
+    editor_tools_register_tool('hr', 'Ligne horizontale', './mods/markdown/icons/hr.png', 'editor_tools_handle_hr()');
+    editor_tools_register_tool('list', 'Liste', './mods/markdown/icons/list.png', 'editor_tools_handle_list()');
 
     editor_tools_register_tool(
         'markdown_video',                  // Tool id
         'Vidéo',                           // Tool description
-        './mods/markdown/video_icon.gif',  // Tool button icon
+        './mods/markdown/video_icon.png',  // Tool button icon
         'markdown_video_editor_tool()'     // Javascript action on button click
     );
 

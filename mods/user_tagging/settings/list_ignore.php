@@ -8,14 +8,14 @@ $forums = phorum_api_forums_get();
 $vroot_folders = array();
 $vroot2forums  = array();
 $forumid2name  = array(
-    0 => "<img src=\"{$PHORUM['http_path']}/mods/user_tagging/settings/folder.gif\" style=\"border:0\"/>&nbsp;Top level forum folder"
+    0 => "<img src=\"{$PHORUM['http_path']}/mods/user_tagging/settings/folder.png\" style=\"border:0\"/>&nbsp;Top level forum folder"
 );
 foreach ($forums as $forum)
 {
     if ($forum['forum_id'] == $forum['vroot'])
     {
         $forumid2name[$forum['forum_id']]  =
-            "<img src=\"{$PHORUM['http_path']}/mods/user_tagging/settings/folder.gif\" style=\"border:0\"/>&nbsp;" .
+            "<img src=\"{$PHORUM['http_path']}/mods/user_tagging/settings/folder.png\" style=\"border:0\"/>&nbsp;" .
             addslashes(strip_tags($forum['name'])) .
             " (vroot {$forum['forum_id']})";
 
@@ -34,7 +34,7 @@ foreach ($vroot2forums as $vroot => $forums) {
         if (!empty($forum['folder_flag'])) continue;
         $path = $forum['forum_path'];
         $name = strip_tags(implode("::", $path));
-        $forumid2name[$fid] = "<img src=\"{$PHORUM['http_path']}/mods/user_tagging/settings/forum.gif\" style=\"border:0\"/>&nbsp;$name";
+        $forumid2name[$fid] = "<img src=\"{$PHORUM['http_path']}/mods/user_tagging/settings/forum.png\" style=\"border:0\"/>&nbsp;$name";
         array_shift($path);
         $name = strip_tags(implode("::", $path));
         $vroot2forums[$vroot][$fid]["strpath"] = $name;

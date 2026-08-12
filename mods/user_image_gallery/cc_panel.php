@@ -38,7 +38,7 @@ if (empty($PHORUM['mod_user_image_gallery']['image_info'])) {
 $messages = array();
 // format of $messages:
 // $messages[0]['type'] = MOD_USER_IMAGE_GALLERY_INFO
-// $messages[0]['message'] = 'File zanzibar.gif uploaded successfully.'
+// $messages[0]['message'] = 'File zanzibar.png uploaded successfully.'
 // $messages[1]['type'] = MOD_USER_IMAGE_GALLERY_WARNING
 // $messages[1]['message'] = 'File luigi.png could not be uploaded: You have exceeded the number of pictures you can have in your account.'
 

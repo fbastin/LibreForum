@@ -23,7 +23,7 @@
 {DEFINE tidy_template 0}
 
 {! -- This is the image for the gauge bar to show how full the PM box is -- }
-{VAR gauge_image "templates/emerald/images/gauge.gif"}
+{VAR gauge_image "templates/emerald/images/gauge.png"}
 
 {! -- Fonts -- }
 

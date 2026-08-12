@@ -143,7 +143,7 @@ function hide_help()
 </head>
 <body>
 <div id="helpdiv">
-<div id="helpdiv-hide"><a href="javascript:hide_help();"><img border="0" src="<?php print $PHORUM['http_path'] ?>/images/close.gif" height="16" width="16" /></a></div>
+<div id="helpdiv-hide"><a href="javascript:hide_help();"><img border="0" src="<?php print $PHORUM['http_path'] ?>/images/close.png" height="16" width="16" /></a></div>
 <div id="helpdiv-title">&nbsp;LibreForum Admin Help</div>
 <div id="helpdiv-content">
 <div id="help-title"></div>
@@ -347,9 +347,9 @@ LibreForum Status:
         echo $layout->fetchAndRemoveRemaining();
 
 ?>
-<img src="<?php echo "$PHORUM[http_path]/images/trans.gif"; ?>" alt="" border="0" width="150" height="1" />
+<img src="<?php echo "$PHORUM[http_path]/images/trans.png"; ?>" alt="" border="0" width="150" height="1" />
     </td>
-    <td valign="top"><img src="<?php echo "$PHORUM[http_path]/images/trans.gif"; ?>" alt="" border="0" width="15" height="15" /></td>
+    <td valign="top"><img src="<?php echo "$PHORUM[http_path]/images/trans.png"; ?>" alt="" border="0" width="15" height="15" /></td>
 <?php
     }
 ?>

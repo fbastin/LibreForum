@@ -67,19 +67,19 @@ function image_viewer_common()
               "/mods/embed_images/viewers/lightbox/code/images";
     $PHORUM['DATA']['HEAD_TAGS'] .=
         "<script type=\"text/javascript\">\n// <![CDATA[\n" .
-        "  fileLoadingImage = '$images/loading.gif';\n" .
-        "  fileBottomNavCloseImage = '$images/close.gif';\n" .
+        "  fileLoadingImage = '$images/loading.png';\n" .
+        "  fileBottomNavCloseImage = '$images/close.png';\n" .
         "</script>" .
         "<style type=\"text/css\">\n" .
         "  #imageData #bottomNavClose{ text-align:right; }\n" .
         "  #prevLink, #nextLink{\n" .
-        "    background: transparent url($images/blank.gif) no-repeat;\n" .
+        "    background: transparent url($images/blank.png) no-repeat;\n" .
         "  }\n" .
         "  #prevLink:hover, #prevLink:visited:hover {\n" .
-        "    background: url($images/prevlabel.gif) left 15% no-repeat;\n" .
+        "    background: url($images/prevlabel.png) left 15% no-repeat;\n" .
         "  }\n" .
         "  #nextLink:hover, #nextLink:visited:hover {\n" .
-        "    background: url($images/nextlabel.gif) right 15% no-repeat;\n" .
+        "    background: url($images/nextlabel.png) right 15% no-repeat;\n" .
         "  }\n" .
         "// ]]>\n</style>\n";
 }

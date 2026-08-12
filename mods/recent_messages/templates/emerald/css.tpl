@@ -1,5 +1,5 @@
 a.mod_jumpmenu_menu_item.recent_messages {
-    background-image: url({URL->HTTP_PATH}/mods/recent_messages/templates/emerald/icon_recent_messages.gif);
+    background-image: url({URL->HTTP_PATH}/mods/recent_messages/templates/emerald/icon_recent_messages.png);
 }
 
 #phorum .recent_messages .options {

@@ -169,7 +169,7 @@ function phorum_mod_editor_tools_before_footer()
 
         // Default for the icon to use.
         if ($toolinfo[TOOL_ICON] === NULL) {
-            $toolinfo[TOOL_ICON] = MOD_EDITOR_TOOLS_ICONS . "/{$tool_id}.gif";
+            $toolinfo[TOOL_ICON] = MOD_EDITOR_TOOLS_ICONS . "/{$tool_id}.png";
         }
 
         // Default for the javascript action to use.
@@ -288,7 +288,7 @@ function phorum_mod_editor_tools_before_footer()
  *     The path to the icon image that has to be used for the button.
  *     This path is relative to the LibreForum web directory. NULL is allowed
  *     as the value. In that case, the icon will be
- *     <module icon path>/<$tool_id>.gif.
+ *     <module icon path>/<$tool_id>.png.
  *
  * @param mixed $jsaction
  *     The javascript code to execute when a user clicks on the editor

@@ -13,8 +13,8 @@ Tireur.org n'a pas pour vocation d'être un site à but lucratif, et repose fina
 <!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="9Y5RH4T3BDP7S">
-<input type="image" src="https://www.paypal.com/fr_FR/BE/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !">
-<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+<input type="image" src="https://www.paypal.com/fr_FR/BE/i/btn/btn_donateCC_LG.png" border="0" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !">
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.png" width="1" height="1">
 </form>-->
 
 </div>

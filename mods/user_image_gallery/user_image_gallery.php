@@ -233,7 +233,7 @@ function mod_user_image_gallery_get_image_info ($image_id) {
   $allinfo = array_merge($info1, $info2);
   $allinfo['dateadded'] = phorum_date($PHORUM['short_date_time'], $allinfo['add_datetime']);
   $allinfo['moddate'] = phorum_date($PHORUM["short_date_time"], $allinfo['mod_date']);
-  $allinfo['url'] = phorum_get_url(PHORUM_FILE_URL, 'file='.$image_id, 'modified='.$allinfo['mod_date'], 'filename='.urlencode($allinfo['filename']));    // file=(number) is enough to get the file -- filename=(filename) is helpful, but not required (and, in fact, ignored) (but some browsers require, for example, a gif image to have a url ending in '.gif' -- it also helps to identify the file, in case something unexpected happens)
+  $allinfo['url'] = phorum_get_url(PHORUM_FILE_URL, 'file='.$image_id, 'modified='.$allinfo['mod_date'], 'filename='.urlencode($allinfo['filename']));    // file=(number) is enough to get the file -- filename=(filename) is helpful, but not required (and, in fact, ignored) (but some browsers require, for example, a gif image to have a url ending in '.png' -- it also helps to identify the file, in case something unexpected happens)
   $allinfo['owner'] = phorum_api_user_get_display_name($allinfo['user_id'], NULL, PHORUM_FLAG_HTML);
   return $allinfo;
 }

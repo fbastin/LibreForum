@@ -134,7 +134,7 @@ $row = $frm->addrow(
 $frm->addhelp($row,
     "Plain image URLs",
     "If this option is enabled, then the module will recognize plain URLs
-     that are placed in the body and which point to a .gif .jpg or .png file."
+     that are placed in the body and which point to a .png .jpg or .png file."
 );
 
 $row = $frm->addrow(
@@ -149,7 +149,7 @@ $frm->addhelp($row,
      body. These links look like
      <span style=\"white-space: nowrap\">\"[attachment &lt;file id&gt; &lt;description&gt;]\"</span><br />
      With this option enabled, these links will be shown as embedded images
-     in case the attachment contains a .gif .jpg or .png file.<br />"
+     in case the attachment contains a .png .jpg or .png file.<br />"
 );
 
 $row = $frm->addrow(
@@ -159,7 +159,7 @@ $row = $frm->addrow(
 );
 $frm->addhelp($row,
     "All image attachments",
-    "If this option is enabled, then all .gif .jpg or .png attachments will
+    "If this option is enabled, then all .png .jpg or .png attachments will
      be shown as embedded images, even if they are not explicitly placed in
      the body by the message author."
 );

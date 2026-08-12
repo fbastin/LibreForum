@@ -4,11 +4,11 @@ function mod_embed_images_initviewer(container, image, link, url, message_id)
                   '/mods/embed_images/viewers/jquery_lightbox/code/images/';
 
     var settings = {
-        imageLoading  : imgpath + 'lightbox-ico-loading.gif',
-        imageBtnPrev  : imgpath + 'lightbox-btn-prev.gif',
-        imageBtnNext  : imgpath + 'lightbox-btn-next.gif',
-        imageBtnClose : imgpath + 'lightbox-btn-close.gif',
-        imageBlank    : imgpath + 'lightbox-blank.gif',
+        imageLoading  : imgpath + 'lightbox-ico-loading.png',
+        imageBtnPrev  : imgpath + 'lightbox-btn-prev.png',
+        imageBtnNext  : imgpath + 'lightbox-btn-next.png',
+        imageBtnClose : imgpath + 'lightbox-btn-close.png',
+        imageBlank    : imgpath + 'lightbox-blank.png',
     };
 
     var a = document.createElement('a');

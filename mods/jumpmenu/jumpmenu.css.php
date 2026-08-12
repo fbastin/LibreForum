@@ -31,7 +31,7 @@ a.mod_jumpmenu_menu_separator
     padding: 0 8px 0 25px;
     text-decoration: none;
     cursor: default;
-    background-image: url(<?php print $PHORUM['http_path'] ?>/mods/jumpmenu/templates/separator.gif);
+    background-image: url(<?php print $PHORUM['http_path'] ?>/mods/jumpmenu/templates/separator.png);
     background-position: center left;
     background-repeat: repeat-x;
 }
@@ -53,7 +53,7 @@ a.mod_jumpmenu_menu_item.mod_jumpmenu_highlighted
 
 a.mod_jumpmenu_folder
 {
-    background-image: url(<?php print $PHORUM['http_path'] ?>/mods/jumpmenu/templates/folder.gif);
+    background-image: url(<?php print $PHORUM['http_path'] ?>/mods/jumpmenu/templates/folder.png);
     background-position: 5px 1px;
     background-repeat: no-repeat;
     cursor: default;
@@ -62,7 +62,7 @@ a.mod_jumpmenu_folder
 
 a.mod_jumpmenu_forum
 {
-    background-image: url(<?php print $PHORUM['http_path'] ?>/mods/jumpmenu/templates/forum.gif);
+    background-image: url(<?php print $PHORUM['http_path'] ?>/mods/jumpmenu/templates/forum.png);
     background-position: 5px 1px;
     background-repeat: no-repeat;
     color: black;

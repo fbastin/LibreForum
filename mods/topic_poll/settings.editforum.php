@@ -10,9 +10,9 @@ while ($entry = readdir($dir)) {
    if ($entry != '.' && $entry != '..' &&
        file_exists("$base/$entry/style.css")) {
       $preview = 0;
-      if (file_exists("$base/$entry/preview.gif")) {
+      if (file_exists("$base/$entry/preview.png")) {
         $preview = $GLOBALS["PHORUM"]["http_path"] .
-                   "/$base/$entry/preview.gif";
+                   "/$base/$entry/preview.png";
       }
       $styles[$entry] = $preview;
     }

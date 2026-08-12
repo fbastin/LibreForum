@@ -123,7 +123,7 @@
 
                         {IF OPTION_ALLOWED->subscribe_mail}
                           <div id="subscription-mail-div">
-                            <img src="{URL->TEMPLATE}/images/tree-L.gif" border="0" alt="tree-L" />
+                            <img src="{URL->TEMPLATE}/images/tree-L.png" border="0" alt="tree-L" />
                             <input type="checkbox" id="subscription-mail" name="subscription_mail" value="1" {IF POSTING->subscription "message"}checked="checked"{/IF} /> <label for="subscription-mail"><small>{LANG->EmailReplies}</small></label>
                           </div>
 

@@ -16,7 +16,7 @@
 {DEFINE show_notify_for_pages "index,list,cc"}
 
 {! -- This is the image for the gauge bar to show how full the PM box is -- }
-{VAR gauge_image "templates/emerald/images/gauge.gif"}
+{VAR gauge_image "templates/emerald/images/gauge.png"}
 
 {! --- Apply some compression to the template data. This feature is      --- }
 {! --- implemented by LibreForum's template parsing code. Possible values    --- }

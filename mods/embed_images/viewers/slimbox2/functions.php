@@ -58,16 +58,16 @@ function image_viewer_common()
     $PHORUM['DATA']['HEAD_TAGS'] .=
         "<style type=\"text/css\">\n" .
         "  .lbLoading {\n" .
-        "    background: #fff url($images/loading.gif) no-repeat center;\n" .
+        "    background: #fff url($images/loading.png) no-repeat center;\n" .
         "  }\n" .
         "  #lbPrevLink:hover {\n" .
-        "    background: transparent url($images/prevlabel.gif) no-repeat 0% 15%;\n" .
+        "    background: transparent url($images/prevlabel.png) no-repeat 0% 15%;\n" .
         "  }\n" .
         "  #lbNextLink:hover {\n" .
-        "    background: transparent url($images/nextlabel.gif) no-repeat 100% 15%;\n" .
+        "    background: transparent url($images/nextlabel.png) no-repeat 100% 15%;\n" .
         "  }\n" .
         "  #lbCloseLink {\n" .
-        "    background: transparent url($images/closelabel.gif) no-repeat center;\n" .
+        "    background: transparent url($images/closelabel.png) no-repeat center;\n" .
         "  }\n" .
         "</style>\n";
 }

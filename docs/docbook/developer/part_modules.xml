@@ -1320,7 +1320,7 @@ $PHORUM["DATA"]["URL"]["MYFILE"] = $url; ]]></programlisting>
           option under "General Settings" in the admin interface.
         </para>
         <para>
-          Let's asume you have a file named <filename>foobar.gif</filename>
+          Let's asume you have a file named <filename>foobar.png</filename>
           in your "foo" module tree, then you could generate the URL for
           that file like this:
           <example>
@@ -1332,8 +1332,8 @@ $PHORUM["DATA"]["URL"]["MYFILE"] = $url; ]]></programlisting>
 // the global $PHORUM variable needs to be imported.
 global $PHORUM;
 
-// Build the URL for the foobar.gif.
-$url = $PHORUM['http_path'] . "/mods/foo/foobar.gif";
+// Build the URL for the foobar.png.
+$url = $PHORUM['http_path'] . "/mods/foo/foobar.png";
 
 // After this, you could store the URL in the template data, so you
 // can use it from the templates. Here an example for filling the

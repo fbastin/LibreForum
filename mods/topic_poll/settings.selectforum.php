@@ -38,7 +38,7 @@
 
         $name = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", $level);
         $name .= '<img border="0" src="'.$PHORUM["http_path"].'/mods/topic_poll/images/' .
-            ($node["folder_flag"] ? "folder.gif" : "forum.gif") . '" alt="" /> ' .
+            ($node["folder_flag"] ? "folder.png" : "forum.png") . '" alt="" /> ' .
                  ((!$node["folder_flag"] && $settings["permission"] != 0) ? "<b>" : "") .
                  $node["name"] .
                  ((!$node["folder_flag"] && $settings["permission"] != 0) ? "</b>" : "");

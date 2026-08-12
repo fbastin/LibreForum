@@ -150,7 +150,7 @@ function phorum_mod_embed_images_format($data)
             foreach ($m[0] as $mid => $match)
             {
                 // Try to determine the image filename. If we cannot find
-                // an image file name (ending in .jp(e)g, .gif or .png), we
+                // an image file name (ending in .jp(e)g, .png or .png), we
                 // skip the URL.
                 $name = basename($m[1][$mid]);
                 $name = preg_replace('/\?.*$/', '', $name);
@@ -296,7 +296,7 @@ function embed_images_bbcode_img_handler($content, $args, &$message)
     }
 
     // Try to determine the image filename. If we cannot find
-    // a reliable name (ending in .jp(e)g, .gif or .png), we
+    // a reliable name (ending in .jp(e)g, .png or .png), we
     // fallback to an empty string.
     $name = basename($args['img']);
     $name = preg_replace('/\?.*$/', '', $name);
@@ -674,7 +674,7 @@ function mod_embed_images_cache_put($key, $requested_size, $val)
             if ($val['mime'] == 'image/png')  $ext = '.png';
         elseif ($val['mime'] == 'image/jpeg') $ext = '.jpg';
         elseif ($val['mime'] == 'image/jpg')  $ext = '.jpg';
-        elseif ($val['mime'] == 'image/gif')  $ext = '.gif';
+        elseif ($val['mime'] == 'image/gif')  $ext = '.png';
         else die("mod_embed_images_cache_put(): " .
                  "MIME type $val[mime] is not handled");
 
