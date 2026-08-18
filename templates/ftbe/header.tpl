@@ -155,7 +155,7 @@ Some Icons courtesy of:
 <div id="wrapper">
 
 <header id="header">
-    <a href="/index.php"><img src="/images/logo-site.webp" alt="Tireur.org" class="site-logo" /></a>
+    <a href="/index.php"><img src="/Pictures/logo_realistic_5.svg" alt="Tireur.org" class="site-logo" /></a>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/nav_search.php'; ?>
 </header>
 
