@@ -2,3 +2,9 @@ Changelog:
 ----------
 
 2009-12-27 v0.9: initial release.
+2026-08-22 : modification locale (tireur.org).
+  La retenue n'est plus levee par la visite du forum mais par la lecture du
+  fil concerne. Voir le bloc de commentaire dans single_notification.php :
+  db_del() recoit desormais thread_id, et le crochet common() ne s'applique
+  qu'aux pages read.php. Sans ce correctif, ouvrir une alerte rearmait la
+  notification pour tous les fils du meme forum et le module ne retenait rien.
