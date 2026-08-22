@@ -6,19 +6,19 @@ function mod_single_notification_init() {
 	
 }
 
-// MODIFICATION LOCALE (tireur.org) --------------------------------------------
+// Portee de la remise a zero : le fil lu, et non le forum visite.
+// -----------------------------------------------------------------------------
+// Ce crochet effaçait auparavant TOUTES les retenues du forum consulte
+// (db_del sans clause thread_id), et ce des la liste des sujets. Ouvrir
+// l'alerte d'une discussion rearmait donc la notification pour tous les autres
+// fils du meme forum. Sur un forum ou les reponses sont espacees de plusieurs
+// jours et ou l'abonne passe tous les jours, la retenue etait systematiquement
+// levee avant l'arrivee du message suivant : le module ne retenait plus rien
+// et chaque message donnait un courriel — l'inverse de ce qu'il annonce.
 //
-// Version d'origine : toute page d'un forum consultee en etant connecte
-// effaçait TOUTES les retenues de ce forum (db_del sans clause thread_id).
-// Consequence : ouvrir l'alerte d'un fil rearmait la notification pour tous
-// les autres fils du meme forum. Sur un forum ou les reponses sont espacees
-// de plusieurs jours et ou l'abonne passe tous les jours, la retenue etait
-// systematiquement levee avant l'arrivee du message suivant : le module ne
-// retenait plus rien et chaque message donnait un courriel.
-//
-// Version locale : la retenue n'est levee que par la LECTURE DU FIL concerne.
-// Le module tient alors sa promesse — une alerte par discussion tant qu'elle
-// n'a pas ete lue — au lieu d'une alerte par discussion et par visite.
+// La retenue n'est desormais levee que par la LECTURE DU FIL concerne. Le
+// module tient alors sa promesse : une alerte par discussion tant qu'elle n'a
+// pas ete lue, au lieu d'une alerte par discussion et par visite.
 //
 // Corollaire assume : un fil dont l'alerte n'est jamais ouverte ne redonnera
 // plus d'alerte, quel que soit le nombre de reponses qui s'y accumulent.
