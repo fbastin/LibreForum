@@ -51,6 +51,13 @@ function phorum_mod_pdfpages_addon() {
     include_once("./include/email_functions.php");
     include_once("./include/format_functions.php");
 
+    // Ce point d'entrée est public (addon.php) : l'argument peut manquer, et
+    // les robots l'appellent sans. Sans ce garde, PHP émet un « Undefined
+    // array key "thread" » puis la suite travaille sur un identifiant vide
+    // (13 relevés dans le journal d'Apache au 2026-09-13).
+    if (empty($PHORUM['args']['thread'])) {
+        return;
+    }
     $thread = $PHORUM['args']['thread'];
 
     $PHORUM["threaded_read"]=0;
