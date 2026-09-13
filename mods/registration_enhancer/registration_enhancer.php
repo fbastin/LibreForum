@@ -35,8 +35,13 @@ function phorum_mod_registration_enhancer_after($userdata) {
     
     // Simple fetch from ip-api.com (timeout 2s to not block registration)
     if ($ip && $ip != '127.0.0.1' && $ip != '::1') {
+        // HTTPS : l'adresse IP d'un inscrit est une donnée personnelle, elle
+        // ne doit pas transiter en clair vers un tiers. ip-api.com ne sert le
+        // HTTPS qu'aux comptes payants (403 en gratuit, vérifié le
+        // 2026-09-13) ; ipwho.is le fait gratuitement et renvoie exactement le
+        // même {"country":"..."} , d'où la substitution directe.
         $ctx = stream_context_create(array('http' => array('timeout' => 2)));
-        $json = @file_get_contents("http://ip-api.com/json/{$ip}?fields=country", false, $ctx);
+        $json = @file_get_contents("https://ipwho.is/{$ip}?fields=country", false, $ctx);
         if ($json) {
             $data = json_decode($json, true);
             if (!empty($data['country'])) {
@@ -94,27 +99,28 @@ function phorum_mod_registration_enhancer_user_save($user) {
     
     // Check if the user is being approved by transitioning to PHORUM_USER_ACTIVE
     if (isset($user['user_id']) && isset($user['active']) && $user['active'] == PHORUM_USER_ACTIVE) {
-        // We fetch the old user state to see if it was pending
-        $old_user = phorum_api_user_get($user['user_id']);
-        if ($old_user && $old_user['active'] == PHORUM_USER_PENDING_MOD) {
-            
-            // Build the login URL
-            if (!function_exists('phorum_get_url')) {
-                include_once("./common.php");
-            }
-            $login_url = phorum_get_url(PHORUM_LOGIN_URL);
-            
-            // User just got approved!
-            $mail_data = array(
-                "mailsubject" => "Votre compte est approuvé !",
-                "mailmessage" => "Bonjour " . $old_user["username"] . ",\n\n" .
-                                 "Bonne nouvelle : votre compte sur " . $PHORUM["title"] . " a été approuvé par l'équipe de modération.\n" .
-                                 "Vous pouvez dès à présent vous connecter et participer au forum via ce lien :\n" .
-                                 $login_url . "\n\n" .
-                                 "À très bientôt sur le forum !"
-            );
-            phorum_email_user(array($old_user["email"]), $mail_data);
-        }
+        // Ce module N'ENVOIE PLUS de message d'approbation : Phorum le fait
+        // déjà. include/controlcenter/users.php envoie RegApprovedSubject /
+        // RegApprovedEmailBody juste avant phorum_api_user_save(), qui
+        // déclenche ce hook — l'utilisateur recevait donc DEUX courriels à la
+        // même minute (« Votre compte a été approuvé. » puis « Votre compte
+        // est approuvé ! »), constaté le 2026-09-13.
+        //
+        // C'est l'envoi du module qui est retiré, pas celui de Phorum : le
+        // message natif porte déjà le lien de connexion, et toucher au cœur
+        // priverait de ce courriel les installations de LibreForum qui n'ont
+        // pas ce module. Pour personnaliser le texte, modifier les chaînes
+        // RegApprovedSubject / RegApprovedEmailBody dans include/lang/.
+        //
+        // La fonction et sa déclaration `hook: user_save` sont CONSERVÉES à
+        // dessein : le setting `hooks` en base cite cette fonction, et c'est
+        // lui qui pilote l'exécution. La supprimer du fichier sans
+        // reconstruire `hooks` par Admin → Modules ferait appeler une
+        // fonction inexistante à chaque sauvegarde d'utilisateur.
+        //
+        // Le module garde par ailleurs ses deux autres rôles : filtrage des
+        // adresses à l'inscription (before_register) et alerte aux
+        // modérateurs (after_register).
     }
     return $user;
 }
