@@ -1,7 +1,43 @@
 <?php
 if(!defined("PHORUM")) return;
 
+/**
+ * Renvoie une chaine du module, jetons %xxx% substitues.
+ *
+ * Les textes vivent dans mods/registration_enhancer/lang/, que common.php
+ * charge selon la langue du forum (avec repli sur PHORUM_DEFAULT_LANGUAGE).
+ * Le repli sur la cle elle-meme evite d'expedier un courriel vide si le
+ * fichier de langue venait a manquer.
+ */
+function phorum_mod_registration_enhancer_lang($key, $tokens = array())
+{
+    global $PHORUM;
+
+    // common.php ne charge le fichier de langue d'un module que si celui-ci
+    // declare « hook: lang| » ET que le setting `hooks` en base a ete
+    // reconstruit depuis (Admin -> Modules). Sur une installation ou ce
+    // n'est pas encore le cas, on le charge ici : sans ce repli, les
+    // courriels partiraient avec le nom des cles a la place des textes.
+    if (!isset($PHORUM['DATA']['LANG']['mod_registration_enhancer'])) {
+        $langue = isset($PHORUM['language'])
+                ? basename($PHORUM['language']) : PHORUM_DEFAULT_LANGUAGE;
+        foreach (array($langue, PHORUM_DEFAULT_LANGUAGE) as $essai) {
+            $fichier = "./mods/registration_enhancer/lang/$essai.php";
+            if (file_exists($fichier)) { include_once $fichier; break; }
+        }
+    }
+
+    $lang = isset($PHORUM['DATA']['LANG']['mod_registration_enhancer'])
+          ? $PHORUM['DATA']['LANG']['mod_registration_enhancer'] : array();
+    $text = isset($lang[$key]) ? $lang[$key] : $key;
+    foreach ($tokens as $token => $value) {
+        $text = str_replace("%$token%", $value, $text);
+    }
+    return $text;
+}
+
 function phorum_mod_registration_enhancer_before($userdata) {
+    global $PHORUM;
     // 1. Check MX record and disposable domains for the email
     if (!empty($userdata['email'])) {
         $parts = explode('@', $userdata['email']);
@@ -10,14 +46,14 @@ function phorum_mod_registration_enhancer_before($userdata) {
             
             // Check for valid MX records
             if (!checkdnsrr($domain, 'MX') && !checkdnsrr($domain, 'A')) {
-                $userdata['error'] = "L'adresse e-mail fournie semble invalide (aucun serveur de réception trouvé pour ce domaine).";
+                $userdata['error'] = phorum_mod_registration_enhancer_lang('InvalidEmailDomain');
                 return $userdata;
             }
             
             // Basic blacklist for disposable emails
             $blacklist = array('yopmail.com', 'yopmail.fr', '10minutemail.com', 'trashmail.com', 'mailinator.com', 'guerrillamail.com', 'temp-mail.org');
             if (in_array(strtolower($domain), $blacklist)) {
-                $userdata['error'] = "Les adresses e-mail jetables ne sont pas autorisées sur ce forum.";
+                $userdata['error'] = phorum_mod_registration_enhancer_lang('DisposableEmail');
                 return $userdata;
             }
         }
@@ -31,7 +67,7 @@ function phorum_mod_registration_enhancer_after($userdata) {
 
     // 2. Get IP and Country
     $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
-    $country = "Inconnu";
+    $country = phorum_mod_registration_enhancer_lang('UnknownCountry');
     
     // Simple fetch from ip-api.com (timeout 2s to not block registration)
     if ($ip && $ip != '127.0.0.1' && $ip != '::1') {
@@ -61,16 +97,16 @@ function phorum_mod_registration_enhancer_after($userdata) {
         $admin_url = phorum_get_url(PHORUM_CONTROLCENTER_URL, "panel=users");
         
         $mail_users = phorum_api_user_list_moderators($PHORUM['forum_id'], false, true);
+        $tokens = array(
+            'username' => $userdata["username"],
+            'email'    => $userdata["email"],
+            'ip'       => $ip,
+            'country'  => $country,
+            'url'      => $admin_url,
+        );
         $mail_data = array(
-            "mailsubject" => "Nouvelle inscription (en attente) : " . $userdata["username"],
-            "mailmessage" => "Un nouvel utilisateur vient de s'inscrire sur le forum.\n\n" .
-                             "Nom d'utilisateur : " . $userdata["username"] . "\n" .
-                             "E-mail : " . $userdata["email"] . "\n\n" .
-                             "--- Informations de connexion ---\n" .
-                             "Adresse IP : " . $ip . "\n" .
-                             "Pays détecté : " . $country . "\n\n" .
-                             "Vous pouvez valider ou refuser ce compte en cliquant sur le lien ci-dessous :\n" .
-                             $admin_url . "\n"
+            "mailsubject" => phorum_mod_registration_enhancer_lang('ModNotifySubject', $tokens),
+            "mailmessage" => phorum_mod_registration_enhancer_lang('ModNotifyBody', $tokens)
         );
         phorum_email_user($mail_users, $mail_data);
     }
@@ -79,13 +115,13 @@ function phorum_mod_registration_enhancer_after($userdata) {
     // Actually, if VERIFY_BOTH is active, they will receive the confirmation link first. We should tell them about the manual moderation after they click.
     // That happens in register.php when approve is passed. It might be better to send the "pending" email directly here if it's VERIFY_MODERATOR only.
     if ($PHORUM["registration_control"] == PHORUM_REGISTER_VERIFY_MODERATOR) {
+        $tokens = array(
+            'username' => $userdata["username"],
+            'title'    => $PHORUM["title"],
+        );
         $mail_data = array(
-            "mailsubject" => "Votre compte est en cours d'examen",
-            "mailmessage" => "Bonjour " . $userdata["username"] . ",\n\n" .
-                             "Votre compte a bien été créé sur " . $PHORUM["title"] . ".\n" .
-                             "Il est actuellement en cours d'examen par notre équipe de modération.\n" .
-                             "Vous recevrez un nouvel e-mail dès qu'il aura été approuvé.\n\n" .
-                             "Merci de votre patience !"
+            "mailsubject" => phorum_mod_registration_enhancer_lang('PendingSubject', $tokens),
+            "mailmessage" => phorum_mod_registration_enhancer_lang('PendingBody', $tokens)
         );
         phorum_email_user(array($userdata["email"]), $mail_data);
     }
