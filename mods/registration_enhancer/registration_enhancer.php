@@ -69,7 +69,7 @@ function phorum_mod_registration_enhancer_after($userdata) {
     $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
     $country = phorum_mod_registration_enhancer_lang('UnknownCountry');
     
-    // Simple fetch from ip-api.com (timeout 2s to not block registration)
+    // Recherche du pays, bornée à 2 s pour ne jamais retarder une inscription.
     if ($ip && $ip != '127.0.0.1' && $ip != '::1') {
         // HTTPS : l'adresse IP d'un inscrit est une donnée personnelle, elle
         // ne doit pas transiter en clair vers un tiers. ip-api.com ne sert le
