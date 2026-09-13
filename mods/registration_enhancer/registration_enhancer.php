@@ -2,22 +2,22 @@
 if(!defined("PHORUM")) return;
 
 /**
- * Renvoie une chaine du module, jetons %xxx% substitues.
+ * Returns one of this module's strings, with %tokens% substituted.
  *
- * Les textes vivent dans mods/registration_enhancer/lang/, que common.php
- * charge selon la langue du forum (avec repli sur PHORUM_DEFAULT_LANGUAGE).
- * Le repli sur la cle elle-meme evite d'expedier un courriel vide si le
- * fichier de langue venait a manquer.
+ * The texts live in mods/registration_enhancer/lang/, which common.php loads
+ * for the active forum language (falling back to PHORUM_DEFAULT_LANGUAGE).
+ * Falling back to the key itself prevents sending an empty email should the
+ * language file ever go missing.
  */
 function phorum_mod_registration_enhancer_lang($key, $tokens = array())
 {
     global $PHORUM;
 
-    // common.php ne charge le fichier de langue d'un module que si celui-ci
-    // declare « hook: lang| » ET que le setting `hooks` en base a ete
-    // reconstruit depuis (Admin -> Modules). Sur une installation ou ce
-    // n'est pas encore le cas, on le charge ici : sans ce repli, les
-    // courriels partiraient avec le nom des cles a la place des textes.
+    // common.php only loads a module's language file when that module
+    // declares "hook: lang|" AND the `hooks` setting in the database has been
+    // rebuilt since (Admin -> Modules). On an installation where that has not
+    // happened yet, we load it here: without this fallback, emails would go
+    // out with key names in place of the actual texts.
     if (!isset($PHORUM['DATA']['LANG']['mod_registration_enhancer'])) {
         $langue = isset($PHORUM['language'])
                 ? basename($PHORUM['language']) : PHORUM_DEFAULT_LANGUAGE;
@@ -69,13 +69,13 @@ function phorum_mod_registration_enhancer_after($userdata) {
     $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
     $country = phorum_mod_registration_enhancer_lang('UnknownCountry');
     
-    // Simple fetch from ip-api.com (timeout 2s to not block registration)
+    // Country lookup, capped at 2s so it never holds up a registration.
     if ($ip && $ip != '127.0.0.1' && $ip != '::1') {
-        // HTTPS : l'adresse IP d'un inscrit est une donnée personnelle, elle
-        // ne doit pas transiter en clair vers un tiers. ip-api.com ne sert le
-        // HTTPS qu'aux comptes payants (403 en gratuit, vérifié le
-        // 2026-09-13) ; ipwho.is le fait gratuitement et renvoie exactement le
-        // même {"country":"..."} , d'où la substitution directe.
+        // HTTPS: a registrant's IP address is personal data and must not
+        // travel to a third party in the clear. ip-api.com only serves HTTPS
+        // to paying accounts (403 on the free tier, checked 2026-09-13);
+        // ipwho.is does it for free and returns the very same
+        // {"country":"..."}, hence the drop-in replacement.
         $ctx = stream_context_create(array('http' => array('timeout' => 2)));
         $json = @file_get_contents("https://ipwho.is/{$ip}?fields=country", false, $ctx);
         if ($json) {
@@ -135,28 +135,27 @@ function phorum_mod_registration_enhancer_user_save($user) {
     
     // Check if the user is being approved by transitioning to PHORUM_USER_ACTIVE
     if (isset($user['user_id']) && isset($user['active']) && $user['active'] == PHORUM_USER_ACTIVE) {
-        // Ce module N'ENVOIE PLUS de message d'approbation : Phorum le fait
-        // déjà. include/controlcenter/users.php envoie RegApprovedSubject /
-        // RegApprovedEmailBody juste avant phorum_api_user_save(), qui
-        // déclenche ce hook — l'utilisateur recevait donc DEUX courriels à la
-        // même minute (« Votre compte a été approuvé. » puis « Votre compte
-        // est approuvé ! »), constaté le 2026-09-13.
+        // This module deliberately sends NO approval message: Phorum already
+        // does. include/controlcenter/users.php sends RegApprovedSubject /
+        // RegApprovedEmailBody right before phorum_api_user_save(), which in
+        // turn fires this hook -- so the user received TWO emails within the
+        // same minute ("Your account has been approved." followed by the
+        // module's own wording). Observed 2026-09-13.
         //
-        // C'est l'envoi du module qui est retiré, pas celui de Phorum : le
-        // message natif porte déjà le lien de connexion, et toucher au cœur
-        // priverait de ce courriel les installations de LibreForum qui n'ont
-        // pas ce module. Pour personnaliser le texte, modifier les chaînes
-        // RegApprovedSubject / RegApprovedEmailBody dans include/lang/.
+        // It is the module's email that was dropped, not Phorum's: the native
+        // message already carries the login link, and touching the core would
+        // deprive installations without this module of that email. To reword
+        // it, edit RegApprovedSubject / RegApprovedEmailBody in include/lang/.
         //
-        // La fonction et sa déclaration `hook: user_save` sont CONSERVÉES à
-        // dessein : le setting `hooks` en base cite cette fonction, et c'est
-        // lui qui pilote l'exécution. La supprimer du fichier sans
-        // reconstruire `hooks` par Admin → Modules ferait appeler une
-        // fonction inexistante à chaque sauvegarde d'utilisateur.
+        // The function and its "hook: user_save" declaration are kept on
+        // purpose, emptied: the `hooks` setting in the database names this
+        // function, and that setting is what drives execution. Removing it
+        // from the file without rebuilding `hooks` from Admin -> Modules
+        // would call a non-existent function on every user save.
         //
-        // Le module garde par ailleurs ses deux autres rôles : filtrage des
-        // adresses à l'inscription (before_register) et alerte aux
-        // modérateurs (after_register).
+        // The module keeps its two other roles: address filtering at
+        // registration time (before_register) and the moderator alert
+        // (after_register).
     }
     return $user;
 }
