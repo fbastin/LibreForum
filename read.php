@@ -250,7 +250,18 @@ if($PHORUM['cache_messages'] &&
 
         // Check if we really have requested the thread.
         // If not, then we redirect back to the message list.
-        if (!empty($data[$thread]['parent_id'])) {
+        //
+        // The empty() test covers a case the parent_id test alone misses:
+        // phorum_db_get_message() returns NULL (not an array) when the
+        // message does not exist at all -- see its `$return = $multiple ?
+        // array() : NULL` initialiser. empty(NULL['parent_id']) is true, so
+        // execution used to fall through to the lines below and read offsets
+        // on NULL, emitting two "Trying to access array offset on null"
+        // warnings per hit. Requests for a vanished or made-up thread id
+        // (dead links, crawlers) did that 162 times in one Apache log by
+        // 2026-09-13. A missing thread deserves the very same answer as a
+        // mis-addressed one: "message not found", back to the list.
+        if (empty($data[$thread]) || !empty($data[$thread]['parent_id'])) {
             $PHORUM["DATA"]["ERROR"]=$PHORUM["DATA"]["LANG"]["MessageNotFound"];
             $PHORUM['DATA']["URL"]["REDIRECT"]=$PHORUM["DATA"]["URL"]["LIST"];
             $PHORUM['DATA']["BACKMSG"]=$PHORUM["DATA"]["LANG"]["BackToList"];

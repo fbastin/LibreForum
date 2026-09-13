@@ -114,11 +114,20 @@ if (isset($PHORUM['args']['module'])) {
     $module = $_GET['module'];
 }
 
-if ($module === NULL) trigger_error(
-    '<h1>Modscript Error</h1><br/>' .
-    'Missing "module" argument.',
-    E_USER_ERROR
-);
+if ($module === NULL) {
+    // A malformed request is invalid INPUT, not a failure of the software.
+    // Raising E_USER_ERROR here logged an application ALERT every time a
+    // crawler hit addon.php without a usable "module" argument -- 7 of them
+    // in a week by 2026-09-13, drowning the alert log in noise that needs no
+    // action. Answer 400 and stop: the message stays just as explicit for a
+    // developer calling addon.php incorrectly.
+    if (!headers_sent()) {
+        header('HTTP/1.1 400 Bad Request');
+        header('Content-Type: text/plain; charset=utf-8');
+    }
+    echo "Modscript error: missing \"module\" argument.\n";
+    exit;
+}
 
 $module = basename($module);
 
