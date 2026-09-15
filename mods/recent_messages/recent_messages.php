@@ -77,7 +77,12 @@ function mod_recent_messages_setup_templatedata()
 
     // Check if the user has read access for the active forum.
     // Not really important to check, but good for some paranoia.
-    if (!phorum_check_read_common()) { return; }
+    //
+    // phorum_check_read_common() ne se contente PAS de repondre : quand l'acces est
+    // refuse, elle a deja rendu une page complete ("PleaseLoginRead" ou "NoRead"),
+    // en-tete et pied compris, avant de rendre FALSE. Son appelant doit donc se taire.
+    // On rend FALSE au lieu de rien, pour que l'appelant puisse le savoir.
+    if (!phorum_check_read_common()) { return FALSE; }
 
     // Load the module installation code if this was not yet done.
     // The installation code will take care of automatically adding
@@ -440,12 +445,23 @@ function mod_recent_messages_setup_templatedata()
         'TEXT' => $PHORUM['DATA']['HEADING'],
         'TYPE' => 'recent_messages'
     );
+
+    return TRUE;
 }
 
 function phorum_mod_recent_messages_addon()
 {
     global $PHORUM;
-    mod_recent_messages_setup_templatedata();
+
+    // Sans ce test, un visiteur sans droit de lecture sur le forum actif recevait
+    // DEUX pages completes dans la meme reponse : celle du refus d'acces, rendue par
+    // phorum_check_read_common(), puis celle du module par-dessus. Le second
+    // phorum_output() reincluait le gabarit d'en-tete, ce qui redeclarait la fonction
+    // randImage() qu'il portait et tuait la requete par une erreur fatale -- le
+    // symptome visible, 3 fois le 2026-09-14. Cette fatale masquait la vraie faute :
+    // elle interrompait le second rendu, donc la page servie paraissait normale.
+    if (!mod_recent_messages_setup_templatedata()) return;
+
     phorum_output("recent_messages::page");
 }
 
@@ -507,7 +523,7 @@ function phorum_mod_recent_messages_ajax()
         }
     }
 
-    mod_recent_messages_setup_templatedata();
+    if (!mod_recent_messages_setup_templatedata()) return;
 
     ob_start();
     include phorum_get_template("recent_messages::page");
