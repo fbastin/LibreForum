@@ -599,7 +599,29 @@ function phorum_api_file_check_read_access($file_id, $flags = 0)
     $GLOBALS["PHORUM"]["API"]["error"] = NULL;
 
     // Check if the active user has read access for the active forum_id.
-    if (!($flags & PHORUM_FLAG_IGNORE_PERMS) && !phorum_check_read_common()) {
+    //
+    // La verification est faite ici avec la primitive SILENCIEUSE, et non avec
+    // phorum_check_read_common(). Celle-ci ne se contente pas de repondre : quand
+    // l'acces est refuse, elle rend une page HTML complete -- en-tete, message
+    // "PleaseLoginRead" ou "NoRead", pied -- avant de renvoyer FALSE
+    // (common.php, fonction phorum_check_read_common). Une fonction d'API n'a pas
+    // a ecrire dans la reponse : ses appelants ne peuvent pas savoir qu'elle l'a
+    // fait, et ils ecrivent par-dessus.
+    //
+    // Les trois appelants en souffraient, chacun a sa facon :
+    //   file.php            rendait une SECONDE page complete par-dessus la premiere ;
+    //   mods/embed_images   servait une page HTML la ou le navigateur attend une image ;
+    //   mods/user_image_gallery  rangeait l'erreur dans un tableau et poursuivait
+    //                       le rendu de la galerie, page deja emise.
+    //
+    // La condition ci-dessous est celle de phorum_check_read_common(), sans le rendu.
+    // Les huit pages qui appellent cette derniere correctement (elles font `return`
+    // en portee de script, ce qui arrete la requete) ne sont pas concernees.
+    $acces_refuse = $PHORUM["forum_id"] > 0 &&
+                    !$PHORUM["folder_flag"] &&
+                    !phorum_api_user_check_access(PHORUM_USER_ALLOW_READ);
+
+    if (!($flags & PHORUM_FLAG_IGNORE_PERMS) && $acces_refuse) {
         return phorum_api_error_set(
             PHORUM_ERRNO_NOACCESS,
             "Read permission for file (id $file_id) denied."
