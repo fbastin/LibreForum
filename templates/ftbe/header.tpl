@@ -1,28 +1,5 @@
 <?php
 
-function randImage($path)
-{
-        $path = $_SERVER['DOCUMENT_ROOT'] . "/" . $path;
-//        echo $path;
-	if (is_dir($path)) 
-	{
-		$images = glob($path.'/*.*'); // will grab every files in the current directory
-		$arrayImage = array(); // create an empty array
-		
-		// read throught all files
-		foreach ($images as $img) 
-		{
-			// check file mime type like (jpeg,jpg,gif,png,webp), you can limit or allow certain file type	
-			if (preg_match('/[.](jpeg|jpg|gif|png|webp)$/i', basename($img))) { $arrayImage[] = $img; }
-		}
-		
-		return($arrayImage); // return every images back as an array
-	}
-	else
-	{
-		return(array());
-	}
-}
 
 if ($PHORUM['DATA']['CHARSET']) {
     header("Content-Type: text/html; charset=".htmlspecialchars($PHORUM['DATA']['CHARSET']));
@@ -31,13 +8,13 @@ if ($PHORUM['DATA']['CHARSET']) {
     echo '<?xml version="1.0" ?>';
 }
 
-$bkgd = randImage('backgrounds');
-if (count($bkgd) > 0) {
-	$i = rand(0, count($bkgd)-1);
-	$selectedBg = $bkgd[$i];
-} else {
-	$selectedBg = '';
-}
+// Le choix d'une image de fond aleatoire a ete retire le 2026-09-15. randImage()
+// parcourait /backgrounds a chaque rendu de page (glob + 12 filtres) pour alimenter
+// $selectedBg, qui n'etait lu nulle part -- le fond de l'en-tete vient de
+// le reglage header_background_image du gabarit (css.tpl). Ce code mort declarait
+// une fonction au niveau superieur du gabarit : incluse deux fois dans la meme
+// requete, elle levait "Cannot redeclare randImage()", c'est-a-dire une page blanche
+// (3 fois le 2026-09-14 sur addon.php?module=recent_messages).
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

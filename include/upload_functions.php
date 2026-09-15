@@ -104,16 +104,32 @@ function phorum_get_system_max_upload()
  */
 function phorum_phpcfgsize2bytes($val) {
     $val = trim($val);
+
+    // Une valeur vide n'a pas de dernier caractere : $val[-1] levait un avertissement
+    // de lecture hors chaine. ini_get() rend "" pour une directive absente.
+    if ($val === '') return 0;
+
     $last = strtolower($val[strlen($val)-1]);
+
+    // Le suffixe est retire AVANT la multiplication. En PHP 8, "8M" * 1024 leve
+    // "A non-numeric value encountered" -- 2 occurrences le 2026-09-14, sur chaque
+    // page qui demande la taille maximale d'envoi. Le resultat etait pourtant juste :
+    // PHP lisait le 8 et ignorait le M. C'est donc un avertissement pour rien, mais
+    // ecrit dans le journal a chaque appel.
+    $bytes = in_array($last, array('g', 'm', 'k'), TRUE)
+           ? (float) substr($val, 0, -1)
+           : (float) $val;
+
     switch($last) {
        // The 'G' modifier is available since PHP 5.1.0
+       // La cascade est conservee : 'g' traverse 'm' puis 'k', donc 1024^3.
        case 'g':
-           $val *= 1024;
+           $bytes *= 1024;
        case 'm':
-           $val *= 1024;
+           $bytes *= 1024;
        case 'k':
-           $val *= 1024;
+           $bytes *= 1024;
     }
-    return $val;
+    return $bytes;
 }
 
