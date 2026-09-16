@@ -176,16 +176,19 @@ function mod_user_image_gallery_read($messages)
         if (empty($message["user_id"])) continue;
 
         // Use the cached image_gallery URL if we have one.
+        //
+        // Le cache ne porte QUE l'URL (indice 0). L'ancienne galerie Phorum y
+        // rangeait aussi la largeur et la hauteur de la vignette (indices 1 et
+        // 2) ; depuis le passage a /gallery.php, plus personne ne les ecrit —
+        // et aucun gabarit ne les lit. Les relire ici produisait deux
+        // « Undefined array key » par message des qu'un auteur postait plus
+        // d'une fois dans le meme fil.
         if (isset($cache[$message["user_id"]])) {
             if ($cache[$message["user_id"]]) {
                 $data = $cache[$message["user_id"]];
                 // mod_user_image_gallery = backward compatibility
-                $messages[$messageid]["mod_user_image_gallery"]   =
-                    $messages[$messageid]["user_image_gallery"]   = $data[0];
-                $messages[$messageid]["mod_user_image_gallery_w"] =
-                    $messages[$messageid]["user_image_gallery_w"] = $data[1];
-                $messages[$messageid]["mod_user_image_gallery_h"] =
-                    $messages[$messageid]["user_image_gallery_h"] = $data[2];
+                $messages[$messageid]["mod_user_image_gallery"] =
+                    $messages[$messageid]["user_image_gallery"] = $data[0];
             }
             continue;
         }
