@@ -93,7 +93,10 @@ if(!empty($cache)){
     $messages = phorum_db_get_recent_messages(30, 0, $forum_ids, $thread, $list_type);
 
     // remove users from messages array
-    $users = $messages["users"];
+    // phorum_db_get_recent_messages() returns a bare array() when the user may
+    // read none of the requested forums (a crawler asking for the feed of a
+    // private forum): no "users" key, and nothing to format below.
+    $users = isset($messages["users"]) ? $messages["users"] : array();
     unset($messages["users"]);
 
     // run read hooks to get everything formatted

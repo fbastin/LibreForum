@@ -367,6 +367,10 @@ function phorum_mod_pdfpages_read($data) {
     global $PHORUM;
 
     $entry = current($data);
+    // Nothing to link to: the read hook also runs on an empty message list
+    // (feed.php on a forum the visitor cannot read).
+    if ($entry === false) return $data;
+
     // replace the printview link with our module link
     $PHORUM['DATA']['URL']['PRINTVIEW']=phorum_get_url(PHORUM_ADDON_URL,'module=pdfpages','thread='.$entry['thread']);
 
