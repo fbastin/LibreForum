@@ -180,9 +180,11 @@ function phorum_mod_readable_dates_profile($data)
         $data['raw_date_added'], $data['date_added']
     );
 
-    // These fields might not be set if the user activity is hidden.
-    $data['orig_date_last_active'] = $data['date_last_active'];
+    // These fields might not be set if the user activity is hidden. The
+    // original code said so, then dereferenced the key one line above its own
+    // isset() guard.
     if (isset($data['date_last_active'])) {
+        $data['orig_date_last_active'] = $data['date_last_active'];
         // Format the last activity date.
         $data['date_last_active'] = mod_readable_dates_format_date(
             $data['raw_date_last_active'], $data['date_last_active']
