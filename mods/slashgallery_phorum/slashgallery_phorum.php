@@ -30,10 +30,32 @@ function phorum_mod_slashgallery_phorum_javascript_register($data) {
     return $data;
 }
 
-function phorum_mod_slashgallery_phorum_sync_attachments($message) {
+function phorum_mod_slashgallery_phorum_sync_attachments($message, $origmessage = null) {
     global $PHORUM;
     
     if (empty($message['message_id'])) return $message;
+
+    // after_post et after_edit ne passent pas la meme forme de message.
+    // after_edit recoit le $dbmessage destine a la base : il n'a pas de
+    // « datestamp », et ses pieces jointes vivent sous meta.attachments.
+    // Sans cette normalisation, $message['attachments'] est vide a l'edition,
+    // donc $current_attachment_filenames aussi, et l'etape 3 plus bas retire de
+    // la galerie TOUTES les images du message — silencieusement.
+    if (!isset($message['attachments']) && isset($message['meta']['attachments'])) {
+        $message['attachments'] = $message['meta']['attachments'];
+    }
+    if (!isset($message['datestamp']) && isset($origmessage['datestamp'])) {
+        $message['datestamp'] = $origmessage['datestamp'];
+    }
+    if (!isset($message['author']) && isset($origmessage['author'])) {
+        $message['author'] = $origmessage['author'];
+    }
+
+    // Le datestamp et l'auteur composent le nom de fichier. Sans eux, tous les
+    // noms calcules seraient faux : aucune correspondance avec l'existant, donc
+    // recopie sous un mauvais nom puis suppression de l'ancien comme orphelin.
+    // On prefere ne rien faire.
+    if (!isset($message['datestamp']) || !isset($message['author'])) return $message;
     
     phorum_mod_slashgallery_phorum_load_library();
     if (!class_exists('SlashGallery')) return $message;
@@ -107,8 +129,10 @@ function phorum_mod_slashgallery_phorum_after_post($message) {
     return phorum_mod_slashgallery_phorum_sync_attachments($message);
 }
 
-function phorum_mod_slashgallery_phorum_after_edit($message) {
-    return phorum_mod_slashgallery_phorum_sync_attachments($message);
+function phorum_mod_slashgallery_phorum_after_edit($message, $origmessage = null) {
+    // Phorum passe le message d'origine en second argument depuis la 5.2.15 :
+    // c'est la seule source du datestamp a l'edition.
+    return phorum_mod_slashgallery_phorum_sync_attachments($message, $origmessage);
 }
 
 function phorum_mod_slashgallery_phorum_before_delete($data) {
