@@ -180,14 +180,22 @@ Some Icons courtesy of:
     {! the Phorum start location (leaving a "breadcrumb" at every step }
     {! deeper into the site structure.) }
     <div id="breadcrumb">
+      {! Fil d'Ariane aligne sur celui du site et du wiki (2026-09-20). Les trois en }
+      {! avaient un, avec trois conventions : « Accueil » Outils » sur le site, }
+      {! « Accueil des forums » ici, et « Vous etes ici : Wiki Tireur.org » … » sur le }
+      {! wiki. Trois changements : un maillon « Accueil » vers la racine du site ouvre }
+      {! la chaine, le separateur passe de > a », et le premier maillon de Phorum }
+      {! s'intitule « Forum » au lieu de « Accueil des forums » — la chaine dit deja }
+      {! qu'on vient de l'accueil, le repeter allonge sans informer. }
       <div id="breadcrumb-trail">
+        <a href="/index.php">Accueil</a>
         {VAR FIRST TRUE}
         {LOOP BREADCRUMBS}
-          {IF NOT FIRST} &gt;{/IF}
+          &raquo;
           {IF BREADCRUMBS->URL}
-            <a {IF BREADCRUMBS->ID AND BREADCRUMBS->TYPE}rel="breadcrumb-{BREADCRUMBS->TYPE}[{BREADCRUMBS->ID}]"{/IF} href="{BREADCRUMBS->URL}">{BREADCRUMBS->TEXT}</a>
+            <a {IF BREADCRUMBS->ID AND BREADCRUMBS->TYPE}rel="breadcrumb-{BREADCRUMBS->TYPE}[{BREADCRUMBS->ID}]"{/IF} href="{BREADCRUMBS->URL}">{IF FIRST}Forum{ELSE}{BREADCRUMBS->TEXT}{/IF}</a>
           {ELSE}
-            {BREADCRUMBS->TEXT}
+            {IF FIRST}Forum{ELSE}{BREADCRUMBS->TEXT}{/IF}
           {/IF}
           {VAR FIRST FALSE}
         {/LOOP BREADCRUMBS}
