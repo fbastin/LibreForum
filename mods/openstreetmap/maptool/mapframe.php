@@ -72,6 +72,30 @@ $lang = $PHORUM["DATA"]["LANG"]["mod_openstreetmap"];
     <link rel="stylesheet" href="/js/vendor/leaflet-markercluster/MarkerCluster.Default.css?v=1.4.1" />
     <script src="/js/vendor/leaflet-markercluster/leaflet.markercluster.js?v=1.4.1"></script>
 
+    <?php /* ---- FORK LOCAL : mise au thème de la carte. Ajouté le 2026-09-20. ----------
+       Cette iframe ne charge ni `tireur.min.css` ni `carnet.css` : ses deux cartes — la
+       carte des membres et l'éditeur de position du profil — restaient donc en clair,
+       carte du monde éblouissante sous un chrome de forum noir. `leaflet-theme.css` porte
+       le thème de TOUTES les cartes du site et se suffit à lui-même : chacun de ses
+       `var(--color-…)` a une valeur de repli, puisque les jetons ne sont pas ici.
+
+       Le script qui suit est nécessaire EN PLUS : `prefers-color-scheme` traverse l'iframe
+       tout seul, mais le choix MANUEL de thème est une classe posée sur le `<html>` de la
+       page parente, qu'un document enfant ne voit pas. On relit donc `localStorage.theme`,
+       que `js/theme-switcher.js` écrit et que l'iframe partage — même origine. Inline et
+       avant le rendu, pour éviter que la carte n'apparaisse claire puis ne bascule.
+       Le try/catch n'est pas décoratif : `localStorage` lève en navigation privée. */ ?>
+    <link rel="stylesheet" href="/css/leaflet-theme.css?v=<?php echo @filemtime($_SERVER['DOCUMENT_ROOT'] . '/css/leaflet-theme.css'); ?>" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'dark')       document.documentElement.classList.add('dark-theme');
+          else if (t === 'light') document.documentElement.classList.add('light-theme');
+        } catch (e) { /* stockage inaccessible : on s'en remet à prefers-color-scheme */ }
+      })();
+    </script>
+
     <script type="text/javascript">
     //<![CDATA[
 
