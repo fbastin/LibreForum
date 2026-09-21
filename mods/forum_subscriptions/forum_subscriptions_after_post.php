@@ -84,6 +84,16 @@ function phorum_mod_forum_subscriptions_functions_after_post($data = NULL, $queu
                 "forumname"   => strip_tags($PHORUM["DATA"]["NAME"]),
                 "forum_id"    => $data['forum_id'],
                 "message_id"  => $data['message_id'],
+                // IDENTIFIANT DU FIL. Il etait absent de $mail_data, alors que le bloc
+                // « single_notification enforcement » plus bas teste
+                // `!empty($mail_data["thread_id"])` : la condition etait donc TOUJOURS
+                // fausse, la retenue ne s'appliquait jamais a cette voie, et chaque
+                // message d'un fil donnait un courriel. Le module single_notification
+                // fonctionnait pourtant (104 retenues en base) — mais seulement pour les
+                // notifications du coeur de Phorum, pas pour les abonnements de forum.
+                // Signale par l'exploitant le 2026-09-21. La valeur existait deja : elle
+                // sert aux URL de lecture juste en dessous.
+                "thread_id"   => isset($data['thread']) ? (int) $data['thread'] : 0,
                 "user_id"     => $data['user_id'],
                 "vroot"       => $PHORUM["vroot"],
                 "author"      => $data['author'],
