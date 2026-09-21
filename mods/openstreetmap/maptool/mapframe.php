@@ -1,5 +1,13 @@
 <?php
 
+// Ce fichier est INCLUS par addon.php (`addon=mapframe`), jamais appele par son
+// URL. Appele directement, `$PHORUM` n'existe pas : 12 avertissements PHP par
+// requete — $PHORUM indefini, acces a un index de null, foreach sur null — et une
+// carte vide. Vu au journal d'Apache le 2026-09-20, sur des requetes de
+// verification ; un robot qui trouverait l'adresse produirait la meme chose.
+// Convention Phorum, la meme que defaults.php et openstreetmap.php du meme mod.
+if (!defined("PHORUM")) return;
+
 // This script is used to display an OpenStreetMap from within an <iframe>
 // in the page. It's a generic tool that can be used for displaying
 // all required kinds of maps (editing, viewing and overviews).
