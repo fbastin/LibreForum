@@ -37,11 +37,11 @@
 <form action="{URL->ACTION}" method="POST" id="fprepost">
     {POST_VARS}
     <div style="overflow-x:auto; max-width:100%;">
-    <table cellspacing="0" class="list table-triable" style="width:100%;">
+    <table cellspacing="0" class="list table-triable cc-prepost">
         <thead>
             <tr>
                 <th align="left" data-tri="texte">Forum</th>
-                <th align="left" data-tri="texte" style="min-width:14em;">Message</th>
+                <th align="left" data-tri="texte" class="cc-sujet">Message</th>
                 <th align="left" data-tri="texte">{LANG->Author}</th>
                 <th align="left" data-tri="nombre" style="white-space:nowrap;">{LANG->Date}</th>
                 <th align="left" data-tri="texte">État</th>
@@ -54,7 +54,7 @@
         {LOOP PREPOST}
             <tr>
                 <td>{PREPOST->forumname}</td>
-                <td>
+                <td class="cc-sujet">
                     <a href="{PREPOST->URL->READ}" target="_blank">{PREPOST->subject}</a>
                     <div style="font-size:0.85em; margin-top:0.2em;">
                         <a href="{PREPOST->URL->APPROVE_MESSAGE}">{LANG->ApproveMessage}</a>
