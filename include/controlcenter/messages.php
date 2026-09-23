@@ -143,6 +143,9 @@ foreach($mod_forums as $forum => $rest) {
         $rows[$key]["URL"]["DELETE"] = phorum_get_url(PHORUM_MODERATION_URL, PHORUM_DELETE_TREE, $row["message_id"], "prepost=1", "old_forum=" . $oldforum,"onlyunapproved=".$showwaiting,"moddays=".$moddays);
         $PHORUM["forum_id"] = $oldforum;
         $rows[$key]["raw_short_datestamp"] = $row["datestamp"];
+        // État lisible dans le tableau : la liste mêle les messages EN ATTENTE de validation
+        // (statut -1) et ceux qu'un modérateur a CACHÉS (-2), sans rien pour les distinguer.
+        $rows[$key]["is_hidden"] = ((int) $row["status"] === PHORUM_STATUS_HIDDEN) ? 1 : 0;
         $rows[$key]["short_datestamp"] = phorum_date($PHORUM["short_date_time"], $row["datestamp"]);
     }
 
