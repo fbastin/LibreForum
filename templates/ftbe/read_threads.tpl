@@ -103,7 +103,7 @@
                 {IF MESSAGE->is_unapproved}
                     <a class="icon" href="{MESSAGE->URL->APPROVE}"><i class="li-check"></i> {LANG->ApproveMessage}</a>
                 {ELSE}
-                    <a class="icon" href="{MESSAGE->URL->HIDE}"><i class="li-trash"></i> {LANG->HideMessage}</a>
+                    <a class="icon" href="{MESSAGE->URL->HIDE}"><i class="li-eye-off"></i> {LANG->HideMessage}</a>
                 {/IF}
                 <a class="icon" href="{MESSAGE->URL->EDIT}"><i class="li-pencil"></i> {LANG->EditPost}</a>
             </div>

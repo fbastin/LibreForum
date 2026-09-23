@@ -49,7 +49,7 @@ display: inline;
   <link rel="stylesheet" type="text/css" href="{URL->CSS}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{URL->CSS_PRINT}" media="print" />
   <link rel="stylesheet" type="text/css" href="/css/tireur.min.css?v=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'].'/css/tireur.min.css'); ?>" media="all"/>
-  <link rel="stylesheet" type="text/css" href="/css/lucide.css?v=1" media="all"/>
+  <link rel="stylesheet" type="text/css" href="/css/lucide.css?v=20260923" media="all"/>
   <link rel="stylesheet" type="text/css" href="/css/print.css?v=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'].'/css/print.css'); ?>" media="print"/>
 {/IF}
 
