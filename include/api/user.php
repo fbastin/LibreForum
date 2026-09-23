@@ -2250,6 +2250,82 @@ function phorum_api_user_session_create($type, $reset = 0)
 }
 // }}}
 
+// {{{ Function: phorum_api_user_session_dedup_cookies()
+/**
+ * Choose between duplicate session cookies.
+ *
+ * Cookies set when session_domain was empty are host-only (bound to the
+ * exact host, without a Domain attribute). After session_domain is set,
+ * they coexist with the new shared-domain cookies under the same name.
+ * The browser sends the oldest one first and PHP keeps only that one in
+ * $_COOKIE. A stale host-only cookie therefore hides a valid login: the
+ * login succeeds, yet every following page shows the visitor as logged out.
+ *
+ * When a session cookie occurs more than once in the raw Cookie header,
+ * keep the value that matches the user's stored session, expire the
+ * host-only variant and set the valid value again on the shared domain.
+ */
+function phorum_api_user_session_dedup_cookies()
+{
+    static $done = FALSE;
+    if ($done || empty($_SERVER['HTTP_COOKIE'])) return;
+    $done = TRUE;
+
+    global $PHORUM;
+
+    $values = array();
+    foreach (explode(';', $_SERVER['HTTP_COOKIE']) as $pair) {
+        $parts = explode('=', trim($pair), 2);
+        if (count($parts) == 2) {
+            $values[$parts[0]][] = urldecode($parts[1]);
+        }
+    }
+
+    $names = array(
+        PHORUM_SESSION_LONG_TERM  => 'sessid_lt',
+        PHORUM_SESSION_SHORT_TERM => 'sessid_st',
+        PHORUM_SESSION_ADMIN      => 'sessid_admin',
+    );
+    foreach ($names as $name => $field)
+    {
+        if (empty($values[$name]) || count($values[$name]) < 2) continue;
+
+        $valid = NULL;
+        foreach ($values[$name] as $value) {
+            $split = explode(':', $value, 2);
+            if (count($split) != 2 || !is_numeric($split[0])) continue;
+            $user = phorum_api_user_get((int)$split[0], FALSE, FALSE, TRUE);
+            if (empty($user) || empty($user['sessid_lt'])) continue;
+            $expected = $field == 'sessid_admin'
+                ? md5($user['sessid_lt'] . $PHORUM['admin_session_salt'])
+                : $user[$field];
+            if (!empty($expected) && $expected === $split[1]) {
+                $valid = $value;
+                break;
+            }
+        }
+
+        if (headers_sent()) continue;
+
+        // Expire the host-only variant; the shared-domain cookie is separate.
+        setcookie($name, '', time() - 86400, $PHORUM['session_path']);
+
+        if ($valid !== NULL) {
+            $_COOKIE[$name] = $valid;
+            $timeout = 0;
+            if ($name == PHORUM_SESSION_LONG_TERM &&
+                !empty($PHORUM['session_timeout'])) {
+                $timeout = time() + 86400 * $PHORUM['session_timeout'];
+            } elseif ($name == PHORUM_SESSION_SHORT_TERM) {
+                $timeout = $user['sessid_st_timeout'];
+            }
+            setcookie($name, $valid, $timeout, $PHORUM['session_path'],
+                      $PHORUM['session_domain'], FALSE, TRUE);
+        }
+    }
+}
+// }}}
+
 // {{{ Function: phorum_api_user_session_restore()
 /**
  * Restore a Phorum user session.
@@ -2277,6 +2353,8 @@ function phorum_api_user_session_create($type, $reset = 0)
  */
 function phorum_api_user_session_restore($type)
 {
+    phorum_api_user_session_dedup_cookies();
+
     $PHORUM = $GLOBALS['PHORUM'];
 
     // ----------------------------------------------------------------------
