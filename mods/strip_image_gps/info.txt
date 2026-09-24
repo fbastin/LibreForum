@@ -1,0 +1,8 @@
+title: Retrait de la position GPS
+desc: Retire la position GPS (EXIF, XMP, QuickTime) des images et vidéos envoyées au forum — pièces jointes, fichiers personnels, avatars —, sauf pour le membre qui a choisi, dans son profil (Confidentialité), de garder toutes les métadonnées. Requiert exiftool et includes/image_gps.php du site.
+version: 1.0.0
+author: tireur.org
+category: admin
+
+hook: file_store|phorum_mod_strip_image_gps_file_store
+priority: run hook file_store before store_files_on_disk

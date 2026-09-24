@@ -8,21 +8,27 @@ if (!defined("PHORUM")) return;
  *
  * real_name_privacy : « Garder privé » le vrai nom (1 = privé ; 0/absent =
  * partageable). Décoché par défaut → le vrai nom peut être diffusé.
+ *
+ * keep_photo_gps : garder TOUTES les métadonnées des photos et vidéos envoyées au
+ * forum, position GPS comprise (1 = garder ; 0/absent = la position est retirée, voir
+ * le module strip_image_gps). Décoché par défaut.
  */
 function phorum_mod_custom_profile_fields_handler_ensure_fields()
 {
     if (!function_exists('phorum_api_custom_profile_field_byname')) {
         @include_once('./include/api/custom_profile_fields.php');
     }
-    if (function_exists('phorum_api_custom_profile_field_byname') &&
-        !phorum_api_custom_profile_field_byname('real_name_privacy')) {
-        phorum_api_custom_profile_field_configure(array(
-            'id'            => NULL,
-            'name'          => 'real_name_privacy',
-            'length'        => 1,
-            'html_disabled' => TRUE,
-            'show_in_admin' => FALSE,
-        ));
+    if (!function_exists('phorum_api_custom_profile_field_byname')) return;
+    foreach (array('real_name_privacy', 'keep_photo_gps') as $name) {
+        if (!phorum_api_custom_profile_field_byname($name)) {
+            phorum_api_custom_profile_field_configure(array(
+                'id'            => NULL,
+                'name'          => $name,
+                'length'        => 1,
+                'html_disabled' => TRUE,
+                'show_in_admin' => FALSE,
+            ));
+        }
     }
 }
 
@@ -35,6 +41,16 @@ function phorum_mod_custom_profile_fields_handler_common()
 
 function phorum_mod_custom_profile_fields_handler_save($userdata)
 {
+    // Panneau Confidentialité : case « garder la position GPS de mes photos ».
+    // Le champ n'est écrit que depuis ce panneau ; ailleurs il est ignoré, pour
+    // qu'une sauvegarde de « Mon profil » ne le remette pas à zéro.
+    if (isset($userdata['panel']) && $userdata['panel'] == "privacy") {
+        phorum_mod_custom_profile_fields_handler_ensure_fields();
+        $userdata['keep_photo_gps'] = isset($_POST['keep_photo_gps']) ? 1 : 0;
+        return $userdata;
+    }
+    unset($userdata['keep_photo_gps']);
+
     // On ne s'occupe que du panneau "user" (Mon Profil)
     if (isset($userdata['panel']) && $userdata['panel'] != "user") {
         return $userdata;

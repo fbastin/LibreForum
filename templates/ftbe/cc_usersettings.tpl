@@ -51,6 +51,12 @@
             {IF PROFILE->PRIVACYSETTINGS}
             {IF SHOW_EMAIL_HIDE}<dd><input type="checkbox" name="hide_email" value="1"{PROFILE->hide_email_checked} /> {LANG->AllowSeeEmail}</dd>{/IF}
                 <dd><input type="checkbox" name="hide_activity" value="1"{PROFILE->hide_activity_checked} /> {LANG->AllowSeeActivity}</dd>
+                <dt>Position GPS de mes photos&nbsp;:&nbsp;</dt>
+                <dd>
+                    <input type="checkbox" name="keep_photo_gps" id="keep_photo_gps" value="1" {IF PROFILE->keep_photo_gps 1}checked="checked"{/IF} />
+                    <label for="keep_photo_gps">Garder toutes les m&eacute;tadonn&eacute;es de mes photos et vid&eacute;os, position GPS comprise</label>
+                    <br /><small>D&eacute;coch&eacute; par d&eacute;faut : la position est retir&eacute;e des fichiers que vous envoyez au forum, parce qu'une photo prise chez vous donne votre adresse. Cochez seulement si vous voulez que vos photos gardent le lieu de prise de vue (stand, mus&eacute;e, lieu historique). La position reste alors lisible par quiconque t&eacute;l&eacute;charge le fichier. Le r&eacute;glage vaut pour les envois suivants, pas pour les fichiers d&eacute;j&agrave; en ligne.</small>
+                </dd>
             {/IF}
 
             {IF PROFILE->BOARDSETTINGS}
