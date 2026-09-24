@@ -27,4 +27,9 @@ LibreForum is a modernized fork of the classic LibreForum 5.2 discussion board.
 
 ## License
 
-LibreForum is licensed under the Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE) for details.
+LibreForum is a fork of Phorum 5.2, and its code is covered by two licenses:
+
+- the code **inherited from Phorum** remains under the **Phorum License 2.0** — see [LICENSE-PHORUM](LICENSE-PHORUM). Its copyright notice, conditions and disclaimer must be kept in any redistribution, and the name "Phorum" may not be used to name or promote a derived product;
+- **modifications and additions made by LibreForum** are licensed under the **Apache License 2.0** — see [LICENSE](LICENSE).
+
+See [NOTICE](NOTICE) for the required attributions. Internal identifiers such as `$PHORUM`, `phorum_*()` or the `phorum_` table prefix are kept for compatibility with existing modules; they do not name the product.
