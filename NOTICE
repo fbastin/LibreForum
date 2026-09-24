@@ -1,5 +1,18 @@
 LibreForum
-Copyright 2026 The LibreForum Development Team
+Copyright 2026 Fabian Bastin and the LibreForum contributors
 
-This product includes software developed by the Phorum Development Team
-(https://www.phorum.org/) and its contributors.
+This product includes software developed by the
+Phorum Development Team (http://phorum.org/).
+
+Portions Copyright (c) 2001 The Phorum Development Team. All rights reserved.
+
+LibreForum is a fork of Phorum 5.2. The code inherited from Phorum remains
+under the Phorum License 2.0, reproduced in full in LICENSE-PHORUM, including
+its conditions and disclaimer of warranty. Source files whose header refers
+to "the Phorum License" are covered by that file.
+
+Modifications and additions made for LibreForum are licensed under the
+Apache License 2.0 (LICENSE).
+
+"Phorum" is a name of the Phorum Development Team. LibreForum is not
+affiliated with, nor endorsed by, the Phorum Development Team.
