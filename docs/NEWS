@@ -1,4 +1,4 @@
-LibreForum 5 Changelog
+Phorum 5 Changelog
   
 --------------------------------------------------------------------------------
   
@@ -154,7 +154,7 @@ Mon Jan 24 05:27:29 2011 +0000: mmakaay
 Sat Jan 22 17:28:47 2011 +0000: ts77
 * # precaution against a race condition when two messages are posted at the same second.
 
-   LibreForum 5 Changelog (Up to Version 5.2.16 - pre-GIT)
+   Phorum 5 Changelog (Up to Version 5.2.16 - pre-GIT)
    --------------------------------------------------------------------------------
    
    2011-01-18 19:58  mmakaay
@@ -254,7 +254,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 
    2010-10-11 23:28  mmakaay
 	* Release Spam Hurdles version 2.0.2 as the default version for both
-	  LibreForum 5.2 and the LibreForum development trunk.
+	  Phorum 5.2 and the Phorum development trunk.
 
    2010-07-16 12:02  ts77
 	* added attachments as input to the send_email hook (thanks to
@@ -603,7 +603,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2009-07-27 15:42  mmakaay
 	* - Added a new logged event: User requests a new password. Thanks
 	  to CBiLL for the idea. This feature requires a new hook that is
-	  only available in LibreForum 5.2.13 and up. - Modified the failed
+	  only available in Phorum 5.2.13 and up. - Modified the failed
 	  login event: if the username that was used is known to LibreForum,
 	  then the user_id is set for the event. This way, failed login
 	  events can be filtered by the username as long as an existing
@@ -984,7 +984,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    2008-09-01 07:41  mmakaay
 	* Fixed the classic index style (directory browsing mode) for the
 	  classic 0.4 template. It did not yet reflect a change in the
-	  datastructures that we use for the index page in LibreForum 5.2,
+	  datastructures that we use for the index page in Phorum 5.2,
 	  causing folders to not show up in that view.
 
    2008-09-01 06:33  mmakaay
@@ -1020,7 +1020,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 
    2008-08-04 17:57  mmakaay
 	* LibreForum3 script updated for the new phorum_db_file_save() call in
-	  LibreForum 5.2. Thanks to Simon King who posted the patch in our
+	  Phorum 5.2. Thanks to Simon King who posted the patch in our
 	  support forums.
 
    2008-07-22 07:23  mmakaay
@@ -1080,7 +1080,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
 	  can always see the email addresses of the users. For moderators,
 	  this can be restricted by setting the PHORUM_MOD_EMAIL_VIEW
 	  constant to false in include/constants.php. Some more fine grained
-	  control for email address displaying will be added to LibreForum 5.3.
+	  control for email address displaying will be added to Phorum 5.3.
 
    2008-06-16 10:15  ts77
 	* quote anonymous authors with their name (fixing #744)
@@ -2970,7 +2970,7 @@ Sat Jan 22 17:28:47 2011 +0000: ts77
    ---------------------------------------------------------------------------------
    
    
-LibreForum 5 Changelog
+Phorum 5 Changelog
 ---------------------------------------------------------------------------
 
 Release: phorum.5.0.15
@@ -3684,7 +3684,7 @@ Release: phorum.5.0.1.alpha
      thread - brian (05/25/2003)
 
    * Fixed lost password so that it now sends a temp password like
-     LibreForum 3 does. - brian (05/25/2003)
+     Phorum 3 does. - brian (05/25/2003)
 
    * Public users can no longer post using registered names. - brian
      (05/25/2003)

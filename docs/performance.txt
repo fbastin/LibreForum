@@ -1,4 +1,4 @@
-LibreForum 5 performance notes
+Phorum 5 performance notes
 ==========================
 
 Several of LibreForum's options have a tradeoff effect: enabling more 

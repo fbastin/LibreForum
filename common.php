@@ -906,7 +906,7 @@ if ( !defined( "PHORUM_ADMIN" ) ) {
      *     page_<phorum_page>
      *
      * [availability]
-     *     LibreForum 5 >= 5.2.7
+     *     Phorum 5 >= 5.2.7
      *
      *
      * [description]
@@ -1255,7 +1255,7 @@ function phorum_get_template_file( $page )
      *     get_template_file
      *
      * [availability]
-     *     LibreForum 5 >= 5.2.11
+     *     Phorum 5 >= 5.2.11
      *
      * [description]
      *     Allow modules to have influence on the results of the
@@ -1461,7 +1461,7 @@ function phorum_output($templates) {
 
     /*
      * [availability]
-     *     LibreForum 5 >= 5.2.16
+     *     Phorum 5 >= 5.2.16
      *
      * [hook]
      *     start_output_<page>
@@ -1524,7 +1524,7 @@ function phorum_output($templates) {
 
     /*
      * [availability]
-     *     LibreForum 5 >= 5.2.16
+     *     Phorum 5 >= 5.2.16
      *
      * [hook]
      *     before_footer_<page>
@@ -1631,7 +1631,7 @@ function phorum_output($templates) {
 
     /*
      * [availability]
-     *     LibreForum 5 >= 5.2.16
+     *     Phorum 5 >= 5.2.16
      *
      * [hook]
      *     end_output_<page>
@@ -2070,7 +2070,7 @@ function phorum_check_posting_token($target_page = NULL)
  */
 function phorum_generate_backtrace($skip = 0, $hidepath = "{path to LibreForum}")
 {
-    // Allthough LibreForum 4.3.0 is the required PHP version
+    // Allthough Phorum 4.3.0 is the required PHP version
     // for LibreForum at the time of writing, people might still be running
     // LibreForum on older PHP versions. For those people, we'll skip
     // creation of a back trace.

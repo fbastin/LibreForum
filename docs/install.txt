@@ -1,4 +1,4 @@
-LibreForum 5 Installation instructions
+Phorum 5 Installation instructions
 ==================================
 
 Contents:
@@ -33,7 +33,7 @@ Contents:
 
    * PHP, version 5 or above.
 
-     PHP4 is over 5 years old. As of LibreForum 5.2 there are some functions
+     PHP4 is over 5 years old. As of Phorum 5.2 there are some functions
      used in LibreForum which *require* PHP5 as they didn't exist before.
      Therefor PHP5 is a requirement now. 
 
@@ -42,9 +42,9 @@ Contents:
      MySQL has discontinued active development for all version below 5.0. The
      LibreForum teams uses 5.0 for all development. MySQL 5.0.15 was the first
      production release of the 5.0 branch.
-     Since the first release of LibreForum 5.2 we were only testing against MySQL-5
+     Since the first release of Phorum 5.2 we were only testing against MySQL-5
      but weren explicitly using MySQL-4 incompatible queries. 
-     As of LibreForum 5.2.14 there were changes needed to make LibreForum work with more
+     As of Phorum 5.2.14 there were changes needed to make Phorum work with more
      recent MySQL versions and therefore MySQL-5 or higher is a requirement now.
 
    If you do not run your own website, but have hosted your website with
