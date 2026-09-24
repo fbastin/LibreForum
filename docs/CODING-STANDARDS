@@ -1,3 +1,55 @@
+LibreForum Coding Standards
+===========================
+
+LibreForum is a fork of Phorum 5.2. The Phorum 5 standards below still apply
+to style, with the following rules for NEW code. They take precedence over
+points 1 and 2 of the Phorum section.
+
+Why a separate prefix: LibreForum is covered by two licenses (see NOTICE).
+Code inherited from Phorum is under the Phorum License 2.0 (LICENSE-PHORUM);
+code written for LibreForum is under the Apache License 2.0 (LICENSE). A
+distinct prefix makes that boundary visible in the code itself.
+
+1. Naming new code
+
+   - New functions and APIs:               libreforum_*       e.g. libreforum_<area>_<action>()
+   - New constants:                        LIBREFORUM_*
+   - Hook functions of a new module:       libreforum_mod_<module>_<hook>
+     (the function name is declared in the module's info.txt, so any
+     prefix works)
+   - New settings: under $PHORUM['libreforum'][...] rather than new
+     top-level keys.
+
+   Keep the phorum_ prefix only when the new function fulfils an existing
+   Phorum contract that other code calls by name: a database layer function
+   (phorum_db_*), a member of an existing API family (phorum_api_*), a
+   template or hook name expected by Phorum. Consistency of the family wins.
+
+   Do NOT rename existing identifiers ($PHORUM, phorum_*(), PHORUM_*, the
+   phorum_ table prefix). They do not name the product, and renaming them
+   would break every existing module.
+
+2. Header of a new file
+
+   Do not copy the Phorum header into a new file: it would attribute your
+   code to the Phorum Development Team and to the Phorum License. Use:
+
+       <?php
+       // LibreForum — https://github.com/fbastin/LibreForum
+       // Copyright 2026 Fabian Bastin and the LibreForum contributors
+       // SPDX-License-Identifier: Apache-2.0
+
+   Files inherited from Phorum keep their original header unchanged, even
+   when you modify them: the Phorum License requires the copyright notice to
+   be retained.
+
+3. Site-specific code
+
+   Code that only makes sense for one installation (paths, business rules,
+   external services of a given site) does not belong on the main branch.
+   Keep it on that site's branch, with that site's prefix.
+
+
 Phorum 5 Coding Standards
 =========================
 
