@@ -18,6 +18,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 define('phorum_page','register');
 
+// Adresse imbriquée (`?redir=…login.php?redir=…register.php?redir=…`) : renvoi permanent
+// vers la forme simple, avant de démarrer le forum. La barre latérale fabriquait ces
+// adresses à l'infini et les robots de Meta en gardent des millions en file (~84 000
+// requêtes par jour, 2026-09-24) : chacune se replie ainsi sur la vraie destination.
+// GET seulement — l'envoi du formulaire (POST) n'est jamais touché. Voir
+// includes/login_redir.php du site.
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'GET' && isset($_GET['redir']) && is_string($_GET['redir'])) {
+    require_once dirname(__FILE__) . '/../includes/login_redir.php';
+    $tireur_redir_chemin = parse_url($_GET['redir'], PHP_URL_PATH);
+    if (in_array($tireur_redir_chemin, LOGIN_REDIR_PAGES, true)) {
+        $tireur_redir_simple = login_redir_unwrap($_GET['redir']);
+        header('Location: /forum/' . basename(__FILE__) . '?redir=' . rawurlencode($tireur_redir_simple), true, 301);
+        exit;
+    }
+}
+
 include_once("./common.php");
 include_once("./include/profile_functions.php");
 include_once("./include/email_functions.php");
