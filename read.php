@@ -720,7 +720,7 @@ if(!empty($data) && isset($data[$thread]) && isset($data[$message_id])) {
      *     read
      *
      * [availability]
-     *     LibreForum 5
+     *     Phorum 5
      *
      * [description]
      *     This hook can be used to pre-process all the messages.

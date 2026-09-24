@@ -294,7 +294,7 @@ if (!empty($action)) {
                      *     pm_delete_folder
                      *
                      * [availability]
-                     *     LibreForum 5 >= 5.2.13
+                     *     Phorum 5 >= 5.2.13
                      *
                      * [description]
                      *     This hook can be used for working on deletion of a
@@ -351,7 +351,7 @@ if (!empty($action)) {
                          *     pm_delete
                          *
                          * [availability]
-                         *     LibreForum 5 >= 5.2.13
+                         *     Phorum 5 >= 5.2.13
                          *
                          * [description]
                          *     This hook can be used for working deletion of a
@@ -532,7 +532,7 @@ if (!empty($action)) {
                          *     pm_before_send
                          *
                          * [availability]
-                         *     LibreForum 5 >= 5.2.15
+                         *     Phorum 5 >= 5.2.15
                          *
                          * [description]
                          *     This hook can be used for doing modifications to
@@ -815,7 +815,7 @@ switch ($page) {
          *     buddy_list
          *
          * [availability]
-         *     LibreForum 5 >= 5.2.7
+         *     Phorum 5 >= 5.2.7
          *
          * [description]
          *     This hook can be used for reformatting a list of buddies.
@@ -894,7 +894,7 @@ switch ($page) {
              *     before_pm_list
              *
              * [availability]
-             *     LibreForum 5 >= 5.2.17
+             *     Phorum 5 >= 5.2.17
              *
              * [description]
              *     This hook can be used for retreiveing a list of messages
@@ -939,7 +939,7 @@ switch ($page) {
              *     pm_list
              *
              * [availability]
-             *     LibreForum 5 >= 5.2.7
+             *     Phorum 5 >= 5.2.7
              *
              * [description]
              *     This hook can be used for reformatting a list of
@@ -1015,7 +1015,7 @@ switch ($page) {
              *     pm_read
              *
              * [availability]
-             *     LibreForum 5 >= 5.2.7
+             *     Phorum 5 >= 5.2.7
              *
              * [description]
              *     This hook can be used for reformatting a single private
@@ -1168,7 +1168,7 @@ switch ($page) {
          *     pm_send_init
          *
          * [availability]
-         *     LibreForum 5 >= 5.2.15
+         *     Phorum 5 >= 5.2.15
          *
          * [description]
          *     This hook can be used for doing modifications to the
@@ -1269,7 +1269,7 @@ switch ($page) {
          *     pm_before_editor
          *
          * [availability]
-         *     LibreForum 5 >= 5.2.15
+         *     Phorum 5 >= 5.2.15
          *
          * [description]
          *     This hook can be used for tweaking the template data that

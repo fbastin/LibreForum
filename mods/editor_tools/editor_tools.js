@@ -23,15 +23,15 @@
 // This is done to arrange for backward compatibility between
 // LibreForum versions.
 var editor_tools_textarea_ids = new Array(
-    'phorum_textarea',  // LibreForum 5.1
-    'body',             // LibreForum 5.2
+    'phorum_textarea',  // Phorum 5.1
+    'body',             // Phorum 5.2
     'message'           // PM interface
 );
 
 // Valid object ids for subject text field objects to handle.
 var editor_tools_subject_ids = new Array(
-    'phorum_subject',   // LibreForum 5.1
-    'subject'           // LibreForum 5.2
+    'phorum_subject',   // Phorum 5.1
+    'subject'           // Phorum 5.2
 );
 
 // Storage for language translation strings from the LibreForum language system.

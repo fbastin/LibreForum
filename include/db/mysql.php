@@ -7578,7 +7578,7 @@ function phorum_db_sanitychecks()
 {
     global $PHORUM;
 
-    // For LibreForum 5.2+, we need the "charset" option to be set
+    // For Phorum 5.2+, we need the "charset" option to be set
     // in the config.php.
     if (!isset($PHORUM['DBCONFIG']['charset'])) return array(
         PHORUM_SANITY_CRIT,

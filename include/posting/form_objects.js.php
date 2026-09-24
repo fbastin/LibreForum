@@ -3,15 +3,15 @@
 // This is done to arrange for backward compatibility between
 // LibreForum versions.
 LibreForum.textarea_ids = new Array(
-    'phorum_textarea',  // LibreForum 5.1
-    'body',             // LibreForum 5.2
+    'phorum_textarea',  // Phorum 5.1
+    'body',             // Phorum 5.2
     'message'           // PM interface
 );
 
 // Valid object ids for subject text field objects to handle.
 LibreForum.subject_ids = new Array(
-    'phorum_subject',   // LibreForum 5.1
-    'subject'           // LibreForum 5.2
+    'phorum_subject',   // Phorum 5.1
+    'subject'           // Phorum 5.2
 );
 
 // Some variables for storing objects that we need globally.

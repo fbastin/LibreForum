@@ -138,7 +138,7 @@
     // A list of database layer files that ship with LibreForum.
     $GLOBALS["PHORUM"]["distro_dblayers"] = array(
         "mysql.php",
-        # "postgresql.php", needs Porting to LibreForum 5.2
+        # "postgresql.php", needs Porting to Phorum 5.2
     );
 
     // A list of templates that ship with LibreForum.

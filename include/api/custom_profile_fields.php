@@ -354,7 +354,7 @@ function phorum_api_custom_profile_field_restore($id)
  * This function has mainly been implemented for fixing problems that
  * are introduced by modules that create custom profile fields on their
  * own. Besides that, it was also written to upgrade the profile field
- * configuration, because LibreForum 5.2 introduced some new fields in
+ * configuration, because Phorum 5.2 introduced some new fields in
  * the config.
  */
 function phorum_api_custom_profile_field_checkconfig()

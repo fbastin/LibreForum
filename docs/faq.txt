@@ -1,4 +1,4 @@
-LibreForum 5 FAQ
+Phorum 5 FAQ
 ============
 
 Table of contents:
@@ -61,10 +61,10 @@ Table of contents:
 4. Why don't non-registered users have new indicators or any options?
 -------------------------------------------------------------------------------
 
-    Because of many cookie problems that plagued LibreForum 3, we have decided
-    to store all user settings in the database for LibreForum 5.  The down side
+    Because of many cookie problems that plagued Phorum 3, we have decided
+    to store all user settings in the database for Phorum 5.  The down side
     of this is that users must be registered to use these features.  The up
-    side is that the new indicator really works like it should in LibreForum 5.
+    side is that the new indicator really works like it should in Phorum 5.
 
 
 5. Why doesn't the default template use {insert latest greatest W3C concept}?

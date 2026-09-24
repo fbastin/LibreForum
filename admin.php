@@ -17,7 +17,7 @@
 //   along with this program.                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 
-    // LibreForum 5 Admin
+    // Phorum 5 Admin
 
     define("PHORUM_ADMIN", 1);
 

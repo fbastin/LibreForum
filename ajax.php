@@ -109,7 +109,7 @@ if(empty($PHORUM['user']['user_id'])) {
  *     ajax_<call>
  *
  * [availability]
- *     LibreForum 5 >= 5.2.8
+ *     Phorum 5 >= 5.2.8
  *
  * [description]
  *     This hook allows module writers to implement calls for the

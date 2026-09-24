@@ -83,7 +83,7 @@ if (!file_exists('./mods/user_avatar')) {
 } elseif (empty($PHORUM['mods']['user_avatar'])) {
     $warn = '<div style="color:red">This module is currently not enabled</div>';
 } elseif (!file_exists('./mods/user_avatar/api.php')) {
-    $warn = '<div style="color:red">User Avatar version 3.1.0 or higher is required (note: not available for LibreForum 5.2)</div>';
+    $warn = '<div style="color:red">User Avatar version 3.1.0 or higher is required (note: not available for Phorum 5.2)</div>';
 }
 $row = $frm->addrow("Enable support for the User Avatar module?$warn", $frm->checkbox("enable_user_avatar", "1", "", $PHORUM["mod_recent_messages"]["enable_user_avatar"]));
 

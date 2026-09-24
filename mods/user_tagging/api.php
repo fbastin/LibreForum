@@ -1,11 +1,11 @@
 <?php
 
-// LibreForum 5.2
+// Phorum 5.2
 if (file_exists('./include/profile_functions.php')) {
     include_once './include/profile_functions.php';
     $GLOBALS['PHORUM']['ban_check_func'] = 'phorum_check_ban_lists';
 }
-// LibreForum 5.3
+// Phorum 5.3
 elseif (file_exists('./include/api/ban.php')) {
     include_once './include/api/ban.php';
     $GLOBALS['PHORUM']['ban_check_func'] = 'phorum_api_ban_check';

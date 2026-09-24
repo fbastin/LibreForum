@@ -1,4 +1,4 @@
-Permissions in LibreForum 5
+Permissions in Phorum 5
 =======================
 
 This document describes the way the permission system of LibreForum works.

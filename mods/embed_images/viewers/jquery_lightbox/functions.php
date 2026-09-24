@@ -40,7 +40,7 @@ function image_viewer_javascript_register($data)
 }
 
 // Setup LibreForum.http_path javascript variable. Available by default in
-// LibreForum 5.3, but added here for backward compatibility with LibreForum 5.2.
+// Phorum 5.3, but added here for backward compatibility with Phorum 5.2.
 function image_viewer_after_header()
 {
     global $PHORUM;

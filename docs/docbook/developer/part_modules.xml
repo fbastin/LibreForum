@@ -73,7 +73,7 @@
         talk about an add-on.
       </para>
       <para>
-        For LibreForum 5.0, this was a pretty common thing to do. For LibreForum
+        For Phorum 5.0, this was a pretty common thing to do. For Phorum
         5.1 and up, a special script was added for being able to implement
         addon code fully through a module. Therefore, there is no real
         need anymore for writing add-ons: <filename>addon.php</filename>.
@@ -332,7 +332,7 @@ function phorum_mod_foo_some_hook ($data) {
                   This describes which phorum version is required to use
                   this module. Modules with a requirement above the current
                   phorum version are automatically disabled when going to
-                  the modules page. This feature was added in LibreForum 5.2.
+                  the modules page. This feature was added in Phorum 5.2.
                 </para>
                 <para>
                   Example:<sbr/>
@@ -418,7 +418,7 @@ function phorum_mod_foo_some_hook ($data) {
                     <listitem>
                       <emphasis role="bold">phorum3conversion</emphasis><sbr/>
                       Modules that can help sites to convert from the
-                      old LibreForum 3 system to LibreForum 5.
+                      old Phorum 3 system to Phorum 5.
                     </listitem>
                     <listitem>
                       <emphasis role="bold">email</emphasis><sbr/>

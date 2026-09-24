@@ -967,7 +967,7 @@ Table of contents:
      currently no hook available. If that is the case, let the dev
      team know by posting a message in the development forum
      on phorum.org, explaining where and why you need an extra hook.
-     Hooks will be added as necessary, especially while LibreForum 5
+     Hooks will be added as necessary, especially while Phorum 5
      is young.
 
 

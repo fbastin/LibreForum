@@ -237,7 +237,7 @@ if (count($_POST) > 0) {
          *     password_reset
          *
          * [availability]
-         *     LibreForum 5 >= 5.2.13
+         *     Phorum 5 >= 5.2.13
          *
          * [description]
          *     This hook is called after handling a password reset request.

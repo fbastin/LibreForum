@@ -218,7 +218,7 @@ LibreForum Status:
          *     admin_menu
          *
          * [availability]
-         *     LibreForum 5.2.16
+         *     Phorum 5.2.16
          *
          * [description]
          *     This hook allows to inject custom HTML into the LibreForum admin

@@ -50,10 +50,10 @@ function phorum_mod_topic_poll_tpl_editor_buttons()
     // Try to find the message data for the edited post.
     // Return if we cannot find it (shouldn't happen though).
     $message = null;
-    // LibreForum 5.2
+    // Phorum 5.2
     if (isset($PHORUM["DATA"]["POSTING"]))
         $message = $PHORUM["DATA"]["POSTING"];
-    // LibreForum 5.1
+    // Phorum 5.1
     else if (isset($PHORUM["DATA"]["POST"]))
         $message = $PHORUM["DATA"]["POST"];
     if ($message == NULL) return;
@@ -273,10 +273,10 @@ function phorum_mod_topic_poll_tpl_editor_before_textarea()
     // Try to find the message data for the edited post.
     // Return if we cannot find it (shouldn't happen though).
     $message = null;
-    // LibreForum 5.2
+    // Phorum 5.2
     if (isset($PHORUM["DATA"]["POSTING"]))
         $message = $PHORUM["DATA"]["POSTING"];
-    // LibreForum 5.1
+    // Phorum 5.1
     else if (isset($PHORUM["DATA"]["POST"]))
         $message = $PHORUM["DATA"]["POST"];
     if ($message == NULL) return;
@@ -398,7 +398,7 @@ function phorum_mod_topic_poll_read($messages)
 
     $poll = $message["meta"]["mod_topic_poll"];
 
-    // Fix if datestamp was overwritten with a formatted date (LibreForum 5.1).
+    // Fix if datestamp was overwritten with a formatted date (Phorum 5.1).
     if (! is_numeric($message["datestamp"])) {
         $dbmessage = phorum_db_get_message($message["message_id"]);
         if (! $dbmessage) return; // should not happen
@@ -741,8 +741,8 @@ function phorum_mod_topic_poll_format($messages, $admin_preview = false)
                 $endtime = $datestamp + ($poll["votingtime"] * 86400);
                 if ($endtime > time()) {
                     $format = isset($GLOBALS["PHORUM"]['short_date_time'])
-                            ? $GLOBALS["PHORUM"]['short_date_time'] // LibreForum 5.2
-                            : $GLOBALS["PHORUM"]['short_date'];     // LibreForum 5.1
+                            ? $GLOBALS["PHORUM"]['short_date_time'] // Phorum 5.2
+                            : $GLOBALS["PHORUM"]['short_date'];     // Phorum 5.1
                     $endtime = phorum_date($format, $endtime);
                     $str = str_replace("%time%", $endtime, $lang["VotingEndsAt"]);
                 }
@@ -1120,7 +1120,7 @@ function check_if_topic_poll_is_open($message)
     // Nobody can vote if the voting time is over.
     if ($poll["votingtime"] > 0) {
 
-        // Fix if datestamp was overwritten with a formatted date (LibreForum 5.1).
+        // Fix if datestamp was overwritten with a formatted date (Phorum 5.1).
         if (! is_numeric($message["datestamp"])) {
             $dbmessage = phorum_db_get_message($message["message_id"]);
             if (! $dbmessage) return; // should not happen

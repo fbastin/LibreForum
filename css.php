@@ -314,7 +314,7 @@ if ($content === null)
      *     css_filter
      *
      * [availability]
-     *     LibreForum 5 >= 5.2.11
+     *     Phorum 5 >= 5.2.11
      *
      * [description]
      *     This hook can be used to apply a filter to the LibreForum CSS
