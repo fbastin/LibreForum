@@ -154,15 +154,6 @@ function hide_help()
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 <tr>
     <td class="statusbar_edge">LibreForum Admin<small><br />version <?php echo PHORUM; ?></small></td>
-<?php if(empty($module)){ // only show the versioncheck if you are on the front page of the admin ?>
-    <td class="statusbar_edge" align="center" valign="middle">
-      <iframe scrolling="no" frameborder="0" align="top" width="400" height="35" src="versioncheck.php"></iframe>
-    </td>
-<?php } else {
-    // Reset the cookie that is used for the version check.
-    setcookie("phorum_upgrade_available", '', time()-86400,
-              $PHORUM["session_path"], $PHORUM["session_domain"]);
-} ?>
     <td class="statusbar_edge" align="center" valign="middle">
 <?php
     require_once('./include/api/modules.php');

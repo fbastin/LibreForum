@@ -132,7 +132,6 @@
         'rss.'.PHORUM_FILE_EXTENSION,
         'feed.'.PHORUM_FILE_EXTENSION,
         'search.'.PHORUM_FILE_EXTENSION,
-        'versioncheck.php',
     );
 
     // A list of database layer files that ship with LibreForum.
