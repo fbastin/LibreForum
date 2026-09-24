@@ -8,6 +8,12 @@ function phorum_mod_slashgallery_phorum_load_library() {
     if (!class_exists('SlashGallery')) {
         require_once __DIR__ . '/../../../libs/SlashGallery/src/SlashGallery.php';
     }
+    // Retrait du GPS avant publication (tireur.org, 2026-09-23) : voir
+    // includes/image_gps.php du site. Absente, aucune pièce jointe n'est publiée.
+    $gps = __DIR__ . '/../../../includes/image_gps.php';
+    if (!function_exists('strip_image_gps') && is_file($gps)) {
+        require_once $gps;
+    }
 }
 
 function phorum_mod_slashgallery_phorum_editor_tool_plugin() {
@@ -102,7 +108,11 @@ function phorum_mod_slashgallery_phorum_sync_attachments($message, $origmessage 
                 $phorum_file = phorum_api_file_get($attachment['file_id']);
                 if ($phorum_file && !empty($phorum_file['file_data'])) {
                     $destPath = $galleryDir . '/' . $finalName;
-                    if (file_put_contents($destPath, $phorum_file['file_data'])) {
+                    $written = file_put_contents($destPath, $phorum_file['file_data']);
+                    if ($written && !(function_exists('strip_image_gps') && strip_image_gps($destPath))) {
+                        // GPS non retiré : le fichier ne reste pas dans la galerie.
+                        @unlink($destPath);
+                    } elseif ($written) {
                         $gallery->addTag($finalName, 'membre');
                         $gallery->addTag($finalName, $username);
                         $gallery->addTag($finalName, 'post_attachment');
