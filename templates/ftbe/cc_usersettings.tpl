@@ -66,7 +66,7 @@
                              son option 0 s'affichait « Tout » (LANG->None mal traduit). Les liens
                              « Changer ce réglage » du formulaire et des discussions suivies visent
                              l'ancre #reglage-suivi. */ ?>
-                    <dt id="reglage-suivi"><label for="email_notify">{LANG->EnableNotifyDefault}</label>&nbsp;:&nbsp;</dt>
+                    <dt id="reglage-suivi">{LANG->EnableNotifyDefault}:&nbsp;</dt>
                     <dd>
                         <select name="email_notify" id="email_notify">
                           <option value="2"{IF PROFILE->email_notify 2} selected="selected" {/IF}>{LANG->NotifyDefaultEmail}</option>
