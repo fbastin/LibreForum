@@ -333,6 +333,10 @@ if (count($_POST)) {
     // Some error encountered during processing? Then setup the
     // data to redisplay the registration form, including an error.
     if (!empty($error)) {
+        // Un envoi incomplet (robot, curl) n'a pas forcément tous les champs, et le
+        // gabarit lit REGISTER->username et REGISTER->email sans condition.
+        $PHORUM["DATA"]["REGISTER"]["username"] = "";
+        $PHORUM["DATA"]["REGISTER"]["email"] = "";
         foreach($_POST as $key => $val){
             $PHORUM["DATA"]["REGISTER"][$key] = htmlspecialchars($val, ENT_COMPAT, $PHORUM["DATA"]["HCHARSET"]);
         }
