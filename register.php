@@ -167,6 +167,11 @@ if (count($_POST)) {
         $userdata["date_added"]=time();
         $userdata["date_last_active"]=time();
         $userdata["hide_email"]=true;
+        // Suivre les discussions AVEC copie par courriel (email_notify = 2 ; 1 = sans courriel,
+        // 0 = aucun), fixé ici plutôt que laissé à la valeur par défaut de la colonne : celle de
+        // la base en service vaut 1, et depuis le 2026-07-11 tous les nouveaux inscrits
+        // suivaient donc sans courriel, sans l'avoir choisi (les inscrits antérieurs avaient 2).
+        $userdata["email_notify"]=2;
 
         // Set user active status depending on the registration verification
         // setting. Generate a confirmation code for email verification.
