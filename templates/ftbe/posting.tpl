@@ -159,6 +159,11 @@
                     {/IF}
 
                     <input type="checkbox" id="show-signature" name="show_signature" value="1" {IF POSTING->show_signature} checked="checked"{/IF} /> <label for="show-signature">{LANG->AddSig}</label>
+                    {IF OPTION_ALLOWED->subscribe}
+                    <?php /* Le réglage qui décide de ces cases vit dans le panneau de contrôle, où il
+                             était introuvable : un lien direct, sur son ancre. */ ?>
+                    <div class="post-lien-reglage"><a href="<?php echo htmlspecialchars(phorum_get_url(PHORUM_CONTROLCENTER_URL, 'panel=' . PHORUM_CC_BOARD), ENT_QUOTES); ?>#reglage-suivi">{LANG->NotifyDefaultChange}</a></div>
+                    {/IF}
                 </div>
                 {/IF}
 

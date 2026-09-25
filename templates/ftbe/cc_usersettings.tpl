@@ -60,6 +60,21 @@
             {/IF}
 
             {IF PROFILE->BOARDSETTINGS}
+                    <?php /* En tête de section (2026-09-25) : ce réglage — quelles cases « Suivre »
+                             sont cochées dans chaque nouveau message — était perdu entre le fuseau
+                             horaire et le gabarit, sous un libellé oui/non pour un choix à trois, et
+                             son option 0 s'affichait « Tout » (LANG->None mal traduit). Les liens
+                             « Changer ce réglage » du formulaire et des discussions suivies visent
+                             l'ancre #reglage-suivi. */ ?>
+                    <dt id="reglage-suivi"><label for="email_notify">{LANG->EnableNotifyDefault}</label>&nbsp;:&nbsp;</dt>
+                    <dd>
+                        <select name="email_notify" id="email_notify">
+                          <option value="2"{IF PROFILE->email_notify 2} selected="selected" {/IF}>{LANG->NotifyDefaultEmail}</option>
+                          <option value="1"{IF PROFILE->email_notify 1} selected="selected" {/IF}>{LANG->NotifyDefaultFollow}</option>
+                          <option value="0"{IF PROFILE->email_notify 0} selected="selected" {/IF}>{LANG->NotifyDefaultNone}</option>
+                        </select>
+                    </dd>
+
                     {IF PROFILE->TZSELECTION}
                     <dt>{LANG->Timezone}:&nbsp;</dt>
                     <dd>
@@ -108,15 +123,6 @@
                         <option value="1" {IF PROFILE->threaded_read} selected="selected"{/IF}>{LANG->ViewThreadedRead}</option>
                         <option value="2" {IF PROFILE->threaded_read 2} selected="selected"{/IF}>{LANG->ViewFlatRead}</option>
                         <option value="3" {IF PROFILE->threaded_read 3} selected="selected"{/IF}>{LANG->ViewHybridRead}</option>
-                    </select>
-                </dd>
-
-                <dt>{LANG->EnableNotifyDefault}:&nbsp;</dt>
-                <dd>
-                    <select name="email_notify">
-                      <option value="0"{IF PROFILE->email_notify 0} selected="selected" {/IF}>{LANG->None}</option>
-                      <option value="1"{IF PROFILE->email_notify 1} selected="selected" {/IF}>{LANG->FollowThread}</option>
-                      <option value="2"{IF PROFILE->email_notify 2} selected="selected" {/IF}>{LANG->FollowWithEmailCC}</option>
                     </select>
                 </dd>
 

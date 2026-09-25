@@ -17,6 +17,11 @@
     </div>
 </form>
 
+<div class="information">
+    {LANG->NotifyDefaultHelp}
+    <a href="{URL->CC6}#reglage-suivi">{LANG->NotifyDefaultChange}</a>
+</div>
+
 {IF TOPICS}
     <form action="{URL->ACTION}" method="POST" id="phorum-sub-list">
         {POST_VARS}
