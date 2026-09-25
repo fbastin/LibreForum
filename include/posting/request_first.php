@@ -99,6 +99,30 @@ if ($mode == "edit" || $mode == "moderation") {
     $message = phorum_posting_merge_db2form($message, $dbmessage, ALLFIELDS);
 }
 
+/**
+ * Abonnement proposé par défaut, d'après le réglage « Suivre les discussions » du profil
+ * (email_notify, panneau de contrôle) :
+ *   0 = Aucun                           -> ""        (cases décochées)
+ *   1 = Suivre la discussion            -> "bookmark" (suivre, SANS courriel)
+ *   2 = Suivre avec copie par courriel  -> "message"  (suivre ET courriel)
+ * Réglage absent : "message" (choix local du 2026-05-28 : suivre par défaut).
+ *
+ * C'est la correspondance du Phorum d'origine. Le 2026-05-28, un correctif l'avait
+ * réécrite en traitant 1 comme 2 : les membres qui avaient choisi de suivre SANS courriel
+ * recevaient les réponses par courriel (30 membres au 2026-09-25). Rétablie le 2026-09-25.
+ */
+if (!function_exists('phorum_mod_tireur_default_subscription')) {
+function phorum_mod_tireur_default_subscription($user)
+{
+    if (!isset($user["email_notify"])) return "message";
+    switch ((int)$user["email_notify"]) {
+        case 2:  return "message";
+        case 1:  return "bookmark";
+        default: return "";
+    }
+}
+}
+
 // For new messages, set some default values for logged in users.
 if (($mode == "post" || $mode == "reply" || $mode == "quote") && $PHORUM["DATA"]["LOGGEDIN"])
 {
@@ -109,14 +133,7 @@ if (($mode == "post" || $mode == "reply" || $mode == "quote") && $PHORUM["DATA"]
 
     // Default to "message" (follow thread with email notifications) to ensure users follow
     // discussions they participate in by default.
-    $message['subscription'] = "message";
-    if (isset($PHORUM["user"]["email_notify"])) {
-        if($PHORUM["user"]["email_notify"] == 2 || $PHORUM["user"]["email_notify"] == 1) {
-            $message["subscription"] = "message";
-        } elseif($PHORUM["user"]["email_notify"] == 0) {
-            $message["subscription"] = "";
-        }
-    }
+    $message['subscription'] = phorum_mod_tireur_default_subscription($PHORUM["user"]);
 }
 
 // When replying, the user might already be subscribed to the thread,
@@ -129,15 +146,7 @@ if (($mode == "reply"  || $mode == "quote") && $PHORUM["DATA"]["LOGGEDIN"])
 
     switch ($type) {
         case NULL:
-            // Default to "message" (follow thread with email notifications)
-            $message["subscription"] = "message";
-            if (isset($PHORUM["user"]["email_notify"])) {
-                if($PHORUM["user"]["email_notify"] == 2 || $PHORUM["user"]["email_notify"] == 1) {
-                    $message["subscription"] = "message";
-                } elseif($PHORUM["user"]["email_notify"] == 0) {
-                    $message["subscription"] = "";
-                }
-            }
+            $message["subscription"] = phorum_mod_tireur_default_subscription($PHORUM["user"]);
             break;
         case PHORUM_SUBSCRIPTION_BOOKMARK:
             $message["subscription"] = "bookmark";
