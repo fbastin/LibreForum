@@ -73,6 +73,7 @@
                           <option value="1"{IF PROFILE->email_notify 1} selected="selected" {/IF}>{LANG->NotifyDefaultFollow}</option>
                           <option value="0"{IF PROFILE->email_notify 0} selected="selected" {/IF}>{LANG->NotifyDefaultNone}</option>
                         </select>
+                        <div class="reglage-note">{LANG->NotifyDefaultNote}</div>
                     </dd>
 
                     {IF PROFILE->TZSELECTION}
