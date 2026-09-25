@@ -74,78 +74,70 @@
         {POST_VARS}
 
         <div class="generic">
-                {IF SHOW_SPECIALOPTIONS}
 
-                  <div id="post-moderation">
-                    <small>
-                    {LANG->Special}:<br />
+            <?php /* Disposition (2026-09-25) : l'en-tête (auteur, sujet) tient sur une ligne, le
+                     message vient juste après, et les réglages (options, pièces jointes, options
+                     de modération) passent dessous, côte à côte. Jusque-là tout s'empilait et le
+                     message — le champ principal — arrivait en dernier, ~500 px plus bas. */ ?>
+            <div class="post-entete">
 
-                    {IF OPTION_ALLOWED->sticky}
-                    <input type="checkbox" name="sticky"
-                     id="phorum_sticky" value="1"
-                     {IF POSTING->special "sticky"}checked="checked"{/IF} />
-                    <label for="phorum_sticky">{LANG->MakeSticky}</label>
-                    <br />
+                <div class="post-champ post-champ-auteur">
+                    <span class="post-etiquette">{IF MODE "moderation"}{LANG->YourName}{ELSE}{LANG->Author}{/IF}</span>
+                    {IF OPTION_ALLOWED->edit_author}
+                        <input type="text" name="author" size="30" value="{POSTING->author}" />
+                    {ELSE}
+                        <strong class="post-auteur">{POSTING->author}</strong>
                     {/IF}
-
-                    <input type="checkbox" id="allow-reply" name="allow_reply" value="1" {IF POSTING->allow_reply} checked="checked"{/IF} /> <label for="allow-reply">{LANG->AllowReplies}</label>
-                    </small>
-                  </div>
-                {/IF}
-                <small>
-                {IF MODE "moderation"}
-                  {LANG->YourName}:<br/>
-                {ELSE}
-                  {LANG->Author}:<br />
-                {/IF}
-                {IF OPTION_ALLOWED->edit_author}
-                    <input type="text" name="author" size="30" value="{POSTING->author}" />
-                {ELSE}
-                    <big><strong>{POSTING->author}</strong></big><br />
-                {/IF}
-                <br/>
+                </div>
 
                 {IF MODE "post" OR MODE "reply"}
-
                     {IF NOT LOGGEDIN}
-
-                        {LANG->YourEmail}:<br />
-                        <input type="text" name="email" size="30" value="{POSTING->email}" /><br />
-                        <br />
-
+                        <div class="post-champ">
+                            <label class="post-etiquette" for="post-email">{LANG->YourEmail}</label>
+                            <input type="text" name="email" id="post-email" size="30" value="{POSTING->email}" />
+                        </div>
                     {/IF}
-
                 {ELSEIF MODE "moderation"}
-
                     {IF POSTING->user_id 0}
-
-                        {LANG->Email}:<br />
-                        <input type="text" name="email" size="30" value="{POSTING->email}" /><br />
-                        <br />
-
+                        <div class="post-champ">
+                            <label class="post-etiquette" for="post-email">{LANG->Email}</label>
+                            <input type="text" name="email" id="post-email" size="30" value="{POSTING->email}" />
+                        </div>
                     {/IF}
-
                 {/IF}
 
-                {LANG->Subject}:<br />
-                <input type="text" name="subject" id="subject" size="50" value="{POSTING->subject}" /><br />
-                <br />
+                <div class="post-champ post-champ-sujet">
+                    <label class="post-etiquette" for="subject">{LANG->Subject}</label>
+                    <input type="text" name="subject" id="subject" size="50" value="{POSTING->subject}" />
+                </div>
 
-                {HOOK "tpl_editor_after_subject"}
+            </div>
 
-                </small>
+            {HOOK "tpl_editor_after_subject"}
+
+            {HOOK "tpl_editor_before_textarea"}
+            <label class="post-etiquette" for="body">{LANG->Message}</label>
+            <div id="post-body">
+              <!-- fieldset is a work around for an MSIE rendering bug -->
+              <fieldset>
+                <textarea name="body" id="body" class="body" rows="15" cols="50">{POSTING->body}</textarea>
+              </fieldset>
+            </div>
+
+            <div class="post-annexes">
+
                 {IF POSTING->user_id}
-
-                    <small>{LANG->Options}:</small><br />
+                <div class="post-bloc">
+                    <span class="post-etiquette">{LANG->Options}</span>
 
                     {IF OPTION_ALLOWED->subscribe}
 
-                        <input type="checkbox" id="subscription-follow" name="subscription_follow" value="1" {IF POSTING->subscription}checked="checked"{/IF} {IF OPTION_ALLOWED->subscribe_mail}onclick="phorum_subscription_displaystate()"{/IF} /> <label for="subscription-follow"><small>{LANG->FollowThread}</small></label><br />
+                        <input type="checkbox" id="subscription-follow" name="subscription_follow" value="1" {IF POSTING->subscription}checked="checked"{/IF} {IF OPTION_ALLOWED->subscribe_mail}onclick="phorum_subscription_displaystate()"{/IF} /> <label for="subscription-follow">{LANG->FollowThread}</label><br />
 
                         {IF OPTION_ALLOWED->subscribe_mail}
                           <div id="subscription-mail-div">
                             <img src="{URL->TEMPLATE}/images/tree-L.gif" border="0" alt="tree-L" />
-                            <input type="checkbox" id="subscription-mail" name="subscription_mail" value="1" {IF POSTING->subscription "message"}checked="checked"{/IF} /> <label for="subscription-mail"><small>{LANG->EmailReplies}</small></label>
+                            <input type="checkbox" id="subscription-mail" name="subscription_mail" value="1" {IF POSTING->subscription "message"}checked="checked"{/IF} /> <label for="subscription-mail">{LANG->EmailReplies}</label>
                           </div>
 
                           <script type="text/javascript">
@@ -166,72 +158,80 @@
                         {/IF}
                     {/IF}
 
-                    <input type="checkbox" id="show-signature" name="show_signature" value="1" {IF POSTING->show_signature} checked="checked"{/IF} /> <label for="show-signature"><small>{LANG->AddSig}</small></label><br />
-                    <br/>
-
+                    <input type="checkbox" id="show-signature" name="show_signature" value="1" {IF POSTING->show_signature} checked="checked"{/IF} /> <label for="show-signature">{LANG->AddSig}</label>
+                </div>
                 {/IF}
 
-            {IF ATTACHMENTS}
-                <small>{LANG->Attachments}:</small><br />
-                {IF POSTING->attachments}
-                    <table id="attachment-list" cellspacing="0">
-                      {VAR LIST POSTING->attachments}
-                      {LOOP LIST}
-                        {IF LIST->keep}
-                          <tr>
-                            <td>{LIST->name} ({LIST->size})</td>
-                            <td align="right">
-                              {HOOK "tpl_editor_attachment_buttons" LIST}
-                              <input type="submit" name="detach:{LIST->file_id}" value="{LANG->Detach}" />
-                            </td>
-                          </tr>
-                        {/IF}
-                      {/LOOP LIST}
-                    </table>
-                    {VAR AttachPhrase LANG->AttachAnotherFile}
-                {ELSE}
-                    {VAR AttachPhrase LANG->AttachAFile}
+                {IF ATTACHMENTS}
+                <div class="post-bloc">
+                    <span class="post-etiquette">{LANG->Attachments}</span>
+                    {IF POSTING->attachments}
+                        <table id="attachment-list" cellspacing="0">
+                          {VAR LIST POSTING->attachments}
+                          {LOOP LIST}
+                            {IF LIST->keep}
+                              <tr>
+                                <td>{LIST->name} ({LIST->size})</td>
+                                <td align="right">
+                                  {HOOK "tpl_editor_attachment_buttons" LIST}
+                                  <input type="submit" name="detach:{LIST->file_id}" value="{LANG->Detach}" />
+                                </td>
+                              </tr>
+                            {/IF}
+                          {/LOOP LIST}
+                        </table>
+                        {VAR AttachPhrase LANG->AttachAnotherFile}
+                    {ELSE}
+                        {VAR AttachPhrase LANG->AttachAFile}
+                    {/IF}
+
+                    {IF ATTACHMENTS_FULL}
+                        <strong>{LANG->AttachFull}</strong>
+                    {ELSE}
+                        <script type="text/javascript">
+                        //<![CDATA[
+                          function phorumShowAttachForm() {
+                            document.getElementById('attach-link').style.display='none';
+                            document.getElementById('attach-form').style.display='block';
+                          }
+                          document.write("<div id=\"attach-link\" class=\"attach-link\" style=\"display: block;\"><a href=\"javascript:phorumShowAttachForm();\"><b>{AttachPhrase} ...<\/b><\/a><\/div>\n");
+                          document.write("<div id=\"attach-form\" style=\"display: none;\">");
+                        // ]]>
+                        </script>
+                        <div class="attach-link">{AttachPhrase}</div>
+                        <ul>
+                          {IF EXPLAIN_ATTACH_FILE_TYPES}<li>{EXPLAIN_ATTACH_FILE_TYPES}</li>{/IF}
+                          {IF EXPLAIN_ATTACH_FILE_SIZE}<li>{EXPLAIN_ATTACH_FILE_SIZE}</li>{/IF}
+                          {IF EXPLAIN_ATTACH_TOTALFILE_SIZE}<li>{EXPLAIN_ATTACH_TOTALFILE_SIZE}</li>{/IF}
+                          {IF EXPLAIN_ATTACH_MAX_ATTACHMENTS}<li>{EXPLAIN_ATTACH_MAX_ATTACHMENTS}</li>{/IF}
+                        </ul>
+                        <input type="file" size="50" name="attachment" />
+                        <input type="submit" name="attach" value="{LANG->Attach}" />
+                        <script type="text/javascript">
+                        //<![CDATA[
+                        document.write('<\/div>');
+                        // ]]>
+                        </script>
+                    {/IF}
+                </div>
                 {/IF}
 
-                {IF ATTACHMENTS_FULL}
-                    <strong>{LANG->AttachFull}</strong><br />
-                {ELSE}
-                    <script type="text/javascript">
-                    //<![CDATA[
-                      function phorumShowAttachForm() {
-                        document.getElementById('attach-link').style.display='none';
-                        document.getElementById('attach-form').style.display='block';
-                      }
-                      document.write("<div id=\"attach-link\" class=\"attach-link\" style=\"display: block;\"><a href=\"javascript:phorumShowAttachForm();\"><b>{AttachPhrase} ...<\/b><\/a><\/div>\n");
-                      document.write("<div id=\"attach-form\" style=\"display: none;\">");
-                    // ]]>
-                    </script>
-                    <div class="attach-link">{AttachPhrase}</div>
-                    <ul>
-                      {IF EXPLAIN_ATTACH_FILE_TYPES}<li>{EXPLAIN_ATTACH_FILE_TYPES}</li>{/IF}
-                      {IF EXPLAIN_ATTACH_FILE_SIZE}<li>{EXPLAIN_ATTACH_FILE_SIZE}</li>{/IF}
-                      {IF EXPLAIN_ATTACH_TOTALFILE_SIZE}<li>{EXPLAIN_ATTACH_TOTALFILE_SIZE}</li>{/IF}
-                      {IF EXPLAIN_ATTACH_MAX_ATTACHMENTS}<li>{EXPLAIN_ATTACH_MAX_ATTACHMENTS}</li>{/IF}
-                    </ul>
-                    <input type="file" size="50" name="attachment" />
-                    <input type="submit" name="attach" value="{LANG->Attach}" />
-                    <script type="text/javascript">
-                    //<![CDATA[
-                    document.write('<\/div>');
-                    // ]]>
-                    </script>
+                {IF SHOW_SPECIALOPTIONS}
+                <div class="post-bloc" id="post-moderation">
+                    <span class="post-etiquette">{LANG->Special}</span>
+
+                    {IF OPTION_ALLOWED->sticky}
+                    <input type="checkbox" name="sticky"
+                     id="phorum_sticky" value="1"
+                     {IF POSTING->special "sticky"}checked="checked"{/IF} />
+                    <label for="phorum_sticky">{LANG->MakeSticky}</label>
+                    <br />
+                    {/IF}
+
+                    <input type="checkbox" id="allow-reply" name="allow_reply" value="1" {IF POSTING->allow_reply} checked="checked"{/IF} /> <label for="allow-reply">{LANG->AllowReplies}</label>
+                </div>
                 {/IF}
 
-                <br />
-            {/IF}
-
-            {HOOK "tpl_editor_before_textarea"}
-            <small>{LANG->Message}:</small>
-            <div id="post-body">
-              <!-- fieldset is a work around for an MSIE rendering bug -->
-              <fieldset>
-                <textarea name="body" id="body" class="body" rows="15" cols="50">{POSTING->body}</textarea>
-              </fieldset>
             </div>
 
         </div>
