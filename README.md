@@ -17,6 +17,7 @@ LibreForum is a modernized fork of the classic Phorum 5.2 discussion board.
 - "Force Password Change" feature for improved user security.
 - Improved database error handling.
 - **Markdown & Video Auto-Embedding**: Integrated Markdown formatting support with native YouTube/Vimeo video auto-embedding (simply paste the video URL on its own line) and updated editor toolbar tools.
+- **Full Unicode (utf8mb4)**: emojis and every other Unicode character are stored as typed; with MySQL's 3-byte `utf8`, a message containing an emoji was rejected with a database error.
 
 ## Installation
 
@@ -24,6 +25,14 @@ LibreForum is a modernized fork of the classic Phorum 5.2 discussion board.
 2. Copy `include/db/config.php-dist` to `include/db/config.php` and fill in your database credentials.
 3. Ensure the `cache/` and `files/` directories are writable by the web server.
 4. Run the installer or upgrade scripts as needed.
+
+### Upgrading an existing forum to utf8mb4
+
+Forums created with `'charset' => 'utf8'` reject emojis. After a backup, run
+`php scripts/convert_to_utf8mb4.php` to see what would change, then again with
+`--apply`, and finally set `'charset' => 'utf8mb4'` in `include/db/config.php`.
+The script converts the `utf8` tables, shortens the indexes that would become
+too long, checks that the content is unchanged, and leaves `latin1` tables alone.
 
 ## License
 

@@ -7215,6 +7215,10 @@ function phorum_db_create_tables()
              ? ''
              : "DEFAULT CHARACTER SET {$PHORUM['DBCONFIG']['charset']}";
 
+    // The indexed text columns below stay within 767 bytes per column
+    // (191 characters in utf8mb4) and 1000 bytes per key, the limits of
+    // older InnoDB row formats and of MyISAM. See scripts/convert_to_utf8mb4.php.
+
     $create_table_queries = array(
 
       "CREATE TABLE {$PHORUM['forums_table']} (
@@ -7303,7 +7307,7 @@ function phorum_db_create_tables()
            KEY new_threads (forum_id,status,parent_id,moved,message_id),
            KEY recent_threads (status, parent_id, message_id, forum_id),
            KEY updated_threads (status, parent_id, modifystamp),
-           KEY dup_check (forum_id,author(50),subject,datestamp),
+           KEY dup_check (forum_id,author(50),subject(191),datestamp),
            KEY forum_max_message (forum_id,message_id,status,parent_id),
            KEY last_post_time (forum_id,status,modifystamp),
            KEY next_prev_thread (forum_id,status,thread),
@@ -7312,7 +7316,7 @@ function phorum_db_create_tables()
        ) $charset",
 
       "CREATE TABLE {$PHORUM['settings_table']} (
-           name                     varchar(255)   NOT NULL default '',
+           name                     varchar(191)   NOT NULL default '',
            type                     enum('V','S')  NOT NULL default 'V',
            data                     text           NOT NULL,
 
