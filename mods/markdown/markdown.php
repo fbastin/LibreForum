@@ -323,6 +323,19 @@ function phorum_mod_markdown_quote($data)
     }
 
     $body = trim($body);
+    // Where the quoted message leaves one of its own quotes, add an empty
+    // quote line: without it, Markdown would carry the inner quote on and
+    // show the quoted author's reply as part of it.
+    $lines = explode("\n", $body);
+    $out = array();
+    $depth = 0;
+    foreach ($lines as $line) {
+        $d = preg_match('/^ {0,3}((?:> ?)+)/', $line, $q) ? substr_count($q[1], '>') : 0;
+        if ($d < $depth && trim($line) !== '') $out[] = rtrim(str_repeat('> ', $d));
+        $out[] = $line;
+        $depth = $d;
+    }
+    $body = implode("\n", $out);
     $body = str_replace("\n", "\n> ", $body);
 
     $quote_title = $author . " " . $GLOBALS["PHORUM"]["DATA"]["LANG"]["Wrote"] . ":";
@@ -362,6 +375,13 @@ function libreforum_markdown_quotes($body)
             function ($m) { return $m[1] . str_replace('&gt;', '>', $m[2]); },
             $part
         );
+        // "\>" and "\<": Markdown's escape, which Phorum's escaping hid.
+        // Numeric entities, so that the tag whitelist leaves them as text.
+        $part = str_replace(array('\\&gt;', '\\&lt;'), array('&#62;', '&#60;'), $part);
+        // A quote ends at the first line that does not start with ">".
+        // (A drop from "> >" to ">" is left to Markdown, which carries on
+        // the inner quote: in old messages such a drop is mostly a quoted
+        // line that lost one of its ">" when it was wrapped.)
         $parts[$k] = preg_replace('/^( {0,3}>[^\n]*)\n(?! {0,3}>|\s*\n|\s*$)/m', "$1\n\n", $part);
     }
     return implode('', $parts);
