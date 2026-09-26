@@ -63,6 +63,7 @@ function phorum_mod_pm_alerts_tpl_cc_usersettings($profile)
 		//only if the option to disable alerts has been enabled
 		if (!empty($PHORUM["phorum_mod_pm_alerts"]["allow_users_to_disable_alerts"])) {
 			foreach ($PHORUM["PROFILE_FIELDS"] as $key => $cstm_field) {
+				if ($key === 'num_fields' || !is_array($cstm_field)) continue;   // compteur entier rangé parmi les champs (cœur : même garde)
 				if ($cstm_field["name"] == "phorum_mod_pm_alerts_no_alert") {
 					if (!empty($cstm_field["deleted"]) && $cstm_field["deleted"] == TRUE) {
 						$user_disable_alert = 2;

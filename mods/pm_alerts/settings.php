@@ -24,6 +24,7 @@ if(count($_POST))
 
 //check if the necessary custom profile fields have been created
 foreach ($PHORUM["PROFILE_FIELDS"] as $key => $cstm_field) {
+    if ($key === 'num_fields' || !is_array($cstm_field)) continue;   // compteur entier rangé parmi les champs (cœur : même garde)
 	if ($cstm_field["name"] == "phorum_mod_pm_alerts_no_alert") {
 		if (isset($cstm_field["deleted"]) && $cstm_field["deleted"] == TRUE) {
 			$user_disable_alert = 2;

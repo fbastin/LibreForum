@@ -113,6 +113,7 @@ if (!empty($set_default)) {
 	phorum_db_update_settings(array("phorum_mod_forum_subscriptions"=>$PHORUM["phorum_mod_forum_subscriptions"]));
 }
 foreach ($PHORUM["PROFILE_FIELDS"] as $key => $cstm_field) {
+    if ($key === 'num_fields' || !is_array($cstm_field)) continue;   // compteur entier rangé parmi les champs (cœur : même garde)
 	if ($cstm_field["name"] == "phorum_mod_forum_subscriptions_user_unsubscribe_setting_self") {
 		if (isset($cstm_field["deleted"]) && $cstm_field["deleted"] == TRUE) {
 			$user_unsubscribe_self = 2;

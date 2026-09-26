@@ -368,6 +368,7 @@ function phorum_mod_admin_mass_email_tpl_cc_usersettings($profile)
 	if (!empty($profile["MAILSETTINGS"])) {
 		if ($PHORUM["phorum_mod_admin_mass_email"]["allow_user_unsubscribe"] == 1) {
 			foreach ($PHORUM["PROFILE_FIELDS"] as $key => $cstm_field) {
+				if ($key === 'num_fields' || !is_array($cstm_field)) continue;   // compteur entier rangé parmi les champs (cœur : même garde)
 				if ($cstm_field["name"] == "phorum_mod_admin_mass_email_user_unsubscribe_setting") {
 					if (!empty($cstm_field["deleted"]) && $cstm_field["deleted"] == TRUE) {
 						$user_unsubscribe = 2;
