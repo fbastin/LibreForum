@@ -1,0 +1,19 @@
+.mod_smileys_img {
+    vertical-align: middle;
+    margin: 0px 3px 0px 3px;
+    border: none;
+}
+
+/* The smiley buttons now come first in the tool bar: the pickers open to
+   the right of them and must not run past a phone screen. */
+#editor-tools-smiley-picker,
+#editor-tools-subjectsmiley-picker {
+    box-sizing: border-box;
+    max-width: calc(100vw - 32px);
+}
+@media (max-width: 600px) {
+    #editor-tools-smiley-picker,
+    #editor-tools-subjectsmiley-picker {
+        left: 16px !important;
+    }
+}
