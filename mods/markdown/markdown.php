@@ -254,6 +254,11 @@ function phorum_mod_markdown_addon()
 {
     global $PHORUM;
     
+    if (isset($PHORUM["args"]["action"]) && $PHORUM["args"]["action"] == 'guide') {
+        libreforum_markdown_guide();
+        return;
+    }
+
     if (isset($PHORUM["args"]["action"]) && $PHORUM["args"]["action"] == 'help') {
         // Load language strings or fallback to French
         if (isset($PHORUM["DATA"]["LANG"]["mod_markdown"])) {
@@ -284,8 +289,8 @@ function phorum_mod_markdown_addon()
         echo '</ul>';
         echo '<h2>' . $l['links_images'] . '</h2>';
         echo '<ul>';
-        echo '<li>' . $l['link'] . ' : <code>[Tireur.org](https://www.tireur.org)</code></li>';
-        echo '<li>' . $l['image'] . ' : <code>![Tireur](https://www.tireur.org/images/logo.png)</code></li>';
+        echo '<li>' . $l['link'] . ' : <code>[example.org](https://example.org)</code></li>';
+        echo '<li>' . $l['image'] . ' : <code>![description](https://example.org/photo.jpg)</code></li>';
         echo '</ul>';
         echo '<h2>' . $l['quotes_code'] . '</h2>';
         echo '<ul>';
@@ -305,7 +310,7 @@ function phorum_mod_markdown_addon()
         echo '<li>' . $l['emoji_mac'] . '</li>';
         echo '<li>' . $l['emoji_phone'] . '</li>';
         echo '</ul>';
-        echo '<p><br><a href="https://www.tireur.org/help/markdown.php" target="_blank">' . $l['consult_full'] . '</a> | <a href="javascript:window.close();">' . $l['close_window'] . '</a></p>';
+        echo '<p><br><a href="' . htmlspecialchars(phorum_get_url(PHORUM_ADDON_URL, 'module=markdown', 'action=guide')) . '" target="_blank">' . $l['consult_full'] . '</a> | <a href="javascript:window.close();">' . $l['close_window'] . '</a></p>';
         echo '</body></html>';
         exit;
     }
@@ -572,6 +577,128 @@ function libreforum_markdown_restore_html($html, $saved)
         $parts[$k] = implode('', $pieces);
     }
     return implode('', $parts);
+}
+
+// ----------------------------------------------------------------------
+// LibreForum — https://github.com/fbastin/LibreForum
+// Copyright 2026 Fabian Bastin and the LibreForum contributors
+// SPDX-License-Identifier: Apache-2.0
+//
+// Formatting guide: addon.php?module=markdown&action=guide. Its content is
+// in mods/markdown/guide/<language>.php. Every example is rendered by the
+// forum's own formatting chain (phorum_format_messages(), all active format
+// modules included), so the guide cannot promise what the forum does not do.
+// ----------------------------------------------------------------------
+
+function libreforum_markdown_guide_content()
+{
+    global $PHORUM;
+    $choices = array();
+    if (!empty($PHORUM['args']['lang'])) $choices[] = basename($PHORUM['args']['lang']);
+    if (!empty($PHORUM['language']))     $choices[] = basename($PHORUM['language']);
+    $choices[] = 'english';
+    foreach ($choices as $lang) {
+        $file = "./mods/markdown/guide/$lang.php";
+        if (file_exists($file)) return include($file);
+    }
+    return NULL;
+}
+
+function libreforum_markdown_render_example($source, $n)
+{
+    require_once './include/format_functions.php';
+    $id = 900000000 + $n;
+    $out = phorum_format_messages(array($id => array(
+        'message_id' => $id, 'body' => $source, 'subject' => '', 'author' => '',
+        'user_id' => 0, 'email' => '',
+    )));
+    return $out[$id]['body'];
+}
+
+function libreforum_markdown_guide()
+{
+    global $PHORUM;
+    $g = libreforum_markdown_guide_content();
+    if (!$g) return;
+    $h = function ($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); };
+
+    $toc = '';
+    $body = '';
+    $n = 0;
+    foreach ($g['sections'] as $section) {
+        list($anchor, $title, $note, $examples) = $section;
+        $toc .= '<li><a href="#' . $h($anchor) . '">' . $h($title) . '</a></li>';
+        $body .= '<section id="' . $h($anchor) . '"><h2>' . $h($title) . '</h2>';
+        if ($note !== '') $body .= '<p class="note">' . $h($note) . '</p>';
+        $body .= '<div class="examples">';
+        foreach ($examples as $ex) {
+            $show = !isset($ex['show']) || $ex['show'];
+            $result = $show
+                ? libreforum_markdown_render_example($ex[1], $n++)
+                : '<p class="none">' . $h($g['not_rendered']) . '</p>';
+            $body .= '<div class="example"><h3>' . $h($ex[0]) . '</h3>'
+                   . '<div class="pair"><div><div class="label">' . $h($g['syntax']) . '</div>'
+                   . '<pre class="source">' . $h($ex[1]) . '</pre></div>'
+                   . '<div><div class="label">' . $h($g['result']) . '</div>'
+                   . '<div class="result">' . $result . '</div></div></div></div>';
+        }
+        $body .= '</div></section>';
+    }
+    $toc .= '<li><a href="#emoji">' . $h($g['emoji']) . '</a></li>';
+    $body .= '<section id="emoji"><h2>' . $h($g['emoji']) . '</h2><p>' . $g['emoji_intro'] . '</p><ul>'
+           . '<li>' . $g['emoji_windows'] . '</li><li>' . $g['emoji_mac'] . '</li><li>' . $g['emoji_phone'] . '</li>'
+           . '</ul></section>';
+
+    header('Content-Type: text/html; charset=UTF-8');
+    echo '<!DOCTYPE html><html><head><meta charset="utf-8">'
+       . '<meta name="viewport" content="width=device-width, initial-scale=1">'
+       . '<meta name="robots" content="noindex">'
+       . '<title>' . $h($g['title']) . '</title><style>' . libreforum_markdown_guide_css() . '</style></head><body>'
+       . '<main><h1>' . $h($g['title']) . '</h1><p class="intro">' . $g['intro'] . '</p>'
+       . '<nav><h2>' . $h($g['contents']) . '</h2><ul>' . $toc . '</ul></nav>'
+       . $body
+       . '<p class="close"><a href="javascript:window.close();">' . $h($g['back']) . '</a></p>'
+       . '</main></body></html>';
+    exit;
+}
+
+function libreforum_markdown_guide_css()
+{
+    return <<<CSS
+:root { --bg: #ffffff; --fg: #24292f; --muted: #57606a; --line: #d0d7de; --soft: #f6f8fa; --accent: #0969da; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0d1117; --fg: #c9d1d9; --muted: #8b949e; --line: #30363d; --soft: #161b22; --accent: #58a6ff; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+h1 { font-size: 1.7rem; margin: 0 0 .75rem; }
+h2 { font-size: 1.3rem; margin: 2rem 0 .5rem; padding-bottom: .3rem; border-bottom: 1px solid var(--line); }
+h3 { font-size: .95rem; margin: 0 0 .4rem; color: var(--muted); }
+a { color: var(--accent); }
+.intro, .note { color: var(--muted); }
+nav ul { columns: 2 12rem; padding-left: 1.2rem; }
+nav h2 { border: none; margin-top: 1rem; }
+.example { margin: 1rem 0 1.25rem; }
+.pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: .75rem; }
+.pair > div { min-width: 0; }
+.label { font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-bottom: .2rem; }
+pre.source { margin: 0; padding: .6rem .75rem; background: var(--soft); border: 1px solid var(--line); border-radius: 6px; white-space: pre-wrap; overflow-wrap: anywhere; font: .9rem/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.result { padding: .5rem .75rem; border: 1px solid var(--line); border-radius: 6px; overflow-x: auto; }
+.result > :first-child { margin-top: 0; }
+.result > :last-child { margin-bottom: 0; }
+.result blockquote { margin: .4rem 0; padding: .3rem .8rem; border-left: 4px solid var(--line); background: var(--soft); }
+.result pre { background: var(--soft); padding: .5rem; border-radius: 4px; overflow-x: auto; }
+.result code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em; }
+.result table { border-collapse: collapse; }
+.result th, .result td { border: 1px solid var(--line); padding: .25rem .6rem; }
+.result h1, .result h2, .result h3 { border: none; margin: .2rem 0; padding: 0; }
+.none { color: var(--muted); font-style: italic; }
+@media (prefers-color-scheme: dark) {
+  .result [style*="--libreforum-color"] { color: color-mix(in oklab, var(--libreforum-color) 35%, var(--fg)) !important; }
+}
+.close { margin-top: 2.5rem; }
+CSS;
 }
 
 ?>
