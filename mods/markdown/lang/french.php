@@ -25,6 +25,13 @@ $PHORUM["DATA"]["LANG"]["mod_markdown"] = array(
     'numbered_list' => 'Liste numérotée',
     'consult_full' => 'Consulter le guide complet',
     'close_window' => 'Fermer cette fenêtre',
+
+    // Émojis
+    'emoji' => 'Émojis',
+    'emoji_intro' => 'Les émojis Unicode (😀 👍 🎯) sont acceptés dans les messages et les sujets. Pour ouvrir le sélecteur d\'émojis :',
+    'emoji_windows' => 'Windows : touche Windows + <code>.</code> (point)',
+    'emoji_mac' => 'Mac : <code>Ctrl</code> + <code>Cmd</code> + <code>Espace</code>',
+    'emoji_phone' => 'Téléphone et tablette : la touche 😀 du clavier',
     
     // JS Prompts
     'prompt_color' => 'Entrez la couleur (nom en anglais ou code hexa, ex: red, #FF0000) :',

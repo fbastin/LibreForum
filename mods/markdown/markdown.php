@@ -266,6 +266,13 @@ function phorum_mod_markdown_addon()
         echo '<li>' . $l['bullet_list'] . ' : <code>- </code> ou <code>* </code> en début de ligne.</li>';
         echo '<li>' . $l['numbered_list'] . ' : <code>1. </code>, <code>2. </code>, etc.</li>';
         echo '</ul>';
+        echo '<h2>' . $l['emoji'] . '</h2>';
+        echo '<p>' . $l['emoji_intro'] . '</p>';
+        echo '<ul>';
+        echo '<li>' . $l['emoji_windows'] . '</li>';
+        echo '<li>' . $l['emoji_mac'] . '</li>';
+        echo '<li>' . $l['emoji_phone'] . '</li>';
+        echo '</ul>';
         echo '<p><br><a href="https://www.tireur.org/help/markdown.php" target="_blank">' . $l['consult_full'] . '</a> | <a href="javascript:window.close();">' . $l['close_window'] . '</a></p>';
         echo '</body></html>';
         exit;
