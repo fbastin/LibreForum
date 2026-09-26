@@ -62,7 +62,9 @@ $PHORUM['DBCONFIG']=array(
     // used for specifying web site charsets. For example "utf-8" is not
     // a valid charset.
 //    'charset' => 'iso-8859-1',
-    'charset' => 'utf8',
+    // utf8mb4 stores every Unicode character, emojis included; MySQL's
+    // "utf8" is limited to 3 bytes and rejects them (error 1366).
+    'charset' => 'utf8mb4',
 
     // For master/slave setup (if the "mysql_php_extension" option is set to
     // "mysqli_replication") you need to specify the slave servers to use.
