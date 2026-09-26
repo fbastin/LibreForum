@@ -1,29 +1,5 @@
 <?php
 
-function randImage($path)
-{
-        $path = $_SERVER['DOCUMENT_ROOT'] . "/" . $path;
-//        echo $path;
-	if (is_dir($path)) 
-	{
-		$images = glob($path.'/*.*'); // will grab every files in the current directory
-		$arrayImage = array(); // create an empty array
-		
-		// read throught all files
-		foreach ($images as $img) 
-		{
-			// check file mime type like (jpeg,jpg,gif,png,webp), you can limit or allow certain file type	
-			if (preg_match('/[.](jpeg|jpg|gif|png|webp)$/i', basename($img))) { $arrayImage[] = $img; }
-		}
-		
-		return($arrayImage); // return every images back as an array
-	}
-	else
-	{
-		return(array());
-	}
-}
-
 if ($PHORUM['DATA']['CHARSET']) {
     header("Content-Type: text/html; charset=".htmlspecialchars($PHORUM['DATA']['CHARSET']));
     echo '<?xml version="1.0" encoding="'.$PHORUM['DATA']['CHARSET'].'"?>';
@@ -31,13 +7,6 @@ if ($PHORUM['DATA']['CHARSET']) {
     echo '<?xml version="1.0" ?>';
 }
 
-$bkgd = randImage('backgrounds');
-if (count($bkgd) > 0) {
-	$i = rand(0, count($bkgd)-1);
-	$selectedBg = $bkgd[$i];
-} else {
-	$selectedBg = '';
-}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -52,8 +21,6 @@ form {
 display: inline;
 }
 </style>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="icon" href="/favicon.ico" sizes="any" />
 
 <title>{HTML_TITLE}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -66,20 +33,18 @@ display: inline;
 {! "css_register" module hook. }
 {IF PRINTVIEW}
   <meta name="robots" content="index, follow">
-  <meta name="keywords" content="tir, tir sportf, tireur, shooting, firearms, armes, rechargement, Belgique, Europe, munitions, slashbin.net/libreforum" />
   <link rel="stylesheet" type="text/css" href="{URL->CSS_PRINT}" media="screen,print" />
 {ELSE}
   <link rel="stylesheet" type="text/css" href="{URL->CSS}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{URL->CSS_PRINT}" media="print" />
-  <link rel="stylesheet" type="text/css" href="{URL->HTTP_PATH}/css/tireur.min.css?v=<?php echo filemtime(dirname(__FILE__).'/../css/tireur.min.css'); ?>" media="all"/>
-  <link rel="stylesheet" type="text/css" href="{URL->HTTP_PATH}/css/lucide.css?v=<?php echo filemtime(dirname(__FILE__).'/../css/lucide.css'); ?>" media="all"/>
+  <link rel="stylesheet" type="text/css" href="{URL->HTTP_PATH}/css/libreforum.min.css?v=<?php echo @filemtime('./css/libreforum.min.css'); ?>" media="all"/>
+  <link rel="stylesheet" type="text/css" href="{URL->HTTP_PATH}/css/lucide.css?v=<?php echo @filemtime('./css/lucide.css'); ?>" media="all"/>
 {/IF}
 
 {! Load Javascript code. This code origins from core LibreForum javascript }
 {! code, template javascript code (templates/.../javascript.tpl) and }
 {! modules that add their code using the "javascript_register" module hook. }
 <script type="text/javascript" src="{URL->JAVASCRIPT}"></script>
-<script type="text/javascript" src="/js/theme-switcher.js"></script>
 
 {! Add links to the available RSS feeds. }
 {IF FEEDS}
@@ -132,19 +97,19 @@ Some Icons courtesy of:
   Tango Project - http://tango-project.org/
 -->
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="Tireur.org" />
+<meta property="og:site_name" content="{TITLE}" />
 <meta property="og:title" content="{HTML_TITLE}" />
-{! og:url se bâtit sur la requête courante, et non sur URL->READ / URL->INDEX : }
-{! la première n'est jamais définie à ce niveau (seulement par ligne, dans      }
-{! list.php et read.php) et la seconde renvoie déjà une URL absolue, que le     }
-{! préfixe codé en dur doublait. Tout fil annonçait donc l'index en canonique.  }
-<meta property="og:url" content="https://www.slashbin.net/libreforum<?php echo htmlspecialchars(strtok($_SERVER['REQUEST_URI'], '#'), ENT_QUOTES, 'UTF-8'); ?>" />
-<meta property="og:image" content="https://www.slashbin.net/libreforum/images/logo-site.png" />
-<meta property="og:locale" content="fr_BE" />
-<meta name="theme-color" content="#141D26">
-<link rel="stylesheet" href="/js/vendor/katex/katex.min.css?v=0.16.8">
-<script defer src="/js/vendor/katex/katex.min.js?v=0.16.8"></script>
-<script defer src="/js/vendor/katex/auto-render.min.js?v=0.16.8" onload="var opts = new Object(); var d1 = new Object(); d1.left = '$$'; d1.right = '$$'; d1.display = true; var d2 = new Object(); d2.left = '$'; d2.right = '$'; d2.display = false; var d3 = new Object(); d3.left = '\\('; d3.right = '\\)'; d3.display = false; var d4 = new Object(); d4.left = '\\['; d4.right = '\\]'; d4.display = true; opts.delimiters = [d1, d2, d3, d4]; opts.throwOnError = false; renderMathInElement(document.body, opts);"></script>
+{! og:url: the current request on the forum's own host (http_path), not }
+{! URL->READ, which is only set per row in list.php and read.php. }
+<?php $libreforum_base = parse_url($PHORUM['http_path']); ?>
+<meta property="og:url" content="<?php echo htmlspecialchars($libreforum_base['scheme'] . '://' . $libreforum_base['host'] . (isset($libreforum_base['port']) ? ':' . $libreforum_base['port'] : '') . strtok($_SERVER['REQUEST_URI'], '#'), ENT_QUOTES, 'UTF-8'); ?>" />
+<meta property="og:image" content="{URL->HTTP_PATH}/images/logo-site.png" />
+{! KaTeX renders the $...$ and $$...$$ formulas that the Markdown module }
+{! leaves untouched. Shipped in js/vendor/katex, no third-party CDN.     }
+{! No braces in the onload code: the template engine reads them.        }
+<link rel="stylesheet" href="{URL->HTTP_PATH}/js/vendor/katex/katex.min.css?v=0.16.8" />
+<script defer src="{URL->HTTP_PATH}/js/vendor/katex/katex.min.js?v=0.16.8"></script>
+<script defer src="{URL->HTTP_PATH}/js/vendor/katex/auto-render.min.js?v=0.16.8" onload="var opts = new Object(); var d1 = new Object(); d1.left = '$$'; d1.right = '$$'; d1.display = true; var d2 = new Object(); d2.left = '$'; d2.right = '$'; d2.display = false; var d3 = new Object(); d3.left = '\\('; d3.right = '\\)'; d3.display = false; var d4 = new Object(); d4.left = '\\['; d4.right = '\\]'; d4.display = true; opts.delimiters = [d1, d2, d3, d4]; opts.throwOnError = false; renderMathInElement(document.body, opts);"></script>
 </head>
 
 {! Start of the page body. }
@@ -154,7 +119,7 @@ Some Icons courtesy of:
 
 <div id="wrapper">
 <header id="header">
-    <a href="/libreforum/index.php" style="text-decoration: none; display: flex; align-items: center; padding: 15px 20px;">
+    <a href="{URL->INDEX}" style="text-decoration: none; display: flex; align-items: center; padding: 15px 20px;">
         <i class="li-message-circle" style="font-size: 2rem; color: var(--color-accent); margin-right: 10px;"></i>
         <h1 style="color: var(--color-accent); font-family: Outfit\, sans-serif; font-size: 2rem; margin: 0;">LibreForum</h1>
     </a>

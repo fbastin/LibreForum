@@ -12,7 +12,7 @@ L'affichage d'éléments obsolètes ou manquants (notamment pour les icônes) so
 
 ## 2. Harmonisation de l'impression (Firefox vs Edge)
 Le comportement des feuilles de style pour l'impression (`@media print`) diffère souvent selon le moteur de rendu du navigateur (Gecko pour Firefox, Blink pour Edge).
-- **Action :** Auditer la feuille de style `css_print.tpl` et `tireur.min.css`.
+- **Action :** Auditer la feuille de style `css_print.tpl` et `libreforum.min.css`.
 - **Action :** Ajouter des règles spécifiques pour forcer le comportement des sauts de page (`page-break-inside: avoid;`) et la gestion des marges sur Firefox.
 - **Action :** Tester le rendu PDF généré pour s'assurer d'une homogénéité inter-navigateurs.
 - **Livrable :** Des impressions ou exports PDF propres et identiques, quel que soit le navigateur.
