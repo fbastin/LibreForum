@@ -133,7 +133,7 @@ function editor_tools_handle_subjectsmiley()
     if (!editor_tools_subjectsmiley_picker_obj)
     {
         // Create a new popup.
-        var popup = editor_tools_construct_popup('editor-tools-subjectsmiley-picker','l');
+        var popup = editor_tools_construct_popup('editor-tools-subjectsmiley-picker','r');
         editor_tools_subjectsmiley_picker_obj = popup[0];
         var content_obj = popup[1];
 

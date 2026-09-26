@@ -4,8 +4,9 @@
     border: none;
 }
 
-/* The smiley buttons now come first in the tool bar: the pickers open to
-   the right of them and must not run past a phone screen. */
+/* The body smiley button now comes first in the tool bar, so its picker
+   opens to the right of it; the subject one sits at the right end of the
+   subject field and opens to the left. Neither may run past a phone screen. */
 #editor-tools-smiley-picker,
 #editor-tools-subjectsmiley-picker {
     box-sizing: border-box;
