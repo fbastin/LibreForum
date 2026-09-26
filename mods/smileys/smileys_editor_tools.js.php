@@ -72,6 +72,37 @@ foreach ($PHORUM["mod_smileys"]["smileys"] as $id => $smiley)
 // Tool: smiley
 // ----------------------------------------------------------------------
 
+// Unicode emojis offered at the top of both pickers (tireur.org, 2026-09-26).
+// Code points rather than literal characters: this file is served through
+// javascript.php, and the characters then do not depend on its encoding.
+var editor_tools_emojis = [
+    [[0x1F44D], 'pouce levé'], [[0x1F44E], 'pouce baissé'],
+    [[0x1F600], 'sourire'], [[0x1F602], 'pleurer de rire'], [[0x1F609], 'clin d\'œil'],
+    [[0x1F914], 'réfléchir'], [[0x1F62E], 'étonné'], [[0x1F622], 'triste'],
+    [[0x1F621], 'en colère'], [[0x1F44F], 'applaudir'], [[0x1F64F], 'merci'],
+    [[0x1F44B], 'salut'], [[0x1F3AF], 'dans le mille'], [[0x1F3C6], 'trophée'],
+    [[0x2705], 'oui'], [[0x2764, 0xFE0F], 'cœur']
+];
+
+function editor_tools_add_emoji_row(content_obj, select_function)
+{
+    var row = document.createElement('div');
+    row.className = 'editor-tools-emoji-row';
+    for (var i = 0; i < editor_tools_emojis.length; i++)
+    {
+        var ch = String.fromCodePoint.apply(null, editor_tools_emojis[i][0]);
+        var a_obj = document.createElement('a');
+        a_obj.href = '#';
+        a_obj.title = editor_tools_emojis[i][1];
+        a_obj.textContent = ch;
+        a_obj.onclick = (function (c) {
+            return function () { select_function(c); return false; };
+        })(ch);
+        row.appendChild(a_obj);
+    }
+    content_obj.appendChild(row);
+}
+
 function editor_tools_handle_smiley()
 {
     // Create the smiley picker on first access.
@@ -83,6 +114,8 @@ function editor_tools_handle_smiley()
         var content_obj = popup[1];
 
         editor_tools_smiley_picker_obj.style.width = editor_tools_smileys_popupwidth;
+
+        editor_tools_add_emoji_row(content_obj, editor_tools_handle_smiley_select);
 
         // Populate the new popup.
         for (var i = 0; i < editor_tools_smileys.length; i++)
@@ -136,6 +169,8 @@ function editor_tools_handle_subjectsmiley()
         var popup = editor_tools_construct_popup('editor-tools-subjectsmiley-picker','r');
         editor_tools_subjectsmiley_picker_obj = popup[0];
         var content_obj = popup[1];
+
+        editor_tools_add_emoji_row(content_obj, editor_tools_handle_subjectsmiley_select);
 
         // Populate the new popup.
         for (var i = 0; i < editor_tools_subjectsmileys.length; i++)

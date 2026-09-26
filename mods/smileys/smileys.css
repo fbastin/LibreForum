@@ -18,3 +18,19 @@
         left: 16px !important;
     }
 }
+
+/* Unicode emojis above the image smileys. */
+.editor-tools-emoji-row {
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    font-size: 22px;
+    line-height: 1.5;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #bbb;
+}
+
+.editor-tools-popup .editor-tools-emoji-row a {
+    display: inline-block;
+    padding: 0 3px;
+    text-decoration: none;
+}
