@@ -129,6 +129,7 @@ Some Icons courtesy of:
 {! The default onload code for the <body> uses the FOCUS_TO_ID template }
 {! variable to specify what page element should get the focus. }
 <body onload="{IF FOCUS_TO_ID}var focuselt=document.getElementById('{FOCUS_TO_ID}'); if (focuselt) focuselt.focus();{/IF}">
+<a class="skip-link" href="#content"><span class="lang-fr">Aller au contenu</span><span class="lang-en">Skip to content</span></a>
 
 <div id="wrapper">
 
