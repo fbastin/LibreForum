@@ -347,13 +347,24 @@ define('LIBREFORUM_MARKDOWN_MARK', "\x1A");
 
 // "&gt; text" at the start of a line is a Markdown quote. Nested quotes
 // ("&gt; &gt; text") too. A ">" glued to the text (">:D<") is left alone.
+// A quote ends at the first line that does not start with ">": Markdown
+// would carry on the quote ("lazy continuation"), and a reply written just
+// under the quoted text would be shown as part of it.
 function libreforum_markdown_quotes($body)
 {
-    return preg_replace_callback(
-        '/^( {0,3})((?:&gt; ?)*&gt;)(?= |$)/m',
-        function ($m) { return $m[1] . str_replace('&gt;', '>', $m[2]); },
-        $body
-    );
+    // Fenced code blocks are left untouched.
+    $parts = preg_split('/(^ {0,3}(?:```|~~~).*?(?:^ {0,3}(?:```|~~~)[^\n]*$|\z))/ms',
+                        $body, -1, PREG_SPLIT_DELIM_CAPTURE);
+    foreach ($parts as $k => $part) {
+        if ($k % 2 == 1) continue;
+        $part = preg_replace_callback(
+            '/^( {0,3})((?:&gt; ?)*&gt;)(?= |$)/m',
+            function ($m) { return $m[1] . str_replace('&gt;', '>', $m[2]); },
+            $part
+        );
+        $parts[$k] = preg_replace('/^( {0,3}>[^\n]*)\n(?! {0,3}>|\s*\n|\s*$)/m', "$1\n\n", $part);
+    }
+    return implode('', $parts);
 }
 
 // Validate one escaped tag and return its safe HTML form, or NULL.
@@ -395,7 +406,10 @@ function libreforum_markdown_tag($closing, $name, $attrs)
                 $prop = strtolower($d[1]);
                 $val  = strtolower($d[2]);
                 if ($prop == 'color' && preg_match('/^(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z]{3,20})$/', $val)) {
+                    // Also as a custom property, so that a dark theme can
+                    // lighten colours chosen for a white background.
                     $css[] = "color: $val";
+                    $css[] = "--libreforum-color: $val";
                 } elseif ($prop == 'font-size') {
                     $keywords = array('xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large');
                     if (in_array($val, $keywords)) {
