@@ -65,6 +65,10 @@ return array(
         array('tableaux', 'Tableaux', 'Les colonnes sont séparées par des barres verticales ; la deuxième ligne sépare l\'en-tête. Un deux-points à droite aligne la colonne à droite.', array(
             array('Tableau', "| Nom | Valeur |\n| --- | ---: |\n| premier | 12 |\n| second | 3,5 |"),
         )),
+        array('formules', 'Formules mathématiques', 'Entre signes dollar : un seul pour une formule dans la phrase, deux pour une formule centrée sur sa ligne. La notation est celle de LaTeX.', array(
+            array('Dans la phrase', 'L\'énergie vaut $E = \\frac{1}{2} m v^2$.'),
+            array('Centrée', '$$\\sigma = \\sqrt{\\frac{\\sum (x_i - \\bar{x})^2}{n - 1}}$$'),
+        ), 'needs' => 'katex'),
         array('echapper', 'Écrire un signe sans qu\'il agisse', 'Une barre oblique inverse devant le signe le montre tel quel.', array(
             array('Astérisques visibles', '\\*pas en italique\\*'),
             array('Chevron en début de ligne', '\\> pas une citation'),

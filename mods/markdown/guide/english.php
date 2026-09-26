@@ -65,6 +65,10 @@ return array(
         array('tables', 'Tables', 'Columns are separated by vertical bars; the second line separates the header. A colon on the right aligns the column to the right.', array(
             array('Table', "| Name | Value |\n| --- | ---: |\n| first | 12 |\n| second | 3.5 |"),
         )),
+        array('formulas', 'Mathematical formulas', 'Between dollar signs: one for a formula within the sentence, two for a formula centred on its own line. The notation is LaTeX.', array(
+            array('Within the sentence', 'The energy is $E = \\frac{1}{2} m v^2$.'),
+            array('Centred', '$$\\sigma = \\sqrt{\\frac{\\sum (x_i - \\bar{x})^2}{n - 1}}$$'),
+        ), 'needs' => 'katex'),
         array('escaping', 'Writing a sign without its effect', 'A backslash before the sign shows it as is.', array(
             array('Visible asterisks', '\\*not italic\\*'),
             array('">" at the start of a line', '\\> not a quote'),

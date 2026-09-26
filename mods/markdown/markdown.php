@@ -625,7 +625,10 @@ function libreforum_markdown_guide()
     $toc = '';
     $body = '';
     $n = 0;
+    // Formulas are drawn by KaTeX in the browser, when the forum ships it.
+    $katex = file_exists('./js/vendor/katex/katex.min.js');
     foreach ($g['sections'] as $section) {
+        if (isset($section['needs']) && $section['needs'] == 'katex' && !$katex) continue;
         list($anchor, $title, $note, $examples) = $section;
         $toc .= '<li><a href="#' . $h($anchor) . '">' . $h($title) . '</a></li>';
         $body .= '<section id="' . $h($anchor) . '"><h2>' . $h($title) . '</h2>';
@@ -653,13 +656,25 @@ function libreforum_markdown_guide()
     echo '<!DOCTYPE html><html><head><meta charset="utf-8">'
        . '<meta name="viewport" content="width=device-width, initial-scale=1">'
        . '<meta name="robots" content="noindex">'
-       . '<title>' . $h($g['title']) . '</title><style>' . libreforum_markdown_guide_css() . '</style></head><body>'
+       . '<title>' . $h($g['title']) . '</title><style>' . libreforum_markdown_guide_css() . '</style>'
+       . ($katex ? libreforum_markdown_guide_katex() : '')
+       . '</head><body>'
        . '<main><h1>' . $h($g['title']) . '</h1><p class="intro">' . $g['intro'] . '</p>'
        . '<nav><h2>' . $h($g['contents']) . '</h2><ul>' . $toc . '</ul></nav>'
        . $body
        . '<p class="close"><a href="javascript:window.close();">' . $h($g['back']) . '</a></p>'
        . '</main></body></html>';
     exit;
+}
+
+function libreforum_markdown_guide_katex()
+{
+    $base = htmlspecialchars($GLOBALS['PHORUM']['http_path'] . '/js/vendor/katex/', ENT_QUOTES, 'UTF-8');
+    return '<link rel="stylesheet" href="' . $base . 'katex.min.css" />'
+         . '<script defer src="' . $base . 'katex.min.js"></script>'
+         . '<script defer src="' . $base . 'auto-render.min.js" onload="renderMathInElement(document.querySelector(\'main\'), '
+         . '{delimiters: [{left: \'$$\', right: \'$$\', display: true}, {left: \'$\', right: \'$\', display: false}], '
+         . 'ignoredTags: [\'script\', \'noscript\', \'style\', \'textarea\', \'pre\', \'code\'], throwOnError: false});"></script>';
 }
 
 function libreforum_markdown_guide_css()
