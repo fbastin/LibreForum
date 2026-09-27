@@ -264,7 +264,7 @@
 }
 
 .btn-add-event:hover {
-    background: var(--color-accent-light, #3498db);
+    background: var(--color-accent-hover, #1f6a9c);
 }
 
 .events-scroll {
@@ -434,7 +434,7 @@
     font-family: inherit;
     transition: background-color 0.15s;
 }
-.cal-modal-foot .btn-save:hover { background: var(--color-accent-light, #3498db); }
+.cal-modal-foot .btn-save:hover { background: var(--color-accent-hover, #1f6a9c); }
 .cal-modal-foot .btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .cal-modal-foot .btn-cancel {
