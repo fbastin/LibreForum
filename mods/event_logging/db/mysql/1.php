@@ -2,6 +2,11 @@
 
 if (!defined("PHORUM")) return;
 
+// Same character set as the core tables (see phorum_db_create_tables()).
+$charset = empty($PHORUM['DBCONFIG']['charset'])
+         ? ''
+         : "DEFAULT CHARACTER SET {$PHORUM['DBCONFIG']['charset']}";
+
 $sqlqueries[]= "
     CREATE TABLE {$PHORUM["event_logging_table"]} (
 
@@ -29,7 +34,7 @@ $sqlqueries[]= "
         KEY datestamp  (datestamp),
         KEY user_id    (user_id),
         KEY forum      (vroot, forum_id, thread_id, message_id)
-    )
+    ) $charset
 ";
 
 ?>

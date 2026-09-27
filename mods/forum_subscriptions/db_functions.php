@@ -49,6 +49,11 @@ function phorum_mod_forum_subscriptions_db_check_table ($table) {
 function phorum_mod_forum_subscriptions_db_create_table ($full_table) {
     
     global $PHORUM;
+
+    // Same character set as the core tables (see phorum_db_create_tables()).
+    $charset = empty($PHORUM['DBCONFIG']['charset'])
+             ? ''
+             : "DEFAULT CHARACTER SET {$PHORUM['DBCONFIG']['charset']}";
     
     switch ($full_table) {
         
@@ -72,7 +77,7 @@ function phorum_mod_forum_subscriptions_db_create_table ($full_table) {
                 
                 PRIMARY KEY (queue_id),
                 INDEX (insert_timestamp)
-              )";
+              ) $charset";
             break;
         case $PHORUM["DBCONFIG"]["table_prefix"]."_mod_forum_sub_subscriptions":
             $sql = "CREATE TABLE $full_table (
@@ -85,7 +90,7 @@ function phorum_mod_forum_subscriptions_db_create_table ($full_table) {
                 INDEX (forum_id),
                 INDEX (user_id, forum_id),
                 INDEX (forum_id, frequency)
-              )";
+              ) $charset";
             break;    
     }
     
