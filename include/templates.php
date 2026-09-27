@@ -804,6 +804,13 @@ function phorum_write_file($file, $data)
         E_USER_ERROR
     );
     fclose($fp);
+
+    // OPcache may still hold the previous version of a file rewritten
+    // within the same second; the stale stage 1 check would then rebuild
+    // the template in a loop until max_execution_time.
+    if (function_exists('opcache_invalidate')) {
+        opcache_invalidate($file, true);
+    }
 }
 
 
