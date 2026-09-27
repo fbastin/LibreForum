@@ -148,11 +148,19 @@ Contents:
    them. Else, you can use the mysql prompt to create the database
    by issuing commands like:
 
-   mysql> CREATE DATABASE phorum;
-   mysql> GRANT ALL ON phorum.* TO 'user'@'localhost' IDENTIFIED BY 'password';
+   mysql> CREATE DATABASE phorum
+       ->   CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+   mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
+   mysql> GRANT ALL ON phorum.* TO 'user'@'localhost';
 
    Of course, for security reasons you would use your own user and
    password instead.
+
+   utf8mb4 lets messages hold any Unicode character, emojis included.
+   It is the "charset" set in include/db/config.php-dist; the forum
+   tables are created with it whatever the default of the database,
+   but giving it to the database too keeps tables added by hand or by
+   third-party modules consistent.
 
    If you are unsure how to create a database and a database user,
    please refer to your system documentation.
