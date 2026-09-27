@@ -98,8 +98,10 @@ function phorum_mod_smileys_matcher($target)
     // Order matters: known smiley first (some start with "&gt;" or "<em>"),
     // then any other tag or entity, which is kept as is. Entities are
     // consumed whole so that ";)" is not found inside "&#039;)".
+    // Case-sensitive, like $map: with /i, "b)" matched the smiley "B)",
+    // found no entry in $map and was erased from the message.
     $cache[$target] = empty($alts) ? NULL : array(
-        '~(' . implode('|', $alts) . ')|(<[^>]*>)|(&(?:[a-z]+|#[0-9]+);)~i',
+        '~(' . implode('|', $alts) . ')|(<[^>]*>)|(&(?:[A-Za-z][A-Za-z0-9]*|#[0-9]+|#x[0-9A-Fa-f]+);)~',
         $map
     );
     return $cache[$target];
