@@ -101,7 +101,8 @@ Some Icons courtesy of:
 <meta property="og:title" content="{HTML_TITLE}" />
 {! og:url: the current request on the forum's own host (http_path), not }
 {! URL->READ, which is only set per row in list.php and read.php. }
-<?php $libreforum_base = parse_url($PHORUM['http_path']); ?>
+{! phorum_output() only copies DATA, locale and hooks into $PHORUM. }
+<?php $libreforum_base = parse_url($PHORUM['DATA']['URL']['HTTP_PATH']); ?>
 <meta property="og:url" content="<?php echo htmlspecialchars($libreforum_base['scheme'] . '://' . $libreforum_base['host'] . (isset($libreforum_base['port']) ? ':' . $libreforum_base['port'] : '') . strtok($_SERVER['REQUEST_URI'], '#'), ENT_QUOTES, 'UTF-8'); ?>" />
 <meta property="og:image" content="{URL->HTTP_PATH}/images/logo-site.png" />
 {! KaTeX renders the $...$ and $$...$$ formulas that the Markdown module }
@@ -119,7 +120,8 @@ Some Icons courtesy of:
 
 <div id="wrapper">
 <header id="header">
-    <a href="{URL->INDEX}" style="text-decoration: none; display: flex; align-items: center; padding: 15px 20px;">
+    {! index.php unsets URL->INDEX: it is the page the link leads to. }
+    <a href="{IF URL->INDEX}{URL->INDEX}{ELSE}{URL->BASE}{/IF}" style="text-decoration: none; display: flex; align-items: center; padding: 15px 20px;">
         <i class="li-message-circle" style="font-size: 2rem; color: var(--color-accent); margin-right: 10px;"></i>
         <h1 style="color: var(--color-accent); font-family: Outfit\, sans-serif; font-size: 2rem; margin: 0;">LibreForum</h1>
     </a>
