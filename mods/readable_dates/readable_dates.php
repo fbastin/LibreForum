@@ -202,7 +202,7 @@ function phorum_mod_readable_dates_pm_read($data)
     if (!$PHORUM['mod_readable_dates']['pm_read']) return $data;
 
     // Format the message date.
-    $data['orig_date'] = $data['data'];
+    $data['orig_date'] = $data['date'];
     $data['date'] = mod_readable_dates_format_date(
         $data['raw_date'], $data['date']
     );
