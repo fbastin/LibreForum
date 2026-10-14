@@ -41,6 +41,15 @@ if ($PHORUM["forum_id"]==$PHORUM["vroot"]){
 }
 // Use a single forum.
 else {
+    // Read permission first (2026-10-14). phorum_db_get_recent_messages() filters
+    // unreadable forums, but the thread feed below reads its first message
+    // directly with phorum_db_get_message(), which does not: an anonymous
+    // visitor got the subject and body of any thread of a private forum
+    // (feed.php?110,<thread>, « Petites annonces clôturées »).
+    if (!phorum_api_user_check_access(PHORUM_USER_ALLOW_READ, $PHORUM["forum_id"])) {
+        header("HTTP/1.1 404 Not Found");
+        exit();
+    }
     // its cheap to copy this even though there is more than needed in it
     $forums[$PHORUM["forum_id"]] = $PHORUM;
 }
@@ -113,6 +122,17 @@ if(!empty($cache)){
             $thread_start = phorum_db_get_message($thread);
         } else {
             $thread_start = $messages[$thread];
+        }
+
+        // No such thread in THIS forum: deleted, or moved (an old URL keeps the
+        // former forum id, and phorum_db_get_message() only searches the current
+        // forum). Nothing to describe: answer 404 instead of writing a feed with
+        // an empty title from a null message (2026-10-14). The direct read does
+        // not filter on status either: a thread start still awaiting moderation
+        // is not published, here no more than in the message list.
+        if (empty($thread_start) || $thread_start["status"] != PHORUM_STATUS_APPROVED) {
+            header("HTTP/1.1 404 Not Found");
+            exit();
         }
 
         $feed_url = phorum_get_url(PHORUM_FOREIGN_READ_URL, $PHORUM["forum_id"], $thread, $thread);
