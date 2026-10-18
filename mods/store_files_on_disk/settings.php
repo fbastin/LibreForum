@@ -31,15 +31,18 @@ if (isset($_POST['path']))
 
     // Check if Phorum can write to the storage path.
     else {
-        ini_set('track_errors', 1);
         $dummy = "$path/mod_store_files_on_disk_dummy";
         @rmdir($dummy);
+        // error_get_last(), cleared AFTER the rmdir() above, which fails
+        // whenever the dummy does not exist: $php_errormsg no longer
+        // exists since PHP 8.0.
+        error_clear_last();
         if (@mkdir($dummy) == FALSE) {
             phorum_admin_error(
                 "The path that you entered seems invalid. " .
                 "Phorum is unable to create subdirectories beneath it. " .
                 "The error returned from the system was: " .
-                $php_errormsg
+                (error_get_last()['message'] ?? 'unknown error')
             );
             $error = TRUE;
         }

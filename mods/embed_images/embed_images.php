@@ -563,12 +563,14 @@ function mod_embed_images_build_cache_dir($key, $requested_size)
  */
 function mod_embed_images_mkdir($path)
 {
-    @ini_set('track_errors', TRUE);
     if (empty($path)) return FALSE;
     if (is_dir($path)) return TRUE;
     if (!mod_embed_images_mkdir(dirname($path))) return FALSE;
+    // error_get_last(): $php_errormsg no longer exists since PHP 8.0.
+    error_clear_last();
     if (@mkdir($path) === FALSE) {
-        die("mkdir($path) failed:<br />" . strip_tags($php_errormsg));
+        die("mkdir($path) failed:<br />" .
+            strip_tags(error_get_last()['message'] ?? 'unknown error'));
     }
     return TRUE;
 }

@@ -47,13 +47,15 @@
         $dummy_file = "$dir/sanity_check_dummy_file";
 
         // Check if we can create files in the cache directory.
+        // (error_get_last(): $php_errormsg no longer exists since PHP 8.0.)
+        error_clear_last();
         $fp = @fopen ($dummy_file, "w");
         if (! $fp) return array (
             $is_install ? PHORUM_SANITY_WARN : PHORUM_SANITY_CRIT,
             "The system is unable to write files
              to your cache directory \"".htmlspecialchars($dir)."\".
              The system error was:<br/><br/>".
-             htmlspecialchars($php_errormsg).".",
+             htmlspecialchars(error_get_last()['message'] ?? 'unknown error').".",
             $solution_2
         );
         if (! fclose($fp)) return array (
@@ -88,11 +90,13 @@
         $dummy_dir = "$dir/sanity_check_dummy_dir";
 
         // Check if we can create directories in the cache directory.
+        error_clear_last();
         if (! @mkdir($dummy_dir)) return array(
             $is_install ? PHORUM_SANITY_WARN : PHORUM_SANITY_CRIT,
             "The system is unable to create directories
              in your cache directory \"".htmlspecialchars($dir)."\".
-             The system error was:<br/><br/>".htmlspecialchars($php_errormsg).".",
+             The system error was:<br/><br/>".
+             htmlspecialchars(error_get_last()['message'] ?? 'unknown error').".",
             $solution_2
         );
         rmdir($dummy_dir);

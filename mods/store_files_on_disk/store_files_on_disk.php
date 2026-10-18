@@ -23,8 +23,9 @@ function phorum_mod_store_files_on_disk_store($file)
     // mechanism in this module will convert the file once writing
     // succeeds again.
 
-    @ini_set('track_errors', 1);
-    $php_errormsg = NULL;
+    // The system error is read through error_get_last(): $php_errormsg
+    // (track_errors) no longer exists since PHP 8.0.
+    error_clear_last();
     $error = NULL;
 
     if (!file_exists($dirpart)) {
@@ -59,8 +60,9 @@ function phorum_mod_store_files_on_disk_store($file)
     // Trigger an error if the writing failed.
     if ($error !== NULL)
     {
-        if (!empty($php_errormsg)) {
-            $error .= " ($php_errormsg)";
+        $syserr = error_get_last();
+        if ($syserr !== NULL) {
+            $error .= " ({$syserr['message']})";
         }
 
         if (file_exists($swapfile)) @unlink($swapfile);

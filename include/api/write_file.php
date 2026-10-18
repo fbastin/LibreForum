@@ -54,19 +54,23 @@ function phorum_api_write_file($file, $data)
     // Reset error storage.
     $GLOBALS['PHORUM']['API']['errno'] = NULL;
     $GLOBALS['PHORUM']['API']['error'] = NULL;
-    ini_set('track_errors', 1);
 
     // Generate the swap file name.
     $stamp   = preg_replace('/\D/', '', microtime());
     $swpfile = $file . '.swp' . $stamp;
 
-    // Open the swap file.
+    // Open the swap file. The system error is read through error_get_last():
+    // $php_errormsg (track_errors) was removed in PHP 8.0, and the messages
+    // below were lost behind an "Undefined variable" warning. It is read
+    // before @unlink(), which would replace it.
+    error_clear_last();
     $fp = @fopen($swpfile, 'w');
     if (!$fp) {
+        $syserr = error_get_last()['message'] ?? 'unknown error';
         @unlink($swpfile);
         return phorum_api_error_set(
             PHORUM_ERRNO_ERROR,
-            "Cannot create swap file \"$swpfile\": $php_errormsg"
+            "Cannot create swap file \"$swpfile\": $syserr"
         );
     }
 
@@ -97,11 +101,13 @@ function phorum_api_write_file($file, $data)
     @fclose($fp);
 
     // Move the swap file to its final location.
+    error_clear_last();
     if (!@rename($swpfile, $file)) {
+        $syserr = error_get_last()['message'] ?? 'unknown error';
         @unlink($swpfile);
         return phorum_api_error_set(
             PHORUM_ERRNO_ERROR,
-            "Cannot move swap file \"$swpfile\": $php_errormsg"
+            "Cannot move swap file \"$swpfile\": $syserr"
         );
     }
 
