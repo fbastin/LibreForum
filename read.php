@@ -140,11 +140,19 @@ if(empty($PHORUM["args"][1])) {
                 $thread_message=phorum_db_get_message($thread,'message_id');
                 $message_ids=$thread_message['meta']['message_ids'];
 
+                // Unlike "markthreadread", this case is reachable without logging in
+                // (crawlers follow old gotonewpost links). An anonymous user's newinfo
+                // is an empty array, without "min_id": one "Undefined array key"
+                // warning per message of the thread (28 on 2026-10-14). No read
+                // information means nothing is read: min_id 0, same redirection as
+                // before PHP 8, to the first message (2026-10-20).
+                $min_id = isset($PHORUM['user']['newinfo']['min_id']) ? $PHORUM['user']['newinfo']['min_id'] : 0;
+
                 $last_id = 0;
                 foreach($message_ids as $mkey => $mid) {
                     if ($last_id < $mid) $last_id = $mid;
                     // if already read, remove it from message-array
-                    if(isset($PHORUM['user']['newinfo'][$mid]) || $mid <= $PHORUM['user']['newinfo']['min_id']) {
+                    if(isset($PHORUM['user']['newinfo'][$mid]) || $mid <= $min_id) {
                         unset($message_ids[$mkey]);
                     }
 
