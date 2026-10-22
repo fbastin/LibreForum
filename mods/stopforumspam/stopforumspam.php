@@ -11,30 +11,24 @@ function phorum_mod_stopforumspam_before_register($userdata) {
     $apikey = $PHORUM['mod_stopforumspam']['apikey'];
     $last_key = false;
     if(!empty($apikey)) {
-        $baseurl = "http://www.stopforumspam.com/api?";
         $args=array();
-        // Valeurs encodées : un nom avec une espace ou en cyrillique partait tel quel et
-        // l'API répondait 400 ; le « + » d'une adresse e-mail y devenait une espace.
         if(!empty($PHORUM['mod_stopforumspam']['check_ip'])) {
-            $args[]="ip=".rawurlencode($_SERVER['REMOTE_ADDR']);
+            $args['ip'] = $_SERVER['REMOTE_ADDR'];
         }
         if(!empty($PHORUM['mod_stopforumspam']['check_username'])) {
-            $args[]="username=".rawurlencode($userdata['username']);
+            $args['username'] = $userdata['username'];
         }
         if(!empty($PHORUM['mod_stopforumspam']['check_email'])) {
-            $args[]="email=".rawurlencode($userdata['email']);
+            $args['email'] = $userdata['email'];
         }
         if(count($args)) {
-            include_once("./include/api/http_get.php");
             $error = array();
             // request serialized data
-            $args[]="f=serial";
-            $url = $baseurl.implode("&",$args);
-            #_phorum_mod_stopforumspam_log("SFS query is $url", "", EVENTLOG_LVL_DEBUG);
-            $res = phorum_api_http_get($url);
-            // En cas d'échec (code HTTP autre que 200, hôte injoignable),
-            // phorum_api_http_get() renvoie FALSE, pas NULL : l'ancien test « !== null »
-            // le laissait passer, unserialize(FALSE) rendait FALSE, le score restait à 0
+            $args['f'] = 'serial';
+            $raison = '';
+            $res = _phorum_mod_stopforumspam_query($args, $raison);
+            // Avant le 2026-10-22, un échec (FALSE de phorum_api_http_get()) passait le
+            // test « !== null » : unserialize(FALSE) rendait FALSE, le score restait à 0
             // et l'inscription était déclarée sûre. Une réponse sans « success » finissait
             // de même. Les 10 comptes frauduleux du 2026-10-21 sont entrés ainsi.
             // Désormais, un contrôle impossible met le compte en modération, et
@@ -42,7 +36,7 @@ function phorum_mod_stopforumspam_before_register($userdata) {
             // ne prévient personne qu'un compte attend d'être approuvé.
             $resdata = is_string($res) ? @unserialize($res, array('allowed_classes' => false)) : false;
             if(!is_array($resdata) || empty($resdata['success'])) {
-                $raison = is_string($res) ? 'réponse inexploitable' : phorum_api_strerror();
+                if(is_string($res)) $raison = 'réponse inexploitable';
                 _phorum_mod_stopforumspam_pending($userdata);
                 trigger_error("stopforumspam : vérification impossible ($raison), inscription mise en modération", E_USER_WARNING);
                 _phorum_mod_stopforumspam_log('ERROR Check failed',"Data returned from Stopforumspam was:\n".print_r($res,true));
@@ -89,6 +83,40 @@ function phorum_mod_stopforumspam_before_register($userdata) {
     }
     return $userdata;
 }
+// Requête à l'API : POST, HTTPS avec vérification du certificat, serveur européen.
+// Selon stopforumspam (pages GDPR et Usage, lues le 2026-10-22), le contenu d'une requête
+// GET (l'URL, donc l'adresse IP et l'e-mail de l'inscrit) est écrit dans ses journaux,
+// gardés 5 ou 7 jours selon la page, et des sauvegardes hors site peuvent en contenir ;
+// celui d'une requête POST ne l'est pas, et europe.stopforumspam.org garde la requête
+// dans l'Union européenne. phorum_api_http_get() ne fait que du GET, sans délai maximal
+// et sans vérifier le certificat. Renvoie le corps de la réponse, ou FALSE avec la
+// raison de l'échec dans $raison.
+function _phorum_mod_stopforumspam_query($args, &$raison) {
+    if(!function_exists('curl_init')) {
+        $raison = 'extension curl absente';
+        return false;
+    }
+    $ch = curl_init('https://europe.stopforumspam.org/api');
+    curl_setopt_array($ch, array(
+        CURLOPT_POST           => true,
+        // http_build_query encode les valeurs : envoyées telles quelles dans l'URL, un
+        // nom avec une espace faisait répondre 400, et le « + » d'un e-mail y devenait une espace.
+        CURLOPT_POSTFIELDS     => http_build_query($args),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CONNECTTIMEOUT => 5,
+        CURLOPT_TIMEOUT        => 10,
+    ));
+    $res = curl_exec($ch);
+    $code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+    if($res === false) {
+        $raison = 'curl : ' . curl_error($ch);
+    } elseif($code != 200) {
+        $raison = "HTTP $code";
+        $res = false;
+    }
+    return $res;
+}
+
 // Compte à approuver par un modérateur ; la vérification d'adresse e-mail, si elle est
 // demandée, reste due (register.php passe PENDING_BOTH à PENDING_MOD au clic).
 function _phorum_mod_stopforumspam_pending(&$userdata) {
