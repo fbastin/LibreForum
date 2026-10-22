@@ -39,6 +39,7 @@ function phorum_mod_stopforumspam_before_register($userdata) {
                 if(is_string($res)) $raison = 'réponse inexploitable';
                 _phorum_mod_stopforumspam_pending($userdata);
                 trigger_error("stopforumspam : vérification impossible ($raison), inscription mise en modération", E_USER_WARNING);
+                _phorum_mod_stopforumspam_alerte($userdata, $raison);
                 _phorum_mod_stopforumspam_log('ERROR Check failed',"Data returned from Stopforumspam was:\n".print_r($res,true));
             } else {
                 $score = 0;
@@ -115,6 +116,34 @@ function _phorum_mod_stopforumspam_query($args, &$raison) {
         $res = false;
     }
     return $res;
+}
+
+// Mail immédiat à l'adresse d'alerte du module (réglage « alert_email », vide = aucun
+// mail) quand une inscription part en modération faute de vérification : le forum ne
+// prévient personne par mail, et le contrôle nocturne des erreurs PHP ne relève
+// l'avertissement que la nuit suivante. Un envoi raté ne bloque pas l'inscription.
+function _phorum_mod_stopforumspam_alerte($userdata, $raison) {
+    global $PHORUM;
+    $adresse = isset($PHORUM['mod_stopforumspam']['alert_email']) ? trim($PHORUM['mod_stopforumspam']['alert_email']) : '';
+    if($adresse === '') return;
+    try {
+        include_once("./include/email_functions.php");
+        $url = phorum_get_url(PHORUM_CONTROLCENTER_URL, "panel=" . PHORUM_CC_USERS);
+        // phorum_email_user() renvoie le nombre d'adresses, pas un succès : rien à tester.
+        phorum_email_user(array($adresse), array(
+            'mailsubject' => "Inscription au forum à valider : {$userdata['username']}",
+            'mailmessage' =>
+                "L'inscription de « {$userdata['username']} » ({$userdata['email']}, adresse IP "
+                . "{$_SERVER['REMOTE_ADDR']}) n'a pas pu être vérifiée auprès de StopForumSpam : $raison.\n\n"
+                . "Le compte est créé en attente de validation. Si une confirmation de l'adresse "
+                . "e-mail est demandée, l'inscrit doit encore la faire.\n\n"
+                . "Valider ou refuser le compte :\n$url\n\n"
+                . "Ce mail part à chaque échec de la vérification. L'échec est aussi écrit dans "
+                . "le journal d'Apache, que le contrôle nocturne des erreurs PHP relève.\n",
+        ));
+    } catch(Throwable $e) {
+        trigger_error("stopforumspam : mail d'alerte non envoyé — " . $e->getMessage(), E_USER_WARNING);
+    }
 }
 
 // Compte à approuver par un modérateur ; la vérification d'adresse e-mail, si elle est
