@@ -347,6 +347,15 @@ function phorum_mod_pdfpages_addon() {
             $body = preg_replace('!<script\b[^>]*>.*?</script>!is', '', $body);
             $body = preg_replace('!mod_embed_images_loadimage\s*\([^;]*\);?!is', '', $body);
 
+            // TCPDF reads a link that starts with "%" as an embedded PDF file and one
+            // that starts with "*" as an embedded file, opened by PDF JavaScript built
+            // from the link text. No forum link means either. Parsedown writes ":" as
+            // "%3A" in a link without a known scheme: [/color](:D:lo::lov:), left by
+            // the BBCode migration in message 188715, became href="%3AD..." and TCPDF
+            // looked up an embedded file that does not exist (two warnings per
+            // message, 2026-10-25). Such a link is dropped and its text kept.
+            $body = preg_replace('!<a\b[^>]*?\bhref\s*=\s*(["\'])\s*[%*][^>]*>(.*?)</a>!is', '$2', $body);
+
             // output the HTML body
             $pdf->writeHTML("<br />".$body."$att<br /><hr />", true, 0, true, 0);
         }
