@@ -60,6 +60,8 @@ function phorum_mod_markdown_format($data)
         // This is done before Parsedown so it gets properly rendered.
         $body = preg_replace('#\[url=([^\]]+)\]\[img\](.*?)\[/img\]\[/url\]#is', '[![image]($2)]($1)', $body);
         $body = preg_replace('#\[img\](.*?)\[/img\]#is', '![image]($1)', $body);
+        // The other BBCode tags left by the migration, and still typed today.
+        $body = libreforum_markdown_bbcode($body);
 
         // 4. Force HTTPS for all Markdown images to avoid Mixed Content blocking in Firefox
         $body = preg_replace_callback('/!\[([^\]]*)\]\s*\(\s*http:\/\/([^\)]+)\s*\)/i', function($matches) {
@@ -572,6 +574,139 @@ function libreforum_markdown_restore_html($html, $saved)
         $parts[$k] = implode('', $pieces);
     }
     return implode('', $parts);
+}
+
+// BBCode left in the messages after the move to Markdown (2026-07-04), in
+// signatures, and still typed by members who paste a share code. Only [img]
+// was converted: [b], [color=…], [size=…], [url=…]text[/url] or [quote] were
+// shown as typed, and the URL of a [url=…] was auto-linked together with the
+// "]" and the text after it. Relevé du 2026-10-31 : ~260 messages, 13
+// signatures. Runs on the escaped body, before the quotes and the tag
+// whitelist: colour, size, underline and centring become the escaped tags
+// that libreforum_markdown_protect_html() validates; the rest becomes
+// Markdown. An unknown or invalid value drops the tag and keeps the text.
+// Fenced code blocks are left untouched.
+function libreforum_markdown_bbcode($body)
+{
+    if (strpos($body, '[') === FALSE) return $body;
+
+    $parts = preg_split('/(^ {0,3}(?:```|~~~).*?(?:^ {0,3}(?:```|~~~)[^\n]*$|\z))/ms',
+                        $body, -1, PREG_SPLIT_DELIM_CAPTURE);
+    foreach ($parts as $k => $part) {
+        if ($k % 2 == 1 || strpos($part, '[') === FALSE) continue;
+        // Nested tags ([b][color=red]…[/color][/b]) are converted from the inside out.
+        for ($pass = 0; $pass < 6; $pass++) {
+            $before = $part;
+            $part = libreforum_markdown_bbcode_pass($part);
+            if ($part === $before) break;
+        }
+        // What is left has lost its pair. A tag with a value, a closing tag or
+        // [quote], [list], [center] is BBCode for sure: removed, an orphan
+        // [url=…] leaving its address. [b], [i], [u], [s] go only at the start
+        // of a word and before a word: "se prononçant [i]." and "x[i]" stay.
+        $part = preg_replace('#\[url=\s*(?:&quot;|\'|")?((?:https?://|www\.)[^\]\s"]+?)(?:&quot;|\'|")?\s*\]#i', ' $1 ', $part);
+        $part = preg_replace('#\[(?:color|size|font|quote|list)=[^\]\n]{0,40}\]#i', '', $part);
+        $part = preg_replace('#\[/(?:b|i|u|s|color|size|font|url|quote|list|center)\]#i', '', $part);
+        $part = preg_replace('#\[(?:quote|list|center)\]#i', '', $part);
+        // Before a letter, an escaped tag or another tag; after a space, "*" or a tag.
+        for ($pass = 0; $pass < 4; $pass++) {
+            $before = $part;
+            $part = preg_replace('#(?:(?<![^\s*\]])|(?<=&gt;))\[(?:b|i|u|s)\](?=\s*(?:\p{L}|&lt;|\[))#iu', '', $part);
+            if ($part === $before) break;
+        }
+        $parts[$k] = $part;
+    }
+    return implode('', $parts);
+}
+
+// A tag's value as typed: without the quotes the author may have put around it.
+function libreforum_markdown_bbcode_value($v)
+{
+    return trim(preg_replace('/^(&quot;|\'|")(.*)\1$/s', '$2', trim($v)));
+}
+
+// Emphasis on each line, the spaces left outside: "** text **" would not be bold.
+function libreforum_markdown_bbcode_emphasis($text, $mark)
+{
+    return preg_replace_callback('/^([ \t]*)(.*?)([ \t]*)$/m', function ($m) use ($mark) {
+        return $m[2] === '' ? $m[0] : $m[1] . $mark . $m[2] . $mark . $m[3];
+    }, $text);
+}
+
+function libreforum_markdown_bbcode_pass($s)
+{
+    // The innermost tag only: its content holds no other opening tag of the same name.
+    $inner = function ($tag) {
+        return '#\[' . $tag . '(=[^\]\n]*)?\]((?:(?!\[' . $tag . '[=\]]).)*?)\[/' . $tag . '\]#is';
+    };
+
+    $s = preg_replace_callback($inner('b'), function ($m) {
+        return libreforum_markdown_bbcode_emphasis($m[2], '**');
+    }, $s);
+    $s = preg_replace_callback($inner('i'), function ($m) {
+        return libreforum_markdown_bbcode_emphasis($m[2], '*');
+    }, $s);
+    $s = preg_replace_callback($inner('s'), function ($m) {
+        return libreforum_markdown_bbcode_emphasis($m[2], '~~');
+    }, $s);
+    $s = preg_replace_callback($inner('u'), function ($m) {
+        return '&lt;u&gt;' . $m[2] . '&lt;/u&gt;';
+    }, $s);
+    $s = preg_replace_callback($inner('center'), function ($m) {
+        return '&lt;center&gt;' . $m[2] . '&lt;/center&gt;';
+    }, $s);
+    $s = preg_replace_callback($inner('color'), function ($m) {
+        $c = strtolower(libreforum_markdown_bbcode_value(substr($m[1], 1)));
+        if (!preg_match('/^(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z]{3,20})$/', $c)) return $m[2];
+        return '&lt;span style=&quot;color: ' . $c . '&quot;&gt;' . $m[2] . '&lt;/span&gt;';
+    }, $s);
+    $s = preg_replace_callback($inner('size'), function ($m) {
+        $v = libreforum_markdown_bbcode_value(substr($m[1], 1));
+        if (!preg_match('/^\d{1,3}(px|pt|%)?$/i', $v)) return $m[2];
+        return '&lt;span style=&quot;font-size: ' . strtolower($v) . '&quot;&gt;' . $m[2] . '&lt;/span&gt;';
+    }, $s);
+    $s = preg_replace_callback($inner('url'), function ($m) {
+        $text = trim($m[2]);
+        $url = $m[1] !== '' ? libreforum_markdown_bbcode_value(substr($m[1], 1)) : $text;
+        if (preg_match('!^www\.!i', $url)) $url = 'http://' . $url;
+        if (!preg_match('!^(https?://|ftp://|mailto:)[^\s"<>]+$!i', $url)) return $m[2];
+        $url = str_replace(array('(', ')', ' '), array('%28', '%29', '%20'), $url);
+        if ($text === '') $text = $url;
+        // Square brackets in the text would end the Markdown link early;
+        // an image already converted from [img] keeps its own.
+        if (!preg_match('/^!\[[^\]]*\]\([^)\s]*\)$/', $text)) {
+            $text = str_replace(array('[', ']'), array('&#91;', '&#93;'), $text);
+        }
+        return '[' . $text . '](' . $url . ')';
+    }, $s);
+    $s = preg_replace_callback($inner('youtube'), function ($m) {
+        $v = trim(strip_tags($m[2]));
+        if (preg_match('/^[\w-]{11}$/', $v)) $v = 'https://youtu.be/' . $v;
+        return '[video]' . $v . '[/video]';
+    }, $s);
+    $s = preg_replace_callback($inner('list'), function ($m) {
+        $ordered = $m[1] !== '';
+        $items = preg_split('/\[\*\]/', $m[2]);
+        array_shift($items);                     // what comes before the first [*]
+        $out = array();
+        foreach ($items as $n => $item) {
+            $item = trim(preg_replace('/\s*\n\s*/', ' ', $item));
+            if ($item !== '') $out[] = ($ordered ? ($n + 1) . '. ' : '- ') . $item;
+        }
+        return $out ? "\n\n" . implode("\n", $out) . "\n\n" : $m[2];
+    }, $s);
+    $s = preg_replace_callback($inner('quote'), function ($m) {
+        $who = $m[1] !== '' ? libreforum_markdown_bbcode_value(substr($m[1], 1)) : '';
+        $lines = explode("\n", trim($m[2]));
+        if ($who !== '') {
+            $wrote = isset($GLOBALS['PHORUM']['DATA']['LANG']['Wrote'])
+                   ? $GLOBALS['PHORUM']['DATA']['LANG']['Wrote'] : 'a écrit';
+            array_unshift($lines, '**' . $who . ' ' . $wrote . ' :**');
+        }
+        foreach ($lines as $n => $l) $lines[$n] = '&gt; ' . $l;
+        return "\n\n" . implode("\n", $lines) . "\n\n";
+    }, $s);
+    return $s;
 }
 
 ?>
