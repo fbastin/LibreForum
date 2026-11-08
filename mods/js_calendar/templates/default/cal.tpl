@@ -250,15 +250,18 @@
                     var html = '';
                     for (var i = 0; i < data.length; i++) {
                         var ev = data[i];
-                        var canEdit = USER_ID > 0 && (IS_ADMIN || USER_ID == ev.user_id) && ev.type !== 'birthday';
+                        // Un événement tiré d'une annonce se modifie dans l'annonce (sauf administrateur).
+                        var canEdit = USER_ID > 0 && (IS_ADMIN || USER_ID == ev.user_id) && ev.type !== 'birthday' && (IS_ADMIN || !ev.thread);
                         var isBirthday = ev.type === 'birthday';
                         html += '<div class="event-item' + (canEdit ? ' editable' : '') + (isBirthday ? ' is-birthday' : '') + '" data-idx="' + i + '">';
                         if (canEdit) {
                             html += '<span class="btn-delete-event" title="Supprimer">&times;</span>';
                         }
-                        html += '<div class="event-title">' + (isBirthday ? '🎂 ' : '') + esc(ev.title) + '</div>';
+                        var titre = esc(ev.title);
+                        if (ev.thread_url) titre = '<a href="' + esc(ev.thread_url) + '">' + titre + '</a>';
+                        html += '<div class="event-title">' + (isBirthday ? '🎂 ' : '') + titre + '</div>';
                         if (!isBirthday) {
-                            html += '<div class="event-author">Par ' + esc(ev.username) + '</div>';
+                            html += '<div class="event-author">' + (ev.thread_url ? 'Annonce du forum, par ' : 'Par ') + esc(ev.username) + '</div>';
                         }
                         if (ev.description) {
                             html += '<div class="event-desc">' + liens(esc(ev.description)) + '</div>';
@@ -272,8 +275,11 @@
                         (function(el) {
                             var idx = parseInt(el.getAttribute('data-idx'));
                             var ev = data[idx];
-                            if (ev.type !== 'birthday') {
-                                el.addEventListener('click', function() { openModal('edit', ev); });
+                            if (ev.type !== 'birthday' && (IS_ADMIN || !ev.thread)) {
+                                el.addEventListener('click', function(e) {
+                                    if (e.target && e.target.tagName === 'A') return;   // lien vers l'annonce
+                                    openModal('edit', ev);
+                                });
                             }
                             var del = el.querySelector('.btn-delete-event');
                             if (del) {

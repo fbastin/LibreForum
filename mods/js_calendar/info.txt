@@ -7,3 +7,10 @@ required_version: 5.2.0
 version: 0.1.2
 
 hook: addon|phorum_mod_js_calendar_addon
+hook: tpl_editor_before_textarea|phorum_mod_js_calendar_tpl_editor_before_textarea
+hook: check_post|phorum_mod_js_calendar_check_post
+hook: before_post|phorum_mod_js_calendar_before_post
+hook: after_post|phorum_mod_js_calendar_after_post
+hook: before_edit|phorum_mod_js_calendar_before_edit
+hook: after_edit|phorum_mod_js_calendar_after_edit
+hook: format_fixup|phorum_mod_js_calendar_format_fixup

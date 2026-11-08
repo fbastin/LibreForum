@@ -109,13 +109,25 @@ function phorum_mod_js_calendar_list_events() {
     $quoted_date = phorum_db_interact(DB_RETURN_QUOTED, $date);
 
     // 1. Fetch standard events
-    $sql = "SELECT e.*, u.username FROM phorum_calendar_events e JOIN {$prefix}_users u ON e.user_id = u.user_id WHERE e.event_date = '$quoted_date' ORDER BY e.created_at ASC";
+    // Un événement lié à une annonce (colonne thread) ne paraît que si le fil est approuvé :
+    // un fil masqué ou supprimé emporte son événement.
+    $sql = "SELECT e.*, COALESCE(u.username, m.author) AS username, m.forum_id AS thread_forum_id
+            FROM phorum_calendar_events e
+            LEFT JOIN {$prefix}_users u ON e.user_id = u.user_id
+            LEFT JOIN {$prefix}_messages m ON m.message_id = e.thread
+            WHERE e.event_date = '$quoted_date'
+              AND (e.thread IS NULL OR m.status = " . PHORUM_STATUS_APPROVED . ")
+            ORDER BY e.created_at ASC";
     $res = phorum_db_interact(DB_RETURN_RES, $sql);
 
     $results = array();
     if ($res) {
         while ($row = phorum_db_fetch_row($res, DB_RETURN_ASSOC)) {
             $row['type'] = 'event';
+            if (!empty($row['thread'])) {
+                // FOREIGN : la page du calendrier est hors forum (?0,…) ; READ_URL y mettrait 0.
+                $row['thread_url'] = phorum_get_url(PHORUM_FOREIGN_READ_URL, (int)$row['thread_forum_id'], (int)$row['thread']);
+            }
             $results[] = $row;
         }
     }
@@ -164,7 +176,9 @@ function phorum_mod_js_calendar_list_all_dates() {
     $prefix = $PHORUM['DBCONFIG']['table_prefix'];
     
     // Standard events dates
-    $res = phorum_db_interact(DB_RETURN_RES, "SELECT DISTINCT event_date FROM phorum_calendar_events");
+    $res = phorum_db_interact(DB_RETURN_RES, "SELECT DISTINCT e.event_date FROM phorum_calendar_events e
+        LEFT JOIN {$prefix}_messages m ON m.message_id = e.thread
+        WHERE e.thread IS NULL OR m.status = " . PHORUM_STATUS_APPROVED);
     $results = array();
     if ($res) {
         while ($row = phorum_db_fetch_row($res, DB_RETURN_ASSOC)) {
@@ -238,11 +252,14 @@ function phorum_mod_js_calendar_save_event() {
     $user_id = (int)$PHORUM['user']['user_id'];
 
     if ($event_id > 0) {
-        $res = phorum_db_interact(DB_RETURN_RES, "SELECT user_id FROM phorum_calendar_events WHERE event_id = $event_id");
+        $res = phorum_db_interact(DB_RETURN_RES, "SELECT user_id, thread FROM phorum_calendar_events WHERE event_id = $event_id");
         $row = $res ? phorum_db_fetch_row($res, DB_RETURN_ASSOC) : null;
         if (!$row) return array('success' => false, 'error' => 'Événement introuvable');
         if ($row['user_id'] != $user_id && empty($PHORUM['user']['admin'])) {
             return array('success' => false, 'error' => 'Accès interdit');
+        }
+        if (!empty($row['thread']) && empty($PHORUM['user']['admin'])) {
+            return array('success' => false, 'error' => "Cet événement vient d'une annonce du forum : modifiez la date dans l'annonce.");
         }
         $sql = "UPDATE phorum_calendar_events SET title = '$quoted_title', description = '$quoted_desc', event_date = '$quoted_date' WHERE event_id = $event_id";
     } else {
@@ -261,12 +278,15 @@ function phorum_mod_js_calendar_delete_event() {
     // En POST seulement (voir phorum_mod_js_calendar_jeton).
     $event_id = isset($_POST['event_id']) ? (int)$_POST['event_id'] : 0;
     
-    $res = phorum_db_interact(DB_RETURN_RES, "SELECT user_id FROM phorum_calendar_events WHERE event_id = $event_id");
+    $res = phorum_db_interact(DB_RETURN_RES, "SELECT user_id, thread FROM phorum_calendar_events WHERE event_id = $event_id");
     if (!$res) return array('success' => false, 'error' => 'Event introuvable');
     $row = phorum_db_fetch_row($res, DB_RETURN_ASSOC);
 
     if (!$row || ($row['user_id'] != $PHORUM['user']['user_id'] && empty($PHORUM['user']['admin']))) {
         return array('success' => false, 'error' => 'Accès interdit');
+    }
+    if (!empty($row['thread']) && empty($PHORUM['user']['admin'])) {
+        return array('success' => false, 'error' => "Cet événement vient d'une annonce du forum : effacez la date dans l'annonce.");
     }
 
     phorum_db_interact(DB_RETURN_RES, "DELETE FROM phorum_calendar_events WHERE event_id = $event_id");
@@ -278,7 +298,12 @@ function phorum_mod_js_calendar_export_ical() {
     $prefix = $PHORUM['DBCONFIG']['table_prefix'];
 
     // 1. Fetch events
-    $sql = "SELECT e.*, u.username FROM phorum_calendar_events e JOIN {$prefix}_users u ON e.user_id = u.user_id ORDER BY e.event_date ASC";
+    $sql = "SELECT e.*, COALESCE(u.username, m.author) AS username, m.forum_id AS thread_forum_id
+            FROM phorum_calendar_events e
+            LEFT JOIN {$prefix}_users u ON e.user_id = u.user_id
+            LEFT JOIN {$prefix}_messages m ON m.message_id = e.thread
+            WHERE e.thread IS NULL OR m.status = " . PHORUM_STATUS_APPROVED . "
+            ORDER BY e.event_date ASC";
     $res = phorum_db_interact(DB_RETURN_RES, $sql);
 
     // 2. Prepare iCal content
@@ -297,6 +322,11 @@ function phorum_mod_js_calendar_export_ical() {
             $ical .= "DTSTAMP:" . date('Ymd\THis\Z', strtotime($row['created_at'])) . "\r\n";
             $ical .= "DTSTART;VALUE=DATE:" . $dt . "\r\n";
             $ical .= "SUMMARY:" . phorum_mod_js_calendar_ical_escape($row['title']) . "\r\n";
+            if (!empty($row['thread'])) {
+                $url_fil = phorum_get_url(PHORUM_FOREIGN_READ_URL, (int)$row['thread_forum_id'], (int)$row['thread']);
+                if (strpos($url_fil, 'http') !== 0) $url_fil = 'https://www.tireur.org' . (substr($url_fil, 0, 1) === '/' ? '' : '/forum/') . $url_fil;
+                $ical .= "URL:" . $url_fil . "\r\n";
+            }
             if (!empty($row['description'])) {
                 $ical .= "DESCRIPTION:" . phorum_mod_js_calendar_ical_escape($row['description'] . " (Par " . $row['username'] . ")") . "\r\n";
             } else {
@@ -325,4 +355,151 @@ function phorum_mod_js_calendar_ical_escape($text) {
     $text = str_replace(';', '\\;', $text);
     $text = str_replace("\n", '\\n', $text);
     return $text;
+}
+
+/* ---------------------------------------------------------------------------------------
+ * Annonces du forum ↔ calendrier (2026-11-08).
+ *
+ * Dans les forums d'annonces, le formulaire d'un NOUVEAU fil (et la modification de son
+ * premier message) porte un champ facultatif « Date de l'événement ». La date est gardée
+ * dans les métadonnées du message (meta.mod_js_calendar_date) et reportée dans
+ * phorum_calendar_events, colonne thread (unique) : l'événement ouvre son fil, le fil
+ * affiche sa date en tête. Un événement lié à une annonce se modifie depuis l'annonce,
+ * pas depuis le calendrier (save/delete le refusent, sauf administrateur). Un fil masqué
+ * ou supprimé fait disparaître son événement : toutes les lectures joignent le message
+ * et exigent le statut approuvé.
+ * ------------------------------------------------------------------------------------- */
+
+/** Forums dont les nouveaux fils peuvent porter une date d'événement. */
+function phorum_mod_js_calendar_forums_annonces() {
+    return array(30); // « Annonces de concours »
+}
+
+function phorum_mod_js_calendar_date_valide($d) {
+    if (!is_string($d) || !preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $d, $m)) return false;
+    return checkdate((int)$m[2], (int)$m[3], (int)$m[1]);
+}
+
+function phorum_mod_js_calendar_date_fr($d) {
+    $mois = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août',
+                  'septembre', 'octobre', 'novembre', 'décembre');
+    list($a, $m, $j) = explode('-', $d);
+    return (int)$j . ' ' . $mois[(int)$m - 1] . ' ' . $a;
+}
+
+/** Premier message d'un fil, dans un forum d'annonces ? */
+function phorum_mod_js_calendar_annonce($message) {
+    return is_array($message)
+        && isset($message['forum_id'], $message['parent_id'])
+        && in_array((int)$message['forum_id'], phorum_mod_js_calendar_forums_annonces(), true)
+        && (int)$message['parent_id'] === 0;
+}
+
+/** Hook tpl_editor_before_textarea : le champ de date, au-dessus du texte du message. */
+function phorum_mod_js_calendar_tpl_editor_before_textarea() {
+    $PHORUM = $GLOBALS['PHORUM'];
+    if (empty($PHORUM['DATA']['POSTING']) || !is_array($PHORUM['DATA']['POSTING'])) return;
+    $m = $PHORUM['DATA']['POSTING'];
+    if (!isset($m['forum_id'])) $m['forum_id'] = isset($PHORUM['forum_id']) ? $PHORUM['forum_id'] : 0;
+    if (!isset($m['parent_id'])) $m['parent_id'] = 0;
+    if (!phorum_mod_js_calendar_annonce($m)) return;
+
+    // Valeur : celle qui vient d'être saisie (aperçu, erreur), sinon celle du message.
+    if (isset($_POST['mod_js_calendar_date']) && is_string($_POST['mod_js_calendar_date'])) {
+        $val = trim($_POST['mod_js_calendar_date']);
+    } else {
+        $val = isset($m['meta']['mod_js_calendar_date']) ? $m['meta']['mod_js_calendar_date'] : '';
+    }
+    if (!phorum_mod_js_calendar_date_valide($val)) $val = '';
+    $cal = phorum_get_url(PHORUM_ADDON_URL, 'module=js_calendar');
+
+    echo '<div class="mod-js-calendar-date" style="margin: 0.75rem 0;">'
+       . '<label for="mod-js-calendar-date"><strong>Date de l\'événement</strong> (facultatif)</label><br />'
+       . '<input type="date" id="mod-js-calendar-date" name="mod_js_calendar_date" value="' . htmlspecialchars($val) . '" /> '
+       . '<br /><small>Concours, portes ouvertes, bourse aux armes&nbsp;: la date paraîtra dans le '
+       . '<a href="' . htmlspecialchars($cal) . '">calendrier des événements</a> et dans l\'encadré '
+       . '« Prochains événements », avec un lien vers cette annonce. Laissez vide si l\'annonce n\'a pas de date.</small>'
+       . '</div>';
+}
+
+/** Hook check_post : une date saisie doit être valide. */
+function phorum_mod_js_calendar_check_post($args) {
+    list($message, $error) = $args;
+    if (!$error && isset($_POST['mod_js_calendar_date']) && is_string($_POST['mod_js_calendar_date'])) {
+        $d = trim($_POST['mod_js_calendar_date']);
+        if ($d !== '' && !phorum_mod_js_calendar_date_valide($d)) {
+            $error = "La date de l'événement n'est pas une date valide (AAAA-MM-JJ).";
+        }
+    }
+    return array($message, $error);
+}
+
+/** Reporte le champ du formulaire dans les métadonnées ; champ absent = rien ne change. */
+function phorum_mod_js_calendar_meta($message) {
+    if (!isset($_POST['mod_js_calendar_date']) || !is_string($_POST['mod_js_calendar_date'])) return $message;
+    $d = trim($_POST['mod_js_calendar_date']);
+    if (!isset($message['meta']) || !is_array($message['meta'])) $message['meta'] = array();
+    if (phorum_mod_js_calendar_date_valide($d)) {
+        $message['meta']['mod_js_calendar_date'] = $d;
+    } else {
+        unset($message['meta']['mod_js_calendar_date']);
+    }
+    return $message;
+}
+
+/** Hook before_post : nouveau fil d'annonce. */
+function phorum_mod_js_calendar_before_post($message) {
+    return phorum_mod_js_calendar_annonce($message) ? phorum_mod_js_calendar_meta($message) : $message;
+}
+
+/** Hook before_edit : modification du premier message d'une annonce ($orig porte les ids). */
+function phorum_mod_js_calendar_before_edit($dbmessage, $orig = null) {
+    return phorum_mod_js_calendar_annonce($orig) ? phorum_mod_js_calendar_meta($dbmessage) : $dbmessage;
+}
+
+/** Hook after_post : l'annonce publiée, son événement est créé. */
+function phorum_mod_js_calendar_after_post($message) {
+    if (phorum_mod_js_calendar_annonce($message) && !empty($message['message_id'])) {
+        phorum_mod_js_calendar_synchroniser((int)$message['message_id'], $message);
+    }
+    return $message;
+}
+
+/** Hook after_edit : date ajoutée, changée ou effacée dans l'annonce. */
+function phorum_mod_js_calendar_after_edit($dbmessage, $orig = null) {
+    if (phorum_mod_js_calendar_annonce($orig) && !empty($orig['message_id']) && isset($_POST['mod_js_calendar_date'])) {
+        phorum_mod_js_calendar_synchroniser((int)$orig['message_id'], $dbmessage + $orig);
+    }
+    return $dbmessage;
+}
+
+/** Crée, met à jour ou supprime l'événement d'un fil (clé : thread, unique). */
+function phorum_mod_js_calendar_synchroniser($thread, $message) {
+    $d = isset($message['meta']['mod_js_calendar_date']) ? $message['meta']['mod_js_calendar_date'] : '';
+    if (!phorum_mod_js_calendar_date_valide($d)) {
+        phorum_db_interact(DB_RETURN_RES, "DELETE FROM phorum_calendar_events WHERE thread = " . (int)$thread);
+        return;
+    }
+    $titre = phorum_db_interact(DB_RETURN_QUOTED, mb_substr((string)$message['subject'], 0, 255));
+    $qd = phorum_db_interact(DB_RETURN_QUOTED, $d);
+    $user = isset($message['user_id']) ? (int)$message['user_id'] : 0;
+    phorum_db_interact(DB_RETURN_RES,
+        "INSERT INTO phorum_calendar_events (user_id, thread, title, description, event_date)
+         VALUES ($user, " . (int)$thread . ", '$titre', '', '$qd')
+         ON DUPLICATE KEY UPDATE title = VALUES(title), event_date = VALUES(event_date)");
+}
+
+/** Hook format_fixup : la date en tête du premier message d'une annonce datée. */
+function phorum_mod_js_calendar_format_fixup($messages) {
+    if (!is_array($messages)) return $messages;
+    foreach ($messages as $id => $m) {
+        if (!is_array($m) || !isset($m['body'], $m['parent_id']) || (int)$m['parent_id'] !== 0) continue;
+        $d = isset($m['meta']['mod_js_calendar_date']) ? $m['meta']['mod_js_calendar_date'] : '';
+        if (!phorum_mod_js_calendar_date_valide($d)) continue;
+        $url = phorum_get_url(PHORUM_ADDON_URL, 'module=js_calendar', 'date=' . $d);
+        $messages[$id]['body'] = '<p class="mod-js-calendar-annonce"><strong>Événement le '
+            . phorum_mod_js_calendar_date_fr($d) . '</strong> — <a href="' . htmlspecialchars($url)
+            . '">voir le calendrier</a></p>' . $m['body'];
+    }
+    return $messages;
 }
