@@ -95,6 +95,16 @@ function phorum_import_template($page, $infile, $outfile)
 
     // Output file for stage 2. This file contains the compiled template.
     phorum_write_file($stage2file, $template);
+
+    // OPcache : sans invalidation, le stage 1 réécrit ci-dessus n'est pas relu dans la
+    // requête qui l'a réécrit — OPcache revalide par rapport à l'heure de DÉBUT de requête
+    // et resert l'ancien stage 1, qui voit le gabarit changé, se supprime, recompile, se
+    // ré-inclut… jusqu'au « Maximum execution time » (30 s). Vu deux fois le 2026-11-08 sur
+    // js_calendar::cal : la première requête après chaque modification du gabarit.
+    if (function_exists('opcache_invalidate')) {
+        @opcache_invalidate($stage1file, true);
+        @opcache_invalidate($stage2file, true);
+    }
 }
 
 /**
