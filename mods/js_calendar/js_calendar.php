@@ -49,11 +49,19 @@ function phorum_mod_js_calendar_addon() {
 
     $is_logged_in = !empty($PHORUM['user']['user_id']);
 
+    // Jour à ouvrir (lien « Prochains événements » de la colonne latérale) : AAAA-MM-JJ.
+    $date_initiale = isset($PHORUM['args']['date']) ? (string)$PHORUM['args']['date'] : '';
+    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date_initiale)) {
+        $date_initiale = '';
+    }
+
     $GLOBALS['PHORUM']['DATA']['CALENDAR'] = array(
         'is_logged_in' => $is_logged_in,
         'user_id' => $is_logged_in ? (int)$PHORUM['user']['user_id'] : 0,
         'is_admin' => !empty($PHORUM['user']['admin']) ? 1 : 0,
-        'ajax_url' => phorum_get_url(PHORUM_ADDON_URL, 'module=js_calendar')
+        'ajax_url' => phorum_get_url(PHORUM_ADDON_URL, 'module=js_calendar'),
+        'jeton' => phorum_mod_js_calendar_jeton(),
+        'date_initiale' => $date_initiale
     );
 
     phorum_output('js_calendar::cal');
@@ -189,13 +197,36 @@ function phorum_mod_js_calendar_list_all_dates() {
     return array_values(array_unique($results));
 }
 
+/**
+ * Jeton anti-CSRF des écritures (ajout, modification, suppression), propre au membre.
+ * Jusqu'au 2026-11-08, la suppression passait par une simple requête GET sans jeton :
+ * un lien ou une image piégés effaçaient les événements du membre qui les chargeait.
+ * Signé par la clé privée du forum : un autre site ne peut pas le calculer.
+ */
+function phorum_mod_js_calendar_jeton() {
+    $PHORUM = $GLOBALS['PHORUM'];
+    if (empty($PHORUM['user']['user_id']) || empty($PHORUM['private_key'])) return '';
+    return hash_hmac('sha256', 'js_calendar|' . (int)$PHORUM['user']['user_id'] . '|' .
+                     (isset($PHORUM['user']['sessid_lt']) ? $PHORUM['user']['sessid_lt'] : ''),
+                     $PHORUM['private_key']);
+}
+
+/** Une écriture n'est acceptée qu'en POST, avec le jeton du membre. */
+function phorum_mod_js_calendar_ecriture_permise() {
+    if (!isset($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] !== 'POST') return false;
+    $attendu = phorum_mod_js_calendar_jeton();
+    $recu = isset($_POST['jeton']) && is_string($_POST['jeton']) ? $_POST['jeton'] : '';
+    return $attendu !== '' && hash_equals($attendu, $recu);
+}
+
 function phorum_mod_js_calendar_save_event() {
     $PHORUM = $GLOBALS['PHORUM'];
     if (empty($PHORUM['user']['user_id'])) return array('success' => false, 'error' => 'Non connecté');
+    if (!phorum_mod_js_calendar_ecriture_permise()) return array('success' => false, 'error' => 'Jeton invalide : rechargez la page.');
 
-    $title = isset($_POST['title']) ? trim($_POST['title']) : '';
-    $desc = isset($_POST['description']) ? trim($_POST['description']) : '';
-    $date = isset($_POST['date']) ? $_POST['date'] : '';
+    $title = isset($_POST['title']) && is_string($_POST['title']) ? trim($_POST['title']) : '';
+    $desc = isset($_POST['description']) && is_string($_POST['description']) ? trim($_POST['description']) : '';
+    $date = isset($_POST['date']) && is_string($_POST['date']) ? $_POST['date'] : '';
     $event_id = isset($_POST['event_id']) ? (int)$_POST['event_id'] : 0;
 
     if (empty($title) || empty($date)) return array('success' => false, 'error' => 'Champs requis manquants');
@@ -225,8 +256,10 @@ function phorum_mod_js_calendar_save_event() {
 function phorum_mod_js_calendar_delete_event() {
     $PHORUM = $GLOBALS['PHORUM'];
     if (empty($PHORUM['user']['user_id'])) return array('success' => false, 'error' => 'Non connecté');
+    if (!phorum_mod_js_calendar_ecriture_permise()) return array('success' => false, 'error' => 'Jeton invalide : rechargez la page.');
 
-    $event_id = isset($_REQUEST['event_id']) ? (int)$_REQUEST['event_id'] : (isset($PHORUM['args']['event_id']) ? (int)$PHORUM['args']['event_id'] : 0);
+    // En POST seulement (voir phorum_mod_js_calendar_jeton).
+    $event_id = isset($_POST['event_id']) ? (int)$_POST['event_id'] : 0;
     
     $res = phorum_db_interact(DB_RETURN_RES, "SELECT user_id FROM phorum_calendar_events WHERE event_id = $event_id");
     if (!$res) return array('success' => false, 'error' => 'Event introuvable');

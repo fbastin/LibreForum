@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/forum/mods/js_calendar/css/jsCalendar.min.css?v=1">
 <script src="/forum/mods/js_calendar/js/jsCalendar.min.js?v=1"></script>
 <script src="/forum/mods/js_calendar/js/jsCalendar.lang.fr.js?v=1"></script>
-<link rel="stylesheet" href="/forum/mods/js_calendar/css/calendar.css?v=20260627">
+<link rel="stylesheet" href="/forum/mods/js_calendar/css/calendar.css?v=20261108">
 
 <div class="calendar-page-header">Calendrier des &eacute;v&eacute;nements</div>
 <div class="PhorumStdBlock calendar-page-main">
@@ -56,8 +56,9 @@
                 </div>
                 <div class="form-group">
                     <label for="event-desc">Description</label>
-                    <textarea id="event-desc" name="description" placeholder="D&eacute;tails, horaires, lieu..."></textarea>
+                    <textarea id="event-desc" name="description" placeholder="D&eacute;tails, horaires, lieu, lien vers le fil ou l'organisateur..."></textarea>
                 </div>
+                <p class="event-form-note">Les &eacute;v&eacute;nements sont publics : les visiteurs non connect&eacute;s les voient aussi. Une adresse en https:// dans la description devient un lien.</p>
             </form>
         </div>
         <div class="cal-modal-foot">
@@ -74,6 +75,8 @@
     var AJAX_URL = "{CALENDAR->ajax_url}";
     var USER_ID = {CALENDAR->user_id};
     var IS_ADMIN = {CALENDAR->is_admin};
+    var JETON = "{CALENDAR->jeton}";
+    var DATE_INITIALE = "{CALENDAR->date_initiale}";
 
     function boot() {
         if (typeof jsCalendar === 'undefined') {
@@ -88,8 +91,11 @@
         var calR = jsCalendar.new('#cal-right',  null, calOpts);
         var cals = [calL, calC, calR];
 
-        var centerDate = new Date();
-        centerDate.setDate(1);
+        // Jour de départ : celui de l'adresse (lien « Prochains événements »), sinon aujourd'hui.
+        var dateDepart = /^\d\d\d\d-\d\d-\d\d$/.test(DATE_INITIALE)   // pas d'accolades : Phorum y lirait une variable
+            ? new Date(+DATE_INITIALE.slice(0, 4), +DATE_INITIALE.slice(5, 7) - 1, +DATE_INITIALE.slice(8, 10))
+            : new Date();
+        var centerDate = new Date(dateDepart.getFullYear(), dateDepart.getMonth(), 1);
 
         function shiftMonth(d, n) {
             var r = new Date(d.getFullYear(), d.getMonth() + n, 1);
@@ -161,6 +167,16 @@
             var d = document.createElement('div');
             d.textContent = text;
             return d.innerHTML;
+        }
+
+        // Adresses https:// d'un texte DÉJÀ échappé par esc(), rendues cliquables. esc()
+        // n'échappe pas les guillemets : l'adresse s'arrête donc à " et ', sans quoi elle
+        // pourrait sortir de l'attribut href. Ponctuation finale laissée hors du lien.
+        function liens(html) {
+            return html.replace(/\bhttps?:\/\/[^\s<>"']+/g, function (u) {
+                var url = u.replace(/[.,;:!?)\]]+$/, '');
+                return '<a href="' + url + '" rel="nofollow ugc noopener" target="_blank">' + url + '</a>' + u.slice(url.length);
+            });
         }
 
         function refreshSelections() {
@@ -245,7 +261,7 @@
                             html += '<div class="event-author">Par ' + esc(ev.username) + '</div>';
                         }
                         if (ev.description) {
-                            html += '<div class="event-desc">' + esc(ev.description) + '</div>';
+                            html += '<div class="event-desc">' + liens(esc(ev.description)) + '</div>';
                         }
                         html += '</div>';
                     }
@@ -285,7 +301,10 @@
 
         function deleteEvent(eventId) {
             if (!confirm("Supprimer cet événement ?")) return;
-            fetch(apiUrl('delete') + ',event_id=' + eventId)
+            var fdDel = new FormData();
+            fdDel.append('event_id', eventId);
+            fdDel.append('jeton', JETON);
+            fetch(apiUrl('delete'), { method: 'POST', body: fdDel })
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
                     if (data.success) {
@@ -305,6 +324,7 @@
                 if (!$dateInput.value) { $dateInput.focus(); return; }
                 $btnSave.disabled = true;
                 var fd = new FormData(document.getElementById('event-form'));
+                fd.append('jeton', JETON);
                 fetch(apiUrl('save'), { method: 'POST', body: fd })
                     .then(function(r) { return r.json(); })
                     .then(function(data) {
@@ -337,7 +357,7 @@
         calR.onDateClick(onDateClicked);
 
         /* --- Init --- */
-        loadEvents(fmtDate(new Date()));
+        loadEvents(fmtDate(dateDepart));
         highlightDates();
     }
 

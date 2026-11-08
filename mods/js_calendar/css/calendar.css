@@ -388,6 +388,7 @@
 
 .cal-modal-body .form-group { margin-bottom: 1.25rem; }
 .cal-modal-body .form-group:last-child { margin-bottom: 0; }
+.cal-modal-body .event-form-note { margin: 0.75rem 0 0; font-size: 0.85rem; color: var(--color-text-light, #666); }
 .cal-modal-body .form-group label {
     display: block;
     font-weight: 600;
