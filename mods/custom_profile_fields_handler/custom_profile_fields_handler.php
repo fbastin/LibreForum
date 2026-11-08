@@ -12,6 +12,11 @@ if (!defined("PHORUM")) return;
  * keep_photo_gps : garder TOUTES les métadonnées des photos et vidéos envoyées au
  * forum, position GPS comprise (1 = garder ; 0/absent = la position est retirée, voir
  * le module strip_image_gps). Décoché par défaut.
+ *
+ * user_birthday_no_email : ne pas recevoir le courriel de vœux que
+ * scripts/send_birthday_emails.php envoie le jour de l'anniversaire (1 = refusé ;
+ * 0/absent = reçu). Ajouté le 2026-11-08 : le courriel partait sans qu'on puisse le
+ * refuser, et la case « Garder privée » ne concerne que le calendrier.
  */
 function phorum_mod_custom_profile_fields_handler_ensure_fields()
 {
@@ -19,7 +24,7 @@ function phorum_mod_custom_profile_fields_handler_ensure_fields()
         @include_once('./include/api/custom_profile_fields.php');
     }
     if (!function_exists('phorum_api_custom_profile_field_byname')) return;
-    foreach (array('real_name_privacy', 'keep_photo_gps') as $name) {
+    foreach (array('real_name_privacy', 'keep_photo_gps', 'user_birthday_no_email') as $name) {
         if (!phorum_api_custom_profile_field_byname($name)) {
             phorum_api_custom_profile_field_configure(array(
                 'id'            => NULL,
@@ -102,6 +107,9 @@ function phorum_mod_custom_profile_fields_handler_save($userdata)
 
     // 3. Case « Garder privé » le vrai nom (décochée par défaut → partageable).
     $userdata['real_name_privacy'] = isset($_POST['real_name_privacy']) ? 1 : 0;
+
+    // 4. Case « Pas de courriel d'anniversaire » (décochée par défaut → courriel envoyé).
+    $userdata['user_birthday_no_email'] = isset($_POST['user_birthday_no_email']) ? 1 : 0;
 
     return $userdata;
 }

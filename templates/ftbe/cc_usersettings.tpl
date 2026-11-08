@@ -20,7 +20,9 @@
                     <input type="text" name="user_birthday" size="10" maxlength="10" value="{PROFILE->user_birthday}" />
                     &nbsp;&nbsp;
                     <input type="checkbox" name="user_birthday_privacy" value="1" {IF PROFILE->user_birthday_privacy 1}checked="checked"{/IF} /> Garder priv&eacute;e
-                    <br /><small>Sans cette case, votre anniversaire appara&icirc;t dans le calendrier du forum, pour les seuls membres connect&eacute;s : le jour et le mois, jamais l'ann&eacute;e. Cochez-la pour qu'il n'y figure pas.</small>
+                    &nbsp;&nbsp;
+                    <input type="checkbox" name="user_birthday_no_email" value="1" {IF PROFILE->user_birthday_no_email 1}checked="checked"{/IF} /> Pas de courriel d'anniversaire
+                    <br /><small>&laquo;&nbsp;Garder priv&eacute;e&nbsp;&raquo; d&eacute;coch&eacute;e : votre anniversaire appara&icirc;t dans le calendrier du forum, pour les seuls membres connect&eacute;s (le jour et le mois, jamais l'ann&eacute;e). &laquo;&nbsp;Pas de courriel&nbsp;&raquo; d&eacute;coch&eacute;e : le forum vous envoie un courriel de v&oelig;ux le jour de votre anniversaire.</small>
                 </dd>
             {/IF}
 
