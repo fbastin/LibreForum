@@ -12,7 +12,28 @@ class LibreForumParsedown extends Parsedown
     protected function inlineUrl($Excerpt)
     {
         $Excerpt['context'] = str_replace("\x1A", ' ', $Excerpt['context']);
-        return parent::inlineUrl($Excerpt);
+        $Inline = parent::inlineUrl($Excerpt);
+        if (!isset($Inline['element']['text'])) return $Inline;
+
+        // The URL was matched in the body that Phorum had already escaped.
+        // Parsedown escapes the link text once more on output, so that
+        // "?a=1&b=2" was shown as "?a=1&amp;b=2" (673 messages on
+        // 2026-11-14). Its href came out right only because
+        // libreforum_markdown_restore_html() undoes the second escaping in
+        // tags. Give Parsedown the URL as typed instead.
+        // A '"', '<' or '>' cannot be part of a URL: the link stops before
+        // it, and before the punctuation that precedes it, as Parsedown's
+        // own pattern does at the end of a URL. The rest stays text.
+        $url = $Inline['element']['text'];
+        if (preg_match('/&(?:quot|lt|gt)(?:;|$)/', $url, $m, PREG_OFFSET_CAPTURE)) {
+            $url = preg_replace('~[^\w/]+$~u', '', substr($url, 0, $m[0][1]));
+            if (!preg_match('~^https?://.~i', $url)) return NULL;
+            $Inline['extent'] = strlen($url);
+        }
+        $url = htmlspecialchars_decode($url, ENT_COMPAT);
+        $Inline['element']['text'] = $url;
+        $Inline['element']['attributes']['href'] = $url;
+        return $Inline;
     }
 
     // Safe mode stays off (it would escape the HTML that other modules
