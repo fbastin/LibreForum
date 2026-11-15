@@ -100,8 +100,16 @@ function tireur_anon_dokuwiki($username, $dry_run = false) {
 function tireur_anonymize_user($user_id, $username, $dry_run = false) {
     $ip = ($user_id > 0) ? tireur_anon_phorum_ip_by_uid($user_id, $dry_run) : 0;
     $wiki = tireur_anon_dokuwiki((string)$username, $dry_run);
+    // Photos de cibles envoyées depuis la page de comptage (site, includes/comptage_envois.php) :
+    // supprimées avec le compte, comme le promet la politique de confidentialité.
+    $envois = 0;
+    $lib_envois = dirname(__DIR__, 3) . '/includes/comptage_envois.php';
+    if ($user_id > 0 && is_file($lib_envois)) {
+        require_once $lib_envois;
+        $envois = comptage_envois_supprimer_membre((int)$user_id, $dry_run);
+    }
     $tag = $dry_run ? 'SIMULATION' : 'anonymisé';
-    tireur_anon_log(sprintf('%s user="%s" (#%d) : messages IP=%d, wiki fichiers=%d lignes=%d',
-        $tag, $username, (int)$user_id, $ip, $wiki['files'], $wiki['rows']));
-    return ['ip_messages' => $ip, 'wiki' => $wiki];
+    tireur_anon_log(sprintf('%s user="%s" (#%d) : messages IP=%d, wiki fichiers=%d lignes=%d, photos de comptage=%d',
+        $tag, $username, (int)$user_id, $ip, $wiki['files'], $wiki['rows'], $envois));
+    return ['ip_messages' => $ip, 'wiki' => $wiki, 'comptage_envois' => $envois];
 }
