@@ -455,6 +455,7 @@
                            When using --scheduled, these are ignored.\n\n",
         "SearchAuthors"         =>      "Search Authors",
         "Search"                =>      "Search",
+        "StripGpsRefused" => "The GPS location of this file could not be removed, so it was not uploaded. Try again, or remove the location on your phone before uploading.",
         "WikiLinksHeader" => "Wiki articles related to this discussion",
         "UserListSearchLabel" => "Find a member:",
         "UserListSearchPlaceholder" => "Name, username...",

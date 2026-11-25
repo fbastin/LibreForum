@@ -453,6 +453,7 @@
                            Avec --scheduled, elles sont ignorées.\n\n",
 				"SearchAuthors"   =>      "Chercher dans les auteurs",
 				"Search"   =>      "Chercher",
+				"StripGpsRefused" => "La position GPS de ce fichier n'a pas pu être retirée ; il n'a pas été envoyé. Réessayez, ou retirez la position avec votre téléphone avant l'envoi.",
 				"WikiLinksHeader" => "Articles du wiki liés à cette discussion",
 				"UserListSearchLabel" => "Rechercher un membre :",
 				"UserListSearchPlaceholder" => "Nom, pseudonyme...",

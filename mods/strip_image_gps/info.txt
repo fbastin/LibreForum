@@ -1,0 +1,8 @@
+title: Strip GPS location
+desc: Removes the GPS location (EXIF, XMP, QuickTime) from the images and videos uploaded to the forum (attachments, personal files, avatars) before they are stored. An upload whose location cannot be removed is refused. Requires exiftool (/usr/bin/exiftool or /usr/local/bin/exiftool, or the path in $PHORUM['mod_strip_image_gps']['exiftool']).
+version: 1.0.0
+author: LibreForum
+category: admin
+
+hook: file_store|phorum_mod_strip_image_gps_file_store
+priority: run hook file_store before store_files_on_disk
