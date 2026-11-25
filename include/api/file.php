@@ -657,6 +657,25 @@ function phorum_api_file_check_read_access($file_id, $flags = 0)
     // If PHORUM_ADMIN is defined, we don't need to check permissions
     if (defined("PHORUM_ADMIN")) return $file;
 
+    // Un fichier encore lie a l'editeur n'a pas ete publie : message en cours de
+    // redaction, abandonne, ou piece jointe retiree avant l'envoi. Il n'appartient
+    // qu'a celui qui l'a envoye (phorum_api_file_store y inscrit l'utilisateur
+    // actif). Sans ce test, le seul controle etait le droit de lecture du forum
+    // demande, que RIEN ne rattache au fichier : n'importe quel forum public
+    // suffisait, et les identifiants se suivent. Constate le 2026-11-25 :
+    // 222 fichiers jamais publies, depuis 2011, se telechargeaient sans connexion.
+    if ($file["link"] == PHORUM_LINK_EDITOR) {
+        $uid = empty($PHORUM["user"]["user_id"]) ? 0 : (int)$PHORUM["user"]["user_id"];
+        if (empty($PHORUM["user"]["admin"]) &&
+            ($uid === 0 || (int)$file["user_id"] !== $uid)) {
+            return phorum_api_error_set(
+                PHORUM_ERRNO_NOACCESS,
+                "Permission denied for reading the file: it has not been " .
+                "posted, and only its uploader may read it."
+            );
+        }
+    }
+
     // Is the file linked to a forum message? In that case, we have to
     // check if the message does really belong to the requested forum_id.
     if ($file["link"] == PHORUM_LINK_MESSAGE && !empty($file["message_id"]))
