@@ -67,7 +67,7 @@ define( "PHORUM", "6.1.0" );
 define( "PHORUM_SCHEMA_VERSION", "2010101500" );
 
 // our database patch level in format of year-month-day-serial
-define( "PHORUM_SCHEMA_PATCHLEVEL", "2026052800" );
+define( "PHORUM_SCHEMA_PATCHLEVEL", "2026112500" );
 
 // Initialize the global $PHORUM variable, which holds all LibreForum data.
 global $PHORUM;

@@ -7457,7 +7457,7 @@ function phorum_db_create_tables()
            PRIMARY KEY (message_id),
            KEY forum_id (forum_id),
            FULLTEXT KEY search_text (search_text)
-       ) ENGINE=MyISAM $charset",
+       ) ENGINE=InnoDB $charset",
 
       "CREATE TABLE {$PHORUM['user_custom_fields_table']} (
            user_id                  int unsigned   NOT NULL default '0',
