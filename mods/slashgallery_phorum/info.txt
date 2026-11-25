@@ -9,6 +9,7 @@ hook: common|phorum_mod_slashgallery_phorum_common
 hook: editor_tool_plugin|phorum_mod_slashgallery_phorum_editor_tool_plugin
 hook: after_post|phorum_mod_slashgallery_phorum_after_post
 hook: after_edit|phorum_mod_slashgallery_phorum_after_edit
-hook: before_delete|phorum_mod_slashgallery_phorum_before_delete
+hook: delete|phorum_mod_slashgallery_phorum_delete
+hook: after_merge|phorum_mod_slashgallery_phorum_after_merge
 hook: javascript_register|phorum_mod_slashgallery_phorum_javascript_register
 

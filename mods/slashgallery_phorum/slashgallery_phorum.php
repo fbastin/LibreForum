@@ -193,7 +193,7 @@ function phorum_mod_slashgallery_phorum_sync_attachments($message, $origmessage 
     // 3. Remove orphaned images (if attachment was removed in Phorum)
     foreach ($existing_filenames as $filename) {
         if (!in_array($filename, $current_attachment_filenames)) {
-            $gallery->deleteImage($filename);
+            phorum_mod_slashgallery_phorum_drop_copy($gallery, $filename, []);
         }
     }
     
@@ -210,38 +210,103 @@ function phorum_mod_slashgallery_phorum_after_edit($message, $origmessage = null
     return phorum_mod_slashgallery_phorum_sync_attachments($message, $origmessage);
 }
 
-function phorum_mod_slashgallery_phorum_before_delete($data) {
-    // Phorum before_delete hook passes an array: 
-    // array($handled, $msg_ids, $msgthd_id, $message, $delete_mode)
-    if (!is_array($data)) return $data;
-
+/** La galerie du site, avec les droits d'administration (toutes ses actions d'ecriture les exigent). */
+function phorum_mod_slashgallery_phorum_gallery() {
     phorum_mod_slashgallery_phorum_load_library();
-    if (!class_exists('SlashGallery')) return $data;
-
-    $galleryDir = __DIR__ . '/../../../uploads/gallery';
-    $config = [
+    if (!class_exists('SlashGallery')) return null;
+    $gallery = new SlashGallery([
         'db_path' => __DIR__ . '/../../../cache/gallery.db',
-        'photo_base_dir' => $galleryDir,
+        'photo_base_dir' => __DIR__ . '/../../../uploads/gallery',
         'python_venv' => __DIR__ . '/../../../libs/SlashGallery/venv',
         'base_url' => '/uploads/gallery/'
-    ];
-    $gallery = new SlashGallery($config);
+    ]);
+    $gallery->setSecurityContext(true);
+    return $gallery;
+}
 
-    $msg_ids = $data[1];
-    $msgthd_id = $data[2];
-
-    if (!is_array($msg_ids)) {
-        $ids = !empty($msgthd_id) ? array($msgthd_id) : array();
-    } else {
-        $ids = $msg_ids;
+/** Les noms des copies liees a ce message. runPython peut rendre [false, "..."] : filtrer. */
+function phorum_mod_slashgallery_phorum_copies_of($gallery, $msg_id) {
+    $names = [];
+    $rows = $gallery->getByMessageId((int)$msg_id);
+    if (!is_array($rows)) return $names;
+    foreach ($rows as $row) {
+        if (is_array($row) && !empty($row['path'])) $names[] = basename($row['path']);
     }
+    return $names;
+}
 
-    foreach ($ids as $id) {
-        if (!empty($id)) {
-            $gallery->deleteByMessageId((int)$id);
+/**
+ * Un message, autre que ceux de $exclus, insere-t-il ce fichier ? Le selecteur « Galerie »
+ * de l'editeur insere l'adresse brute de la photo ; ce sont les motifs de
+ * gallery_access.php, qui decide qui la voit. En cas de doute (fichier absent, base
+ * muette), on repond oui : garder un fichier de trop vaut mieux que casser un message.
+ */
+function phorum_mod_slashgallery_phorum_is_inserted($name, array $exclus) {
+    if (!function_exists('gallery_like_patterns')) {
+        $access = __DIR__ . '/../../../includes/gallery_access.php';
+        if (!is_file($access)) return TRUE;
+        require_once $access;
+    }
+    $or = [];
+    foreach (gallery_like_patterns($name, false) as $p) {
+        $or[] = "body LIKE '" . phorum_db_interact(DB_RETURN_QUOTED, $p) . "'";
+    }
+    if (!$or) return TRUE;
+    $sql = "SELECT COUNT(*) FROM {$GLOBALS['PHORUM']['message_table']} WHERE (" . implode(' OR ', $or) . ")";
+    $exclus = array_filter(array_map('intval', $exclus));
+    if ($exclus) $sql .= " AND message_id NOT IN (" . implode(',', $exclus) . ")";
+    $n = phorum_db_interact(DB_RETURN_VALUE, $sql);
+    return $n === NULL || (int)$n > 0;
+}
+
+/**
+ * Retire de la galerie la copie d'une piece jointe dont le message est supprime, ou que
+ * le message n'a plus : fiche, fichier et vignettes. deleteImage() ne retire que la fiche
+ * d'une image liee a un message (regle de juin 2026, pour la corbeille de la galerie) :
+ * on la delie d'abord, et le fichier part avec. Le forum, lui, a deja retire sa propre
+ * piece jointe. Si un autre message insere la photo, elle reste, deliee, comme photo
+ * ordinaire de son auteur. Rend 'supprimee' ou 'gardee'.
+ */
+function phorum_mod_slashgallery_phorum_drop_copy($gallery, $name, array $exclus) {
+    $gallery->setMessageId($name, 0);
+    if (phorum_mod_slashgallery_phorum_is_inserted($name, $exclus)) return 'gardee';
+    $gallery->deleteImage($name);
+    return 'supprimee';
+}
+
+/**
+ * Crochet « delete » : apres la suppression, avec la liste EXACTE des messages supprimes.
+ * Il remplace « before_delete », qui ne retirait rien : la galerie y etait ouverte sans
+ * droits d'administration, que deleteByMessageId exige (« Admin required »), et la
+ * suppression d'un fil n'y recoit qu'une liste vide (moderation.php, PHORUM_DELETE_TREE).
+ * Le meme crochet sert a la moderation, au panneau de controle et a l'elagage.
+ */
+function phorum_mod_slashgallery_phorum_delete($msg_ids) {
+    if (!is_array($msg_ids) || !$msg_ids) return $msg_ids;
+    $gallery = phorum_mod_slashgallery_phorum_gallery();
+    if (!$gallery) return $msg_ids;
+    foreach ($msg_ids as $id) {
+        foreach (phorum_mod_slashgallery_phorum_copies_of($gallery, $id) as $name) {
+            phorum_mod_slashgallery_phorum_drop_copy($gallery, $name, $msg_ids);
         }
     }
+    return $msg_ids;
+}
 
-    return $data;
+/**
+ * Crochet « after_merge » : la fusion de deux fils recree chaque message sous un nouveau
+ * numero (ancien => nouveau) et y rattache ses pieces jointes, puis supprime l'ancien fil
+ * sans passer par « delete ». Les copies suivent leur message.
+ */
+function phorum_mod_slashgallery_phorum_after_merge($translation) {
+    if (!is_array($translation) || !$translation) return $translation;
+    $gallery = phorum_mod_slashgallery_phorum_gallery();
+    if (!$gallery) return $translation;
+    foreach ($translation as $old => $new) {
+        foreach (phorum_mod_slashgallery_phorum_copies_of($gallery, $old) as $name) {
+            $gallery->setMessageId($name, (int)$new);
+        }
+    }
+    return $translation;
 }
 ?>
