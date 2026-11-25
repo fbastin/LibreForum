@@ -78,6 +78,7 @@
     var USER_ID = {CALENDAR->user_id};
     var IS_ADMIN = {CALENDAR->is_admin};
     var L = {CALENDAR->strings_json};
+    var INITIAL_DATE = "{CALENDAR->initial_date}";
 
     function boot() {
         if (typeof jsCalendar === 'undefined') {
@@ -92,8 +93,11 @@
         var calR = jsCalendar.new('#cal-right',  null, calOpts);
         var cals = [calL, calC, calR];
 
-        var centerDate = new Date();
-        centerDate.setDate(1);
+        // Starting day: the one in the address (link from a dated announcement), else today.
+        var startDate = /^\d\d\d\d-\d\d-\d\d$/.test(INITIAL_DATE)   // no braces: Phorum would read a variable
+            ? new Date(+INITIAL_DATE.slice(0, 4), +INITIAL_DATE.slice(5, 7) - 1, +INITIAL_DATE.slice(8, 10))
+            : new Date();
+        var centerDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
 
         function shiftMonth(d, n) {
             var r = new Date(d.getFullYear(), d.getMonth() + n, 1);
@@ -236,15 +240,18 @@
                     var html = '';
                     for (var i = 0; i < data.length; i++) {
                         var ev = data[i];
-                        var canEdit = USER_ID > 0 && (IS_ADMIN || USER_ID == ev.user_id) && ev.type !== 'birthday';
+                        // An event from a forum announcement is changed in the announcement (except by an admin).
+                        var canEdit = USER_ID > 0 && (IS_ADMIN || USER_ID == ev.user_id) && ev.type !== 'birthday' && (IS_ADMIN || !ev.thread);
                         var isBirthday = ev.type === 'birthday';
                         html += '<div class="event-item' + (canEdit ? ' editable' : '') + (isBirthday ? ' is-birthday' : '') + '" data-idx="' + i + '">';
                         if (canEdit) {
                             html += '<span class="btn-delete-event" title="' + esc(L.delete) + '">&times;</span>';
                         }
-                        html += '<div class="event-title">' + (isBirthday ? '🎂 ' : '') + esc(ev.title) + '</div>';
+                        var title = esc(ev.title);
+                        if (ev.thread_url) title = '<a href="' + esc(ev.thread_url) + '">' + title + '</a>';
+                        html += '<div class="event-title">' + (isBirthday ? '🎂 ' : '') + title + '</div>';
                         if (!isBirthday) {
-                            html += '<div class="event-author">' + esc(L.by).replace('%name%', function() { return esc(ev.username); }) + '</div>';
+                            html += '<div class="event-author">' + esc(ev.thread_url ? L.announcement_by : L.by).replace('%name%', function() { return esc(ev.username); }) + '</div>';
                         }
                         if (ev.description) {
                             html += '<div class="event-desc">' + esc(ev.description) + '</div>';
@@ -258,8 +265,11 @@
                         (function(el) {
                             var idx = parseInt(el.getAttribute('data-idx'));
                             var ev = data[idx];
-                            if (ev.type !== 'birthday') {
-                                el.addEventListener('click', function() { openModal('edit', ev); });
+                            if (ev.type !== 'birthday' && (IS_ADMIN || !ev.thread)) {
+                                el.addEventListener('click', function(e) {
+                                    if (e.target && e.target.tagName === 'A') return;   // link to the announcement
+                                    openModal('edit', ev);
+                                });
                             }
                             var del = el.querySelector('.btn-delete-event');
                             if (del) {
@@ -343,7 +353,7 @@
         calR.onDateClick(onDateClicked);
 
         /* --- Init --- */
-        loadEvents(fmtDate(new Date()));
+        loadEvents(fmtDate(startDate));
         highlightDates();
     }
 

@@ -40,6 +40,16 @@ $PHORUM['DATA']['LANG']['mod_js_calendar'] = array(
     'by'                  => 'By %name%',
     'birthday_of'         => 'Birthday of %name%',
 
+    'announcement_by' => 'Forum announcement, by %name%',
+    'edit_in_announcement' => 'This event comes from a forum announcement: change the date in the announcement.',
+    'delete_in_announcement' => 'This event comes from a forum announcement: clear the date in the announcement.',
+    'announcement_date' => 'Event date',
+    'optional' => '(optional)',
+    'announcement_date_help' => 'A competition, an open day, a gun show: the date will appear in the %calendar%, with a link to this announcement. Leave empty if the announcement has no date.',
+    'announcement_date_invalid' => 'The event date is not a valid date (YYYY-MM-DD).',
+    'event_on' => 'Event on %date%',
+    'see_calendar' => 'see the calendar',
+
     'not_logged_in'       => 'Not logged in',
     'invalid_token'       => 'Invalid token: reload the page.',
     'invalid_date'        => 'Invalid date',

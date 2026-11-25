@@ -36,6 +36,16 @@ $PHORUM['DATA']['LANG']['mod_js_calendar'] = array(
     'by'                  => 'Par %name%',
     'birthday_of'         => 'Anniversaire de %name%',
 
+    'announcement_by' => 'Annonce du forum, par %name%',
+    'edit_in_announcement' => 'Cet événement vient d\'une annonce du forum : modifiez la date dans l\'annonce.',
+    'delete_in_announcement' => 'Cet événement vient d\'une annonce du forum : effacez la date dans l\'annonce.',
+    'announcement_date' => 'Date de l\'événement',
+    'optional' => '(facultatif)',
+    'announcement_date_help' => 'Concours, portes ouvertes, bourse aux armes : la date paraîtra dans le %calendar%, avec un lien vers cette annonce. Laissez vide si l\'annonce n\'a pas de date.',
+    'announcement_date_invalid' => 'La date de l\'événement n\'est pas une date valide (AAAA-MM-JJ).',
+    'event_on' => 'Événement le %date%',
+    'see_calendar' => 'voir le calendrier',
+
     'not_logged_in'       => 'Non connecté',
     'invalid_token'       => 'Jeton invalide : rechargez la page.',
     'invalid_date'        => 'Date invalide',
