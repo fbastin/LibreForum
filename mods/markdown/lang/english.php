@@ -33,6 +33,20 @@ $PHORUM["DATA"]["LANG"]["mod_markdown"] = array(
     'emoji_mac' => 'Mac: <code>Ctrl</code> + <code>Cmd</code> + <code>Space</code>',
     'emoji_phone' => 'Phone and tablet: the 😀 key on the keyboard',
     
+    // Editor tool labels and help fragments
+    'tool_center' => 'Center',
+    'tool_size' => 'Text size',
+    'tool_code' => 'Code',
+    'tool_link' => 'Link',
+    'tool_hr' => 'Horizontal line',
+    'tool_list' => 'List',
+    'tool_video' => 'Video',
+    'at_line_start' => 'at the start of a line',
+    'code_here' => 'code here',
+    'fence_hint' => 'surround with three backticks',
+    'single_backtick' => 'a single backtick',
+    'or' => 'or',
+
     // JS Prompts
     'prompt_color' => 'Enter the color (name or hex code, e.g., red, #FF0000):',
     'prompt_video' => 'Please enter the URL of the YouTube or Vimeo video:'

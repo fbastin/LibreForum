@@ -226,17 +226,28 @@ function phorum_mod_markdown_javascript_register($data)
     return $data;
 }
 
+/**
+ * The module's strings: those already loaded, else the file of the forum's
+ * language, else english.php. It used to fall back to french.php whatever the
+ * forum's language.
+ */
+function phorum_mod_markdown_lang()
+{
+    global $PHORUM;
+    if (!isset($PHORUM["DATA"]["LANG"]["mod_markdown"])) {
+        $language = empty($PHORUM["language"]) ? "english" : basename($PHORUM["language"]);
+        $file = "./mods/markdown/lang/$language.php";
+        if (!file_exists($file)) $file = "./mods/markdown/lang/english.php";
+        @include($file);
+    }
+    return $PHORUM["DATA"]["LANG"]["mod_markdown"];
+}
+
 function phorum_mod_markdown_editor_tool_plugin()
 {
     global $PHORUM;
 
-    // Load language strings or fallback to French
-    if (isset($PHORUM["DATA"]["LANG"]["mod_markdown"])) {
-        $l = $PHORUM["DATA"]["LANG"]["mod_markdown"];
-    } else {
-        @include("./mods/markdown/lang/french.php");
-        $l = $PHORUM["DATA"]["LANG"]["mod_markdown"];
-    }
+    $l = phorum_mod_markdown_lang();
 
     // Inject JS strings into editor_tools translations
     if (isset($PHORUM["DATA"]["LANG"]["mod_editor_tools"])) {
@@ -244,25 +255,25 @@ function phorum_mod_markdown_editor_tool_plugin()
         $PHORUM["DATA"]["LANG"]["mod_editor_tools"]["markdown_prompt_video"] = $l["prompt_video"];
     }
 
-    editor_tools_register_tool('b', 'Gras', './mods/markdown/icons/b.png', 'editor_tools_handle_b()');
-    editor_tools_register_tool('i', 'Italique', './mods/markdown/icons/i.png', 'editor_tools_handle_i()');
-    editor_tools_register_tool('u', 'Souligné', './mods/markdown/icons/u.png', 'editor_tools_handle_u()');
-    editor_tools_register_tool('s', 'Barré', './mods/markdown/icons/s.png', 'editor_tools_handle_s()');
-    editor_tools_register_tool('sub', 'Indice', './mods/markdown/icons/sub.png', 'editor_tools_handle_sub()');
-    editor_tools_register_tool('sup', 'Exposant', './mods/markdown/icons/sup.png', 'editor_tools_handle_sup()');
-    editor_tools_register_tool('center', 'Centrer', './mods/markdown/icons/center.png', 'editor_tools_handle_center()');
-    editor_tools_register_tool('color', 'Couleur', './mods/markdown/icons/color.png', 'editor_tools_handle_color()');
-    editor_tools_register_tool('size', 'Taille du texte', './mods/markdown/icons/size.png', 'editor_tools_handle_size()');
-    editor_tools_register_tool('quote', 'Citation', './mods/markdown/icons/quote.png', 'editor_tools_handle_quote()');
-    editor_tools_register_tool('code', 'Code', './mods/markdown/icons/code.png', 'editor_tools_handle_code()');
-    editor_tools_register_tool('url', 'Lien', './mods/markdown/icons/url.png', 'editor_tools_handle_url()');
-    editor_tools_register_tool('img', 'Image', './mods/markdown/icons/img.png', 'editor_tools_handle_img()');
-    editor_tools_register_tool('hr', 'Ligne horizontale', './mods/markdown/icons/hr.png', 'editor_tools_handle_hr()');
-    editor_tools_register_tool('list', 'Liste', './mods/markdown/icons/list.png', 'editor_tools_handle_list()');
+    editor_tools_register_tool('b', $l['bold'], './mods/markdown/icons/b.png', 'editor_tools_handle_b()');
+    editor_tools_register_tool('i', $l['italic'], './mods/markdown/icons/i.png', 'editor_tools_handle_i()');
+    editor_tools_register_tool('u', $l['underline'], './mods/markdown/icons/u.png', 'editor_tools_handle_u()');
+    editor_tools_register_tool('s', $l['strike'], './mods/markdown/icons/s.png', 'editor_tools_handle_s()');
+    editor_tools_register_tool('sub', $l['subscript'], './mods/markdown/icons/sub.png', 'editor_tools_handle_sub()');
+    editor_tools_register_tool('sup', $l['superscript'], './mods/markdown/icons/sup.png', 'editor_tools_handle_sup()');
+    editor_tools_register_tool('center', $l['tool_center'], './mods/markdown/icons/center.png', 'editor_tools_handle_center()');
+    editor_tools_register_tool('color', $l['color'], './mods/markdown/icons/color.png', 'editor_tools_handle_color()');
+    editor_tools_register_tool('size', $l['tool_size'], './mods/markdown/icons/size.png', 'editor_tools_handle_size()');
+    editor_tools_register_tool('quote', $l['quote'], './mods/markdown/icons/quote.png', 'editor_tools_handle_quote()');
+    editor_tools_register_tool('code', $l['tool_code'], './mods/markdown/icons/code.png', 'editor_tools_handle_code()');
+    editor_tools_register_tool('url', $l['tool_link'], './mods/markdown/icons/url.png', 'editor_tools_handle_url()');
+    editor_tools_register_tool('img', $l['image'], './mods/markdown/icons/img.png', 'editor_tools_handle_img()');
+    editor_tools_register_tool('hr', $l['tool_hr'], './mods/markdown/icons/hr.png', 'editor_tools_handle_hr()');
+    editor_tools_register_tool('list', $l['tool_list'], './mods/markdown/icons/list.png', 'editor_tools_handle_list()');
 
     editor_tools_register_tool(
         'markdown_video',                  // Tool id
-        'Vidéo',                           // Tool description
+        $l['tool_video'],                  // Tool description
         './mods/markdown/video_icon.png',  // Tool button icon
         'markdown_video_editor_tool()'     // Javascript action on button click
     );
@@ -283,13 +294,7 @@ function phorum_mod_markdown_addon()
     }
 
     if (isset($PHORUM["args"]["action"]) && $PHORUM["args"]["action"] == 'help') {
-        // Load language strings or fallback to French
-        if (isset($PHORUM["DATA"]["LANG"]["mod_markdown"])) {
-            $l = $PHORUM["DATA"]["LANG"]["mod_markdown"];
-        } else {
-            @include("./mods/markdown/lang/french.php");
-            $l = $PHORUM["DATA"]["LANG"]["mod_markdown"];
-        }
+        $l = phorum_mod_markdown_lang();
 
         echo '<html><head><title>' . htmlspecialchars($l['title']) . '</title>';
         echo '<style>body { font-family: sans-serif; font-size: 14px; padding: 20px; line-height: 1.6; } h1, h2 { color: #333; } code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: monospace; }</style>';
@@ -317,13 +322,13 @@ function phorum_mod_markdown_addon()
         echo '</ul>';
         echo '<h2>' . $l['quotes_code'] . '</h2>';
         echo '<ul>';
-        echo '<li>' . $l['quote'] . ' : <code>&gt; ' . mb_strtolower($l['quote']) . '</code> (en début de ligne)</li>';
-        echo '<li>' . $l['code_block'] . ' : <code>```code ici```</code> (encadrer avec trois accents graves)</li>';
-        echo '<li>' . $l['inline_code'] . ' : <code>`code`</code> (un seul accent grave)</li>';
+        echo '<li>' . $l['quote'] . ' : <code>&gt; ' . mb_strtolower($l['quote']) . '</code> (' . $l['at_line_start'] . ')</li>';
+        echo '<li>' . $l['code_block'] . ' : <code>```' . $l['code_here'] . '```</code> (' . $l['fence_hint'] . ')</li>';
+        echo '<li>' . $l['inline_code'] . ' : <code>`code`</code> (' . $l['single_backtick'] . ')</li>';
         echo '</ul>';
         echo '<h2>' . $l['lists'] . '</h2>';
         echo '<ul>';
-        echo '<li>' . $l['bullet_list'] . ' : <code>- </code> ou <code>* </code> en début de ligne.</li>';
+        echo '<li>' . $l['bullet_list'] . ' : <code>- </code> ' . $l['or'] . ' <code>* </code> (' . $l['at_line_start'] . ')</li>';
         echo '<li>' . $l['numbered_list'] . ' : <code>1. </code>, <code>2. </code>, etc.</li>';
         echo '</ul>';
         echo '<h2>' . $l['emoji'] . '</h2>';
