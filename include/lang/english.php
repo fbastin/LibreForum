@@ -221,6 +221,7 @@
         "Join"                  =>      "Join",
         "JoinAGroup"            =>      "Join a Group",
         "JoinGroupDescription"  =>      "To join a group, select it from this list. Groups marked with an * are moderated, your membership request will require the approval of a Group Moderator to take effect.",
+        "GroupsLockedUntilConfirmed" =>  "You must have been registered for at least %days% days and have posted at least %posts% messages to access the groups.",
 
         "KeepCopy"              =>      "Keep A Copy In My Sent Items",
 

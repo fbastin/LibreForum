@@ -220,6 +220,7 @@
 				"Join"   =>      "Rejoindre",
 				"JoinAGroup"   =>      "Rejoindre un groupe",
 				"JoinGroupDescription"   =>      "Pour rejoindre un groupe, sélectionner le dans la liste. Les groupes marqués d'un * sont modérés, votre adhésion devra être approuvée par un modérateur du groupe pour prendre effet.",
+				"GroupsLockedUntilConfirmed" =>  "Vous devez être inscrit depuis %days% jours au moins et avoir posté au moins %posts% messages pour accéder aux groupes.",
 
 				"KeepCopy"   =>      "Garder une copie de mes éléments envoyés",
 

@@ -6,7 +6,7 @@
 
 <div class="PhorumStdBlockHeader PhorumHeaderText" style="text-align: left;">{LANG->JoinAGroup}</div>
 
-{IF PROFILE->CONFIRMED}
+{IF NOT GROUPS_LOCKED}
 <div class="PhorumStdBlock" style="text-align: left;">
   {LANG->JoinGroupDescription}
   <br/>
@@ -38,6 +38,6 @@
 </div>
 {ELSE}
 <div class="PhorumStdBlock" style="text-align: left;">
-Vous devez être inscrit depuis 7 jours au moins et avoir posté un minimum de 5 messages pour accéder aux groupes.
+{GROUPS_LOCKED}
 </div>
 {/IF}
