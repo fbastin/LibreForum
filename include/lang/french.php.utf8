@@ -312,7 +312,7 @@
 				"NoGroupsJoin"   =>      "Il n'y a aucun groupe à rejoindre.",
 				"NoGroupMembership"   =>      "Vous n'appartenez à aucun groupe.",
 				"NoMoreEmails"   =>      "Vous ne recevrez plus de courriels quand cette discussion sera mise à jour.",
-				"None"   =>      "Tout",
+				"None"   =>      "Aucun",
 				"NoPost"   =>      "Désolé, vous n'avez pas la permission d'envoyer ou de répondre dans ce forum.",
 				"NoRead"   =>      "Désolé, vous n'avez pas la permission de lire ce forum",
 				"NotRegistered"   =>      "Pas encore enregistré ? Cliquez ici pour vous enregistrer maintenant.",
