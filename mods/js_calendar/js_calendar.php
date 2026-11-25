@@ -112,13 +112,19 @@ function phorum_mod_js_calendar_list_events() {
         }
     }
 
-    // 2. Fetch birthdays for this day/month (ignoring year)
-    $day_month = substr($date, 5); // MM-DD
-    $sql_bday = "SELECT u.user_id, u.username, b.data as birthday 
-                 FROM {$prefix}_users u 
+    // 2. Birthdays of the day: for logged-in members only, and without the year.
+    //    Any visitor used to read "Date de naissance : YYYY-MM-DD" of every member
+    //    here, and the iCal export gave them all at once. The birth date itself is
+    //    not read any more: only the day of the month is.
+    if (!phorum_mod_js_calendar_member()) {
+        return $results;
+    }
+    $day_month = substr($date, 5); // MM-DD, from a date already validated
+    $sql_bday = "SELECT u.user_id, u.username
+                 FROM {$prefix}_users u
                  JOIN {$prefix}_user_custom_fields b ON u.user_id = b.user_id AND b.type = 22
                  LEFT JOIN {$prefix}_user_custom_fields p ON u.user_id = p.user_id AND p.type = 23
-                 WHERE b.data LIKE '%-$day_month' 
+                 WHERE b.data LIKE '%-$day_month'
                  AND (p.data IS NULL OR p.data = '0')
                  AND u.active = 1";
     $res_bday = phorum_db_interact(DB_RETURN_RES, $sql_bday);
@@ -129,7 +135,6 @@ function phorum_mod_js_calendar_list_events() {
                 'user_id'     => $row['user_id'],
                 'username'    => $row['username'],
                 'title'       => "Anniversaire de " . $row['username'],
-                'description' => "Date de naissance : " . $row['birthday'],
                 'event_date'  => $date,
                 'type'        => 'birthday'
             );
@@ -137,6 +142,13 @@ function phorum_mod_js_calendar_list_events() {
     }
 
     return $results;
+}
+
+/**
+ * Is the reader a logged-in member? Birthdays are only shown to members.
+ */
+function phorum_mod_js_calendar_member() {
+    return !empty($GLOBALS['PHORUM']['user']['user_id']);
 }
 
 function phorum_mod_js_calendar_list_all_dates() {
@@ -152,16 +164,15 @@ function phorum_mod_js_calendar_list_all_dates() {
         }
     }
 
-    // Birthdays dates (we only care about the current view typically, 
-    // but for simplicity we can return birthdays that match users)
-    // To avoid returning thousands of dates, we could just return those in a range,
-    // but js_calendar list_all_dates is used for highlighting.
-    // Since birthdays repeat every year, this logic is tricky for "list_all_dates".
-    // For now, let's keep it to standard events and we'll handle birthday highlighting in JS if needed,
-    // or just return birthdays for the current year.
+    // Birthday days to highlight (previous, current and next year): for logged-in
+    // members only, like the list of the day.
+    if (!phorum_mod_js_calendar_member()) {
+        return array_values(array_unique($results));
+    }
     $year = date('Y');
     $sql_bday = "SELECT DISTINCT SUBSTR(b.data, 6) as md
                  FROM {$prefix}_user_custom_fields b
+                 JOIN {$prefix}_users u ON u.user_id = b.user_id AND u.active = 1
                  LEFT JOIN {$prefix}_user_custom_fields p ON b.user_id = p.user_id AND p.type = 23
                  WHERE b.type = 22 AND (p.data IS NULL OR p.data = '0')";
     $res_bday = phorum_db_interact(DB_RETURN_RES, $sql_bday);
@@ -173,7 +184,9 @@ function phorum_mod_js_calendar_list_all_dates() {
         }
     }
 
-    return array_unique($results);
+    // array_values(): array_unique() leaves holes in the keys, json_encode() then gives
+    // an object, and the template (Array.isArray) highlighted no day at all.
+    return array_values(array_unique($results));
 }
 
 function phorum_mod_js_calendar_save_event() {
@@ -260,30 +273,10 @@ function phorum_mod_js_calendar_export_ical() {
         }
     }
 
-    // 3. Fetch birthdays (as recurring events)
-    $sql_bday = "SELECT u.user_id, u.username, b.data as birthday 
-                 FROM {$prefix}_users u 
-                 JOIN {$prefix}_user_custom_fields b ON u.user_id = b.user_id AND b.type = 22
-                 LEFT JOIN {$prefix}_user_custom_fields p ON u.user_id = p.user_id AND p.type = 23
-                 WHERE (p.data IS NULL OR p.data = '0')
-                 AND u.active = 1";
-    $res_bday = phorum_db_interact(DB_RETURN_RES, $sql_bday);
-    if ($res_bday) {
-        while ($row = phorum_db_fetch_row($res_bday, DB_RETURN_ASSOC)) {
-            // Birthday is usually YYYY-MM-DD in the custom field
-            // We want it to start on that day and repeat yearly
-            $bdt = str_replace('-', '', $row['birthday']);
-            if (strlen($bdt) === 8) {
-                $ical .= "BEGIN:VEVENT\r\n";
-                $ical .= "UID:bday_" . $row['user_id'] . "@tireur.org\r\n";
-                $ical .= "DTSTAMP:" . date('Ymd\THis\Z') . "\r\n";
-                $ical .= "DTSTART;VALUE=DATE:" . $bdt . "\r\n";
-                $ical .= "RRULE:FREQ=YEARLY\r\n";
-                $ical .= "SUMMARY:Anniversaire de " . phorum_mod_js_calendar_ical_escape($row['username']) . "\r\n";
-                $ical .= "END:VEVENT\r\n";
-            }
-        }
-    }
+    // 3. No birthdays in the export. It used to give them without logging in, each
+    //    with the full birth date as DTSTART. A subscribed calendar downloads this
+    //    address without the member's cookies: birthdays cannot be restricted to
+    //    members there, so they are left out.
 
     $ical .= "END:VCALENDAR\r\n";
 
