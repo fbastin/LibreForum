@@ -53,7 +53,8 @@ function phorum_mod_js_calendar_addon() {
         'is_logged_in' => $is_logged_in,
         'user_id' => $is_logged_in ? (int)$PHORUM['user']['user_id'] : 0,
         'is_admin' => !empty($PHORUM['user']['admin']) ? 1 : 0,
-        'ajax_url' => phorum_get_url(PHORUM_ADDON_URL, 'module=js_calendar')
+        'ajax_url' => phorum_get_url(PHORUM_ADDON_URL, 'module=js_calendar'),
+        'csrf_token' => phorum_mod_js_calendar_csrf_token()
     );
 
     phorum_output('js_calendar::cal');
@@ -189,13 +190,36 @@ function phorum_mod_js_calendar_list_all_dates() {
     return array_values(array_unique($results));
 }
 
+/**
+ * Anti-CSRF token for writes (add, edit, delete), specific to the member.
+ * Deleting used to be a plain GET request without a token: a booby-trapped
+ * link or image deleted the events of the member who loaded it. Signed with
+ * the forum's private key: another site cannot compute it.
+ */
+function phorum_mod_js_calendar_csrf_token() {
+    $PHORUM = $GLOBALS['PHORUM'];
+    if (empty($PHORUM['user']['user_id']) || empty($PHORUM['private_key'])) return '';
+    return hash_hmac('sha256', 'js_calendar|' . (int)$PHORUM['user']['user_id'] . '|' .
+                     (isset($PHORUM['user']['sessid_lt']) ? $PHORUM['user']['sessid_lt'] : ''),
+                     $PHORUM['private_key']);
+}
+
+/** A write is only accepted by POST, with the member's token. */
+function phorum_mod_js_calendar_write_allowed() {
+    if (!isset($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] !== 'POST') return false;
+    $expected = phorum_mod_js_calendar_csrf_token();
+    $received = isset($_POST['csrf_token']) && is_string($_POST['csrf_token']) ? $_POST['csrf_token'] : '';
+    return $expected !== '' && hash_equals($expected, $received);
+}
+
 function phorum_mod_js_calendar_save_event() {
     $PHORUM = $GLOBALS['PHORUM'];
     if (empty($PHORUM['user']['user_id'])) return array('success' => false, 'error' => 'Non connecté');
+    if (!phorum_mod_js_calendar_write_allowed()) return array('success' => false, 'error' => 'Invalid token: reload the page.');
 
-    $title = isset($_POST['title']) ? trim($_POST['title']) : '';
-    $desc = isset($_POST['description']) ? trim($_POST['description']) : '';
-    $date = isset($_POST['date']) ? $_POST['date'] : '';
+    $title = isset($_POST['title']) && is_string($_POST['title']) ? trim($_POST['title']) : '';
+    $desc = isset($_POST['description']) && is_string($_POST['description']) ? trim($_POST['description']) : '';
+    $date = isset($_POST['date']) && is_string($_POST['date']) ? $_POST['date'] : '';
     $event_id = isset($_POST['event_id']) ? (int)$_POST['event_id'] : 0;
 
     if (empty($title) || empty($date)) return array('success' => false, 'error' => 'Champs requis manquants');
@@ -225,8 +249,10 @@ function phorum_mod_js_calendar_save_event() {
 function phorum_mod_js_calendar_delete_event() {
     $PHORUM = $GLOBALS['PHORUM'];
     if (empty($PHORUM['user']['user_id'])) return array('success' => false, 'error' => 'Non connecté');
+    if (!phorum_mod_js_calendar_write_allowed()) return array('success' => false, 'error' => 'Invalid token: reload the page.');
 
-    $event_id = isset($_REQUEST['event_id']) ? (int)$_REQUEST['event_id'] : (isset($PHORUM['args']['event_id']) ? (int)$PHORUM['args']['event_id'] : 0);
+    // By POST only (see phorum_mod_js_calendar_csrf_token()).
+    $event_id = isset($_POST['event_id']) ? (int)$_POST['event_id'] : 0;
     
     $res = phorum_db_interact(DB_RETURN_RES, "SELECT user_id FROM phorum_calendar_events WHERE event_id = $event_id");
     if (!$res) return array('success' => false, 'error' => 'Event introuvable');

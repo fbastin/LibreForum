@@ -72,6 +72,7 @@
 <script type="text/javascript">
 (function() {
     var AJAX_URL = "{CALENDAR->ajax_url}";
+    var CSRF_TOKEN = "{CALENDAR->csrf_token}";
     var USER_ID = {CALENDAR->user_id};
     var IS_ADMIN = {CALENDAR->is_admin};
 
@@ -285,7 +286,10 @@
 
         function deleteEvent(eventId) {
             if (!confirm("Supprimer cet événement ?")) return;
-            fetch(apiUrl('delete') + ',event_id=' + eventId)
+            var fdDel = new FormData();
+            fdDel.append('event_id', eventId);
+            fdDel.append('csrf_token', CSRF_TOKEN);
+            fetch(apiUrl('delete'), { method: 'POST', body: fdDel })
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
                     if (data.success) {
@@ -305,6 +309,7 @@
                 if (!$dateInput.value) { $dateInput.focus(); return; }
                 $btnSave.disabled = true;
                 var fd = new FormData(document.getElementById('event-form'));
+                fd.append('csrf_token', CSRF_TOKEN);
                 fetch(apiUrl('save'), { method: 'POST', body: fd })
                     .then(function(r) { return r.json(); })
                     .then(function(data) {
