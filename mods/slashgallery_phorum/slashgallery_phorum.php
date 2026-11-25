@@ -36,6 +36,46 @@ function phorum_mod_slashgallery_phorum_javascript_register($data) {
     return $data;
 }
 
+/**
+ * Les fichiers que la galerie indexe deja pour cet auteur : ceux qui portent son
+ * etiquette ET son prefixe de nom (convention <auteur>_<horodatage>_<nom>). Les deux,
+ * parce qu'une etiquette se pose a la main, et qu'un prefixe seul confondrait « bob » et
+ * « bob_smith ». runPython rend le JSON tel quel : une action en echec rend
+ * [false, "..."], un tableau qu'il ne faut pas parcourir comme une liste d'images.
+ */
+function phorum_mod_slashgallery_phorum_owned_files($gallery, $galleryDir, $username) {
+    $files = [];
+    $images = $gallery->getAllImages($username);
+    if (!is_array($images)) return $files;
+    $prefix = '/^' . preg_quote($username, '/') . '_\d{8,}_/';
+    foreach ($images as $img) {
+        if (!is_array($img) || empty($img['path'])) continue;
+        $name = basename($img['path']);
+        if (preg_match($prefix, $name) && is_file($galleryDir . '/' . $name)) {
+            $files[] = $galleryDir . '/' . $name;
+        }
+    }
+    return $files;
+}
+
+/**
+ * Le fichier de $candidates dont le contenu est identique a $path, ou null. La taille
+ * d'abord : on ne hache qu'en cas d'egalite, comme la synchro du wiki.
+ */
+function phorum_mod_slashgallery_phorum_find_twin($path, array $candidates) {
+    clearstatcache(true, $path);
+    $size = @filesize($path);
+    if ($size === false) return null;
+    $hash = null;
+    foreach ($candidates as $c) {
+        clearstatcache(true, $c);
+        if (@filesize($c) !== $size) continue;
+        if ($hash === null) $hash = hash_file('sha256', $path);
+        if (hash_file('sha256', $c) === $hash) return $c;
+    }
+    return null;
+}
+
 function phorum_mod_slashgallery_phorum_sync_attachments($message, $origmessage = null) {
     global $PHORUM;
     
@@ -94,12 +134,13 @@ function phorum_mod_slashgallery_phorum_sync_attachments($message, $origmessage 
     $existing_filenames = array_map(function($img) { return basename($img['path']); }, $existing_in_gallery);
 
     $current_attachment_filenames = [];
+    $owned = null;   // fichiers de l'auteur deja en galerie, lus au premier besoin
 
     // 2. Add/Sync current attachments from Phorum
     if (!empty($message['attachments'])) {
         foreach ($message['attachments'] as $attachment) {
             if (!preg_match('/\.(jpg|jpeg|png|webp|gif)$/i', $attachment['name'])) continue;
-            
+
             $newName = preg_replace('/[^a-z0-9\._-]/i', '_', $attachment['name']);
             $finalName = $username . '_' . $add_time . '_' . $newName;
             $current_attachment_filenames[] = $finalName;
@@ -108,11 +149,35 @@ function phorum_mod_slashgallery_phorum_sync_attachments($message, $origmessage 
                 $phorum_file = phorum_api_file_get($attachment['file_id']);
                 if ($phorum_file && !empty($phorum_file['file_data'])) {
                     $destPath = $galleryDir . '/' . $finalName;
-                    $written = file_put_contents($destPath, $phorum_file['file_data']);
-                    if ($written && !(function_exists('strip_image_gps') && strip_image_gps($destPath))) {
+                    // Ecrit a cote sous un nom en point, GPS retire, PUIS compare : c'est
+                    // le fichier tel que la galerie le garderait qu'on compare a l'existant.
+                    // Le nom garde son extension, dont exiftool a besoin.
+                    $tmpPath = $galleryDir . '/.tmp_' . bin2hex(random_bytes(6)) . '_' . $finalName;
+                    $written = file_put_contents($tmpPath, $phorum_file['file_data']);
+                    if ($written && !(function_exists('strip_image_gps') && strip_image_gps($tmpPath))) {
                         // GPS non retiré : le fichier ne reste pas dans la galerie.
-                        @unlink($destPath);
-                    } elseif ($written) {
+                        $written = false;
+                    }
+                    // Le meme contenu est deja en galerie pour cet auteur : pas de copie.
+                    // Un membre joint le meme GIF d'accueil a chaque nouveau venu depuis
+                    // 2016 (186 messages) ; la recopie en faisait une entree de galerie
+                    // par message, cinq entre septembre et novembre 2026. Le forum garde
+                    // la piece jointe de chaque message : le message ne perd rien.
+                    if ($written) {
+                        if ($owned === null) {
+                            $owned = phorum_mod_slashgallery_phorum_owned_files($gallery, $galleryDir, $username);
+                        }
+                        if (phorum_mod_slashgallery_phorum_find_twin($tmpPath, $owned) !== null) {
+                            $written = false;
+                        }
+                    }
+                    if ($written && !@rename($tmpPath, $destPath)) {
+                        $written = false;
+                    }
+                    if (!$written) {
+                        @unlink($tmpPath);
+                    } else {
+                        $owned[] = $destPath;   // deux fois la meme image dans ce message
                         $gallery->addTag($finalName, 'membre');
                         $gallery->addTag($finalName, $username);
                         $gallery->addTag($finalName, 'post_attachment');
