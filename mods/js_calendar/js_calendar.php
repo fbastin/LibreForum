@@ -2,11 +2,58 @@
 
 if (!defined('PHORUM')) return;
 
+# The database scheme version, used to install and upgrade the module's table.
+define('JS_CALENDAR_DB_VERSION', 1);
+
+# The events table, under the configured table prefix like the core tables.
+$GLOBALS['PHORUM']['js_calendar_table'] =
+    $GLOBALS['PHORUM']['DBCONFIG']['table_prefix'] . '_calendar_events';
+
+/**
+ * Creates or upgrades the events table when needed. The module used to read
+ * and write "phorum_calendar_events" without ever creating it: on a new
+ * forum, or one with another table prefix, every query failed.
+ * Returns TRUE when the table is ready, or an error message.
+ */
+function phorum_mod_js_calendar_db_init() {
+    $PHORUM = $GLOBALS['PHORUM'];
+    $version = isset($PHORUM['mod_js_calendar_installed'])
+        ? (int)$PHORUM['mod_js_calendar_installed'] : 0;
+    $layerpath = './mods/js_calendar/db/' . basename($PHORUM['DBCONFIG']['type']);
+
+    while ($version < JS_CALENDAR_DB_VERSION) {
+        $version++;
+        $sqlfile = "$layerpath/$version.php";
+        if (!file_exists($sqlfile)) {
+            return "no database scheme script for this database layer ($sqlfile)";
+        }
+        $sqlqueries = array();
+        include($sqlfile);
+        if (count($sqlqueries) == 0) {
+            return "no SQL query in $sqlfile";
+        }
+        $err = phorum_db_run_queries($sqlqueries);
+        if ($err) {
+            return "running $sqlfile failed: $err";
+        }
+        if (!phorum_db_update_settings(array('mod_js_calendar_installed' => $version))) {
+            return "saving the mod_js_calendar_installed setting failed";
+        }
+        $GLOBALS['PHORUM']['mod_js_calendar_installed'] = $version;
+    }
+    return TRUE;
+}
+
 /**
  * Addon hook to display the js_calendar page.
  */
 function phorum_mod_js_calendar_addon() {
     $PHORUM = $GLOBALS['PHORUM'];
+
+    $db_ready = phorum_mod_js_calendar_db_init();
+    if ($db_ready !== TRUE) {
+        trigger_error("js_calendar: $db_ready", E_USER_WARNING);
+    }
 
     // Determine action from URL args
     $action = 'display';
@@ -102,7 +149,7 @@ function phorum_mod_js_calendar_list_events() {
     $quoted_date = phorum_db_interact(DB_RETURN_QUOTED, $date);
 
     // 1. Fetch standard events
-    $sql = "SELECT e.*, u.username FROM phorum_calendar_events e JOIN {$prefix}_users u ON e.user_id = u.user_id WHERE e.event_date = '$quoted_date' ORDER BY e.created_at ASC";
+    $sql = "SELECT e.*, u.username FROM {$PHORUM['js_calendar_table']} e JOIN {$prefix}_users u ON e.user_id = u.user_id WHERE e.event_date = '$quoted_date' ORDER BY e.created_at ASC";
     $res = phorum_db_interact(DB_RETURN_RES, $sql);
 
     $results = array();
@@ -157,7 +204,7 @@ function phorum_mod_js_calendar_list_all_dates() {
     $prefix = $PHORUM['DBCONFIG']['table_prefix'];
     
     // Standard events dates
-    $res = phorum_db_interact(DB_RETURN_RES, "SELECT DISTINCT event_date FROM phorum_calendar_events");
+    $res = phorum_db_interact(DB_RETURN_RES, "SELECT DISTINCT event_date FROM {$PHORUM['js_calendar_table']}");
     $results = array();
     if ($res) {
         while ($row = phorum_db_fetch_row($res, DB_RETURN_ASSOC)) {
@@ -231,15 +278,15 @@ function phorum_mod_js_calendar_save_event() {
     $user_id = (int)$PHORUM['user']['user_id'];
 
     if ($event_id > 0) {
-        $res = phorum_db_interact(DB_RETURN_RES, "SELECT user_id FROM phorum_calendar_events WHERE event_id = $event_id");
+        $res = phorum_db_interact(DB_RETURN_RES, "SELECT user_id FROM {$PHORUM['js_calendar_table']} WHERE event_id = $event_id");
         $row = $res ? phorum_db_fetch_row($res, DB_RETURN_ASSOC) : null;
         if (!$row) return array('success' => false, 'error' => 'Événement introuvable');
         if ($row['user_id'] != $user_id && empty($PHORUM['user']['admin'])) {
             return array('success' => false, 'error' => 'Accès interdit');
         }
-        $sql = "UPDATE phorum_calendar_events SET title = '$quoted_title', description = '$quoted_desc', event_date = '$quoted_date' WHERE event_id = $event_id";
+        $sql = "UPDATE {$PHORUM['js_calendar_table']} SET title = '$quoted_title', description = '$quoted_desc', event_date = '$quoted_date' WHERE event_id = $event_id";
     } else {
-        $sql = "INSERT INTO phorum_calendar_events (user_id, title, description, event_date) VALUES ($user_id, '$quoted_title', '$quoted_desc', '$quoted_date')";
+        $sql = "INSERT INTO {$PHORUM['js_calendar_table']} (user_id, title, description, event_date) VALUES ($user_id, '$quoted_title', '$quoted_desc', '$quoted_date')";
     }
 
     phorum_db_interact(DB_RETURN_RES, $sql);
@@ -254,7 +301,7 @@ function phorum_mod_js_calendar_delete_event() {
     // By POST only (see phorum_mod_js_calendar_csrf_token()).
     $event_id = isset($_POST['event_id']) ? (int)$_POST['event_id'] : 0;
     
-    $res = phorum_db_interact(DB_RETURN_RES, "SELECT user_id FROM phorum_calendar_events WHERE event_id = $event_id");
+    $res = phorum_db_interact(DB_RETURN_RES, "SELECT user_id FROM {$PHORUM['js_calendar_table']} WHERE event_id = $event_id");
     if (!$res) return array('success' => false, 'error' => 'Event introuvable');
     $row = phorum_db_fetch_row($res, DB_RETURN_ASSOC);
 
@@ -262,7 +309,7 @@ function phorum_mod_js_calendar_delete_event() {
         return array('success' => false, 'error' => 'Accès interdit');
     }
 
-    phorum_db_interact(DB_RETURN_RES, "DELETE FROM phorum_calendar_events WHERE event_id = $event_id");
+    phorum_db_interact(DB_RETURN_RES, "DELETE FROM {$PHORUM['js_calendar_table']} WHERE event_id = $event_id");
     return array('success' => true);
 }
 
@@ -271,7 +318,7 @@ function phorum_mod_js_calendar_export_ical() {
     $prefix = $PHORUM['DBCONFIG']['table_prefix'];
 
     // 1. Fetch events
-    $sql = "SELECT e.*, u.username FROM phorum_calendar_events e JOIN {$prefix}_users u ON e.user_id = u.user_id ORDER BY e.event_date ASC";
+    $sql = "SELECT e.*, u.username FROM {$PHORUM['js_calendar_table']} e JOIN {$prefix}_users u ON e.user_id = u.user_id ORDER BY e.event_date ASC";
     $res = phorum_db_interact(DB_RETURN_RES, $sql);
 
     // 2. Prepare iCal content
