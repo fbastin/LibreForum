@@ -341,19 +341,25 @@ function phorum_mod_js_calendar_export_ical() {
     $sql = "SELECT e.*, u.username FROM {$PHORUM['js_calendar_table']} e JOIN {$prefix}_users u ON e.user_id = u.user_id ORDER BY e.event_date ASC";
     $res = phorum_db_interact(DB_RETURN_RES, $sql);
 
-    // 2. Prepare iCal content
+    // 2. Prepare iCal content. The calendar is named after the forum, and the
+    //    event UIDs use the forum's own host: they used to name one particular
+    //    site, whatever forum served them.
+    $host = parse_url($PHORUM['http_path'], PHP_URL_HOST);
+    if (!$host && isset($_SERVER['HTTP_HOST'])) $host = $_SERVER['HTTP_HOST'];
+    $host = preg_replace('/[^A-Za-z0-9.-]/', '', (string)$host);
+    if ($host === '') $host = 'localhost';
     $ical = "BEGIN:VCALENDAR\r\n";
     $ical .= "VERSION:2.0\r\n";
-    $ical .= "PRODID:-//Tireur.org//jsCalendar//FR\r\n";
+    $ical .= "PRODID:-//LibreForum//js_calendar//EN\r\n";
     $ical .= "CALSCALE:GREGORIAN\r\n";
     $ical .= "METHOD:PUBLISH\r\n";
-    $ical .= "X-WR-CALNAME:Calendrier Tireur.org\r\n";
+    $ical .= "X-WR-CALNAME:" . phorum_mod_js_calendar_ical_escape(strip_tags($PHORUM['title'])) . "\r\n";
 
     if ($res) {
         while ($row = phorum_db_fetch_row($res, DB_RETURN_ASSOC)) {
             $dt = str_replace('-', '', $row['event_date']);
             $ical .= "BEGIN:VEVENT\r\n";
-            $ical .= "UID:event_" . $row['event_id'] . "@tireur.org\r\n";
+            $ical .= "UID:event_" . $row['event_id'] . "@" . $host . "\r\n";
             $ical .= "DTSTAMP:" . date('Ymd\THis\Z', strtotime($row['created_at'])) . "\r\n";
             $ical .= "DTSTART;VALUE=DATE:" . $dt . "\r\n";
             $ical .= "SUMMARY:" . phorum_mod_js_calendar_ical_escape($row['title']) . "\r\n";
@@ -375,7 +381,7 @@ function phorum_mod_js_calendar_export_ical() {
 
     // 4. Send file
     header('Content-Type: text/calendar; charset=utf-8');
-    header('Content-Disposition: attachment; filename="tireur_org_calendar.ics"');
+    header('Content-Disposition: attachment; filename="calendar.ics"');
     echo $ical;
 }
 
