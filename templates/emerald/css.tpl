@@ -1,12 +1,11 @@
 /* BEGIN TEMPLATE css.tpl */
 
-/* Règle inopérante, laissée en commentaire pour mémoire : le moteur de
-   gabarit de LibreForum prend ses accolades pour un appel de variable, la
-   cherche sous la clé « margin: » et ne rend que l'astérisque. Le forum
-   est servi sans cette remise à zéro depuis toujours ; la rétablir
-   déplacerait marges et espacements sur toutes les pages.
-   Accolades découpées sur plusieurs lignes : le moteur ne reconnaît un
-   appel de variable que s'il tient sur une seule.
+/* Inoperative rule, left as a comment for the record: LibreForum's template
+   engine takes its braces for a variable call, looks it up under the key
+   "margin:" and renders only the asterisk. The forum has always been served
+   without this reset; restoring it would move margins and spacing on every
+   page. The braces are split over several lines because the engine only
+   recognises a variable call that fits on one.
 * {
     margin: 0; padding: 0; border: none;
 }
@@ -582,9 +581,9 @@ img {
     margin: 0 0 0 16px;
 }
 
-/* Avatars : vignette uniforme. LibreForum code en ligne les dimensions d'origine
-   (jusqu'à 200 px), ce qui rendait la colonne membre incohérente. Ciblage par
-   alt="avatar" pour ne pas toucher aux pièces jointes servies par file.php. */
+/* Avatars: uniform thumbnail. LibreForum writes the original dimensions inline
+   (up to 200 px), which made the member column uneven. Targeted through
+   alt="avatar" so as not to touch the attachments served by file.php. */
 #phorum img[alt="avatar"] {
     width: auto !important;
     height: auto !important;

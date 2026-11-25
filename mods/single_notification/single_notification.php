@@ -6,22 +6,22 @@ function mod_single_notification_init() {
 	
 }
 
-// Portee de la remise a zero : le fil lu, et non le forum visite.
+// What resets the hold: reading the thread, not visiting the forum.
 // -----------------------------------------------------------------------------
-// Ce crochet effaçait auparavant TOUTES les retenues du forum consulte
-// (db_del sans clause thread_id), et ce des la liste des sujets. Ouvrir
-// l'alerte d'une discussion rearmait donc la notification pour tous les autres
-// fils du meme forum. Sur un forum ou les reponses sont espacees de plusieurs
-// jours et ou l'abonne passe tous les jours, la retenue etait systematiquement
-// levee avant l'arrivee du message suivant : le module ne retenait plus rien
-// et chaque message donnait un courriel — l'inverse de ce qu'il annonce.
+// This hook used to clear ALL the holds of the forum being visited (db_del
+// without a thread_id clause), from the topic list on. Opening the alert of one
+// discussion thus re-armed the notification for every other thread of the same
+// forum. On a forum where replies come days apart and the subscriber visits
+// every day, the hold was always lifted before the next message arrived: the
+// module held nothing back, and every message gave a mail, the opposite of
+// what it promises.
 //
-// La retenue n'est desormais levee que par la LECTURE DU FIL concerne. Le
-// module tient alors sa promesse : une alerte par discussion tant qu'elle n'a
-// pas ete lue, au lieu d'une alerte par discussion et par visite.
+// The hold is now lifted only by READING THE THREAD concerned. The module then
+// keeps its promise: one alert per discussion until it has been read, instead
+// of one alert per discussion and per visit.
 //
-// Corollaire assume : un fil dont l'alerte n'est jamais ouverte ne redonnera
-// plus d'alerte, quel que soit le nombre de reponses qui s'y accumulent.
+// Accepted consequence: a thread whose alert is never opened gives no further
+// alert, however many replies pile up in it.
 // -----------------------------------------------------------------------------
 function mod_single_notification_common() {
 	global $PHORUM;

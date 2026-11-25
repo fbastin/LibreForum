@@ -45,7 +45,7 @@ else {
     // unreadable forums, but the thread feed below reads its first message
     // directly with phorum_db_get_message(), which does not: an anonymous
     // visitor got the subject and body of any thread of a private forum
-    // (feed.php?110,<thread>, « Petites annonces clôturées »).
+    // (feed.php?<forum>,<thread>).
     if (!phorum_api_user_check_access(PHORUM_USER_ALLOW_READ, $PHORUM["forum_id"])) {
         header("HTTP/1.1 404 Not Found");
         exit();

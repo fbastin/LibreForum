@@ -37,26 +37,25 @@ function phorum_smtp_send_messages ($data)
 
 			require_once("./mods/smtp_mail/phpmailer/class.phpmailer.php");
 
-			// Objet CONSERVE d'un appel a l'autre dans la meme requete PHP.
+			// Object KEPT from one call to the next within the same PHP request.
 			//
-			// Chaque appel creait auparavant un PHPMailer neuf, donc une
-			// connexion SMTP neuve : connexion + STARTTLS + AUTH a chaque
-			// destinataire (~0,5 s incompressibles), la ou une session
-			// partagee les paie une seule fois. C'est ce qui faisait tramer
-			// le POST d'approbation de control.php, panneau « users », qui
-			// envoie un courriel par inscription validee.
+			// Each call used to create a new PHPMailer, hence a new SMTP
+			// connection: connect + STARTTLS + AUTH for every recipient
+			// (~0.5 s that cannot be saved), where a shared session pays it
+			// once. That is what made the approval POST of control.php
+			// ("users" panel), which sends one mail per approved
+			// registration, drag.
 			//
-			// Mesures du 2026-09-13, 3 envois reels via phorum_email_user() :
-			// 4,46 s avant, 3,31 s apres. Le gain grandit avec le nombre de
-			// destinataires, et surtout il met a l'abri du bridage de Gmail :
-			// des connexions rapprochees se voient infliger des paliers de
-			// 5 s, mesures jusqu'a 22,42 s pour 5 connexions neuves contre
-			// 0,68 s sur une session partagee. Ce bridage est intermittent,
-			// d'ou l'ecart entre les deux series : le correctif supprime le
-			// risque, il ne se juge pas sur le seul cas favorable.
+			// Measured with 3 real sendings through phorum_email_user():
+			// 4.46 s before, 3.31 s after. The gain grows with the number of
+			// recipients, and above all it avoids Gmail's throttling: close
+			// connections get 5 s steps, measured up to 22.42 s for 5 new
+			// connections against 0.68 s on a shared session. The throttling
+			// is intermittent, hence the gap between the two series: the fix
+			// removes the risk, and is not judged on the favourable case only.
 			//
-			// La reutilisation est sure : SmtpConnect() teste Connected() et
-			// rouvre la session si Gmail l'a fermee entre-temps.
+			// Reuse is safe: SmtpConnect() tests Connected() and reopens the
+			// session if Gmail closed it in the meantime.
 			static $mail = NULL;
 			if ($mail === NULL) {
 				$mail = new PHPMailer();

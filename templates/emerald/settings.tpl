@@ -89,13 +89,12 @@
 {VAR navfont "var(--font-sans)"}
 {VAR navfontsize "0.88rem"}
 
-{! -- Suite des mêmes secours, laissés vides à dessein.                      -- }
-{! -- css.tpl référence ces 25 clés, que rien n'a jamais définies : elles se -- }
-{! -- rendaient donc en chaîne vide, et le forum est stylé depuis           -- }
-{! -- css/libreforum.min.css, chargé après. Les définir vides laisse la   -- }
-{! -- feuille servie identique à l'octet près et supprime l'avertissement.  -- }
-{! -- Leur rendre de vraies valeurs relève d'un choix de rendu, pas d'un    -- }
-{! -- correctif : ce serait rappliquer un habillage absent depuis toujours. -- }
+{! -- More of the same fallbacks, left empty on purpose. css.tpl refers    -- }
+{! -- to these 25 keys, which nothing ever defined: they rendered as empty  -- }
+{! -- strings, and the forum is styled by css/libreforum.min.css, loaded    -- }
+{! -- afterwards. Defining them empty keeps the served sheet identical to   -- }
+{! -- the byte and removes the warning. Giving them real values would be a  -- }
+{! -- rendering choice, not a fix: a look the forum never had.              -- }
 {VAR altbackcolor ""}
 {VAR altlisttextcolor ""}
 {VAR backcolor ""}

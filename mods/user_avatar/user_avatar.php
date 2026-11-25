@@ -100,10 +100,10 @@ function mod_user_avatar_read($messages)
             $info = $author["mod_user_avatar"]["image_info"][$file_id];
             $w = $info['width'];
             $h = $info['height'];
-            // Plafonner à une vignette uniforme (max 90 px, ratio conservé) pour
-            // éviter que les avatars en taille d'origine (jusqu'à 200 px) ne
-            // déforment la colonne membre. Corrigé dans le HTML lui-même -> robuste
-            // quel que soit l'état du cache CSS du navigateur.
+            // Cap to a uniform thumbnail (90 px at most, aspect ratio kept) so
+            // that avatars at their original size (up to 200 px) do not distort
+            // the member column. Done in the HTML itself, so it holds whatever
+            // the state of the browser's CSS cache.
             if ($w > 0 && $h > 0 && ($w > 90 || $h > 90)) {
                 $scale = 90 / max($w, $h);
                 $w = (int) round($w * $scale);
@@ -159,7 +159,7 @@ function mod_user_avatar_profile($profile, $from_post_user = FALSE)
     if (!empty($profile['mod_user_avatar']["image_info"][$file_id])) {
         $info = $profile['mod_user_avatar']['image_info'][$file_id];
         $pw = $info['width']; $ph = $info['height'];
-        // Vignette plafonnée à 90 px (ratio conservé), cf. boucle des messages.
+        // Thumbnail capped to 90 px (aspect ratio kept), as in the message loop.
         if ($pw > 0 && $ph > 0 && ($pw > 90 || $ph > 90)) {
             $scale = 90 / max($pw, $ph);
             $pw = (int) round($pw * $scale);

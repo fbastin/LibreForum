@@ -1,7 +1,7 @@
 <?php
 if (!defined("PHORUM")) return;
 
-// 1. Injecter les champs cachés et le JS dans le formulaire d'inscription
+// 1. Add the hidden fields and the script to the registration form
 function phorum_mod_autodetect_timezone_reg_form()
 {
     ?>
@@ -11,13 +11,13 @@ function phorum_mod_autodetect_timezone_reg_form()
     // <![CDATA[
     (function() {
         var today = new Date();
-        // getTimezoneOffset retourne les minutes (ex: -120 pour UTC+2)
-        // On convertit en heures et on inverse le signe pour correspondre au format PHP/LibreForum
+        // getTimezoneOffset() returns minutes (e.g. -120 for UTC+2): convert to
+        // hours and invert the sign, as PHP and LibreForum expect
         var offsetHours = (today.getTimezoneOffset() / 60) * -1;
         document.getElementById('detected_tz_offset').value = offsetHours;
         
-        // Détection rudimentaire de l'heure d'été (DST)
-        // Compare le décalage en janvier et en juillet (Hémisphère Nord)
+        // Rough daylight saving time (DST) detection: compares the offsets
+        // of January and July (northern hemisphere)
         var jan = new Date(today.getFullYear(), 0, 1);
         var jul = new Date(today.getFullYear(), 6, 1);
         var stdTimezoneOffset = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
@@ -30,15 +30,15 @@ function phorum_mod_autodetect_timezone_reg_form()
     <?php
 }
 
-// 2. Intercepter les données avant la sauvegarde du profil
+// 2. Adjust the data before the profile is saved
 function phorum_mod_autodetect_timezone_reg_save($userdata)
 {
     if (isset($_POST['detected_tz_offset']) && $_POST['detected_tz_offset'] !== "") {
         $offset = (float) $_POST['detected_tz_offset'];
         $is_dst = isset($_POST['detected_is_dst']) && $_POST['detected_is_dst'] == "1" ? 1 : 0;
         
-        // Si DST est actif, on soustrait 1 heure à l'offset de base pour LibreForum
-        // car LibreForum gère "offset de base" + "option DST (+1)"
+        // With DST active, one hour is subtracted from the base offset, since
+        // LibreForum stores a base offset plus a "DST (+1)" option
         if ($is_dst) {
             $offset -= 1.0;
         }
