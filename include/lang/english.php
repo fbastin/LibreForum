@@ -401,6 +401,8 @@
         "read"                  =>      "read",
         "ReadOnlyMessage"       =>      "This forum is currently read only.  You can not log in or make any changes. This is a temporary situation.",
         "RealName"              =>      "Real Name",
+        "DateOfBirth"           =>      "Date of birth (YYYY-MM-DD)",
+        "KeepPrivate"           =>      "Keep private",
         "ReceiveModerationMails"=>      "I want to receive moderation emails",
         "Recipients"            =>      "recipients",
         "RegApprovedSubject"    =>      "Your account has been approved",

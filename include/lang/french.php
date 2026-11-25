@@ -400,6 +400,8 @@
 				"read"   =>      "lire",
 				"ReadOnlyMessage"   =>      "Ce forum est en lecture seule. C'est une situation temporaire. Réessayez plus tard.",
 				"RealName"   =>      "Vrai nom",
+				"DateOfBirth"   =>      "Date de naissance (AAAA-MM-JJ)",
+				"KeepPrivate"   =>      "Garder privée",
 				"ReceiveModerationMails"   =>      "Je veux recevoir les courriels de modération",
 				"Recipients"   =>      "destinataires",
 				"RegApprovedSubject"   =>      "Votre compte est approuvé",
