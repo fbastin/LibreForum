@@ -104,16 +104,31 @@ function phorum_get_system_max_upload()
  */
 function phorum_phpcfgsize2bytes($val) {
     $val = trim($val);
+
+    // An empty value has no last character: $val[-1] raised an "uninitialized
+    // string offset" warning. ini_get() returns "" for a missing directive.
+    if ($val === '') return 0;
+
     $last = strtolower($val[strlen($val)-1]);
+
+    // The suffix is removed BEFORE the multiplication. In PHP 8, "8M" * 1024
+    // raises "A non-numeric value encountered" on every page that asks for the
+    // maximum upload size. The result was right (PHP read the 8 and ignored the
+    // M), but the warning was written to the log on every call.
+    $bytes = in_array($last, array('g', 'm', 'k'), TRUE)
+           ? (float) substr($val, 0, -1)
+           : (float) $val;
+
     switch($last) {
        // The 'G' modifier is available since PHP 5.1.0
+       // The fall-through is kept: 'g' goes through 'm' then 'k', so 1024^3.
        case 'g':
-           $val *= 1024;
+           $bytes *= 1024;
        case 'm':
-           $val *= 1024;
+           $bytes *= 1024;
        case 'k':
-           $val *= 1024;
+           $bytes *= 1024;
     }
-    return $val;
+    return $bytes;
 }
 
