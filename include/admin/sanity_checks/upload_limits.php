@@ -75,13 +75,15 @@
         // Check if the upload temp directory can be written.
         $tmpdir = get_cfg_var('upload_tmp_dir');
         if (!empty($tmpdir)) {
+            // (error_get_last(): $php_errormsg no longer exists since PHP 8.0.)
+            error_clear_last();
             $fp = @fopen("$tmpdir/sanity_checks_dummy_uploadtmpfile", "w");
             if (! $fp) return array(
                 PHORUM_SANITY_CRIT,
                 "The system is unable to write files
                  to PHP's upload tmpdir \"".htmlspecialchars($tmpdir)."\".
                  The system error was:<br/><br/>".
-                 htmlspecialchars($php_errormsg).".",
+                 htmlspecialchars(error_get_last()['message'] ?? 'unknown error').".",
                 "Change the upload_tmp_dir setting in your php.ini file
                  or give your webserver more permissions for the current
                  upload directory."
