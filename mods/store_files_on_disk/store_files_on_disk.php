@@ -253,6 +253,12 @@ function store_files_on_disk_mkdir($path)
     if (is_dir($path)) return TRUE;
     if (!store_files_on_disk_mkdir(dirname($path))) return FALSE;
     if (@mkdir($path) === FALSE) return FALSE;
+    // Ecriture de groupe : sous l'umask d'Apache (022), le dossier naissait en 2755,
+    // et un script de maintenance lance par un autre membre du groupe ne pouvait plus
+    // y effacer un fichier. Le crochet de suppression efface pourtant la ligne en base
+    // meme quand unlink() echoue : le fichier restait alors sur le disque sans plus
+    // rien qui le designe. Le bit setgid suit celui du dossier parent.
+    @chmod($path, 02775);
     return TRUE;
 }
 
