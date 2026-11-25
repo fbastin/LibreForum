@@ -1,5 +1,5 @@
 title: Wiki Links
-desc: Affiche les articles Wiki pertinents en bas de la page, apres les messages (Maillage bidirectionnel).
+desc: Shows the wiki articles related to a discussion at the bottom of the page, after the messages (links read from the "wiki_links" cache, filled by the wiki side).
 author: Gemini CLI
 version: 1.0.3
 category: read

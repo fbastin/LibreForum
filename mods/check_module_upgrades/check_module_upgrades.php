@@ -89,7 +89,7 @@ function phorum_mod_check_module_upgrades_admin_pre($sent_module) {
 		}
 		if ($cmu_flag) {
 			$orig_str = "<td valign=\"top\" width=\"100%\">";
-			$replace_str = $orig_str."<div style=\"background-color: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; padding: 12px; border-radius: 6px; margin-bottom: 12px; font-weight: 500; width: 450px; text-align: center;\">Une ou plusieurs extensions ci-dessous ont une version plus récente disponible.</div>";
+			$replace_str = $orig_str."<div style=\"background-color: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; padding: 12px; border-radius: 6px; margin-bottom: 12px; font-weight: 500; width: 450px; text-align: center;\">One or more modules below have a newer version available.</div>";
 			$output = str_replace($orig_str, $replace_str, $output);
 		}
 	} else {

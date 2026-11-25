@@ -163,39 +163,6 @@ function phorum_mod_js_calendar_page_data() {
     return $data;
 }
 
-/**
- * Register CSS files
- */
-function phorum_mod_js_calendar_css_register($data) {
-    if ($GLOBALS['PHORUM']['page'] !== 'addon' || !isset($_REQUEST['module']) || $_REQUEST['module'] !== 'js_calendar') {
-        return $data;
-    }
-    
-    $data['register'][] = array(
-        'module' => 'js_calendar',
-        'where'  => 'after',
-        'source' => 'file(mods/js_calendar/css/calendar.css)'
-    );
-    
-    return $data;
-}
-
-/**
- * Register JavaScript files
- */
-function phorum_mod_js_calendar_javascript_register($data) {
-    if ($GLOBALS['PHORUM']['page'] !== 'addon' || !isset($_REQUEST['module']) || $_REQUEST['module'] !== 'js_calendar') {
-        return $data;
-    }
-
-    $data[] = array(
-        'module' => 'js_calendar',
-        'source' => 'file(mods/js_calendar/js/calendar.js)'
-    );
-    
-    return $data;
-}
-
 function phorum_mod_js_calendar_list_events() {
     $PHORUM = $GLOBALS['PHORUM'];
     $date = isset($_REQUEST['date']) ? $_REQUEST['date'] : (isset($PHORUM['args']['date']) ? $PHORUM['args']['date'] : '');

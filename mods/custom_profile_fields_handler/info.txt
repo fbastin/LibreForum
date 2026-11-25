@@ -1,5 +1,5 @@
 title: Custom Profile Fields Handler
-desc: Gère les spécificités des champs personnalisés (ex: cases à cocher pour la confidentialité).
+desc: Handles custom profile fields: validates the birthday (YYYY-MM-DD) and stores the privacy checkboxes.
 version: 1.0.0
 author: Gemini CLI
 

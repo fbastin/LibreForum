@@ -1,5 +1,5 @@
 title: Autodetect Timezone on Registration
-desc: Détecte automatiquement le fuseau horaire de l'utilisateur lors de l'inscription via JavaScript et l'assigne à son profil.
+desc: Detects the user's time zone with JavaScript at registration and stores it in the profile.
 version: 1.0.0
 author: Gemini CLI
 

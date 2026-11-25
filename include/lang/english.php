@@ -452,6 +452,7 @@
                            When using --scheduled, these are ignored.\n\n",
         "SearchAuthors"         =>      "Search Authors",
         "Search"                =>      "Search",
+        "WikiLinksHeader" => "Wiki articles related to this discussion",
         "UserListSearchLabel" => "Find a member:",
         "UserListSearchPlaceholder" => "Name, username...",
         "UserListCaseSensitive" => "Case sensitive",

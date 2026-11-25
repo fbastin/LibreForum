@@ -15,7 +15,10 @@ function phorum_mod_wiki_links_before_footer() {
 
     if (is_array($cached_links) && !empty($cached_links)) {
         $html = '<div class="wiki-related-box noprint">';
-        $html .= '<div class="wiki-related-header"><i class="li-book"></i> Articles Wiki recommand&eacute;s pour cette discussion</div>';
+        $header = isset($GLOBALS['PHORUM']['DATA']['LANG']['WikiLinksHeader'])
+                ? $GLOBALS['PHORUM']['DATA']['LANG']['WikiLinksHeader']
+                : 'Wiki articles related to this discussion';
+        $html .= '<div class="wiki-related-header"><i class="li-book"></i> ' . htmlspecialchars($header) . '</div>';
         $html .= '<ul class="wiki-related-list">';
         foreach ($cached_links as $link) {
             $html .= '<li><a href="' . htmlspecialchars($link['url']) . '">' . htmlspecialchars($link['title']) . '</a></li>';
