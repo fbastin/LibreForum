@@ -2,90 +2,98 @@
 if (!defined("PHORUM")) return;
 
 /**
- * Enregistre les champs personnalisés gérés par ce mod s'ils n'existent pas
- * encore (idempotent). Appelé à chaque requête via le hook "common" ; une fois
- * le champ enregistré, ce n'est plus qu'une vérification en mémoire.
+ * Creates the custom profile fields this module handles, when they do not
+ * exist yet (idempotent). Called on every request through the "common" hook;
+ * once the fields exist, this is only an in-memory check.
  *
- * real_name_privacy : « Garder privé » le vrai nom (1 = privé ; 0/absent =
- * partageable). Décoché par défaut → le vrai nom peut être diffusé.
+ *   user_birthday          YYYY-MM-DD, validated below; read by js_calendar
+ *   user_birthday_privacy  1 = keep the birthday private
+ *
+ * The module used to create only "real_name_privacy", a flag that nothing in
+ * this distribution reads, and never the two birthday fields it validates: on
+ * a new forum the birthday was never stored.
  */
 function phorum_mod_custom_profile_fields_handler_ensure_fields()
 {
     if (!function_exists('phorum_api_custom_profile_field_byname')) {
         @include_once('./include/api/custom_profile_fields.php');
     }
-    if (function_exists('phorum_api_custom_profile_field_byname') &&
-        !phorum_api_custom_profile_field_byname('real_name_privacy')) {
-        phorum_api_custom_profile_field_configure(array(
-            'id'            => NULL,
-            'name'          => 'real_name_privacy',
-            'length'        => 1,
-            'html_disabled' => TRUE,
-            'show_in_admin' => FALSE,
-        ));
+    if (!function_exists('phorum_api_custom_profile_field_byname')) return;
+
+    $fields = array('user_birthday' => 10, 'user_birthday_privacy' => 1);
+    foreach ($fields as $name => $length) {
+        if (!phorum_api_custom_profile_field_byname($name)) {
+            phorum_api_custom_profile_field_configure(array(
+                'id'            => NULL,
+                'name'          => $name,
+                'length'        => $length,
+                'html_disabled' => TRUE,
+                'show_in_admin' => FALSE,
+            ));
+        }
     }
 }
 
-// Hook "common" (s'il est actif) : enregistre tôt, pour que la galerie puisse
-// lire le réglage de confidentialité dès que possible.
+// "common" hook: creates the fields early, before anything reads them.
 function phorum_mod_custom_profile_fields_handler_common()
 {
     phorum_mod_custom_profile_fields_handler_ensure_fields();
 }
 
+/** A string of the language file, with an English fallback. */
+function phorum_mod_custom_profile_fields_handler_lang($key, $fallback)
+{
+    return isset($GLOBALS['PHORUM']['DATA']['LANG'][$key])
+         ? $GLOBALS['PHORUM']['DATA']['LANG'][$key] : $fallback;
+}
+
 function phorum_mod_custom_profile_fields_handler_save($userdata)
 {
-    // On ne s'occupe que du panneau "user" (Mon Profil)
+    // Only the "user" panel (my profile) carries these fields.
     if (isset($userdata['panel']) && $userdata['panel'] != "user") {
         return $userdata;
     }
 
-    // Garantit l'existence du champ real_name_privacy avant la sauvegarde
-    // (indépendamment du hook "common", qui peut nécessiter une reconstruction
-    // du cache des modules pour s'activer).
+    // The fields must exist before they are saved, whether or not the
+    // "common" hook is active yet (it may need the module settings saved).
     phorum_mod_custom_profile_fields_handler_ensure_fields();
 
-    // 1. Validation de la date de naissance
+    // 1. Date of birth
     if (isset($_POST['user_birthday']) && trim($_POST['user_birthday']) !== "") {
         $birthday = trim($_POST['user_birthday']);
-        
-        // Vérification du format
+
+        // Format
         if (!preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $birthday, $matches)) {
-            $userdata['error'] = "Le format de la date de naissance doit être AAAA-MM-JJ (ex: 1980-05-15).";
+            $userdata['error'] = phorum_mod_custom_profile_fields_handler_lang(
+                'BirthdayFormatError', 'The date of birth must be written YYYY-MM-DD (e.g. 1980-05-15).');
             return $userdata;
         }
-        
+
         $y = (int)$matches[1];
         $m = (int)$matches[2];
         $d = (int)$matches[3];
-        
-        // Vérification de la validité de la date (ex: pas de 31 février)
+
+        // A real date (no 31 February)
         if (!checkdate($m, $d, $y)) {
-            $userdata['error'] = "La date de naissance saisie est invalide.";
+            $userdata['error'] = phorum_mod_custom_profile_fields_handler_lang(
+                'BirthdayInvalid', 'The date of birth is not a valid date.');
             return $userdata;
         }
-        
-        // Vérification que la date n'est pas dans le futur
+
+        // Not in the future
         if (mktime(0, 0, 0, $m, $d, $y) > time()) {
-            $userdata['error'] = "La date de naissance ne peut pas être dans le futur.";
+            $userdata['error'] = phorum_mod_custom_profile_fields_handler_lang(
+                'BirthdayInFuture', 'The date of birth cannot be in the future.');
             return $userdata;
         }
-        
+
         $userdata['user_birthday'] = $birthday;
     } else {
         $userdata['user_birthday'] = "";
     }
 
-    // 2. Gestion de la case à cocher "Confidentialité"
-    // Si la case n'est pas cochée, PHP ne l'envoie pas dans $_POST.
-    if (!isset($_POST['user_birthday_privacy'])) {
-        $userdata['user_birthday_privacy'] = 0;
-    } else {
-        $userdata['user_birthday_privacy'] = 1;
-    }
-
-    // 3. Case « Garder privé » le vrai nom (décochée par défaut → partageable).
-    $userdata['real_name_privacy'] = isset($_POST['real_name_privacy']) ? 1 : 0;
+    // 2. "Keep private" box: an unchecked box is not sent in $_POST.
+    $userdata['user_birthday_privacy'] = isset($_POST['user_birthday_privacy']) ? 1 : 0;
 
     return $userdata;
 }

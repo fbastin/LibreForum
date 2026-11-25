@@ -1,5 +1,5 @@
 title: Custom Profile Fields Handler
-desc: Handles custom profile fields: validates the birthday (YYYY-MM-DD) and stores the privacy checkboxes.
+desc: Creates the birthday profile fields (date of birth and "keep private"), validates the date (YYYY-MM-DD) and stores both.
 version: 1.0.0
 author: Gemini CLI
 
