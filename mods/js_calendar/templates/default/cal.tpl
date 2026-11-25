@@ -1,35 +1,37 @@
-<link rel="stylesheet" href="/forum/mods/js_calendar/css/jsCalendar.min.css?v=1">
-<script src="/forum/mods/js_calendar/js/jsCalendar.min.js?v=1"></script>
-<script src="/forum/mods/js_calendar/js/jsCalendar.lang.fr.js?v=1"></script>
-<link rel="stylesheet" href="/forum/mods/js_calendar/css/calendar.css?v=20260627">
+<link rel="stylesheet" href="{URL->HTTP_PATH}/mods/js_calendar/css/jsCalendar.min.css?v=1">
+<script src="{URL->HTTP_PATH}/mods/js_calendar/js/jsCalendar.min.js?v=1"></script>
+{IF CALENDAR->jscal_lang_script}
+<script src="{CALENDAR->jscal_lang_script}"></script>
+{/IF}
+<link rel="stylesheet" href="{URL->HTTP_PATH}/mods/js_calendar/css/calendar.css?v=20260627">
 
-<div class="calendar-page-header">Calendrier des &eacute;v&eacute;nements</div>
+<div class="calendar-page-header">{LANG->mod_js_calendar->page_title}</div>
 <div class="PhorumStdBlock calendar-page-main">
     <div class="calendar-layout-container">
         <div class="cal-nav-row">
-            <button type="button" id="cal-prev" class="cal-nav-btn" title="Mois pr&eacute;c&eacute;dent">&#8249;</button>
+            <button type="button" id="cal-prev" class="cal-nav-btn" title="{LANG->mod_js_calendar->prev_month}">&#8249;</button>
             <div class="cal-grid">
                 <div class="cal-cell cal-side" id="cal-left"></div>
                 <div class="cal-cell cal-center" id="cal-center"></div>
                 <div class="cal-cell cal-side" id="cal-right"></div>
             </div>
-            <button type="button" id="cal-next" class="cal-nav-btn" title="Mois suivant">&#8250;</button>
+            <button type="button" id="cal-next" class="cal-nav-btn" title="{LANG->mod_js_calendar->next_month}">&#8250;</button>
         </div>
 
         <div class="calendar-events-panel">
             <div class="events-panel-header">
-                <h3 class="events-panel-title">&Eacute;v&eacute;nements le <span id="selected-date-str">-</span></h3>
+                <h3 class="events-panel-title">{LANG->mod_js_calendar->events_on} <span id="selected-date-str">-</span></h3>
                 <div class="events-panel-actions">
-                    <a href="{CALENDAR->ajax_url},action=export" class="btn-export-cal" title="Exporter au format iCal (.ics)">Exporter</a>
+                    <a href="{CALENDAR->ajax_url},action=export" class="btn-export-cal" title="{LANG->mod_js_calendar->export_title}">{LANG->mod_js_calendar->export}</a>
                     {IF CALENDAR->is_logged_in}
-                    <button type="button" id="btn-open-add" class="btn-add-event">+ Ajouter</button>
+                    <button type="button" id="btn-open-add" class="btn-add-event">{LANG->mod_js_calendar->add}</button>
                     {/IF}
                 </div>
             </div>
-            <div id="events-container" class="events-scroll">S&eacute;lectionnez une date.</div>
+            <div id="events-container" class="events-scroll">{LANG->mod_js_calendar->select_date}</div>
             {IF NOT CALENDAR->is_logged_in}
             <p style="color: #888; font-style: italic; margin: 1rem 0 0; font-size: 0.9rem;">
-                Connectez-vous pour proposer un &eacute;v&eacute;nement.
+                {LANG->mod_js_calendar->login_to_add}
             </p>
             {/IF}
         </div>
@@ -40,30 +42,30 @@
 <div id="cal-modal-overlay" class="cal-modal-overlay">
     <div class="cal-modal" role="dialog" aria-labelledby="modal-title">
         <div class="cal-modal-head">
-            <h3 id="modal-title">Ajouter un &eacute;v&eacute;nement</h3>
+            <h3 id="modal-title">{LANG->mod_js_calendar->add_event}</h3>
             <button type="button" class="cal-modal-close" id="modal-close">&times;</button>
         </div>
         <div class="cal-modal-body">
             <form id="event-form">
                 <input type="hidden" id="event-id" name="event_id" value="">
                 <div class="form-group">
-                    <label for="event-date">Date</label>
+                    <label for="event-date">{LANG->mod_js_calendar->date}</label>
                     <input type="date" id="event-date" name="date" required>
                 </div>
                 <div class="form-group">
-                    <label for="event-title">Titre</label>
-                    <input type="text" id="event-title" name="title" required placeholder="Titre de l'&eacute;v&eacute;nement">
+                    <label for="event-title">{LANG->mod_js_calendar->title}</label>
+                    <input type="text" id="event-title" name="title" required placeholder="{LANG->mod_js_calendar->title_placeholder}">
                 </div>
                 <div class="form-group">
-                    <label for="event-desc">Description</label>
-                    <textarea id="event-desc" name="description" placeholder="D&eacute;tails, horaires, lieu..."></textarea>
+                    <label for="event-desc">{LANG->mod_js_calendar->description}</label>
+                    <textarea id="event-desc" name="description" placeholder="{LANG->mod_js_calendar->desc_placeholder}"></textarea>
                 </div>
             </form>
         </div>
         <div class="cal-modal-foot">
-            <button type="button" id="btn-save" class="btn-save">Enregistrer</button>
-            <button type="button" id="btn-cancel" class="btn-cancel">Annuler</button>
-            <button type="button" id="btn-modal-delete" class="btn-delete" style="display:none">Supprimer</button>
+            <button type="button" id="btn-save" class="btn-save">{LANG->mod_js_calendar->save}</button>
+            <button type="button" id="btn-cancel" class="btn-cancel">{LANG->mod_js_calendar->cancel}</button>
+            <button type="button" id="btn-modal-delete" class="btn-delete" style="display:none">{LANG->mod_js_calendar->delete}</button>
         </div>
     </div>
 </div>
@@ -75,6 +77,7 @@
     var CSRF_TOKEN = "{CALENDAR->csrf_token}";
     var USER_ID = {CALENDAR->user_id};
     var IS_ADMIN = {CALENDAR->is_admin};
+    var L = {CALENDAR->strings_json};
 
     function boot() {
         if (typeof jsCalendar === 'undefined') {
@@ -82,7 +85,7 @@
             return;
         }
 
-        var calOpts = { language: 'fr', monthFormat: 'month YYYY' };
+        var calOpts = { language: '{CALENDAR->jscal_language}', monthFormat: 'month YYYY' };
 
         var calL = jsCalendar.new('#cal-left',   null, calOpts);
         var calC = jsCalendar.new('#cal-center', null, calOpts);
@@ -151,10 +154,8 @@
             return y + '-' + m + '-' + day;
         }
 
-        function fmtDateFR(d) {
-            var months = ['janvier','février','mars','avril','mai','juin',
-                          'juillet','août','septembre','octobre','novembre','décembre'];
-            return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+        function fmtDateLong(d) {
+            return d.getDate() + ' ' + L.months[d.getMonth()] + ' ' + d.getFullYear();
         }
 
         function esc(text) {
@@ -178,14 +179,14 @@
             editingId = 0;
             if (mode === 'edit' && ev) {
                 editingId = ev.event_id;
-                $modalTitle.textContent = "Modifier l'événement";
+                $modalTitle.textContent = L.edit_event;
                 $idInput.value = ev.event_id;
                 $titleInput.value = ev.title;
                 $descInput.value = ev.description || '';
                 $dateInput.value = ev.event_date;
                 $btnDelete.style.display = 'inline-block';
             } else {
-                $modalTitle.textContent = "Ajouter un événement";
+                $modalTitle.textContent = L.add_event;
                 $idInput.value = '';
                 $titleInput.value = '';
                 $descInput.value = '';
@@ -222,14 +223,14 @@
         /* --- Events --- */
         function loadEvents(date) {
             currentDate = date;
-            $dateLabel.textContent = fmtDateFR(toDate(date));
-            $events.innerHTML = '<div class="loader">Chargement...</div>';
+            $dateLabel.textContent = fmtDateLong(toDate(date));
+            $events.innerHTML = '<div class="loader">' + esc(L.loading) + '</div>';
 
             fetch(apiUrl('list') + ',date=' + date)
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
                     if (!data || data.error || !Array.isArray(data) || data.length === 0) {
-                        $events.innerHTML = '<p class="no-events">Aucun événement prévu.</p>';
+                        $events.innerHTML = '<p class="no-events">' + esc(L.no_events) + '</p>';
                         return;
                     }
                     var html = '';
@@ -239,11 +240,11 @@
                         var isBirthday = ev.type === 'birthday';
                         html += '<div class="event-item' + (canEdit ? ' editable' : '') + (isBirthday ? ' is-birthday' : '') + '" data-idx="' + i + '">';
                         if (canEdit) {
-                            html += '<span class="btn-delete-event" title="Supprimer">&times;</span>';
+                            html += '<span class="btn-delete-event" title="' + esc(L.delete) + '">&times;</span>';
                         }
                         html += '<div class="event-title">' + (isBirthday ? '🎂 ' : '') + esc(ev.title) + '</div>';
                         if (!isBirthday) {
-                            html += '<div class="event-author">Par ' + esc(ev.username) + '</div>';
+                            html += '<div class="event-author">' + esc(L.by).replace('%name%', function() { return esc(ev.username); }) + '</div>';
                         }
                         if (ev.description) {
                             html += '<div class="event-desc">' + esc(ev.description) + '</div>';
@@ -271,7 +272,7 @@
                     }
                 })
                 .catch(function() {
-                    $events.innerHTML = '<p class="no-events">Erreur de chargement.</p>';
+                    $events.innerHTML = '<p class="no-events">' + esc(L.load_error) + '</p>';
                 });
         }
 
@@ -285,7 +286,7 @@
         }
 
         function deleteEvent(eventId) {
-            if (!confirm("Supprimer cet événement ?")) return;
+            if (!confirm(L.confirm_delete)) return;
             var fdDel = new FormData();
             fdDel.append('event_id', eventId);
             fdDel.append('csrf_token', CSRF_TOKEN);
@@ -297,7 +298,7 @@
                         loadEvents(currentDate);
                         highlightDates();
                     } else {
-                        alert('Erreur: ' + (data.error || 'Inconnue'));
+                        alert(L.error + (data.error || L.unknown));
                     }
                 });
         }
@@ -319,10 +320,10 @@
                             loadEvents(targetDate);
                             highlightDates();
                         } else {
-                            alert('Erreur: ' + (data.error || 'Inconnue'));
+                            alert(L.error + (data.error || L.unknown));
                         }
                     })
-                    .catch(function() { alert('Erreur réseau.'); })
+                    .catch(function() { alert(L.network_error); })
                     .finally(function() { $btnSave.disabled = false; });
             });
         }

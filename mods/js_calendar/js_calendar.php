@@ -45,6 +45,28 @@ function phorum_mod_js_calendar_db_init() {
 }
 
 /**
+ * Loads the module's language file into $PHORUM['DATA']['LANG']['mod_js_calendar'],
+ * english.php for a language that has no file. Done here rather than through a
+ * "lang" hook, which would need every forum to save its module settings again.
+ */
+function phorum_mod_js_calendar_load_language() {
+    global $PHORUM;
+    if (isset($PHORUM['DATA']['LANG']['mod_js_calendar'])) return;
+    $language = empty($PHORUM['language']) ? 'english' : basename($PHORUM['language']);
+    $file = "./mods/js_calendar/lang/$language.php";
+    if (!file_exists($file)) $file = './mods/js_calendar/lang/english.php';
+    include $file;
+}
+
+/** A string of the module's language file, "%name%" replaced when given. */
+function phorum_mod_js_calendar_t($key, $name = NULL) {
+    phorum_mod_js_calendar_load_language();
+    $lang = $GLOBALS['PHORUM']['DATA']['LANG']['mod_js_calendar'];
+    $text = isset($lang[$key]) ? $lang[$key] : $key;
+    return $name === NULL ? $text : str_replace('%name%', $name, $text);
+}
+
+/**
  * Addon hook to display the js_calendar page.
  */
 function phorum_mod_js_calendar_addon() {
@@ -54,6 +76,7 @@ function phorum_mod_js_calendar_addon() {
     if ($db_ready !== TRUE) {
         trigger_error("js_calendar: $db_ready", E_USER_WARNING);
     }
+    phorum_mod_js_calendar_load_language();
 
     // Determine action from URL args
     $action = 'display';
@@ -94,17 +117,50 @@ function phorum_mod_js_calendar_addon() {
     // Standard display logic
     phorum_build_common_urls();
 
+    $GLOBALS['PHORUM']['DATA']['CALENDAR'] = phorum_mod_js_calendar_page_data();
+
+    phorum_output('js_calendar::cal');
+}
+
+/**
+ * Template data of the calendar page: who reads it, where its requests go, and
+ * the strings and jsCalendar language of the forum's language.
+ */
+function phorum_mod_js_calendar_page_data() {
+    $PHORUM = $GLOBALS['PHORUM'];
+    phorum_mod_js_calendar_load_language();
+
     $is_logged_in = !empty($PHORUM['user']['user_id']);
 
-    $GLOBALS['PHORUM']['DATA']['CALENDAR'] = array(
+    $data = array(
         'is_logged_in' => $is_logged_in,
         'user_id' => $is_logged_in ? (int)$PHORUM['user']['user_id'] : 0,
         'is_admin' => !empty($PHORUM['user']['admin']) ? 1 : 0,
         'ajax_url' => phorum_get_url(PHORUM_ADDON_URL, 'module=js_calendar'),
-        'csrf_token' => phorum_mod_js_calendar_csrf_token()
+        'csrf_token' => phorum_mod_js_calendar_csrf_token(),
+        // jsCalendar's own language file, when the forum's language has one.
+        'jscal_language' => '',
+        'jscal_lang_script' => '',
+        // Strings for the page's script, as a JSON object safe inside <script>.
+        'strings_json' => ''
     );
-
-    phorum_output('js_calendar::cal');
+    $lang = $GLOBALS['PHORUM']['DATA']['LANG']['mod_js_calendar'];
+    $code = preg_replace('/[^a-z]/', '', strtolower($lang['jscalendar_language']));
+    $data['jscal_language'] = $code ? $code : 'en';
+    if ($code && $code !== 'en' && file_exists("./mods/js_calendar/js/jsCalendar.lang.$code.js")) {
+        $data['jscal_lang_script'] =
+            $PHORUM['http_path'] . "/mods/js_calendar/js/jsCalendar.lang.$code.js?v=1";
+    } else {
+        $data['jscal_language'] = 'en';
+    }
+    $js = array();
+    foreach (array('months', 'loading', 'no_events', 'load_error', 'confirm_delete', 'error',
+                   'unknown', 'network_error', 'by', 'add_event', 'edit_event', 'delete') as $key) {
+        $js[$key] = $lang[$key];
+    }
+    $data['strings_json'] = json_encode($js,
+        JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE);
+    return $data;
 }
 
 /**
@@ -143,7 +199,7 @@ function phorum_mod_js_calendar_javascript_register($data) {
 function phorum_mod_js_calendar_list_events() {
     $PHORUM = $GLOBALS['PHORUM'];
     $date = isset($_REQUEST['date']) ? $_REQUEST['date'] : (isset($PHORUM['args']['date']) ? $PHORUM['args']['date'] : '');
-    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) return array('error' => 'Date invalide');
+    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) return array('error' => phorum_mod_js_calendar_t('invalid_date'));
 
     $prefix = $PHORUM['DBCONFIG']['table_prefix'];
     $quoted_date = phorum_db_interact(DB_RETURN_QUOTED, $date);
@@ -183,7 +239,7 @@ function phorum_mod_js_calendar_list_events() {
                 'event_id'    => 'bday_' . $row['user_id'],
                 'user_id'     => $row['user_id'],
                 'username'    => $row['username'],
-                'title'       => "Anniversaire de " . $row['username'],
+                'title'       => phorum_mod_js_calendar_t('birthday_of', $row['username']),
                 'event_date'  => $date,
                 'type'        => 'birthday'
             );
@@ -281,16 +337,16 @@ function phorum_mod_js_calendar_write_allowed() {
 
 function phorum_mod_js_calendar_save_event() {
     $PHORUM = $GLOBALS['PHORUM'];
-    if (empty($PHORUM['user']['user_id'])) return array('success' => false, 'error' => 'Non connecté');
-    if (!phorum_mod_js_calendar_write_allowed()) return array('success' => false, 'error' => 'Invalid token: reload the page.');
+    if (empty($PHORUM['user']['user_id'])) return array('success' => false, 'error' => phorum_mod_js_calendar_t('not_logged_in'));
+    if (!phorum_mod_js_calendar_write_allowed()) return array('success' => false, 'error' => phorum_mod_js_calendar_t('invalid_token'));
 
     $title = isset($_POST['title']) && is_string($_POST['title']) ? trim($_POST['title']) : '';
     $desc = isset($_POST['description']) && is_string($_POST['description']) ? trim($_POST['description']) : '';
     $date = isset($_POST['date']) && is_string($_POST['date']) ? $_POST['date'] : '';
     $event_id = isset($_POST['event_id']) ? (int)$_POST['event_id'] : 0;
 
-    if (empty($title) || empty($date)) return array('success' => false, 'error' => 'Champs requis manquants');
-    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) return array('success' => false, 'error' => 'Date invalide');
+    if (empty($title) || empty($date)) return array('success' => false, 'error' => phorum_mod_js_calendar_t('missing_fields'));
+    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) return array('success' => false, 'error' => phorum_mod_js_calendar_t('invalid_date'));
 
     $quoted_title = phorum_db_interact(DB_RETURN_QUOTED, $title);
     $quoted_desc = phorum_db_interact(DB_RETURN_QUOTED, $desc);
@@ -300,9 +356,9 @@ function phorum_mod_js_calendar_save_event() {
     if ($event_id > 0) {
         $res = phorum_db_interact(DB_RETURN_RES, "SELECT user_id FROM {$PHORUM['js_calendar_table']} WHERE event_id = $event_id");
         $row = $res ? phorum_db_fetch_row($res, DB_RETURN_ASSOC) : null;
-        if (!$row) return array('success' => false, 'error' => 'Événement introuvable');
+        if (!$row) return array('success' => false, 'error' => phorum_mod_js_calendar_t('not_found'));
         if ($row['user_id'] != $user_id && empty($PHORUM['user']['admin'])) {
-            return array('success' => false, 'error' => 'Accès interdit');
+            return array('success' => false, 'error' => phorum_mod_js_calendar_t('forbidden'));
         }
         $sql = "UPDATE {$PHORUM['js_calendar_table']} SET title = '$quoted_title', description = '$quoted_desc', event_date = '$quoted_date' WHERE event_id = $event_id";
     } else {
@@ -315,18 +371,18 @@ function phorum_mod_js_calendar_save_event() {
 
 function phorum_mod_js_calendar_delete_event() {
     $PHORUM = $GLOBALS['PHORUM'];
-    if (empty($PHORUM['user']['user_id'])) return array('success' => false, 'error' => 'Non connecté');
-    if (!phorum_mod_js_calendar_write_allowed()) return array('success' => false, 'error' => 'Invalid token: reload the page.');
+    if (empty($PHORUM['user']['user_id'])) return array('success' => false, 'error' => phorum_mod_js_calendar_t('not_logged_in'));
+    if (!phorum_mod_js_calendar_write_allowed()) return array('success' => false, 'error' => phorum_mod_js_calendar_t('invalid_token'));
 
     // By POST only (see phorum_mod_js_calendar_csrf_token()).
     $event_id = isset($_POST['event_id']) ? (int)$_POST['event_id'] : 0;
     
     $res = phorum_db_interact(DB_RETURN_RES, "SELECT user_id FROM {$PHORUM['js_calendar_table']} WHERE event_id = $event_id");
-    if (!$res) return array('success' => false, 'error' => 'Event introuvable');
+    if (!$res) return array('success' => false, 'error' => phorum_mod_js_calendar_t('not_found'));
     $row = phorum_db_fetch_row($res, DB_RETURN_ASSOC);
 
     if (!$row || ($row['user_id'] != $PHORUM['user']['user_id'] && empty($PHORUM['user']['admin']))) {
-        return array('success' => false, 'error' => 'Accès interdit');
+        return array('success' => false, 'error' => phorum_mod_js_calendar_t('forbidden'));
     }
 
     phorum_db_interact(DB_RETURN_RES, "DELETE FROM {$PHORUM['js_calendar_table']} WHERE event_id = $event_id");
@@ -364,9 +420,9 @@ function phorum_mod_js_calendar_export_ical() {
             $ical .= "DTSTART;VALUE=DATE:" . $dt . "\r\n";
             $ical .= "SUMMARY:" . phorum_mod_js_calendar_ical_escape($row['title']) . "\r\n";
             if (!empty($row['description'])) {
-                $ical .= "DESCRIPTION:" . phorum_mod_js_calendar_ical_escape($row['description'] . " (Par " . $row['username'] . ")") . "\r\n";
+                $ical .= "DESCRIPTION:" . phorum_mod_js_calendar_ical_escape($row['description'] . " (" . phorum_mod_js_calendar_t('by', $row['username']) . ")") . "\r\n";
             } else {
-                $ical .= "DESCRIPTION:Par " . phorum_mod_js_calendar_ical_escape($row['username']) . "\r\n";
+                $ical .= "DESCRIPTION:" . phorum_mod_js_calendar_ical_escape(phorum_mod_js_calendar_t('by', $row['username'])) . "\r\n";
             }
             $ical .= "END:VEVENT\r\n";
         }
