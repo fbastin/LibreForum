@@ -104,6 +104,15 @@ function phorum_api_image_thumbnail($image, $max_w = NULL, $max_h = NULL, $metho
         'Your PHP installation lacks "getimagesize()" support'
     );
 
+    // An attachment whose file is missing from the disk store arrives with
+    // empty data (store_files_on_disk). Running getimagesize() on an empty
+    // temporary file raises a PHP notice; stop before. Crawlers request the
+    // thumbnails of such attachments through embed_images.
+    if ($image === NULL || $image === '') return phorum_api_error_set(
+        PHORUM_ERRNO_ERROR,
+        'No image data: the file is missing from the storage'
+    );
+
     // Try to determine the image type and size using the getimagesize()
     // PHP function. Unfortunately, this function requires a file on disk
     // to process. Therefore we create a temporary file in the LibreForum cache
