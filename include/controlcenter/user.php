@@ -27,6 +27,7 @@ if(count($_POST)) {
 $profile_field_names=array();
 if(is_array($PHORUM["PROFILE_FIELDS"])) {
     foreach ($PHORUM["PROFILE_FIELDS"] as $id => $fieldinfo) {
+        if ($id === 'num_fields' || !is_array($fieldinfo)) continue;   // integer counter stored among the fields (same guard as the core)
         $profile_field_names[$fieldinfo['name']]=$fieldinfo['name'];
     }
 }
