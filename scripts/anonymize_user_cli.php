@@ -50,6 +50,7 @@ if (($u = arg_val('--user')) !== null) {
     $r = tireur_anonymize_user($uid, $u, !$apply);
     echo "Messages IP concernés : {$r['ip_messages']}\n";
     echo "DokuWiki : {$r['wiki']['files']} fichier(s), {$r['wiki']['rows']} ligne(s).\n";
+    echo "Photos de galerie : {$r['galerie']}\n";
     exit;
 }
 

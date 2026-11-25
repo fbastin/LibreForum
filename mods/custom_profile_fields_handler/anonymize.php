@@ -96,6 +96,54 @@ function tireur_anon_dokuwiki($username, $dry_run = false) {
     return $res;
 }
 
+/** Photos de la galerie versées par ce membre, envois directs et copies de ses pièces
+ *  jointes : fiche, fichier et vignettes, supprimés avec le compte (décision de Fabian,
+ *  2026-11-25 ; elles restaient, rattachées à un pseudo qui n'existait plus). Repérées
+ *  par leur NOM, `<pseudo en minuscules>_<horodatage>_<fichier>` (gallery.php et le
+ *  module slashgallery_phorum), plutôt que par l'étiquette du pseudo, qu'on peut retirer :
+ *  « bob » ne touche pas « bob_smith_… », qui n'a pas d'horodatage après « bob_ ».
+ *  Les copies du wiki (`wiki_*`) ne sont à personne et restent. Les pièces jointes des
+ *  messages, conservés anonymisés, restent avec eux. Renvoie le nombre de photos. */
+function tireur_anon_galerie($username, $dry_run = false) {
+    $username = strtolower(trim((string)$username));
+    if ($username === '' || $username === strtolower(TIREUR_ANON_USER)) return 0;
+    $base = dirname(__DIR__, 3);
+    $dir = "$base/uploads/gallery";
+    if (!is_dir($dir)) return 0;
+    $motif = '/^' . preg_quote($username, '/') . '_\d{8,}_/';
+    $noms = array();
+    foreach (scandir($dir) as $f) {
+        if (preg_match($motif, $f) && is_file("$dir/$f")) $noms[] = $f;
+    }
+    if ($dry_run || !$noms) return count($noms);
+
+    $lib = "$base/libs/SlashGallery/src/SlashGallery.php";
+    $g = null;
+    if (is_file($lib)) {
+        require_once $lib;
+        $g = new SlashGallery(array(
+            'db_path' => "$base/cache/gallery.db",
+            'photo_base_dir' => $dir,
+            'python_venv' => "$base/libs/SlashGallery/venv",
+            'base_url' => '/uploads/gallery/',
+        ));
+        $g->setSecurityContext(true);
+    }
+    foreach ($noms as $f) {
+        if ($g) {
+            // deleteImage() garde le fichier d'une image liée à un message : on délie d'abord.
+            $g->setMessageId($f, 0);
+            $g->deleteImage($f);
+        }
+        // Fichier non indexé, ou galerie indisponible : il part quand même, vignettes comprises.
+        @unlink("$dir/$f");
+        $stem = pathinfo($f, PATHINFO_FILENAME);
+        @unlink("$dir/thumbs/$stem.webp");
+        @unlink("$dir/thumbs/$f");
+    }
+    return count($noms);
+}
+
 /** Orchestration complète pour un compte (hook ou CLI). */
 function tireur_anonymize_user($user_id, $username, $dry_run = false) {
     $ip = ($user_id > 0) ? tireur_anon_phorum_ip_by_uid($user_id, $dry_run) : 0;
@@ -108,8 +156,9 @@ function tireur_anonymize_user($user_id, $username, $dry_run = false) {
         require_once $lib_envois;
         $envois = comptage_envois_supprimer_membre((int)$user_id, $dry_run);
     }
+    $galerie = tireur_anon_galerie((string)$username, $dry_run);
     $tag = $dry_run ? 'SIMULATION' : 'anonymisé';
-    tireur_anon_log(sprintf('%s user="%s" (#%d) : messages IP=%d, wiki fichiers=%d lignes=%d, photos de comptage=%d',
-        $tag, $username, (int)$user_id, $ip, $wiki['files'], $wiki['rows'], $envois));
-    return ['ip_messages' => $ip, 'wiki' => $wiki, 'comptage_envois' => $envois];
+    tireur_anon_log(sprintf('%s user="%s" (#%d) : messages IP=%d, wiki fichiers=%d lignes=%d, photos de comptage=%d, photos de galerie=%d',
+        $tag, $username, (int)$user_id, $ip, $wiki['files'], $wiki['rows'], $envois, $galerie));
+    return ['ip_messages' => $ip, 'wiki' => $wiki, 'comptage_envois' => $envois, 'galerie' => $galerie];
 }
