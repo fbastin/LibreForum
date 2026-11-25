@@ -635,6 +635,28 @@ function phorum_api_file_check_read_access($file_id, $flags = 0)
     // If PHORUM_ADMIN is defined, we don't need to check permissions
     if (defined("PHORUM_ADMIN")) return $file;
 
+    // A file that is still linked to the editor has not been posted: the
+    // message is still being written, was abandoned, or the attachment was
+    // removed before posting. Only its uploader may read it (the user that
+    // phorum_api_file_store() records), and administrators. Without this
+    // check, the only test was the read permission for the requested
+    // forum_id, which nothing ties to the file: any forum readable by guests
+    // would do, and since file ids are sequential, every unposted upload
+    // could be downloaded without logging in. Guests that upload in a forum
+    // allowing it can no longer read their own unposted files back; they can
+    // still post them.
+    if ($file["link"] == PHORUM_LINK_EDITOR) {
+        $uid = empty($PHORUM["user"]["user_id"]) ? 0 : (int)$PHORUM["user"]["user_id"];
+        if (empty($PHORUM["user"]["admin"]) &&
+            ($uid === 0 || (int)$file["user_id"] !== $uid)) {
+            return phorum_api_error_set(
+                PHORUM_ERRNO_NOACCESS,
+                "Permission denied for reading the file: it has not been " .
+                "posted, and only its uploader may read it."
+            );
+        }
+    }
+
     // Is the file linked to a forum message? In that case, we have to
     // check if the message does really belong to the requested forum_id.
     if ($file["link"] == PHORUM_LINK_MESSAGE && !empty($file["message_id"]))
