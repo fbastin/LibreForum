@@ -6,6 +6,8 @@ require_once("./mods/stopforumspam/defaults.php");
 // Save settings.
 if (count($_POST))
 {
+        include_once("./include/email_functions.php");
+        $alert_email = isset($_POST['alert_email']) ? trim($_POST['alert_email']) : '';
 
         $PHORUM["mod_stopforumspam"] = array
         (
@@ -21,16 +23,21 @@ if (count($_POST))
             'freq_min' => (!empty($_POST['freq_min'])) ? (int)($_POST['freq_min']) : 1,
 
             'apikey' => $_POST['apikey'],
+            'alert_email' => $alert_email,
 
         );
         if($PHORUM["mod_stopforumspam"]["freq_min"] < 1)
             $PHORUM["mod_stopforumspam"]["freq_min"] = 1;
 
-        phorum_db_update_settings(array(
-            "mod_stopforumspam" => $PHORUM["mod_stopforumspam"]
-        ));
+        if ($alert_email !== '' && !phorum_valid_email($alert_email)) {
+            phorum_admin_error('The alert email address is not valid; the settings were not saved');
+        } else {
+            phorum_db_update_settings(array(
+                "mod_stopforumspam" => $PHORUM["mod_stopforumspam"]
+            ));
 
-        phorum_admin_okmsg('The settings were successfully saved');
+            phorum_admin_okmsg('The settings were successfully saved');
+        }
 }
 
 ?>
@@ -147,6 +154,14 @@ $frm->addhelp(
     $row, "Message type shown to blocked user",
     "Enabling this option will return a generic error message to the suspected spammer
      that does not contain any hints as to the source or reason for the block."
+);
+$row = $frm->addrow('Alert email address', $frm->text_box('alert_email', $PHORUM['mod_stopforumspam']['alert_email'], 50));
+$frm->addhelp(
+    $row, "Alert when the check is impossible",
+    "When the stopforumspam.com API cannot be queried (network error, HTTP error,
+     unreadable answer), the registration is saved in a moderated state and an email
+     naming the account is sent at once to this address. Leave empty to send none:
+     the failure is still written to the PHP error log."
 );
 
 // ----------------------------------------------------------------------

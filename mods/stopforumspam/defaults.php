@@ -16,6 +16,7 @@ $mod_stopforumspam_defaults = array(
     'apikey' => '0000',
     'force_generic' => 0,
     'freq_min' => 1,
+    'alert_email' => '',
 );
 
 foreach ($mod_stopforumspam_defaults as $key => $val)
