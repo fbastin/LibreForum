@@ -164,14 +164,15 @@ function phorum_mod_js_calendar_list_events() {
     //    Any visitor used to read "Date de naissance : YYYY-MM-DD" of every member
     //    here, and the iCal export gave them all at once. The birth date itself is
     //    not read any more: only the day of the month is.
-    if (!phorum_mod_js_calendar_member()) {
+    list($bday_field, $privacy_field) = phorum_mod_js_calendar_birthday_fields();
+    if (!phorum_mod_js_calendar_member() || !$bday_field) {
         return $results;
     }
     $day_month = substr($date, 5); // MM-DD, from a date already validated
     $sql_bday = "SELECT u.user_id, u.username
                  FROM {$prefix}_users u
-                 JOIN {$prefix}_user_custom_fields b ON u.user_id = b.user_id AND b.type = 22
-                 LEFT JOIN {$prefix}_user_custom_fields p ON u.user_id = p.user_id AND p.type = 23
+                 JOIN {$prefix}_user_custom_fields b ON u.user_id = b.user_id AND b.type = $bday_field
+                 LEFT JOIN {$prefix}_user_custom_fields p ON u.user_id = p.user_id AND p.type = $privacy_field
                  WHERE b.data LIKE '%-$day_month'
                  AND (p.data IS NULL OR p.data = '0')
                  AND u.active = 1";
@@ -199,6 +200,24 @@ function phorum_mod_js_calendar_member() {
     return !empty($GLOBALS['PHORUM']['user']['user_id']);
 }
 
+/**
+ * Ids of the birthday profile fields, "user_birthday" (YYYY-MM-DD) and
+ * "user_birthday_privacy" (1 = keep private), looked up by name: their ids
+ * depend on the order in which a forum created its profile fields. They used
+ * to be hard-coded as 22 and 23, the ids of one particular forum; elsewhere the
+ * queries read whatever fields 22 and 23 were. Returns array(birthday, privacy);
+ * 0 for a field that does not exist (no birthday field: no birthdays).
+ */
+function phorum_mod_js_calendar_birthday_fields() {
+    require_once './include/api/custom_profile_fields.php';
+    $ids = array();
+    foreach (array('user_birthday', 'user_birthday_privacy') as $name) {
+        $field = phorum_api_custom_profile_field_byname($name);
+        $ids[] = ($field && empty($field['deleted'])) ? (int)$field['id'] : 0;
+    }
+    return $ids;
+}
+
 function phorum_mod_js_calendar_list_all_dates() {
     $PHORUM = $GLOBALS['PHORUM'];
     $prefix = $PHORUM['DBCONFIG']['table_prefix'];
@@ -214,15 +233,16 @@ function phorum_mod_js_calendar_list_all_dates() {
 
     // Birthday days to highlight (previous, current and next year): for logged-in
     // members only, like the list of the day.
-    if (!phorum_mod_js_calendar_member()) {
+    list($bday_field, $privacy_field) = phorum_mod_js_calendar_birthday_fields();
+    if (!phorum_mod_js_calendar_member() || !$bday_field) {
         return array_values(array_unique($results));
     }
     $year = date('Y');
     $sql_bday = "SELECT DISTINCT SUBSTR(b.data, 6) as md
                  FROM {$prefix}_user_custom_fields b
                  JOIN {$prefix}_users u ON u.user_id = b.user_id AND u.active = 1
-                 LEFT JOIN {$prefix}_user_custom_fields p ON b.user_id = p.user_id AND p.type = 23
-                 WHERE b.type = 22 AND (p.data IS NULL OR p.data = '0')";
+                 LEFT JOIN {$prefix}_user_custom_fields p ON b.user_id = p.user_id AND p.type = $privacy_field
+                 WHERE b.type = $bday_field AND (p.data IS NULL OR p.data = '0')";
     $res_bday = phorum_db_interact(DB_RETURN_RES, $sql_bday);
     if ($res_bday) {
         while ($row = phorum_db_fetch_row($res_bday, DB_RETURN_ASSOC)) {
