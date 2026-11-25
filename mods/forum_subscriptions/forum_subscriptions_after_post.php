@@ -84,6 +84,9 @@ function phorum_mod_forum_subscriptions_functions_after_post($data = NULL, $queu
                 "forumname"   => strip_tags($PHORUM["DATA"]["NAME"]),
                 "forum_id"    => $data['forum_id'],
                 "message_id"  => $data['message_id'],
+                // single_notification holds back the mails of a thread until it is read
+                // (block below, gated on thread_id): without this key it never applied.
+                "thread_id"   => isset($data['thread']) ? (int) $data['thread'] : 0,
                 "user_id"     => $data['user_id'],
                 "vroot"       => $PHORUM["vroot"],
                 "author"      => $data['author'],
