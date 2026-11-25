@@ -251,6 +251,18 @@ function store_files_on_disk_mkdir($path)
     if (is_dir($path)) return TRUE;
     if (!store_files_on_disk_mkdir(dirname($path))) return FALSE;
     if (@mkdir($path) === FALSE) return FALSE;
+    // A new directory takes the group write and setgid bits of its parent.
+    // Under the usual web server umask (022), directories were created 0755
+    // even inside a group-writable storage path, so a maintenance script
+    // running as another member of the group could not delete files there.
+    // The delete hook still removes the database record when unlink() fails,
+    // which leaves the file on disk with nothing pointing at it. To get
+    // group-writable directories, make the storage path itself group-writable.
+    $parent = @fileperms(dirname($path));
+    $mode   = @fileperms($path);
+    if ($parent !== FALSE && $mode !== FALSE && ($parent & 02020)) {
+        @chmod($path, ($mode & 07777) | ($parent & 02020));
+    }
     return TRUE;
 }
 
