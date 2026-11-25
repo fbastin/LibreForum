@@ -4,8 +4,10 @@
  *
  *   php8.3 scripts/anonymize_user_cli.php --check
  *       Diagnostic : messages déjà anonymisés dont l'IP traîne encore.
- *   php8.3 scripts/anonymize_user_cli.php --user "<pseudo>" [--apply]
- *       Anonymise un membre (journaux DokuWiki + IP de ses messages s'il existe encore).
+ *   php8.3 scripts/anonymize_user_cli.php --user "<pseudo>" [--photos-publiques] [--apply]
+ *       Anonymise un membre (journaux DokuWiki + IP de ses messages s'il existe encore) et
+ *       supprime ses photos de galerie privées ; --photos-publiques supprime aussi les
+ *       publiques, que la règle garde jusqu'à une demande de leur auteur.
  *   php8.3 scripts/anonymize_user_cli.php --purge-ips [--apply]
  *       Purge l'IP résiduelle de TOUS les comptes déjà supprimés (user_id=0, auteur anonyme).
  *
@@ -47,10 +49,11 @@ if (($u = arg_val('--user')) !== null) {
     echo "== Anonymisation de « $u » ($tag) ==\n";
     echo $uid ? "Compte Phorum existant (#$uid) : IP des messages + journaux DokuWiki.\n"
               : "Compte introuvable (déjà supprimé) : journaux DokuWiki uniquement.\n";
-    $r = tireur_anonymize_user($uid, $u, !$apply);
+    $r = tireur_anonymize_user($uid, $u, !$apply, in_array('--photos-publiques', $argv, true));
     echo "Messages IP concernés : {$r['ip_messages']}\n";
     echo "DokuWiki : {$r['wiki']['files']} fichier(s), {$r['wiki']['rows']} ligne(s).\n";
-    echo "Photos de galerie : {$r['galerie']}\n";
+    echo "Photos de galerie supprimées : {$r['galerie']['supprimees']}, publiques gardées : {$r['galerie']['publiques_gardees']}"
+       . ($r['galerie']['statut_inconnu'] ? " — VISIBILITÉ ILLISIBLE, rien supprimé : relancer" : '') . "\n";
     exit;
 }
 

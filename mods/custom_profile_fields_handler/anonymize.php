@@ -96,26 +96,53 @@ function tireur_anon_dokuwiki($username, $dry_run = false) {
     return $res;
 }
 
-/** Photos de la galerie versées par ce membre, envois directs et copies de ses pièces
- *  jointes : fiche, fichier et vignettes, supprimés avec le compte (décision de Fabian,
- *  2026-11-25 ; elles restaient, rattachées à un pseudo qui n'existait plus). Repérées
- *  par leur NOM, `<pseudo en minuscules>_<horodatage>_<fichier>` (gallery.php et le
- *  module slashgallery_phorum), plutôt que par l'étiquette du pseudo, qu'on peut retirer :
- *  « bob » ne touche pas « bob_smith_… », qui n'a pas d'horodatage après « bob_ ».
- *  Les copies du wiki (`wiki_*`) ne sont à personne et restent. Les pièces jointes des
- *  messages, conservés anonymisés, restent avec eux. Renvoie le nombre de photos. */
-function tireur_anon_galerie($username, $dry_run = false) {
+/** Photos de la galerie de ce membre, envois directs et copies de ses pièces jointes
+ *  (nom `<pseudo en minuscules>_<horodatage>_<fichier>`, de gallery.php comme du module
+ *  slashgallery_phorum ; « bob » ne touche pas « bob_smith_… », sans horodatage après
+ *  « bob_ »). Repérées par le nom plutôt que par l'étiquette du pseudo, qu'on peut retirer.
+ *
+ *  LA RÈGLE (décision de Fabian, 2026-11-25, « option 3 »). À la suppression du compte, les
+ *  photos PRIVÉES partent : la licence des conditions d'utilisation ne porte que sur les
+ *  photos publiques, et une photo privée dont l'auteur est parti n'est plus vue de personne.
+ *  Les photos PUBLIQUES restent, sous le pseudo de leur auteur, jusqu'à ce qu'il en demande
+ *  la suppression : $publiques = true les supprime aussi (admin-tools.php, CLI
+ *  --photos-publiques). Un fichier sans fiche n'est visible de personne : il part.
+ *  La visibilité vient du cache de gallery-file.php (includes/gallery_access.php) ; s'il est
+ *  illisible, rien n'est supprimé et le compte rendu le dit : mieux vaut relancer que perdre
+ *  une photo publique. Les copies du wiki (`wiki_*`) ne sont à personne et restent.
+ *  Renvoie ['supprimees' => n, 'publiques_gardees' => n, 'statut_inconnu' => bool]. */
+function tireur_anon_galerie($username, $dry_run = false, $publiques = false) {
+    $res = array('supprimees' => 0, 'publiques_gardees' => 0, 'statut_inconnu' => false);
     $username = strtolower(trim((string)$username));
-    if ($username === '' || $username === strtolower(TIREUR_ANON_USER)) return 0;
+    if ($username === '' || $username === strtolower(TIREUR_ANON_USER)) return $res;
     $base = dirname(__DIR__, 3);
     $dir = "$base/uploads/gallery";
-    if (!is_dir($dir)) return 0;
+    if (!is_dir($dir)) return $res;
     $motif = '/^' . preg_quote($username, '/') . '_\d{8,}_/';
     $noms = array();
     foreach (scandir($dir) as $f) {
         if (preg_match($motif, $f) && is_file("$dir/$f")) $noms[] = $f;
     }
-    if ($dry_run || !$noms) return count($noms);
+    if (!$noms) return $res;
+
+    require_once "$base/includes/gallery_access.php";
+    $visibilite = gallery_privacy_load();
+    if ($visibilite === false) {
+        $res['statut_inconnu'] = true;
+        tireur_anon_log("galerie de \"$username\" : visibilité illisible, rien supprimé (" . count($noms) . " photo(s))");
+        return $res;
+    }
+    $a_supprimer = array();
+    foreach ($noms as $f) {
+        $publique = !empty($visibilite['files'][$f]);
+        if ($publique && !$publiques) {
+            $res['publiques_gardees']++;
+        } else {
+            $a_supprimer[] = $f;
+        }
+    }
+    $res['supprimees'] = count($a_supprimer);
+    if ($dry_run || !$a_supprimer) return $res;
 
     $lib = "$base/libs/SlashGallery/src/SlashGallery.php";
     $g = null;
@@ -129,7 +156,7 @@ function tireur_anon_galerie($username, $dry_run = false) {
         ));
         $g->setSecurityContext(true);
     }
-    foreach ($noms as $f) {
+    foreach ($a_supprimer as $f) {
         if ($g) {
             // deleteImage() garde le fichier d'une image liée à un message : on délie d'abord.
             $g->setMessageId($f, 0);
@@ -141,11 +168,11 @@ function tireur_anon_galerie($username, $dry_run = false) {
         @unlink("$dir/thumbs/$stem.webp");
         @unlink("$dir/thumbs/$f");
     }
-    return count($noms);
+    return $res;
 }
 
 /** Orchestration complète pour un compte (hook ou CLI). */
-function tireur_anonymize_user($user_id, $username, $dry_run = false) {
+function tireur_anonymize_user($user_id, $username, $dry_run = false, $photos_publiques = false) {
     $ip = ($user_id > 0) ? tireur_anon_phorum_ip_by_uid($user_id, $dry_run) : 0;
     $wiki = tireur_anon_dokuwiki((string)$username, $dry_run);
     // Photos de cibles envoyées depuis la page de comptage (site, includes/comptage_envois.php) :
@@ -156,9 +183,10 @@ function tireur_anonymize_user($user_id, $username, $dry_run = false) {
         require_once $lib_envois;
         $envois = comptage_envois_supprimer_membre((int)$user_id, $dry_run);
     }
-    $galerie = tireur_anon_galerie((string)$username, $dry_run);
+    $galerie = tireur_anon_galerie((string)$username, $dry_run, $photos_publiques);
     $tag = $dry_run ? 'SIMULATION' : 'anonymisé';
-    tireur_anon_log(sprintf('%s user="%s" (#%d) : messages IP=%d, wiki fichiers=%d lignes=%d, photos de comptage=%d, photos de galerie=%d',
-        $tag, $username, (int)$user_id, $ip, $wiki['files'], $wiki['rows'], $envois, $galerie));
+    tireur_anon_log(sprintf('%s user="%s" (#%d) : messages IP=%d, wiki fichiers=%d lignes=%d, photos de comptage=%d, photos de galerie supprimées=%d, publiques gardées=%d%s',
+        $tag, $username, (int)$user_id, $ip, $wiki['files'], $wiki['rows'], $envois,
+        $galerie['supprimees'], $galerie['publiques_gardees'], $galerie['statut_inconnu'] ? ', VISIBILITÉ ILLISIBLE' : ''));
     return ['ip_messages' => $ip, 'wiki' => $wiki, 'comptage_envois' => $envois, 'galerie' => $galerie];
 }
