@@ -237,8 +237,14 @@ function phorum_api_image_thumbnail($image, $max_w = NULL, $max_h = NULL, $metho
                 $scaled = imagecreatetruecolor($img['new_w'], $img['new_h']);
 
                 //Retain transparency.
+                // A palette image may declare a transparent index beyond its
+                // palette (a 255-colour GIF with index 255): PHP 8 then throws
+                // a ValueError in imagecolorsforindex() and the thumbnail
+                // request ends in a 500. Ignore such an index, as the gallery
+                // module and TCPDF already do (2026-10-10).
                 $trans_idx = imagecolortransparent($original);
-                if ($trans_idx >= 0) {
+                if ($trans_idx >= 0 && (imageistruecolor($original) ||
+                    $trans_idx < imagecolorstotal($original))) {
                     $trans = imagecolorsforindex($original, $trans_idx);
                     $idx = imagecolorallocate(
                         $scaled,
