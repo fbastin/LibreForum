@@ -114,17 +114,6 @@ function mod_user_image_gallery_tpl_cc_menu_options_hook()
 {
     global $PHORUM;
     
-    // Phase out old gallery: Only show menu item if user has existing images
-    $user_id = $PHORUM['user']['user_id'] ?? 0;
-    if (!$user_id) return;
-    
-    require_once('./include/api/file_storage.php');
-    $files = phorum_api_file_list('image_g', $user_id, NULL);
-    
-    if (empty($files)) {
-        return; // No images, don't show the deprecated panel
-    }
-    
     // Generate the require template data for the control panel menu button.
     if ($PHORUM["DATA"]["PROFILE"]["PANEL"] == 'image_gallery') {
         $PHORUM["DATA"]["IMAGE_GALLERY_PANEL_ACTIVE"] = TRUE;
@@ -198,8 +187,7 @@ function mod_user_image_gallery_read($messages)
              $author = phorum_api_user_get($message["user_id"]);
         }
 
-        // Use the new gallery system
-        $url = '/gallery.php?q=' . urlencode(strtolower($author['username']));
+        $url = phorum_get_url(PHORUM_ADDON_URL, 'module=user_image_gallery', 'view=gallery', 'user='.$message['user_id'] );
 
         // This user has an image_gallery. Add it to the message data.
         // mod_user_image_gallery = backward compatibilty.
@@ -243,16 +231,11 @@ function mod_user_image_gallery_get_image_info ($image_id) {
 // Add link to image gallery to user profiles.
 function mod_user_image_gallery_profile($profile)
 {
-    $user_id = $profile['user_id'] ?? 0;
-    if (!$user_id) return $profile;
-
-    require_once('./include/api/file_storage.php');
-    $files = phorum_api_file_list('image_g', $user_id, NULL);
-    
-    if (!empty($files)) {
-        $profile["URL"]["user_image_gallery"] = '/gallery.php?q=' . urlencode(strtolower($profile['username']));
-    }
-    
+    // don't if galleries are currently not visible
+//     if ( ! mod_user_image_gallery_visible() ):
+//       return $profile;
+//     endif;
+    $profile["URL"]["user_image_gallery"] = phorum_get_url(PHORUM_ADDON_URL, 'module=user_image_gallery', 'view=gallery', 'user='.$profile['user_id'] );
     return $profile;
 }
 
@@ -329,24 +312,6 @@ function mod_user_image_gallery_get_keywords_array () {
 function mod_user_image_gallery_addon () {
 
     global $PHORUM;
-
-    // Redirect public gallery views to the new gallery system
-    $view = $PHORUM['args']['view'] ?? 'gallery';
-    if ($view === 'gallery' || $view === 'image') {
-        $redirect_url = '/gallery.php';
-        if (isset($PHORUM['args']['user'])) {
-            $user_id = (int)$PHORUM['args']['user'];
-            if ($user_id > 0) {
-                $author = phorum_api_user_get($user_id);
-                if ($author && !empty($author['username'])) {
-                    $redirect_url = '/gallery.php?q=' . urlencode(strtolower($author['username']));
-                }
-            }
-        }
-        header('HTTP/1.1 301 Moved Permanently');
-        header('Location: ' . $redirect_url);
-        exit;
-    }
 
     require_once('./include/format_functions.php');
     require_once('./include/forum_functions.php');

@@ -8,13 +8,30 @@
 
 <!-- cc_panel.tpl -->
 
-<div class="attention">
-    L'ancienne galerie LibreForum est désormais obsolète et en lecture seule. 
-    Pour ajouter de nouvelles images, merci d'utiliser la nouvelle 
-    <a href="/gallery.php" style="color: inherit; text-decoration: underline; font-weight: bold;">Galerie Photos</a> du site.
-</div>
+  <form action="{URL->ACTION}" method="post" enctype="multipart/form-data">
+      {POST_VARS}
+      <input type="hidden" name="action" value="upload">
+      <input type="hidden" name="screen" value="simple">
 
-<br/>
+      <div class="generic">
+          <dt>{LANG->mod_user_image_gallery->UploadHeadline}</dt>
+          <dd>
+            {IF FILE_SIZE_LIMIT}<div>{FILE_SIZE_LIMIT}</div>{/IF}
+            {IF FILE_TYPE_LIMIT}<div>{FILE_TYPE_LIMIT}</div>{/IF}
+            <div>{LANG->mod_user_image_gallery->ImageLimit}</div>
+            <br />
+            {IF FILES_LIMIT_REACHED}
+              {LANG->mod_user_image_gallery->LimitReached}
+            {ELSE}
+              <input type="file" name="newfile1" size="50" class="uploadblank" /><br />
+              <input type="submit" value="{LANG->Submit}" />
+            {/IF}
+          </dd>
+      </div>
+
+  </form>
+
+  <br/>
 
 <form action="{URL->ACTION}" method="post">
   {POST_VARS}
@@ -97,6 +114,13 @@
 
 </form>
 
+<br />
+<form action="{URL->ACTION}" method="post">
+  {POST_VARS}
+  <input type="hidden" name="action" value="nothing" />
+  <input type="hidden" name="screen" value="multi" />
+  <input type="submit" name="upload_multi" value="{LANG->mod_user_image_gallery->Click_here_to_upload_multiple_images}" class="gallery_button" />
+</form>
 <br />
 
 <form action="{URL->my_gallery}" method="post">

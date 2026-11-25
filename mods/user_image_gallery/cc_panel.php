@@ -66,10 +66,202 @@ if (count($_POST)):
   $action = isset($_POST['action']) ? (string)$_POST['action'] : '';
   switch ($action):
   case 'upload':
-    $messages[] = array(
-        'type' => MOD_USER_IMAGE_GALLERY_WARNING,
-        'message' => 'L\'ajout de nouvelles images via cette interface est désactivé. Merci d\'utiliser la nouvelle galerie du site.'
-    );
+    $new_uploads = array();
+    $multi  = ( $_POST['screen'] == 'multi' );
+    $blanks = isset($_POST['blanks']) ? (int)$_POST['blanks'] : 0;
+// ----------------------------------------------------------------------
+// Handle storing newly uploaded image(s).
+// ----------------------------------------------------------------------
+    if ( $multi ):
+      $i_start = 1;
+      $i_end = $blanks;
+    else:
+      $i_start = 1;
+      $i_end = 1;
+    endif;
+    for ($i = $i_start; $i <= $i_end; ++$i):
+      $upfile = 'newfile' . $i;
+      if (!empty($_FILES) and is_uploaded_file($_FILES[$upfile]["tmp_name"])) {
+        $extension = "";
+        $filename = $_FILES[$upfile]["name"];
+        $dotpos = strrpos($filename, ".");
+        if ($dotpos !== FALSE) {
+            $extension = strtolower(substr($filename, $dotpos+1));
+        }
+        $width  = 0;
+        $height = 0;
+
+        $max_allowed = $PHORUM['mod_user_image_gallery']['max_images'];
+
+        // Check if the user already uploaded the maximum number
+        // of images allowed.
+        if (count($images) >= $max_allowed) {
+            $error = str_replace( '%file_name%', $filename, $lang["ErrorTooManyImages"] );
+            $error = str_replace( '%max_images%', $max_allowed, $error );
+            $messages[] = array(
+                                 'type' => MOD_USER_IMAGE_GALLERY_WARNING,
+                                 'message' => $error,
+                               );
+            continue;  // skip everything else and restart loop with next file
+        }
+
+        // Check if the file extension is allowed.
+        if ( ! in_array($extension, $PHORUM['mod_user_image_gallery']["file_types"])) {
+            $error = str_replace( '%file_name%', $filename, $lang["ErrorNotInAllowedFileTypes"] );
+            $messages[] = array(
+                                 'type' => MOD_USER_IMAGE_GALLERY_WARNING,
+                                 'message' => $error,
+                               );
+            continue;  // skip everything else and restart loop with next file
+        }
+
+        // Check if the file does not exceed the allowed dimensions.
+        $imagedata = getimagesize($_FILES[$upfile]["tmp_name"]);
+
+        // Check if it's really a supported image type, just to
+        // make sure once again (in case the content of the image
+        // mismatches the file extension).
+        if (!$imagedata[2] || (
+             $imagedata[2] !== IMAGETYPE_JPEG &&
+             $imagedata[2] !== IMAGETYPE_PNG  &&
+             $imagedata[2] !== IMAGETYPE_GIF
+            )) {
+            $error = str_replace( '%file_name%', $filename, $lang["ErrorNotInAllowedFileTypes"] );
+
+// $error .= '<br>$imagedata[2] = ' . $imagedata[2];  // debugg
+
+            $messages[] = array(
+                                 'type' => MOD_USER_IMAGE_GALLERY_WARNING,
+                                 'message' => $error,
+                               );
+            continue;  // skip everything else and restart loop with next file
+        }
+        $width  = $imagedata[0];
+        $height = $imagedata[1];
+        if ($width  > $PHORUM['mod_user_image_gallery']["max_width"] ||
+            $height > $PHORUM['mod_user_image_gallery']["max_height"]) {
+            $error = str_replace( '%file_name%', $filename, $lang["ErrorTooLargeDimensions"] );
+            $messages[] = array(
+                                 'type' => MOD_USER_IMAGE_GALLERY_WARNING,
+                                 'message' => $error,
+                               );
+            continue;  // skip everything else and restart loop with next file
+        }
+
+        // Check if the maximum allowed file size is not exceeded.
+        if ($_FILES[$upfile]['size']/1024 > $PHORUM['mod_user_image_gallery']['max_filesize']) {
+            $error = str_replace( '%file_name%', $filename, $lang["ErrorTooLargeFileSize"] );
+            $messages[] = array(
+                                 'type' => MOD_USER_IMAGE_GALLERY_WARNING,
+                                 'message' => $error,
+                               );
+            continue;  // skip everything else and restart loop with next file
+        }
+
+        // Check if the maximum allowed size for the entire gallery is not exceeded.
+        if ( ($total_bytes + $_FILES[$upfile]['size'])/1024 > $PHORUM['mod_user_image_gallery']['max_total_filesize']) {
+            $error = str_replace( '%file_name%', $filename, $lang["ErrorTooMuchMemory"] );
+            $messages[] = array(
+                                 'type' => MOD_USER_IMAGE_GALLERY_WARNING,
+                                 'message' => $error,
+                               );
+            continue;  // skip everything else and restart loop with next file
+        }
+
+        // The file is okay -- Read in the uploaded file.
+        $fp = fopen($_FILES[$upfile]["tmp_name"], "r");
+        $file_data = fread($fp, $_FILES[$upfile]["size"]);
+        fclose($fp);
+
+        // Create the file array for the file storage API.
+        $file = array(
+            "user_id"   => $PHORUM["user"]["user_id"],
+            "filename"  => $filename,
+            "filesize"  => $_FILES[$upfile]["size"],
+            "file_data" => $file_data,
+            "link"      => "image_g"                             // use "image_g" because we have a limit of 10 characters
+        );
+
+        // Store the file.
+        $file_ret = phorum_api_file_store($file);
+        if ( $file_ret === false ) {
+            $error = str_replace( '%file_name%', $filename, $lang["GeneralError"] );
+            $error .= phorum_api_strerror();
+            $messages[] = array(
+                                 'type' => MOD_USER_IMAGE_GALLERY_WARNING,
+                                 'message' => $error,
+                               );
+            continue;  // skip everything else and restart loop with next file
+        }
+
+        // If we get here then file OK and stored in db OK -- everything is OK!
+
+        unset($file_ret['file_data']);
+        unset($file_ret['message_id']);
+        unset($file_ret['link']);
+
+        $total_bytes += $file_ret['filesize'];
+
+        // Add info from the new file to the module's memory area
+        $file_id = $file_ret['file_id'];
+        $PHORUM['mod_user_image_gallery']['image_info'][$file_id] = $file_ret;
+        $PHORUM['mod_user_image_gallery']['image_info'][$file_id]['width']  = $width;
+        $PHORUM['mod_user_image_gallery']['image_info'][$file_id]['height'] = $height;
+        $PHORUM['mod_user_image_gallery']['image_info'][$file_id]['mod_date'] = time();                   // modified date
+
+        if ($PHORUM['mod_user_image_gallery']['suppress_until_approved']):                                // moderator approval
+          $PHORUM['mod_user_image_gallery']['image_info'][$file_id]['approved'] = MOD_USER_IMAGE_GALLERY_WAITING;
+        else:
+          $PHORUM['mod_user_image_gallery']['image_info'][$file_id]['approved'] = MOD_USER_IMAGE_GALLERY_APPROVED;
+        endif;
+
+        $do_store_module_data = true;
+
+// now store just file_id, filename, filesize and add_datetime in $images
+        $images[$file_id]['file_id']      = $file_ret['file_id'];
+        $images[$file_id]['filename']     = $file_ret['filename'];
+        $images[$file_id]['filesize']     = $file_ret['filesize'];
+        $images[$file_id]['add_datetime'] = $file_ret['add_datetime'];
+
+        $new_uploads[] = $file_id;
+
+        $ok = str_replace( '%file_name%', $filename, $lang['SuccessfulFileUpload'] );
+        $messages[] = array(
+                             'type' => MOD_USER_IMAGE_GALLERY_INFO,
+                             'message' => $ok,
+                           );
+      } // end if (!empty($_FILES) && is_uploaded_file($_FILES[$upfile]["tmp_name"]))
+    endfor;
+
+    // alert moderators (or whoever) if alert on new messages or message moderation
+    if ( count($new_uploads) and
+         ( $PHORUM['mod_user_image_gallery']['alertx'] or $PHORUM['mod_user_image_gallery']['suppress_until_approved'] ) and
+         $PHORUM['mod_user_image_gallery']['alert_email'] != ''
+       ):
+      // send an email to $PHORUM['mod_user_image_gallery']['alert_email'] about the images in $new_uploads
+      include_once("./include/email_functions.php");
+
+      if ( $PHORUM['mod_user_image_gallery']['suppress_until_approved'] ):
+        $email_text = $lang['images_uploaded_email_unapproved'];
+      else:
+        $email_text = $lang['images_uploaded_email'];
+      endif;
+      $email_text = str_replace( '%user_display_name%', $user_display_name, $email_text );
+
+      // for now, just list numbers
+      $email_text.= implode( ', ', $new_uploads);
+
+      // now send it
+      $addresses = array();
+      $addresses[] = $PHORUM['mod_user_image_gallery']['alert_email'];
+
+      $data = array();
+      $data['mailmessage'] = $email_text;
+      $data['mailsubject'] = $lang['New_images_uploaded'];        // todo: mention if moderation required
+
+      phorum_email_user($addresses, $data);
+
+    endif;
     break;
 
 // ----------------------------------------------------------------------
