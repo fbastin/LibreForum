@@ -77,7 +77,12 @@ function mod_recent_messages_setup_templatedata()
 
     // Check if the user has read access for the active forum.
     // Not really important to check, but good for some paranoia.
-    if (!phorum_check_read_common()) { return; }
+    //
+    // phorum_check_read_common() does NOT just answer: when access is denied,
+    // it has already rendered a complete page ("PleaseLoginRead" or "NoRead"),
+    // header and footer included, before returning FALSE. The caller must
+    // therefore stay silent: return FALSE instead of nothing, so it can tell.
+    if (!phorum_check_read_common()) { return FALSE; }
 
     // Load the module installation code if this was not yet done.
     // The installation code will take care of automatically adding
@@ -426,12 +431,19 @@ function mod_recent_messages_setup_templatedata()
         'TEXT' => $PHORUM['DATA']['HEADING'],
         'TYPE' => 'recent_messages'
     );
+
+    return TRUE;
 }
 
 function phorum_mod_recent_messages_addon()
 {
     global $PHORUM;
-    mod_recent_messages_setup_templatedata();
+
+    // Without this check, a visitor without read access to the active forum
+    // received TWO complete pages in the same response: the access denial,
+    // rendered by phorum_check_read_common(), then the module page over it.
+    if (!mod_recent_messages_setup_templatedata()) return;
+
     phorum_output("recent_messages::page");
 }
 
@@ -493,7 +505,7 @@ function phorum_mod_recent_messages_ajax()
         }
     }
 
-    mod_recent_messages_setup_templatedata();
+    if (!mod_recent_messages_setup_templatedata()) return;
 
     ob_start();
     include phorum_get_template("recent_messages::page");
